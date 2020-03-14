@@ -1,0 +1,44 @@
+.app {
+    box-sizing: border-box;
+    display: flex;
+    word-wrap: break-word;
+}
+
+.editor {
+    display: flex;
+    padding: 1em;
+    flex-grow: 2;
+    justify-content: center;
+    height: 100%;
+}
+
+.document-area {
+    width: 620px;
+    overflow-wrap: break-word;
+
+    .example {
+        display: none;
+    }
+}
+
+.explorer, .comments {
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 1em;
+    min-width: 200px;
+}
+
+.explorer {
+    .category-children {
+        padding-left: 1em;
+    }
+    .category-name::before {
+        content: '> '
+    }
+    .open > .category-name::before {
+        content: 'v '
+    }
+    .document, .category-name {
+        display: block;
+        padding: 0.5em;
+    }
+}
