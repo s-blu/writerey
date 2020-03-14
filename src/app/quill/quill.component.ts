@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { saveAs } from 'file-saver';
+import streamSaver from 'StreamSaver';
 
 @Component({
   selector: 'wy-quill',
@@ -76,5 +78,23 @@ They started running.
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+
+
+  changedEditor(event) {
+
+    console.log('changed editor');
+    console.log(event);
+    // saveAs(event.html, 'testdatei.txt')
+    // const fileStream = streamSaver.createWriteStream('filename.txt', {
+    //   size: 22, // (optional) Will show progress
+    //   writableStrategy: undefined, // (optional)
+    //   readableStrategy: undefined  // (optional)
+    // })
+
+    // new Response('StreamSaver is awesome').body
+    //   .pipeTo(fileStream)
+    //   .then((e) => console.log('sucess', e), (e) => console.log('error', e))
   }
 }

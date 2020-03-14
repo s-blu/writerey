@@ -38,6 +38,9 @@
             ]
           },
           "configurations": {
+            "node": {
+              "__dirname": false
+            },
             "production": {
               "fileReplacements": [
                 {

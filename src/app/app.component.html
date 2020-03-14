@@ -1,5 +1,6 @@
 <div class="app">
   <div class="explorer">
+    <a (click)="dummyFn()">DummyDummy</a>
     <div class="category">
       <span class="category-name">Characters</span>
     </div>
@@ -116,5 +117,15 @@
       </div>
     </div>
   </div>
-  <div class="comments"></div>
+  <div class="notes">
+
+    <div class="context-sensitive">
+      <div *ngFor="let c of [0,1,2,3,4,5,6,7,8]" class="note">This is a context sensitive note {{c}}</div>
+    </div>
+
+
+    <div class="general">
+      <div *ngFor="let c of [0,1,2,3,4]" class="note">This is a general note {{c}}</div>
+    </div>
+  </div>
 </div>
