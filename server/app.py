@@ -1,24 +1,35 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
+from pathlib import Path
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app, resources={r".*": {"origins": '*'}})  # boooh. fixme.
+CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. fixme.
+
+basePath = '_writerey_data/'
 
 
-class Employees(Resource):
-    def get(self):
-        return {'employees': [{'id': 1, 'name': 'Balram'}, {'id': 2, 'name': 'Tom'}]}
+class Documents(Resource):
+    def get(self, doc_name):
+        return 'Documents get is not implemented yet'
 
-    def post(self):
-        new_path = './new_days.txt'
-        new_days = open(new_path, 'w')
-        new_days.write('hello there, you have just written a file via python')
-        new_days.close()
+    def put(self, doc_name):
+        if request.form['doc_path']:
+            # TODO: Make sure this ends on a / and does not start with a /
+            pathToSaveTo = basePath + request.form['doc_path']
+            Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
+        else:
+            pathToSaveTo = basePath
+        print(request.form)
+        #f = request.files['file']
+        #f.save(pathToSaveTo + doc_name + '.html')
+        f = open(pathToSaveTo + doc_name + '.html', 'w')
+        f.write(request.form['content'])
+        f.close()
 
 
-api.add_resource(Employees, '/')  # Route_1
+api.add_resource(Documents, '/doc/<string:doc_name>')
 
 if __name__ == '__main__':
-    app.run(port=5002)
+    app.run(port=5002, debug=True)  # fixme remove debug
