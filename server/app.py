@@ -5,7 +5,7 @@ from pathlib import Path
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. fixme.
+CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
 basePath = '_writerey_data/'
 
@@ -17,19 +17,21 @@ class Documents(Resource):
     def put(self, doc_name):
         if request.form['doc_path']:
             # TODO: Make sure this ends on a / and does not start with a /
+            # TODO: Sanitize
             pathToSaveTo = basePath + request.form['doc_path']
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
             pathToSaveTo = basePath
-        print(request.form)
-        #f = request.files['file']
-        #f.save(pathToSaveTo + doc_name + '.html')
-        f = open(pathToSaveTo + doc_name + '.html', 'w')
-        f.write(request.form['content'])
-        f.close()
+        # TODO sanitize filename
+        filePath = pathToSaveTo + doc_name + '_file.html'
+        # TODO check if this is available
+        f = request.files['file']
+        f.save(filePath)
+
+        return 'File saved to ' + filePath
 
 
 api.add_resource(Documents, '/doc/<string:doc_name>')
 
 if __name__ == '__main__':
-    app.run(port=5002, debug=True)  # fixme remove debug
+    app.run(port=5002, debug=True)  # FIXME remove debug

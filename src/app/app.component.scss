@@ -6,20 +6,23 @@
 
 .editor {
     box-sizing: border-box;
-    display: flex;
     padding: 1em;
     flex-grow: 2;
-    justify-content: center;
     height: 100%;
+
+    .edit-area {
+        box-sizing: border-box;
+        display: flex;
+        padding: 1em;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
 }
 
 .document-area {
     width: 620px;
     overflow-wrap: break-word;
-
-    .example {
-        display: none;
-    }
 }
 
 .explorer, .notes {
@@ -59,4 +62,8 @@
         display: block;
         padding: 0.5em;
     }
+}
+
+ngx-simplebar {
+    height: 100%
 }
