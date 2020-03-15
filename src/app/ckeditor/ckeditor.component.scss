@@ -1,0 +1,20 @@
+:host ::ng-deep .ck-editor, .ck-content {
+    border: none;
+    font-family: 'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif;
+    font-size: 16px;  
+}
+:host ::ng-deep .ck-content p {
+    margin: 0;
+
+
+}
+
+:host ::ng-deep .paragraph-wrap:hover {
+    margin-left: -4px;
+    border-left: 1px solid coral;
+    z-index: 5;
+    display: block;
+    position: relative;
+    padding-left: 3px;
+}
+

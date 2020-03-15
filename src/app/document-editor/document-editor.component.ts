@@ -26,6 +26,10 @@ export class DocumentEditorComponent implements OnInit {
     });
   }
 
+  hover(event) {
+    document.getElementById('boi').innerHTML = event;
+  }
+
   onContentChange(event) {
 
     // FIXME debounce trigger of save
@@ -34,6 +38,7 @@ export class DocumentEditorComponent implements OnInit {
     const paragraphs = htmlContent.split(/<p>&nbsp;<\/p>/);
     let enhancedContent = '';
     for (let p of paragraphs) {
+      if (p === '') continue;
       p = this.paragraphService.addParagraphIdentifierIfMissing(p)
       enhancedContent += `<p>&nbsp;</p>\n${p}\n`;
 

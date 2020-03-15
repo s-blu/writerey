@@ -12,15 +12,25 @@ export class ParagraphService {
 
   addParagraphIdentifierIfMissing(p) {
     if (p && p !== '' && !this.P_ID_REGEX.test(p)) {
+      const id = uuid.v4();
+
       console.log('paragraph has no identifier, adding', p);
-      return this.getNewParagraphIdentifier() + p;
+      return `${this.getNewParagraphIdentifier(id)}${this.getParagraphWrapStart(id)}${p}${this.getParagraphWrapEnd()}`;
     }
 
     return p;
   }
 
-  private getNewParagraphIdentifier() {
-    return `<div style="display:none">${this.P_ID_KEYWORD} ${uuid.v4()}</div>`;
+  private getNewParagraphIdentifier(uuid) {
+    return `<internal-ids style="display:none">${this.P_ID_KEYWORD} ${uuid}</internal-ids>`;
+  }
+
+  private getParagraphWrapStart(uuid) {
+    return `<div class="paragraph-wrap ${uuid}">`;
+  }
+
+  private getParagraphWrapEnd() {
+    return `</div>`;
   }
 
 }
