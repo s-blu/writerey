@@ -7,12 +7,17 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
-basePath = '_writerey_data/'
+basePath = '_writerey_data/'  # FIXME change me back to _writerey_data/
 
 
 class Documents(Resource):
     def get(self, doc_name):
-        return 'Documents get is not implemented yet'
+        path = request.args.get('doc_path')
+        print('PAAAATH MAAAAN : ' + path, doc_name)
+        f = open(basePath + path + doc_name, encoding='utf-8')
+        content = f.read()
+        print(content)
+        return content
 
     def put(self, doc_name):
         if request.form['doc_path']:
@@ -23,7 +28,7 @@ class Documents(Resource):
         else:
             pathToSaveTo = basePath
         # TODO sanitize filename
-        filePath = pathToSaveTo + doc_name + '_file.html'
+        filePath = pathToSaveTo + doc_name
         # TODO check if this is available
         f = request.files['file']
         f.save(filePath)

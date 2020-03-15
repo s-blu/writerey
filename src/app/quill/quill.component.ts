@@ -1,6 +1,6 @@
 import { DocumentService } from './../document.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { catchError, debounceTime } from 'rxjs/operators';
 import { throwError, from, Observable } from 'rxjs';
 import { CompileTemplateMetadata } from '@angular/compiler';
@@ -11,7 +11,11 @@ import { CompileTemplateMetadata } from '@angular/compiler';
   templateUrl: './quill.component.html',
   styleUrls: ['./quill.component.scss']
 })
-export class QuillComponent implements OnInit {
+export class QuillComponent {
+  @Input() content = 'elo';
+
+  @Output() contentChange: EventEmitter<any> = new EventEmitter();
+
   modules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
@@ -29,21 +33,7 @@ export class QuillComponent implements OnInit {
     'font-size': '16px'
   };
 
-  constructor(
-    private documentService: DocumentService
-  ) { }
-
-  ngOnInit(): void {
-  }
-
-  changedEditor(event) {
-    console.log('changed editor');
-    console.log(event);
-
-
-    // FIXME debounce trigger of save 
-    const docName = 'still_a_dummy';
-
-    this.documentService.saveDocument('', docName, event.html);
+  onContentChange(event) {
+    this.contentChange.emit(event);
   }
 }

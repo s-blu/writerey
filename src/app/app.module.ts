@@ -5,19 +5,26 @@ import { QuillComponent } from './quill/quill.component';
 import { QuillModule } from 'ngx-quill';
 import { SimplebarAngularModule } from 'simplebar-angular';
 import { HttpClientModule } from '@angular/common/http';
+import { DocumentEditorComponent } from './document-editor/document-editor.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    QuillComponent
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    SimplebarAngularModule,
-    QuillModule.forRoot()
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      QuillComponent,
+      DocumentEditorComponent
+   ],
+   imports: [
+      BrowserModule,
+      QuillModule.forRoot(),
+      HttpClientModule,
+      SimplebarAngularModule,
+      FormsModule,
+      ReactiveFormsModule
+   ],
+   providers: [],
+   bootstrap: [
+      AppComponent
+   ]
 })
 export class AppModule { }
