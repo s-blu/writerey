@@ -7,12 +7,15 @@ import { SimplebarAngularModule } from 'simplebar-angular';
 import { HttpClientModule } from '@angular/common/http';
 import { DocumentEditorComponent } from './document-editor/document-editor.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { CkeditorComponent } from './ckeditor/ckeditor.component';
 
 @NgModule({
    declarations: [
       AppComponent,
       QuillComponent,
-      DocumentEditorComponent
+      DocumentEditorComponent,
+      CkeditorComponent
    ],
    imports: [
       BrowserModule,
@@ -20,7 +23,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
       HttpClientModule,
       SimplebarAngularModule,
       FormsModule,
-      ReactiveFormsModule
+      ReactiveFormsModule,
+      CKEditorModule
    ],
    providers: [],
    bootstrap: [

@@ -13,10 +13,9 @@ basePath = '_writerey_data/'  # FIXME change me back to _writerey_data/
 class Documents(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
-        print('PAAAATH MAAAAN : ' + path, doc_name)
+        # TODO: error handling if file is not available/openable
         f = open(basePath + path + doc_name, encoding='utf-8')
         content = f.read()
-        print(content)
         return content
 
     def put(self, doc_name):
