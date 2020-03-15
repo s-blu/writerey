@@ -15,11 +15,8 @@ export class DocumentService {
   ) { }
 
   getDocument(path: string, name: string): Observable<Object> {
-    const httpHeaders = new HttpHeaders();
-    httpHeaders.append('Content-Type', 'multipart/form-data');
-    httpHeaders.append('http_doc_path', path);
 
-    return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`, { headers: httpHeaders })
+    return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`)
       .pipe(catchError((err) => this.handleError(err)));
   }
 

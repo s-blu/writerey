@@ -34,7 +34,7 @@ export class CkeditorComponent implements OnInit {
 
   over(event) {
     console.log('OVER AND OUT', event, event.srcElement.parentNode.classList)
-    this.hover.emit(`BOI YOURE HOVERING ${event.srcElement.parentNode.classList[1]}`);
+    this.hover.emit(event.srcElement.parentNode.classList[1]);
   }
 
 }

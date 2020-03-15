@@ -12,4 +12,8 @@ export class ApiService {
     return docName ? `${this.serverAdress}/doc/${docName}` : `${this.serverAdress}/doc`;
   }
 
+  getParagraphRoute(docName) {
+    return docName ? `${this.serverAdress}/p/${docName}` : `${this.serverAdress}/p`;
+  }
+
 }
