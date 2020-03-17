@@ -1,8 +1,8 @@
-import { ApiService } from './../api.service';
+import { ApiService } from '../services/api.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { ParagraphService } from './../paragraph.service';
+import { ParagraphService } from '../services/paragraph.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { DocumentService } from '../document.service';
+import { DocumentService } from '../services/document.service';
 import { DocumentDefinition } from '../interfaces/DocumentDefinition';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { catchError } from 'rxjs/operators';
@@ -55,6 +55,7 @@ export class DocumentEditorComponent implements OnInit {
     }
     console.log('enhancedContent')
     console.log(enhancedContent)
+    this.content = enhancedContent;
     this.documentService.saveDocument(this.docDef.path, this.docDef.name, enhancedContent);
   }
 
@@ -80,6 +81,8 @@ export class DocumentEditorComponent implements OnInit {
       .subscribe((res) => this.paragraphMeta = res);
   }
 
+   // TODO extract pargraph stuff to service and own component
+   // TODO check if you can simply remove the whole <internal-id> stuff and just work with the divs
 
   private handleError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
