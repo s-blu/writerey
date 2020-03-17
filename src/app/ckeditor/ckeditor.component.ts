@@ -8,37 +8,34 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./ckeditor.component.scss']
 })
 export class CkeditorComponent implements OnInit {
+  // FIXME ckeditor itself needs a wrapped value, i.e. { content: string }
   @Input() content: string;
 
   @Output() contentChange: EventEmitter<any> = new EventEmitter();
   @Output() hover: EventEmitter<any> = new EventEmitter();
 
   public Editor = ClassicEditor;
-  config = {
+  public config = {
     toolbar: ['heading', '|', 'bold', 'italic', '|', 'numberedList', 'bulletedList',
       '|', 'blockQuote', 'indent', 'outdent', '|', 'undo', 'redo'],
-    extraPlugins: [allowElementPluginBuilder('internal-ids'), allowElementPluginBuilder('div')]
+    extraPlugins: [allowElementPluginBuilder('div')]
   };
+  public contentWrap;
 
   constructor() { }
 
   ngOnInit() {
-
+    this.contentWrap = { content: this.content }
   }
 
   onChange(event) {
-    console.log('ssss', event)
-    console.log(event.editor.getData())
     this.contentChange.emit(event);
   }
 
   over(event) {
-    console.log('OVER AND OUT', event, event.srcElement.parentNode.classList)
-    this.hover.emit(event.srcElement.parentNode.classList[1]);
+    this.hover.emit(event?.srcElement?.parentNode?.classList[2]);
   }
-
 }
-
 
 function allowElementPluginBuilder(tagName: string) {
 
@@ -75,8 +72,8 @@ function allowElementPluginBuilder(tagName: string) {
     // Note that a lower-level, event-based API is used here.
     editor.conversion.for('downcast').add(dispatcher => {
       dispatcher.on('attribute', (evt, data, conversionApi) => {
-        // Convert <internal-ids> attributes only.
-        if (data.item.name != tagName) {
+        // Convert <tagName> attributes only.
+        if (data.item.name !== tagName) {
           return;
         }
 
@@ -93,5 +90,5 @@ function allowElementPluginBuilder(tagName: string) {
         }
       });
     });
-  }
+  };
 }

@@ -1,6 +1,6 @@
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -14,7 +14,7 @@ export class DocumentService {
     private httpClient: HttpClient
   ) { }
 
-  getDocument(path: string, name: string): Observable<Object> {
+  getDocument(path: string, name: string): Observable<any> {
 
     return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`)
       .pipe(catchError((err) => this.api.handleHttpError(err)));
@@ -33,6 +33,6 @@ export class DocumentService {
 
     this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
       .pipe(catchError(err => this.api.handleHttpError(err)))
-      .subscribe(res => console.log('i put', res));
+      .subscribe(res => console.log('saveDocument', res));
   }
 }

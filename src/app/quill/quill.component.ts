@@ -6,6 +6,7 @@ import { throwError, from, Observable } from 'rxjs';
 import { CompileTemplateMetadata } from '@angular/compiler';
 import { QuillEditorComponent } from 'ngx-quill';
 
+// FIXME if we wont use Quill anymore, remove the component
 
 @Component({
   selector: 'wy-quill',
