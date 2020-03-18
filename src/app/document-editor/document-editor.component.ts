@@ -13,7 +13,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 })
 export class DocumentEditorComponent implements OnInit {
   @Input() docDef: DocumentDefinition;
-  content: string;
+  contentWrap = { content: '' };
   paragraph;
 
   constructor(
@@ -23,7 +23,8 @@ export class DocumentEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.getDocument(this.docDef.path, this.docDef.name).subscribe((res) => {
-      this.content = res;
+      //console.log('res', res)
+      this.contentWrap.content = res;
     });
   }
 
@@ -35,16 +36,8 @@ export class DocumentEditorComponent implements OnInit {
 
   onContentChange(event) {
     // FIXME debounce trigger of save
-    let enhancedContent = '';
     const htmlContent = event.editor.getData();
-    const paragraphs = htmlContent.split(/<p>&nbsp;<\/p>/);
-
-    for (let p of paragraphs) {
-      // TODO prevent the prefixing from <p>&nbsp;</p> on the first paragraph
-      if (p === '') continue;
-      p = this.paragraphService.addParagraphIdentifierIfMissing(p);
-      enhancedContent += `<p>&nbsp;</p>\n${p}\n`;
-    }
+    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(htmlContent);
 
     this.documentService.saveDocument(this.docDef.path, this.docDef.name, enhancedContent);
   }

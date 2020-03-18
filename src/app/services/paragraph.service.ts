@@ -10,20 +10,39 @@ import { Observable } from 'rxjs';
 })
 export class ParagraphService {
   private UUID_V4_REGEX_STR = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
-  private P_ID_REGEX = RegExp(`<div class="${this.UUID_V4_REGEX_STR}`);
+  private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
+  private PARAGRAPH_DELIMITER = `<p>&nbsp;</p>`;
+  private PARAGRAPH_DELIMITER_REGEX = RegExp(`<p>&nbsp;</p>`);
 
   constructor(
     private api: ApiService,
     private httpClient: HttpClient
   ) { }
 
+  enhanceDocumentWithParagraphIds(document: string) {
+    // FIXME debounce trigger of save
+    let enhancedDocument = '';
+    const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
+
+    console.log('splitted up document', paragraphs)
+    for (let p of paragraphs) {
+      // TODO prevent the prefixing from <p>&nbsp;</p> on the first paragraph
+      if (p === '') continue;
+      p = this.addParagraphIdentifierIfMissing(p);
+      enhancedDocument += `${this.PARAGRAPH_DELIMITER}\n${p}\n`;
+    }
+
+    return enhancedDocument;
+  }
+
   addParagraphIdentifierIfMissing(p) {
     if (p && p !== '' && !this.P_ID_REGEX.test(p)) {
-      const id = uuid.v4();
+      //console.log('needs enhancing', p)
+      const pTagWithId = this.getParagraphTagWithIdentifier(uuid.v4());
+      const enhancedP = p.replace('<p>', pTagWithId);
+      //console.log('FINISHED', enhancedP);
 
-      console.log('=========================');
-      console.log('paragraph has no identifier, adding', p);
-      return `${this.getParagraphWrapStart(id)}${p}${this.getParagraphWrapEnd()} `;
+      return enhancedP;
     }
 
     return p;
@@ -48,14 +67,7 @@ export class ParagraphService {
       .pipe(catchError((err) => this.api.handleHttpError(err)));
   }
 
-  private getParagraphWrapStart(uuid) {
-    return `<div class="${uuid} paragraph-wrap">`;
+  private getParagraphTagWithIdentifier(uuid: string) {
+    return `<p class="${uuid}">`;
   }
-
-  private getParagraphWrapEnd() {
-    return `</div>`;
-  }
-
-
-
 }
