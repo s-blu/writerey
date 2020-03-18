@@ -23,7 +23,6 @@ export class DocumentEditorComponent implements OnInit {
 
   ngOnInit(): void {
     this.documentService.getDocument(this.docDef.path, this.docDef.name).subscribe((res) => {
-      //console.log('res', res)
       this.contentWrap.content = res;
     });
   }
@@ -31,7 +30,9 @@ export class DocumentEditorComponent implements OnInit {
   hover(event) {
     // TODO create a component to show information beside the paragraph and feed it here with data, i.e. the pargraph id
     this.paragraph = event;
-    this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph);
+    this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'test for ' + this.paragraph)
+    this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph)
+    .subscribe((res) => console.log('hover paragraph', res))
   }
 
   onContentChange(event) {

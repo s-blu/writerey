@@ -25,6 +25,8 @@ export class ParagraphService {
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
 
     console.log('splitted up document', paragraphs)
+    // FIXME every p needs its own id ........ or all p's of one block need the class prop
+    // TODO do not write an idea on DELIMITER
     for (let p of paragraphs) {
       // TODO prevent the prefixing from <p>&nbsp;</p> on the first paragraph
       if (p === '') continue;
@@ -37,10 +39,10 @@ export class ParagraphService {
 
   addParagraphIdentifierIfMissing(p) {
     if (p && p !== '' && !this.P_ID_REGEX.test(p)) {
-      //console.log('needs enhancing', p)
+      console.log('needs enhancing', p)
       const pTagWithId = this.getParagraphTagWithIdentifier(uuid.v4());
-      const enhancedP = p.replace('<p>', pTagWithId);
-      //console.log('FINISHED', enhancedP);
+      const enhancedP = p.replace(/\<p\>/g, pTagWithId);
+      console.log('--------->', enhancedP);
 
       return enhancedP;
     }
