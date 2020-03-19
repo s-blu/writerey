@@ -9,13 +9,26 @@ import { DocumentEditorComponent } from './document-editor/document-editor.compo
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { CkeditorComponent } from './ckeditor/ckeditor.component';
+import { TopbarComponent } from './topbar/topbar.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconModule } from '@angular/material/icon';
+import {MatButtonModule} from '@angular/material/button'; 
+import { ExplorerComponent } from './explorer/explorer.component';
+import { NotesComponent } from './notes/notes.component';
+import { NoteComponent } from './note/note.component';
+
+//const MaterialModules = [MatIconModule];
 
 @NgModule({
    declarations: [
       AppComponent,
       QuillComponent,
       DocumentEditorComponent,
-      CkeditorComponent
+      CkeditorComponent,
+      TopbarComponent,
+      ExplorerComponent,
+      NotesComponent,
+      NoteComponent
    ],
    imports: [
       BrowserModule,
@@ -24,7 +37,10 @@ import { CkeditorComponent } from './ckeditor/ckeditor.component';
       SimplebarAngularModule,
       FormsModule,
       ReactiveFormsModule,
-      CKEditorModule
+      CKEditorModule,
+      BrowserAnimationsModule,
+      MatIconModule,
+      MatButtonModule
    ],
    providers: [],
    bootstrap: [

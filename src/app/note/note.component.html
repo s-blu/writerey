@@ -1,0 +1,9 @@
+<div class="note" [style]="noteStyles">
+  <div class="meta">
+    <mat-icon *ngIf="typeIcon">{{typeIcon}}</mat-icon>
+    <span class="context">{{note.context}}</span>
+  </div>
+  <div class="text">
+    {{note.text}}
+  </div>
+</div>

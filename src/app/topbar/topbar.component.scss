@@ -1,0 +1,15 @@
+.topbar {
+    height: 60px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #DDDDDD;
+    font-size: 14pt;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0 1em;
+
+    .left > *, .center > *, .right > * {
+        margin: 10px;
+    }
+}

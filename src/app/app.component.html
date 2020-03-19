@@ -1,47 +1,17 @@
 <div class="app">
-  <div class="explorer">
-    <a (click)="dummyFn()">DummyDummy</a>
-    <div class="category">
-      <span class="category-name">Characters</span>
-    </div>
-    <div class="category">
-      <span class="category-name">World</span>
-    </div>
-    <div class="category">
-      <span class="category-name">Magical System</span>
-    </div>
-    <div class="category open">
-      <span class="category-name">Story</span>
-      <div class="category-children">
-        <div class="category">
-          <span class="category-name">Subcategory</span>
+  <wy-topbar></wy-topbar>
+  <div class="main">
+    <wy-explorer></wy-explorer>
+    <div class="editor">
+      <ngx-simplebar>
+        <div class="edit-area">
+          <div class="document-area">
+            <wy-document-editor [docDef]="{path: 'dummy/path/', name: 'DummyFile.html'}"></wy-document-editor>
+          </div>
         </div>
-        <div class="document">Chapter 1</div>
-        <div class="document">Chapter 2</div>
-        <div class="document">Chapter 2 (first draft)</div>
-        <div class="document">Chapter 3</div>
-      </div>
+      </ngx-simplebar>
     </div>
+    <wy-notes></wy-notes>
   </div>
 
-  <div class="editor">
-    <ngx-simplebar>
-      <div class="edit-area">
-        <div class="document-area">
-          <wy-document-editor [docDef]="{path: 'dummy/path/', name: 'DummyFile.html'}"></wy-document-editor>
-        </div>
-      </div>
-    </ngx-simplebar>
-  </div>
-  <div class="notes">
-
-    <div class="context-sensitive">
-      <div *ngFor="let c of [0,1,2,3,4,5,6,7,8]" class="note">This is a context sensitive note {{c}}</div>
-    </div>
-
-
-    <div class="general">
-      <div *ngFor="let c of [0,1,2,3,4]" class="note">This is a general note {{c}}</div>
-    </div>
-  </div>
 </div>

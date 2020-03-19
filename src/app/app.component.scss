@@ -1,7 +1,14 @@
 .app {
     box-sizing: border-box;
     display: flex;
+    flex-direction: column;
     word-wrap: break-word;
+    font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+}
+
+.main {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
 }
 
 .editor {
@@ -23,46 +30,6 @@
 .document-area {
     width: 640px;
     overflow-wrap: break-word;
-}
-
-.explorer, .notes {
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 1em;
-    min-width: 300px;
-    display: none;
-}
-
-.notes {
-    box-sizing: border-box;
-    
-    & > div {
-        height: 50%;
-        overflow-y: scroll;
-    }
-}
-
-
-.note {
-    padding: 1em;
-    min-height: 50px;
-    border: 1px solid #ccc;
-    margin-bottom: 0.5em;
-}
-
-.explorer {
-    .category-children {
-        padding-left: 1em;
-    }
-    .category-name::before {
-        content: '> '
-    }
-    .open > .category-name::before {
-        content: 'v '
-    }
-    .document, .category-name {
-        display: block;
-        padding: 0.5em;
-    }
 }
 
 ngx-simplebar {
