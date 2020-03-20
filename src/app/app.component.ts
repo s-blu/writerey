@@ -1,5 +1,8 @@
+import { ParagraphService } from './services/paragraph.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { DocumentDefinition } from './interfaces/DocumentDefinition';
+import { Note } from './interfaces/note.interface';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +11,23 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'writerey';
+  document: DocumentDefinition = { path: 'dummy/path/', name: 'DummyFile.html' };
+  notes: Array<Note>;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private paragraphService: ParagraphService
   ) { }
-  dummyFn() {
-    this.http.post('http://127.0.0.1:5000/', {ulul: 'alal'})
-      .subscribe(arg => console.log('dizasgidzasd', arg));
+
+
+  onHover(event) {
+    this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event).subscribe(res => {
+      console.log(res);
+      try {
+        this.notes = JSON.parse(res);
+      } catch (err) {
+        console.log('setting notes failed', err)
+      }
+    });
   }
 }

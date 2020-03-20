@@ -30,7 +30,6 @@ export class CkeditorComponent implements OnInit {
   ngOnInit() { }
 
   onChange(event) {
-    console.log('on change', event.editor.getData())
     this.contentChange.emit(event);
   }
 

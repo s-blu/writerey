@@ -6,12 +6,11 @@
       <ngx-simplebar>
         <div class="edit-area">
           <div class="document-area">
-            <wy-document-editor [docDef]="{path: 'dummy/path/', name: 'DummyFile.html'}"></wy-document-editor>
+            <wy-document-editor [docDef]="document" (hover)="onHover($event)"></wy-document-editor>
           </div>
         </div>
       </ngx-simplebar>
     </div>
-    <wy-notes></wy-notes>
+    <wy-notes [notes]="notes"></wy-notes>
   </div>
-
 </div>

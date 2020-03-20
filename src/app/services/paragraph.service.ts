@@ -9,10 +9,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ParagraphService {
-  private UUID_V4_REGEX_STR = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
+  public UUID_V4_REGEX_STR = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
   private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
   private PARAGRAPH_DELIMITER = `<p>&nbsp;</p>`;
-  private PARAGRAPH_DELIMITER_REGEX = RegExp(`<p>&nbsp;</p>`);
+  private PARAGRAPH_DELIMITER_REGEX = RegExp(this.PARAGRAPH_DELIMITER);
 
   constructor(
     private api: ApiService,
@@ -20,29 +20,24 @@ export class ParagraphService {
   ) { }
 
   enhanceDocumentWithParagraphIds(document: string) {
-    // FIXME debounce trigger of save
     let enhancedDocument = '';
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
 
-    console.log('splitted up document', paragraphs)
-    // FIXME every p needs its own id ........ or all p's of one block need the class prop
-    // TODO do not write an idea on DELIMITER
-    for (let p of paragraphs) {
-      // TODO prevent the prefixing from <p>&nbsp;</p> on the first paragraph
-      if (p === '') continue;
+    paragraphs.forEach((p, i) => {
+      if (p === '') return;
+      const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
       p = this.addParagraphIdentifierIfMissing(p);
-      enhancedDocument += `${this.PARAGRAPH_DELIMITER}\n${p}\n`;
-    }
+      enhancedDocument += `${prefix}${p}\n`;
+    });
 
     return enhancedDocument;
   }
 
   addParagraphIdentifierIfMissing(p) {
     if (p && p !== '' && !this.P_ID_REGEX.test(p)) {
-      console.log('needs enhancing', p)
       const pTagWithId = this.getParagraphTagWithIdentifier(uuid.v4());
-      const enhancedP = p.replace(/\<p\>/g, pTagWithId);
-      console.log('--------->', enhancedP);
+      const pDelimiterWoOpeningTag = this.PARAGRAPH_DELIMITER.replace('<p>', '');
+      const enhancedP = p.replace(RegExp(`<p>(?!${pDelimiterWoOpeningTag})`, 'g'), pTagWithId);
 
       return enhancedP;
     }
@@ -54,7 +49,7 @@ export class ParagraphService {
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
     formdata.append('p_id', paragraphId);
-    formdata.append('content', meta);
+    formdata.append('content', JSON.stringify(meta));
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
