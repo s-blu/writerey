@@ -1,5 +1,35 @@
 .explorer {
-    border-right: 1px solid #DDDDDD;
+    //border-right: 1px solid #DDDDDD;
     box-sizing: border-box;
     height: 100%;
+    padding: 1em;
+
+    .category {
+        padding-right: 0;
+        padding: 3px 1em;
+
+        .document {
+            padding-left: 1em;
+        }
+
+        .mat-icon {
+            font-size: 14pt;
+            vertical-align: text-top;
+            width: 12px;
+            height: 12px;
+            margin-right: 5px;
+        }
+    }
+
+    .document {
+        display:block;
+        &.active {
+            font-weight: bold;
+        }
+        i {
+            font-size: 10pt;
+            margin-right: 3px;
+            text-align: center;
+        }
+    }
 }

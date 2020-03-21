@@ -16,3 +16,8 @@
     padding-left: 3px;
 }
 
+::ng-deep .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused) {
+    border-right: 0 white;
+    border-left: 0 white;
+    border-bottom: 0 white;
+}

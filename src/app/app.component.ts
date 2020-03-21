@@ -22,7 +22,6 @@ export class AppComponent {
 
   onHover(event) {
     this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event).subscribe(res => {
-      console.log(res);
       try {
         this.notes = JSON.parse(res);
       } catch (err) {

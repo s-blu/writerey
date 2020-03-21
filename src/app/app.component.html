@@ -1,13 +1,14 @@
 <div class="app">
   <wy-topbar></wy-topbar>
   <div class="main">
-    <wy-explorer></wy-explorer>
+    <div class="left">
+      <wy-explorer></wy-explorer>
+      <wy-document-marks></wy-document-marks>
+    </div>
     <div class="editor">
       <ngx-simplebar>
-        <div class="edit-area">
-          <div class="document-area">
-            <wy-document-editor [docDef]="document" (hover)="onHover($event)"></wy-document-editor>
-          </div>
+        <div class="document-area">
+          <wy-document-editor [docDef]="document" (hover)="onHover($event)"></wy-document-editor>
         </div>
       </ngx-simplebar>
     </div>

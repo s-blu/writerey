@@ -12,10 +12,12 @@ import { CkeditorComponent } from './ckeditor/ckeditor.component';
 import { TopbarComponent } from './topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button'; 
+import { MatButtonModule } from '@angular/material/button';
 import { ExplorerComponent } from './explorer/explorer.component';
 import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './note/note.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { DocumentMarksComponent } from './document-marks/document-marks.component';
 
 //const MaterialModules = [MatIconModule];
 
@@ -28,7 +30,9 @@ import { NoteComponent } from './note/note.component';
       TopbarComponent,
       ExplorerComponent,
       NotesComponent,
-      NoteComponent
+      NoteComponent,
+      BreadcrumbComponent,
+      DocumentMarksComponent
    ],
    imports: [
       BrowserModule,

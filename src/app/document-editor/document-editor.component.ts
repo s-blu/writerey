@@ -32,12 +32,13 @@ export class DocumentEditorComponent implements OnInit {
   onHover(event) {
 
     const dummyData = []
-    for (let i = 0; i < 3; i++) {
+    const no = Math.random() * 10;
+    for (let i = 0; i < no; i++) {
       dummyData.push({
         type: 'info',
-        color: Math.random() > 0.5 ? '' : '#88ff84',
+        color: Math.random() > 0.7 ? Math.random() > 0.4 ? '#d2fbd6' : '#fbd2d2' : '',
         context: 'Paragraph',
-        text: Math.random() > 0.5 ? 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
+        text: Math.random() > 0.7 ? Math.random() > 0.3 ? 'consetetur sadipscing elitr' : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
           : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.'
       })
     }
