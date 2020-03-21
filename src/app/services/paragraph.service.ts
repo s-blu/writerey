@@ -2,8 +2,8 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
 import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { catchError, flatMap, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,8 @@ export class ParagraphService {
   private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
   private PARAGRAPH_DELIMITER = `<p>&nbsp;</p>`;
   private PARAGRAPH_DELIMITER_REGEX = RegExp(this.PARAGRAPH_DELIMITER);
+
+  paragraphMetaCache = {};
 
   constructor(
     private api: ApiService,
@@ -45,31 +47,77 @@ export class ParagraphService {
     return p;
   }
 
-  setParagraphMeta(docPath, docName, paragraphId, meta) {
+  setParagraphMeta(docPath, docName, paragraphId, metaType, metaContent) {
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
     formdata.append('p_id', paragraphId);
-    formdata.append('content', JSON.stringify(meta));
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    this.httpClient.put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders })
-      .pipe(catchError((err) => this.api.handleHttpError(err)))
-      .subscribe((res) => console.log('setParagraphMeta', res));
+    return new Observable(subscriber => {
+      this.getParagraphMeta(docPath, docName, paragraphId, metaType).subscribe((res) => {
+        const paragraphMeta = res || {};
+        paragraphMeta[metaType] = metaContent;
+        formdata.append('content', JSON.stringify(paragraphMeta));
+
+        this.httpClient.put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders })
+          .pipe(catchError((err) => this.api.handleHttpError(err)))
+          .subscribe((putRes: string) => {
+            try {
+              putRes = JSON.parse(putRes);
+              this.setCacheItem(docPath, docName, paragraphId, putRes);
+            } finally {
+              subscriber.next(putRes);
+              subscriber.complete();
+            }
+          });
+      });
+    });
   }
 
   getParagraphMeta(docPath, docName, paragraphId, metaType?): Observable<any> {
-    const params = {
-      'doc_path': docPath,
-      'p_id': paragraphId
+    const cachedMeta = this.getCacheItem(docPath, docName, paragraphId);
+    if (cachedMeta) {
+      return metaType ? of(cachedMeta[metaType]) : of(cachedMeta);
     }
-    if (metaType) params['meta_type'] = metaType;
+    const params = {
+      doc_path: docPath,
+      p_id: paragraphId
+    };
+
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params })
-      .pipe(catchError((err) => this.api.handleHttpError(err)));
+      .pipe(catchError((err) => this.api.handleHttpError(err)),
+        map((res: string) => {
+          if (metaType && res) {
+            try {
+              const data = JSON.parse(res);
+              this.setCacheItem(docPath, docName, paragraphId, data);
+              return data[metaType];
+            } catch {
+              return res;
+            }
+          } else {
+            return res;
+          }
+        })
+      );
   }
 
-  private getParagraphTagWithIdentifier(uuid: string) {
-    return `<p class="${uuid}">`;
+  private getParagraphTagWithIdentifier(id: string) {
+    return `<p class="${id}">`;
+  }
+
+  private getCacheItem(path, name, paragraphId) {
+    return this.paragraphMetaCache[this._getCacheItemKey(path, name, paragraphId)];
+  }
+
+  private setCacheItem(path, name, paragraphId, content) {
+    this.paragraphMetaCache[this._getCacheItemKey(path, name, paragraphId)] = content;
+  }
+
+  private _getCacheItemKey(path, name, paragraphId) {
+    const sanitizedPath = path.replace(/[\/\\]/g, '_');
+    return `${sanitizedPath}__${name}__${paragraphId}`;
   }
 }

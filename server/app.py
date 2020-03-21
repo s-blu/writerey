@@ -66,7 +66,7 @@ class ParagraphMeta(Resource):
         f.write(content)
         f.close()
 
-        return 'Paragraph Meta saved to ' + filePath
+        return content
 
 
 api.add_resource(Documents, '/doc/<string:doc_name>')

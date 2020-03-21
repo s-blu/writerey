@@ -20,5 +20,4 @@ export class NoteComponent implements OnInit {
       this.noteStyles = 'background-color:' + this.note.color;
     }
   }
-
 }

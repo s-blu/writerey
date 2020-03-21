@@ -21,11 +21,12 @@ export class AppComponent {
 
 
   onHover(event) {
-    this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event).subscribe(res => {
+    this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event, 'notes').subscribe(res => {
       try {
-        this.notes = JSON.parse(res);
+        console.log('on hover app', res)
+        this.notes = res;
       } catch (err) {
-        console.log('setting notes failed', err)
+        console.log('getting notes failed', err)
       }
     });
   }

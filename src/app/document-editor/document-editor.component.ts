@@ -1,3 +1,4 @@
+import { debounceTime } from 'rxjs/operators';
 import { ApiService } from '../services/api.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ParagraphService } from '../services/paragraph.service';
@@ -50,9 +51,10 @@ export class DocumentEditorComponent implements OnInit {
       this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph)
         .subscribe((res) => {
           if (res === '') {
-            this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, dummyData);
+            this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'notes', dummyData)
+              .subscribe((res2) => console.log('setPar called', res2));
           }
-          this.hover.emit(event)
+          this.hover.emit(event);
         });
     }
   }

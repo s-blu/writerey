@@ -1,4 +1,4 @@
-.main, .left, .editor, wy-notes, .document-scroll, .document-area  {
+.main, .left, .editor, .notes, .scroll, .document-area  {
     box-sizing: border-box;
     height: 100%;
 }
@@ -12,6 +12,7 @@
 .main {
     display: grid;
     grid-template-columns: 1fr 750px 1fr;
+    
 
     .left {
         display: flex;
@@ -19,9 +20,19 @@
     }
 }
 
+.main > * {
+     // FIXME get the editor to take the height of the browser window and not more
+     // this currently breaks position: sticky behaviour
+    max-height: calc(100vh - 50px);
+}
+
+::ng-deep .scroll .simplebar-scrollbar::before {
+    background: #7a8188 !important;
+}
+
 .editor {
     padding: 1em;
-    max-height: calc(100vh - 50px); // FIXME get the editor to take the height of the browser window and not more
+     
     .document-area {
         padding: 1em;
     }
