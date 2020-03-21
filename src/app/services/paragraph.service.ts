@@ -1,7 +1,7 @@
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -59,8 +59,13 @@ export class ParagraphService {
       .subscribe((res) => console.log('setParagraphMeta', res));
   }
 
-  getParagraphMeta(docPath, docName, paragraphId): Observable<any> {
-    return this.httpClient.get(this.api.getParagraphRoute(docName) + `?doc_path=${docPath}&p_id=${paragraphId}`)
+  getParagraphMeta(docPath, docName, paragraphId, metaType?): Observable<any> {
+    const params = {
+      'doc_path': docPath,
+      'p_id': paragraphId
+    }
+    if (metaType) params['meta_type'] = metaType;
+    return this.httpClient.get(this.api.getParagraphRoute(docName), { params })
       .pipe(catchError((err) => this.api.handleHttpError(err)));
   }
 

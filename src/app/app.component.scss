@@ -1,5 +1,9 @@
-.app {
+.main, .left, .editor, wy-notes, .document-scroll, .document-area  {
     box-sizing: border-box;
+    height: 100%;
+}
+
+.app {
     display: flex;
     flex-direction: column;
     word-wrap: break-word;
@@ -16,18 +20,10 @@
 }
 
 .editor {
-    box-sizing: border-box;
     padding: 1em;
-    flex-grow: 2;
-    height: 100%;
-
+    max-height: calc(100vh - 50px); // FIXME get the editor to take the height of the browser window and not more
     .document-area {
-        box-sizing: border-box;
-        display: flex;
         padding: 1em;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
     }
 }
 

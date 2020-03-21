@@ -1,5 +1,5 @@
 <div class="document-editor">
-    <wy-breadcrumb></wy-breadcrumb>
+    <wy-breadcrumb [docDef]="docDef"></wy-breadcrumb>
     <wy-ckeditor (contentChange)="onContentChange($event)" (hover)="onHover($event)" [(content)]="contentWrap">
     </wy-ckeditor>
 </div>

@@ -2,5 +2,11 @@
     width: 640px;
     overflow-wrap: break-word;
 
-
+    wy-breadcrumb {
+        position: sticky;
+    }
+    * {
+        box-sizing: border-box;
+        height: 500px;
+    }
 }
