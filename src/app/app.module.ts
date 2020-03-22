@@ -19,6 +19,7 @@ import { NoteComponent } from './components/note/note.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 //const MaterialModules = [MatIconModule];
 
@@ -46,7 +47,8 @@ import { FooterComponent } from './components/footer/footer.component';
       CKEditorModule,
       BrowserAnimationsModule,
       MatIconModule,
-      MatButtonModule
+      MatButtonModule,
+      TranslocoRootModule
    ],
    providers: [],
    bootstrap: [
