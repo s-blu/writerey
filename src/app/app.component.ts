@@ -24,7 +24,9 @@ export class AppComponent {
     this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event, 'notes').subscribe(res => {
       try {
         console.log('on hover app', res)
-        this.notes = res;
+        if (res && res.length) {
+          this.notes = res;
+        }
       } catch (err) {
         console.log('getting notes failed', err)
       }

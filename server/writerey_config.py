@@ -1,2 +1,2 @@
 basePath = '_writerey_data/'
-metaSubPath = '/_writerey_meta/'
+metaSubPath = '_writerey_meta'

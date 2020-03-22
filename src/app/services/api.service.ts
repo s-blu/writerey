@@ -18,6 +18,11 @@ export class ApiService {
     return docName ? `${this.serverAdress}/p/${docName}` : `${this.serverAdress}/p`;
   }
 
+  getDirectoryRoute(dirName?: string) {
+    return dirName ? `${this.serverAdress}/dir/${dirName}` : `${this.serverAdress}/dir`;
+  }
+
+
   handleHttpError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
@@ -25,7 +30,7 @@ export class ApiService {
     } else {
       // The backend returned an unsuccessful response code.
       // The response body may contain clues as to what went wrong,
-      console.error( `Backend returned code ${error.status}, body was: ${error.error}`);
+      console.error(`Backend returned code ${error.status}, body was: ${error.error}`);
     }
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');

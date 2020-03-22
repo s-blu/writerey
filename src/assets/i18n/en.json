@@ -1,6 +1,9 @@
 {
     "topbar": {
         "newfile": "Create a new file",
-        "test": "owuewqe"
+        "newcategory": "Create a new category",
+        "snapshot": "Create Snapshot",
+        "tag": "Tag last snapshot",
+        "history": "Show snapshot history"
     }
 }

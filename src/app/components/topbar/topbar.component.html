@@ -1,8 +1,11 @@
 <div class="topbar" *transloco="let t;read: 'topbar'">
-  {{t('newfile')}}
   <div class="left">
-    <i class="material-icons-outlined">insert_drive_file</i>
-    <i class="material-icons-outlined">create_new_folder</i>
+    <button mat-icon-button [matTooltip]="t('newfile')" (click)="createNewFile()">
+      <i class="material-icons-outlined">insert_drive_file</i>
+    </button>
+    <button mat-icon-button [matTooltip]="t('newcategory')">
+      <i class="material-icons-outlined">create_new_folder</i>
+    </button>
   </div>
   <div class="center">
     <button mat-button class="mode-switch">Read</button>
@@ -10,8 +13,14 @@
     <button mat-button class="mode-switch" (click)="review()">Review</button>
   </div>
   <div class="right">
-    <mat-icon>save_alt</mat-icon>
-    <mat-icon>bookmark_border</mat-icon>
-    <mat-icon>history</mat-icon>
+    <button mat-icon-button [matTooltip]="t('snapshot')">
+      <mat-icon>save_alt</mat-icon>
+    </button>
+    <button mat-icon-button [matTooltip]="t('tag')">
+      <mat-icon>bookmark_border</mat-icon>
+    </button>
+    <button mat-icon-button [matTooltip]="t('history')">
+      <mat-icon>history</mat-icon>
+    </button>
   </div>
 </div>
