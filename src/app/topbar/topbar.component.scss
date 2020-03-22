@@ -1,7 +1,9 @@
+@import '../variables';
+
 .topbar {
     height: 50px;
     box-sizing: border-box;
-    border-bottom: 1px solid #DDDDDD;
+    border-bottom: 1px solid $color_border;
     font-size: 14pt;
     display: flex;
     align-items: center;

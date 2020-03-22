@@ -18,6 +18,7 @@ import { NotesComponent } from './notes/notes.component';
 import { NoteComponent } from './note/note.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { DocumentMarksComponent } from './document-marks/document-marks.component';
+import { FooterComponent } from './footer/footer.component';
 
 //const MaterialModules = [MatIconModule];
 
@@ -32,7 +33,8 @@ import { DocumentMarksComponent } from './document-marks/document-marks.componen
       NotesComponent,
       NoteComponent,
       BreadcrumbComponent,
-      DocumentMarksComponent
+      DocumentMarksComponent,
+      FooterComponent
    ],
    imports: [
       BrowserModule,

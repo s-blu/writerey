@@ -1,0 +1,12 @@
+@import '../variables';
+
+.footer {
+    height: 30px;
+    border-top: 1px solid $color-border;
+    padding: 0 1em;
+    display: flex;
+    justify-content: space-between;
+
+    font-size: 10pt;
+    color: $color-font-hint;
+}
