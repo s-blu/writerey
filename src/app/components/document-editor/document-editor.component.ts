@@ -59,11 +59,11 @@ export class DocumentEditorComponent implements OnInit {
     }
   }
 
-  onContentChange(event) {
+  onBlur(event) {
+    console.log('document editor on blur')
     // FIXME debounce trigger of save
     const htmlContent = event.editor.getData();
-    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(htmlContent);
 
-    this.documentService.saveDocument(this.docDef.path, this.docDef.name, enhancedContent);
+    this.documentService.saveDocument(this.docDef.path, this.docDef.name, event.editor.getData());
   }
 }

@@ -1,8 +1,8 @@
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
-import { HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -11,8 +11,9 @@ import { Observable, of } from 'rxjs';
 export class ParagraphService {
   public UUID_V4_REGEX_STR = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
   private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
-  private PARAGRAPH_DELIMITER = `<p>&nbsp;</p>`;
-  private PARAGRAPH_DELIMITER_REGEX = RegExp(this.PARAGRAPH_DELIMITER);
+  private PARAGRAPH_DELIMITER_WO_OPENING = `&nbsp;</p>`;
+  private PARAGRAPH_DELIMITER = `<p>${this.PARAGRAPH_DELIMITER_WO_OPENING}`;
+  private PARAGRAPH_DELIMITER_REGEX = RegExp(`<p(?: class="${this.UUID_V4_REGEX_STR}")?>` + this.PARAGRAPH_DELIMITER_WO_OPENING);
 
   paragraphMetaCache = {};
 
@@ -23,28 +24,41 @@ export class ParagraphService {
 
   enhanceDocumentWithParagraphIds(document: string) {
     let enhancedDocument = '';
+    let previousUuid = '';
+    let currentUuidBeforeEnhance = '';
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
-
+    console.log('paragraphs', paragraphs)
     paragraphs.forEach((p, i) => {
       if (p === '') return;
       const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
-      p = this.addParagraphIdentifierIfMissing(p);
+      currentUuidBeforeEnhance = this._extractUuid(p);
+      p = this.upsertParagraphIdentifierIfNecessary(p, previousUuid);
+      previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
     });
 
     return enhancedDocument;
   }
 
-  addParagraphIdentifierIfMissing(p) {
-    if (p && p !== '' && !this.P_ID_REGEX.test(p)) {
-      const pTagWithId = this.getParagraphTagWithIdentifier(uuid.v4());
-      const pDelimiterWoOpeningTag = this.PARAGRAPH_DELIMITER.replace('<p>', '');
-      const enhancedP = p.replace(RegExp(`<p>(?!${pDelimiterWoOpeningTag})`, 'g'), pTagWithId);
+  upsertParagraphIdentifierIfNecessary(p, previousUuid) {
+    if (!p || p === '') return p;
 
+    const currentUuid = this._extractUuid(p);
+    console.log('prev, curr', previousUuid, currentUuid, _uuidsAreEqual(previousUuid, currentUuid));
+
+    if (_uuidsAreEqual(previousUuid, currentUuid) || !this.P_ID_REGEX.test(p)) {
+      const pTagWithId = this._getParagraphTagWithIdentifier(uuid.v4());
+      const enhancedP = p.replace(RegExp(`<p( class="${this.UUID_V4_REGEX_STR}")?>(?!${this.PARAGRAPH_DELIMITER_WO_OPENING})`, 'g'), pTagWithId);
+      console.log('enhanced p', enhancedP)
       return enhancedP;
     }
 
     return p;
+
+    function _uuidsAreEqual(prev, curr) {
+      if (prev === '' || curr === '') return false;
+      return prev === curr;
+    }
   }
 
   setParagraphMeta(docPath, docName, paragraphId, metaType, metaContent) {
@@ -104,10 +118,22 @@ export class ParagraphService {
       );
   }
 
-  private getParagraphTagWithIdentifier(id: string) {
+  private _getParagraphTagWithIdentifier(id: string) {
     return `<p class="${id}">`;
   }
 
+  private _extractUuid(p) {
+    let pUuid = '';
+    let uuidExec;
+    if (p && p !== '') {
+      uuidExec = RegExp(this.UUID_V4_REGEX_STR).exec(p);
+      if (uuidExec) pUuid = uuidExec[0];
+      console.log('uuid exec', pUuid);
+    }
+    return pUuid;
+  }
+
+  // TODO do this in an own service
   private getCacheItem(path, name, paragraphId) {
     return this.paragraphMetaCache[this._getCacheItemKey(path, name, paragraphId)];
   }

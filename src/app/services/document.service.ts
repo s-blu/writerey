@@ -1,3 +1,4 @@
+import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -11,7 +12,8 @@ export class DocumentService {
 
   constructor(
     private api: ApiService,
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private paragraphService: ParagraphService
   ) { }
 
   getDocument(path: string, name: string): Observable<any> {
@@ -21,7 +23,12 @@ export class DocumentService {
   }
 
   saveDocument(path: string, name: string, content) {
-    const blob = new Blob([content], { type: 'text/html' });
+    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
+    console.log('===========================')
+    console.log('CONTENT TO SAVE', enhancedContent)
+    console.log('===========================')
+
+    const blob = new Blob([enhancedContent], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
 
     const formdata = new FormData();
