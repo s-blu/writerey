@@ -44,12 +44,10 @@ export class ParagraphService {
     if (!p || p === '') return p;
 
     const currentUuid = this._extractUuid(p);
-    console.log('prev, curr', previousUuid, currentUuid, _uuidsAreEqual(previousUuid, currentUuid));
 
     if (_uuidsAreEqual(previousUuid, currentUuid) || !this.P_ID_REGEX.test(p)) {
       const pTagWithId = this._getParagraphTagWithIdentifier(uuid.v4());
       const enhancedP = p.replace(RegExp(`<p( class="${this.UUID_V4_REGEX_STR}")?>(?!${this.PARAGRAPH_DELIMITER_WO_OPENING})`, 'g'), pTagWithId);
-      console.log('enhanced p', enhancedP)
       return enhancedP;
     }
 

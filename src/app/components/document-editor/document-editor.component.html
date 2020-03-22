@@ -1,4 +1,4 @@
 <div class="document-editor">
-    <wy-ckeditor (contentChange)="onContentChange($event)" (hover)="onHover($event)" [(content)]="contentWrap">
+    <wy-ckeditor (editorBlur)="onBlur($event)" (hover)="onHover($event)" [(content)]="contentWrap">
     </wy-ckeditor>
 </div>
