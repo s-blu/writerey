@@ -10,6 +10,8 @@ import json
 class Directories(Resource):
     def get(self):
         directoryStructure = {
+            'name': '',
+            'dirs': [],
             'files': []
         }
         for (dirpath, dirnames, filenames) in os.walk(basePath):
@@ -28,26 +30,24 @@ class Directories(Resource):
                 walkToDir = directoryStructure
                 for pathStep in path:
                     print('next pathstep', pathStep)
-                    walkToDir = walkToDir[pathStep]
-                print('walkToDir...', walkToDir)
+                    walkToDir = next(
+                        (sub for sub in walkToDir['dirs'] if sub['name'] == pathStep), {})
                 currDir = walkToDir
-                # directoryStructure[dirpath] = currDir
-                print('updated dirStr', directoryStructure)
-                # print(currDir)
-                # print(directoryStructure)
 
             for f in filenames:
                 print('FILE :', f, os.path.join(dirpath, f))
-                currDir['files'].append(f)
+                currDir['files'].append({
+                    'name': f,
+                    'path': dirpath
+                })
             for d in dirnames:
                 print('DIRECTORY :', d, os.path.join(dirpath, d))
                 if d != metaSubPath:
-                    currDir[d] = {
+                    currDir['dirs'].append({
+                        'name': d,
+                        'dirs': [],
                         'files': []
-                    }
-
-            print('finished currDir', currDir)
-            print('dirStructure', directoryStructure)
+                    })
 
         return json.dumps(directoryStructure)  # directoryStructure
 

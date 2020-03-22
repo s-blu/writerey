@@ -25,6 +25,7 @@ export class DocumentEditorComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    // todo: update when docDef is updated
     this.documentService.getDocument(this.docDef.path, this.docDef.name).subscribe((res) => {
       this.contentWrap.content = res;
     });

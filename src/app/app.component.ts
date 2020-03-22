@@ -20,6 +20,11 @@ export class AppComponent {
   ) { }
 
 
+  changeDoc(event) {
+    console.log('ooommmgggg!!!');
+    this.document = event;
+  }
+
   onHover(event) {
     this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event, 'notes').subscribe(res => {
       try {

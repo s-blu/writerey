@@ -2,7 +2,7 @@
   <wy-topbar></wy-topbar>
   <div class="main">
     <div class="left">
-      <wy-explorer></wy-explorer>
+      <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
       <wy-document-marks></wy-document-marks>
     </div>
     <div class="editor">

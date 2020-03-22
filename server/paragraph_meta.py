@@ -24,10 +24,10 @@ class ParagraphMeta(Resource):
         if request.form['doc_path']:
             # TODO: Make sure this ends on a / and does not start with a /
             # TODO: Sanitize
-            pathToSaveTo = basePath + request.form['doc_path'] + metaSubPath
+            pathToSaveTo = basePath + request.form['doc_path'] + metaSubPath + '/'
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
-            pathToSaveTo = basePath + metaSubPath
+            pathToSaveTo = basePath + metaSubPath + '/'
         # TODO sanitize filename
         filePath = pathToSaveTo + doc_name + '_' + pId
         f = open(filePath, 'w')

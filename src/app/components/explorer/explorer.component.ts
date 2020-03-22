@@ -1,6 +1,7 @@
+import { DocumentDefinition } from './../../interfaces/DocumentDefinition';
 import { ApiService } from './../../services/api.service';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 
@@ -8,38 +9,20 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface FoodNode {
+interface IExplorerNode {
   name: string;
-  children?: FoodNode[];
 }
 
-const TREE_DATA: FoodNode[] = [
-  {
-    name: 'Fruit',
-    children: [
-      { name: 'Apple' },
-      { name: 'Banana' },
-      { name: 'Fruit loops' },
-    ]
-  }, {
-    name: 'Vegetables',
-    children: [
-      {
-        name: 'Green',
-        children: [
-          { name: 'Broccoli' },
-          { name: 'Brussels sprouts' },
-        ]
-      }, {
-        name: 'Orange',
-        children: [
-          { name: 'Pumpkins' },
-          { name: 'Carrots' },
-        ]
-      },
-    ]
-  },
-];
+interface DirectoryNode extends IExplorerNode {
+  dirs: DirectoryNode[];
+  files: FileNode[];
+}
+
+interface FileNode extends IExplorerNode {
+  path: string;
+}
+
+const TREE_DATA: DirectoryNode[] = [];
 
 /** Flat node with expandable and level information */
 interface ExampleFlatNode {
@@ -54,13 +37,13 @@ interface ExampleFlatNode {
   styleUrls: ['./explorer.component.scss']
 })
 export class ExplorerComponent implements OnInit {
-  tree = {}
+  @Output() docChanged: EventEmitter<DocumentDefinition> = new EventEmitter<DocumentDefinition>();
+  tree;
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(
-    node => node.level, node => node.expandable);
+  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
-    this._transformer, node => node.level, node => node.expandable, node => node.children);
+    this._transformer, node => node.level, node => node.expandable, node => [...node.dirs, ...node.files]);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -70,6 +53,7 @@ export class ExplorerComponent implements OnInit {
       console.log(res);
       try {
         this.tree = JSON.parse(res);
+        this.dataSource.data = this.tree.dirs;
       } finally {
         console.log(this.tree);
       }
@@ -80,14 +64,20 @@ export class ExplorerComponent implements OnInit {
     private httpClient: HttpClient,
     private api: ApiService
   ) {
-    this.dataSource.data = TREE_DATA;
+
+  }
+
+  openDocument(node) {
+    console.log('openDocument', node)
+    this.docChanged.emit({ name: node.name, path: node.path });
   }
 
   hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
 
-  private _transformer(node: FoodNode, level: number) {
+  private _transformer(node, level: number) {
     return {
-      expandable: !!node.children && node.children.length > 0,
+      expandable: node.dirs || node.files ? node.dirs.length > 0 || node.files.length > 0 : false,
+      path: node.path,
       name: node.name,
       level
     };
