@@ -1,0 +1,9 @@
+.document-editor {
+    width: 640px;
+    overflow-wrap: break-word;
+
+    * {
+        box-sizing: border-box;
+        height: 500px;
+    }
+}

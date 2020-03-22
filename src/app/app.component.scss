@@ -23,7 +23,7 @@
 .main > * {
      // FIXME get the editor to take the height of the browser window and not more
      // this currently breaks position: sticky behaviour
-    max-height: calc(100vh - 50px);
+    max-height: calc(100vh - 80px);
 }
 
 ::ng-deep .scroll .simplebar-scrollbar::before {

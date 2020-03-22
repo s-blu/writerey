@@ -1,10 +1,10 @@
 import { debounceTime } from 'rxjs/operators';
-import { ApiService } from '../services/api.service';
+import { ApiService } from '../../services/api.service';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { ParagraphService } from '../services/paragraph.service';
+import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { DocumentService } from '../services/document.service';
-import { DocumentDefinition } from '../interfaces/DocumentDefinition';
+import { DocumentService } from '../../services/document.service';
+import { DocumentDefinition } from '../../interfaces/DocumentDefinition';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({

@@ -1,4 +1,4 @@
-import { DocumentService } from '../services/document.service';
+import { DocumentService } from '../../services/document.service';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
