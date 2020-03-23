@@ -6,16 +6,12 @@
       <wy-document-marks></wy-document-marks>
     </div>
     <div class="editor">
-      <ngx-simplebar class='scroll'>
-        <div class="document-area">
-          <wy-document-editor [docDef]="document" (hover)="onHover($event)"></wy-document-editor>
-        </div>
-      </ngx-simplebar>
+      <div class="document-area">
+        <wy-document-editor [docDef]="document" (hover)="onHover($event)"></wy-document-editor>
+      </div>
     </div>
     <div class="notes">
-      <ngx-simplebar class='scroll'>
-        <wy-notes [notes]="notes"></wy-notes>
-      </ngx-simplebar>
+      <wy-notes [notes]="notes"></wy-notes>
     </div>
   </div>
   <wy-footer [docDef]="document"></wy-footer>

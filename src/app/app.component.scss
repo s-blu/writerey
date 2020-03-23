@@ -2,17 +2,19 @@
     box-sizing: border-box;
     height: 100%;
 }
-
+.notes {
+    overflow-y: scroll;
+}
 .app {
     display: flex;
     flex-direction: column;
     word-wrap: break-word;
+    overflow: hidden;
 }
 
 .main {
     display: grid;
     grid-template-columns: 1fr 750px 1fr;
-    
 
     .left {
         display: flex;
@@ -21,9 +23,8 @@
 }
 
 .main > * {
-     // FIXME get the editor to take the height of the browser window and not more
-     // this currently breaks position: sticky behaviour
-    max-height: calc(100vh - 80px);
+     // FIXME uh. this is not so cool. is there a beter solution?
+    height: calc(100vh - 80px);
 }
 
 ::ng-deep .scroll .simplebar-scrollbar::before {
@@ -31,10 +32,9 @@
 }
 
 .editor {
-    padding: 1em;
-     
     .document-area {
-        padding: 1em;
+        overflow-y: scroll;
+        padding: 2em;
     }
 }
 

@@ -49,7 +49,7 @@ export class DocumentEditorComponent implements OnInit {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
       this.paragraph = event;
 
-      this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph)
+      this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'notes')
         .subscribe((res) => {
           if (res === '') {
             this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'notes', dummyData)
