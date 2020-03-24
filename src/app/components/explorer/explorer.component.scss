@@ -2,7 +2,6 @@
     //border-right: 1px solid #DDDDDD;
     box-sizing: border-box;
     height: 100%;
-    padding: 1em;
 
     .explorer-btn {
         height: 24px;
@@ -13,7 +12,34 @@
             font-size: 12pt;
         }
     }
+
+    .file-btn {
+        width: 18px;
+
+        i {
+            font-size: 10pt;
+        }
+    }
+
     .mat-tree-node {
         min-height: 28px;
+        padding: 0 1em;
+
+        .name {
+            flex: none;
+        }
+
+        .menu {
+            display: none;
+            font-size: 12pt;
+        }
+
+        &:hover {
+            background-color: aliceblue;
+
+            .menu {
+                display: inline;
+            }
+        }
     }
 }

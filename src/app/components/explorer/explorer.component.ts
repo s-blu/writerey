@@ -9,26 +9,12 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
-interface IExplorerNode {
-  name: string;
-}
-
-interface DirectoryNode extends IExplorerNode {
-  dirs: DirectoryNode[];
-  files: FileNode[];
-}
-
-interface FileNode extends IExplorerNode {
-  path: string;
-}
-
-const TREE_DATA: DirectoryNode[] = [];
-
 /** Flat node with expandable and level information */
-interface ExampleFlatNode {
+interface ExplorerNode {
   expandable: boolean;
   name: string;
   level: number;
+  path?: string;
 }
 
 @Component({
@@ -40,17 +26,19 @@ export class ExplorerComponent implements OnInit {
   @Output() docChanged: EventEmitter<DocumentDefinition> = new EventEmitter<DocumentDefinition>();
   tree;
 
-  treeControl = new FlatTreeControl<ExampleFlatNode>(node => node.level, node => node.expandable);
+  treeControl = new FlatTreeControl<ExplorerNode>(node => node.level, node => node.expandable);
 
   treeFlattener = new MatTreeFlattener(
-    this._transformer, node => node.level, node => node.expandable, node => [...node.dirs, ...node.files]);
+    this._transformer,
+    node => node.level,
+    node => node.expandable,
+    node => [...node.dirs, ...node.files]);
 
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
 
   ngOnInit() {
     return this.httpClient.get(this.api.getDirectoryRoute()).subscribe((res: string) => {
-      console.log(res);
       try {
         this.tree = JSON.parse(res);
         this.dataSource.data = this.tree.dirs;
@@ -72,7 +60,8 @@ export class ExplorerComponent implements OnInit {
     this.docChanged.emit({ name: node.name, path: node.path });
   }
 
-  hasChild = (_: number, node: ExampleFlatNode) => node.expandable;
+  hasChild = (_: number, node: ExplorerNode) => node.expandable;
+  isFile = (_: number, node: ExplorerNode) => node.path && node.path !== '';
 
   private _transformer(node, level: number) {
     return {

@@ -1,15 +1,15 @@
+import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { SimplebarAngularModule } from 'simplebar-angular';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-import {MatTreeModule} from '@angular/material/tree'; 
+import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -37,12 +37,12 @@ const matModules = [MatIconModule, MatButtonModule, MatTooltipModule, MatTreeMod
       NoteComponent,
       BreadcrumbComponent,
       DocumentMarksComponent,
-      FooterComponent
+      FooterComponent,
+      StripFileEndingPipe
    ],
    imports: [
       BrowserModule,
       HttpClientModule,
-      SimplebarAngularModule,
       FormsModule,
       ReactiveFormsModule,
       CKEditorModule,

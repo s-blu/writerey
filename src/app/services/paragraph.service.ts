@@ -101,15 +101,13 @@ export class ParagraphService {
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params })
       .pipe(catchError((err) => this.api.handleHttpError(err)),
         map((res: string) => {
-          if (metaType && res) {
-            try {
-              const data = JSON.parse(res);
-              this.setCacheItem(docPath, docName, paragraphId, data);
-              return data[metaType];
-            } catch {
-              return res;
-            }
-          } else {
+          if (!res || res === '') return res;
+          try {
+            const data = JSON.parse(res);
+            this.setCacheItem(docPath, docName, paragraphId, data);
+            return metaType ? data[metaType] : data;
+          } catch {
+            console.warn('Was not able to parse paragraph meta. Returning result as-is.');
             return res;
           }
         })
