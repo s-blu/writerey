@@ -2,9 +2,11 @@ from flask import request
 from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
+from pathUtils import PathUtils
 
 import os
 import json
+
 
 class Directories(Resource):
     def get(self):
@@ -16,9 +18,10 @@ class Directories(Resource):
         for (dirpath, dirnames, filenames) in os.walk(basePath):
             path = dirpath.replace('\\', '/').split('/')
             path.pop(0)  # removes unneeded basePath
+            filePath = PathUtils.concatPathParts(path)
 
-            if (path[-1] == metaSubPath):
-                continue # skip meta paths
+            if (len(path) == 0 or path[-1] == metaSubPath):
+                continue  # skip meta paths
 
             if path[0] == '':
                 currDir = directoryStructure
@@ -28,11 +31,10 @@ class Directories(Resource):
                     walkToDir = next(
                         (sub for sub in walkToDir['dirs'] if sub['name'] == pathStep), {})
                 currDir = walkToDir
-
             for f in filenames:
                 currDir['files'].append({
                     'name': f,
-                    'path': dirpath
+                    'path': filePath
                 })
             for d in dirnames:
                 if d != metaSubPath:
@@ -41,7 +43,6 @@ class Directories(Resource):
                         'dirs': [],
                         'files': []
                     })
-
         return json.dumps(directoryStructure)
 
     def put(self, doc_name):

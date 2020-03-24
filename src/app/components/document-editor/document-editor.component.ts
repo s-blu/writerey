@@ -1,11 +1,7 @@
-import { debounceTime } from 'rxjs/operators';
-import { ApiService } from '../../services/api.service';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDefinition } from '../../interfaces/DocumentDefinition';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'wy-document-editor',
@@ -13,9 +9,18 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./document-editor.component.scss']
 })
 export class DocumentEditorComponent implements OnInit {
-  @Input() docDef: DocumentDefinition;
   contentWrap = { content: '' };
-  paragraph;
+  paragraphId: string;
+  docDef: DocumentDefinition;
+
+  @Input()
+  set document(docDef: DocumentDefinition) {
+    console.log('called setter for DocDef', docDef)
+    this.docDef = docDef;
+    this.documentService.getDocument(docDef.path, docDef.name).subscribe((res) => {
+      this.contentWrap.content = res;
+    });
+  }
 
   @Output() hover: EventEmitter<any> = new EventEmitter();
 
@@ -24,12 +29,7 @@ export class DocumentEditorComponent implements OnInit {
     private paragraphService: ParagraphService
   ) { }
 
-  ngOnInit(): void {
-    // todo: update when docDef is updated
-    this.documentService.getDocument(this.docDef.path, this.docDef.name).subscribe((res) => {
-      this.contentWrap.content = res;
-    });
-  }
+  ngOnInit(): void {}
 
   onHover(event) {
 
@@ -47,12 +47,12 @@ export class DocumentEditorComponent implements OnInit {
 
 
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
-      this.paragraph = event;
+      this.paragraphId = event;
 
-      this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'notes')
+      this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraphId, 'notes')
         .subscribe((res) => {
           if (res === '') {
-            this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraph, 'notes', dummyData)
+            this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraphId, 'notes', dummyData)
               .subscribe((res2) => console.log('setPar called', res2));
           }
           this.hover.emit(event);

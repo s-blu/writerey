@@ -1,6 +1,7 @@
 class PathUtils:
     @staticmethod
-    def concatPathParts(parts):
+    def concatPathParts(pathParts):
+        parts = pathParts[:]
         # TODO error handling if parts is empty/no list
         path = parts[0]
         parts.pop(0)

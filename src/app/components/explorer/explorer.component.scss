@@ -1,5 +1,5 @@
 .explorer {
-    //border-right: 1px solid #DDDDDD;
+    border-right: 1px solid #DDDDDD;
     box-sizing: border-box;
     height: 100%;
 
@@ -21,12 +21,19 @@
         }
     }
 
+    .file-node {
+        .name:hover {
+            cursor: pointer;
+        }
+    }
+
     .mat-tree-node {
         min-height: 28px;
         padding: 0 1em;
+        display: flex;
 
         .name {
-            flex: none;
+            flex-grow: 2;
         }
 
         .menu {
