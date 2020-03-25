@@ -20,16 +20,12 @@ export class DocumentEditorComponent implements OnInit {
     console.log('called setter for DocDef', docDef)
     this.docDef = docDef;
     this.isLoading = true;
-    const getFile = () => {
-      this.documentService.getDocument(docDef.path, docDef.name)
-        .subscribe((res) => {
-          this.isLoading = false
-          this.contentWrap.content = res;
-        });
-      // todo catch error 
-    }
-
-    setTimeout(getFile, 3500)
+    this.documentService.getDocument(docDef.path, docDef.name)
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.contentWrap.content = res;
+      });
+    // todo catch error 
   }
 
   @Output() hover: EventEmitter<any> = new EventEmitter();

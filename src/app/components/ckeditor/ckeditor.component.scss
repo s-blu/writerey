@@ -14,6 +14,9 @@
         height: 100%;
         display: block;
     }
+    .ck-content {
+        margin-bottom: 2em;
+    }
     .ck-content p {
         margin: 0;
     }
@@ -35,13 +38,13 @@
         box-shadow: none;
     }
 
-    &, .ck.ck-editor__main {
+    .ck.ck-editor__main {
         height: 100%;
     }
 
     .ck.ck-editor__top, .ck.ck-editor__top > * {
         position: sticky;
-        top: calc(-2em - 4px);
+        top: calc(-2em - 5px);
         z-index: 3230;
     }
 
@@ -55,9 +58,4 @@
         color: grey;
         cursor: not-allowed;
     }
-
-    // ::ng-deep .ck-* {
-    //     box-sizing: border-box;
-    //     max-height: 100%;
-    // }
 }

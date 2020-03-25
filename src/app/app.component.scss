@@ -29,14 +29,11 @@
     height: calc(100vh - 80px);
 }
 
-::ng-deep .scroll .simplebar-scrollbar::before {
-    background: #7a8188 !important;
-}
-
 .editor {
     .document-area {
-        overflow-y: scroll;
-        padding: 2em;
+        overflow: hidden;
+        padding: 0 2em;
+        box-sizing: content-box;
     }
 }
 
