@@ -9,6 +9,8 @@ import { DocumentDefinition } from '../../interfaces/DocumentDefinition';
 export class FooterComponent implements OnInit {
   @Input() docDef: DocumentDefinition;
 
+  dummyDate = new Date();
+
   constructor() { }
 
   ngOnInit() {

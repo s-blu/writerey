@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -25,7 +26,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-const matModules = [MatIconModule, MatButtonModule, MatTooltipModule, MatTreeModule, MatMenuModule];
+const matModules = [MatIconModule, MatButtonModule, MatTooltipModule, MatTreeModule, MatMenuModule, MatProgressBarModule];
 
 @NgModule({
    declarations: [

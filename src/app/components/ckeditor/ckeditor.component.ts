@@ -7,6 +7,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
   styleUrls: ['./ckeditor.component.scss']
 })
 export class CkeditorComponent implements OnInit {
+  @Input() readonly: boolean = false;
   @Input() content: { content: string };
 
   // @Input() set content(value: string) {

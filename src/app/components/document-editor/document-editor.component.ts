@@ -1,3 +1,4 @@
+import { debounceTime } from 'rxjs/operators';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
@@ -12,14 +13,23 @@ export class DocumentEditorComponent implements OnInit {
   contentWrap = { content: '' };
   paragraphId: string;
   docDef: DocumentDefinition;
+  isLoading: boolean;
 
   @Input()
   set document(docDef: DocumentDefinition) {
     console.log('called setter for DocDef', docDef)
     this.docDef = docDef;
-    this.documentService.getDocument(docDef.path, docDef.name).subscribe((res) => {
-      this.contentWrap.content = res;
-    });
+    this.isLoading = true;
+    const getFile = () => {
+      this.documentService.getDocument(docDef.path, docDef.name)
+        .subscribe((res) => {
+          this.isLoading = false
+          this.contentWrap.content = res;
+        });
+      // todo catch error 
+    }
+
+    setTimeout(getFile, 3500)
   }
 
   @Output() hover: EventEmitter<any> = new EventEmitter();
@@ -29,7 +39,7 @@ export class DocumentEditorComponent implements OnInit {
     private paragraphService: ParagraphService
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onHover(event) {
 
