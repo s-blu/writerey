@@ -9,6 +9,25 @@ html, body, app-root, .app {
 
     font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
+.app-body {
+  .mat-menu-panel {
+    $size: 32px;
+    min-height: $size;
+  
+    .mat-menu-item {
+      height: $size;
+      line-height: $size;
+  
+      .mat-icon {
+        height: $size;
+        line-height: $size;
+        font-size: 12pt;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 
 //Scrollbar
 ::-webkit-scrollbar {

@@ -9,10 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TopbarComponent implements OnInit {
 
-  constructor(
-    private httpClient: HttpClient,
-    private api: ApiService
-  ) { }
+  constructor() { }
 
   ngOnInit() {
   }
@@ -20,9 +17,4 @@ export class TopbarComponent implements OnInit {
   review() {
 
   }
-
-  createNewFile() {
-    return this.httpClient.get(this.api.getDirectoryRoute()).subscribe(res => console.log(res));
-  }
-
 }

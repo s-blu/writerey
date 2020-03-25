@@ -33,5 +33,4 @@ class Logger:
             except:
                 m = json.dumps(m)
                 concatted += ' ' + m
-
         return concatted

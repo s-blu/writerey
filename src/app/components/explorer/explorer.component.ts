@@ -1,3 +1,4 @@
+import { DocumentService } from './../../services/document.service';
 import { DocumentDefinition } from './../../interfaces/DocumentDefinition';
 import { ApiService } from './../../services/api.service';
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +15,8 @@ interface ExplorerNode {
   expandable: boolean;
   name: string;
   level: number;
-  path?: string;
+  path: string;
+  isFile: boolean;
 }
 
 @Component({
@@ -24,18 +26,15 @@ interface ExplorerNode {
 })
 export class ExplorerComponent implements OnInit {
   @Output() docChanged: EventEmitter<DocumentDefinition> = new EventEmitter<DocumentDefinition>();
+  // tree data
   tree;
-
   treeControl = new FlatTreeControl<ExplorerNode>(node => node.level, node => node.expandable);
-
   treeFlattener = new MatTreeFlattener(
     this._transformer,
     node => node.level,
     node => node.expandable,
     node => [...node.dirs, ...node.files]);
-
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
 
   ngOnInit() {
     return this.httpClient.get(this.api.getDirectoryRoute()).subscribe((res: string) => {
@@ -43,14 +42,15 @@ export class ExplorerComponent implements OnInit {
         this.tree = JSON.parse(res);
         this.dataSource.data = this.tree.dirs;
       } finally {
-        console.log(this.tree);
+        console.log('tree init', this.tree);
       }
     });
   }
 
   constructor(
     private httpClient: HttpClient,
-    private api: ApiService
+    private api: ApiService,
+    private documentService: DocumentService
   ) {
 
   }
@@ -60,8 +60,23 @@ export class ExplorerComponent implements OnInit {
     this.docChanged.emit({ name: node.name, path: node.path });
   }
 
+  renameDir(node) {
+    console.log('rename dir', node)
+  }
+  renameFile(node) {
+    console.log('rename file', node)
+  }
+  addNewFile(node) {
+    //FIXME for some reason path is not what I was expecting
+    this.documentService.saveDocument(node.path, 'dumdum', '');
+    console.log('addNewFile', node)
+  }
+
+  /**
+   * Tree functions
+   */
   hasChild = (_: number, node: ExplorerNode) => node.expandable;
-  isFile = (_: number, node: ExplorerNode) => node.path && node.path !== '';
+  isFile = (_: number, node: ExplorerNode) => node.isFile;
 
   private _transformer(node, level: number) {
     return {

@@ -36,10 +36,17 @@ class Directories(Resource):
                     log.logWarn(
                         'Could not find dir for path, skipping', dirpath)
                     continue
+            log.logDebug('crawling content', currDir, filePath)
             self.crawlDirContent(dirnames, filenames, currDir, filePath)
         return json.dumps(directoryStructure)
 
-    def put(self, doc_name):
+    def put(self):
+        log = Logger('directories.put')
+        if not request.form or not request.form['doc_path']:
+            log.logWarn('directories put was called with invalid data. Do nothing.')
+            return None
+        newPath = PathUtils.sanitizePath(request.form['doc_path'])
+        Path(newPath).mkdir(parents=True, exist_ok=True)
         return 'Not implemented yet'
 
     @staticmethod
@@ -55,12 +62,14 @@ class Directories(Resource):
         for f in filenames:
             currDir['files'].append({
                 'name': f,
-                'path': filePath
+                'path': filePath,
+                'isFile': True
             })
         for d in dirnames:
             if d != metaSubPath:
                 currDir['dirs'].append({
                     'name': d,
+                    'path': filePath,
                     'dirs': [],
                     'files': []
                 })

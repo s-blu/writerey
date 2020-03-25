@@ -1,4 +1,9 @@
 {
+    
+    "explorer": {
+        "rename": "Rename",
+        "newfile": "New document"
+    },
     "topbar": {
         "newfile": "Create a new file",
         "newcategory": "Create a new category",
