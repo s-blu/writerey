@@ -1,5 +1,6 @@
 from functools import reduce
 from writerey_config import basePath
+import re
 
 
 class PathUtils:
@@ -39,3 +40,9 @@ class PathUtils:
             return ''
         pathConcat = PathUtils.concatPathParts(pathList)
         return PathUtils.sanitizePathString(pathConcat, removeBasePath)
+
+    @staticmethod
+    def sanitizeFilename(filename: str):
+        if not filename or filename == '':
+            return ''
+        return re.sub(r'([/\\<>\*\?:\'"])', '_', filename)

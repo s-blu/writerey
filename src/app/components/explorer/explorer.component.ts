@@ -77,7 +77,7 @@ export class ExplorerComponent implements OnInit {
   addNewFile(node) {
     const filePath = this.prettifyPath(node.path, node.name);
     const dialogRef = this.dialog.open(CreateNewFileDialogComponent, {
-      data: { dirPath: filePath }
+      data: { dirPath: filePath, typeOfDialog: 'file' }
     });
 
     dialogRef.afterClosed().subscribe(docName => {

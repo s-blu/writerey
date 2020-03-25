@@ -17,8 +17,15 @@
     },
     "createFileDialog" : {
        "title": "Create new document",
-       "message": "Create document in '{{path}}'",
+       "message": "Name your new document.",
        "input": "document name",
+       "cancel": "Cancel",
+       "create": "Create"
+    },
+    "createDirDialog" : {
+       "title": "Create new directory",
+       "message": "Name your new directory",
+       "input": "directory name",
        "cancel": "Cancel",
        "create": "Create"
     }

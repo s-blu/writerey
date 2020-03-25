@@ -7,9 +7,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./createNewFileDialog.component.scss']
 })
 export class CreateNewFileDialogComponent implements OnInit {
+  typeOfDialog = '';
 
   ngOnInit() {
-    console.log('comp data', this.data)
+    this.typeOfDialog = this.data.typeOfDialog === 'file' ? 'createFileDialog' : 'createDirDialog';
   }
 
   constructor(

@@ -24,10 +24,10 @@ class Documents(Resource):
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
             pathToSaveTo = basePath
-        # TODO sanitize filename
-        filePath = PathUtils.sanitizePathList([pathToSaveTo, doc_name])
+        name = PathUtils.sanitizeFilename(doc_name)
+        filePath = PathUtils.sanitizePathList([pathToSaveTo, name])
         # TODO check if this is available
         f = request.files['file']
         f.save(filePath)
 
-        return { 'path': filePath, 'name': doc_name}
+        return {'path': pathToSaveTo, 'name': doc_name}
