@@ -10,7 +10,7 @@ class ParagraphMeta(Resource):
         pId = request.args.get('p_id')
         filename = doc_name + '_' + pId
         try:
-            path = PathUtils.concatPathParts([basePath, path, metaSubPath, filename])
+            path = PathUtils.sanitizePathList([basePath, path, metaSubPath, filename])
             f = open(path, encoding='utf-8')
             content = f.read()
             return content
@@ -23,10 +23,10 @@ class ParagraphMeta(Resource):
         content = request.form['content']
         filename =  doc_name + '_' + pId
         if request.form['doc_path']:
-            pathToSaveTo = PathUtils.concatPathParts([basePath, request.form['doc_path'], metaSubPath, filename])
+            pathToSaveTo = PathUtils.sanitizePathList([basePath, request.form['doc_path'], metaSubPath, filename])
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
-            pathToSaveTo = PathUtils.concatPathParts([basePath, metaSubPath, filename])
+            pathToSaveTo = PathUtils.sanitizePathList([basePath, metaSubPath, filename])
         # TODO sanitize filename
         f = open(pathToSaveTo, 'w')
         f.write(content)

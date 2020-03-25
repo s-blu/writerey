@@ -9,7 +9,7 @@ class Documents(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
         try:
-            path = PathUtils.concatPathParts([basePath, path, doc_name])
+            path = PathUtils.sanitizePathList([basePath, path, doc_name])
             f = open(path, encoding='utf-8')
             content = f.read()
             return content
@@ -19,13 +19,13 @@ class Documents(Resource):
 
     def put(self, doc_name):
         if request.form['doc_path']:
-            pathToSaveTo = PathUtils.concatPathParts(
+            pathToSaveTo = PathUtils.sanitizePathList(
                 [basePath, request.form['doc_path']])
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
             pathToSaveTo = basePath
         # TODO sanitize filename
-        filePath = PathUtils.concatPathParts([pathToSaveTo, doc_name])
+        filePath = PathUtils.sanitizePathList([pathToSaveTo, doc_name])
         # TODO check if this is available
         f = request.files['file']
         f.save(filePath)

@@ -83,6 +83,7 @@ export class ExplorerComponent implements OnInit {
       expandable: node.dirs || node.files ? node.dirs.length > 0 || node.files.length > 0 : false,
       path: node.path,
       name: node.name,
+      isFile: node.isFile,
       level
     };
   }

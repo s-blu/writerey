@@ -18,9 +18,9 @@ class Directories(Resource):
             'files': []
         }
         for (dirpath, dirnames, filenames) in os.walk(basePath):
-            path = dirpath.replace('\\', '/').split('/')
-            path.pop(0)  # removes unneeded basePath
-            filePath = PathUtils.concatPathParts(path)
+            filePath = PathUtils.sanitizePathString(dirpath, True)
+            path = filePath.split('/')
+            log.logDebug('starting with', path)
 
             if (len(path) == 0 or metaSubPath in path):
                 log.logDebug('skipping path', path)
@@ -43,7 +43,8 @@ class Directories(Resource):
     def put(self):
         log = Logger('directories.put')
         if not request.form or not request.form['doc_path']:
-            log.logWarn('directories put was called with invalid data. Do nothing.')
+            log.logWarn(
+                'directories put was called with invalid data. Do nothing.')
             return None
         newPath = PathUtils.sanitizePath(request.form['doc_path'])
         Path(newPath).mkdir(parents=True, exist_ok=True)
