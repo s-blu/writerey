@@ -1,3 +1,4 @@
+import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -12,6 +13,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -26,7 +31,8 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-const matModules = [MatIconModule, MatButtonModule, MatTooltipModule, MatTreeModule, MatMenuModule, MatProgressBarModule];
+const matModules = [MatIconModule, MatButtonModule, MatTooltipModule,
+   MatTreeModule, MatMenuModule, MatProgressBarModule, MatDialogModule, MatInputModule, MatFormFieldModule];
 
 @NgModule({
    declarations: [
@@ -40,7 +46,8 @@ const matModules = [MatIconModule, MatButtonModule, MatTooltipModule, MatTreeMod
       BreadcrumbComponent,
       DocumentMarksComponent,
       FooterComponent,
-      StripFileEndingPipe
+      StripFileEndingPipe,
+      CreateNewFileDialogComponent
    ],
    imports: [
       BrowserModule,

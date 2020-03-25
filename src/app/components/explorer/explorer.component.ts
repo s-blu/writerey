@@ -1,3 +1,4 @@
+import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
 import { DocumentService } from './../../services/document.service';
 import { DocumentDefinition } from './../../interfaces/DocumentDefinition';
 import { ApiService } from './../../services/api.service';
@@ -5,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatDialog } from '@angular/material/dialog';
+
 
 /**
  * Food data with nested structure.
@@ -37,6 +40,19 @@ export class ExplorerComponent implements OnInit {
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   ngOnInit() {
+    return this.fetchTree();
+  }
+
+  constructor(
+    public dialog: MatDialog,
+    private httpClient: HttpClient,
+    private api: ApiService,
+    private documentService: DocumentService
+  ) {
+
+  }
+
+  private fetchTree() {
     return this.httpClient.get(this.api.getDirectoryRoute()).subscribe((res: string) => {
       try {
         this.tree = JSON.parse(res);
@@ -45,14 +61,6 @@ export class ExplorerComponent implements OnInit {
         console.log('tree init', this.tree);
       }
     });
-  }
-
-  constructor(
-    private httpClient: HttpClient,
-    private api: ApiService,
-    private documentService: DocumentService
-  ) {
-
   }
 
   openDocument(node) {
@@ -67,9 +75,23 @@ export class ExplorerComponent implements OnInit {
     console.log('rename file', node)
   }
   addNewFile(node) {
-    //FIXME for some reason path is not what I was expecting
-    this.documentService.saveDocument(node.path, 'dumdum', '');
-    console.log('addNewFile', node)
+    const filePath = this.prettifyPath(node.path, node.name);
+    const dialogRef = this.dialog.open(CreateNewFileDialogComponent, {
+      data: { dirPath: filePath }
+    });
+
+    dialogRef.afterClosed().subscribe(docName => {
+      this.documentService.saveDocument(filePath, docName, '')
+        .subscribe((res: any) => {
+          this.fetchTree(); // FIXME implement way to only get the edited dir
+          this.docChanged.emit({ name: res.name, path: res.path });
+        });
+    });
+  }
+
+  private prettifyPath(path, dirName) {
+    if (!path || path === '') return dirName;
+    return path + '/' + dirName;
   }
 
   /**

@@ -38,8 +38,7 @@ export class DocumentService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
-      .pipe(catchError(err => this.api.handleHttpError(err)))
-      .subscribe(res => console.log('saveDocument', res));
+    return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
+      .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 }

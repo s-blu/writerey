@@ -71,6 +71,6 @@ export class DocumentEditorComponent implements OnInit {
     // FIXME debounce trigger of save
     const htmlContent = event.editor.getData();
 
-    this.documentService.saveDocument(this.docDef.path, this.docDef.name, event.editor.getData());
+    this.documentService.saveDocument(this.docDef.path, this.docDef.name, event.editor.getData()).subscribe(res => res);
   }
 }

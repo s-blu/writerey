@@ -30,4 +30,4 @@ class Documents(Resource):
         f = request.files['file']
         f.save(filePath)
 
-        return 'File saved to ' + filePath
+        return { 'path': filePath, 'name': doc_name}

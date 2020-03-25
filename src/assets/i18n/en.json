@@ -14,5 +14,12 @@
     "saveInfo": {
         "lastSaved": "Last saved on",
         "lastSnapshotted": "Last snapshotted on"
+    },
+    "createFileDialog" : {
+       "title": "Create new document",
+       "message": "Create document in '{{path}}'",
+       "input": "document name",
+       "cancel": "Cancel",
+       "create": "Create"
     }
 }

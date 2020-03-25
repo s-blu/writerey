@@ -46,7 +46,7 @@ class Directories(Resource):
             log.logWarn(
                 'directories put was called with invalid data. Do nothing.')
             return None
-        newPath = PathUtils.sanitizePath(request.form['doc_path'])
+        newPath = PathUtils.sanitizePathString(request.form['doc_path'])
         Path(newPath).mkdir(parents=True, exist_ok=True)
         return 'Not implemented yet'
 
