@@ -12,7 +12,6 @@ from logger import Logger
 class Directories(Resource):
     def get(self):
         log = Logger('directories.get')
-
         directoryStructure = {
             'name': '',
             'dirs': [],
@@ -27,30 +26,41 @@ class Directories(Resource):
                 log.logDebug('skipping path', path)
                 continue  # skip meta paths
 
-            if path[0] == '':
+            if len(path) == 1 and path[0] == '':
                 currDir = directoryStructure
                 log.logDebug('Got root, using directory Structure directly')
             else:
                 log.logDebug('walking for', dirpath, path)
-                # TODO: prevent this from failing. if something goes wrong, log warning/error and skip directory
-                walkToDir = directoryStructure
-                for pathStep in path:
-                    walkToDir = next(
-                        (sub for sub in walkToDir['dirs'] if sub['name'] == pathStep), {})
-                currDir = walkToDir
-            for f in filenames:
-                currDir['files'].append({
-                    'name': f,
-                    'path': filePath
-                })
-            for d in dirnames:
-                if d != metaSubPath:
-                    currDir['dirs'].append({
-                        'name': d,
-                        'dirs': [],
-                        'files': []
-                    })
+                currDir = self.walkToDir(directoryStructure, path)
+                if currDir == None:
+                    log.logWarn(
+                        'Could not find dir for path, skipping', dirpath)
+                    continue
+            self.crawlDirContent(dirnames, filenames, currDir, filePath)
         return json.dumps(directoryStructure)
 
     def put(self, doc_name):
         return 'Not implemented yet'
+
+    @staticmethod
+    def walkToDir(tree, path):
+        dirStep = tree
+        for pathStep in path:
+            dirStep = next(
+                (sub for sub in dirStep['dirs'] if sub['name'] == pathStep), None)
+        return dirStep
+
+    @staticmethod
+    def crawlDirContent(dirnames, filenames, currDir, filePath):
+        for f in filenames:
+            currDir['files'].append({
+                'name': f,
+                'path': filePath
+            })
+        for d in dirnames:
+            if d != metaSubPath:
+                currDir['dirs'].append({
+                    'name': d,
+                    'dirs': [],
+                    'files': []
+                })
