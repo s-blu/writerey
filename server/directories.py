@@ -6,10 +6,13 @@ from pathUtils import PathUtils
 
 import os
 import json
+from logger import Logger
 
 
 class Directories(Resource):
     def get(self):
+        log = Logger('directories.get')
+
         directoryStructure = {
             'name': '',
             'dirs': [],
@@ -20,12 +23,16 @@ class Directories(Resource):
             path.pop(0)  # removes unneeded basePath
             filePath = PathUtils.concatPathParts(path)
 
-            if (len(path) == 0 or path[-1] == metaSubPath):
+            if (len(path) == 0 or metaSubPath in path):
+                log.logDebug('skipping path', path)
                 continue  # skip meta paths
 
             if path[0] == '':
                 currDir = directoryStructure
+                log.logDebug('Got root, using directory Structure directly')
             else:
+                log.logDebug('walking for', dirpath, path)
+                # TODO: prevent this from failing. if something goes wrong, log warning/error and skip directory
                 walkToDir = directoryStructure
                 for pathStep in path:
                     walkToDir = next(

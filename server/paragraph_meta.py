@@ -21,15 +21,14 @@ class ParagraphMeta(Resource):
     def put(self, doc_name):
         pId = request.form['p_id']
         content = request.form['content']
-        print(pId, content)
+        filename =  doc_name + '_' + pId
         if request.form['doc_path']:
-            pathToSaveTo = PathUtils.concatPathParts([basePath, request.form['doc_path'], metaSubPath])
+            pathToSaveTo = PathUtils.concatPathParts([basePath, request.form['doc_path'], metaSubPath, filename])
             Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
         else:
-            pathToSaveTo = PathUtils.concatPathParts([basePath, metaSubPath])
+            pathToSaveTo = PathUtils.concatPathParts([basePath, metaSubPath, filename])
         # TODO sanitize filename
-        filePath = pathToSaveTo + doc_name + '_' + pId
-        f = open(filePath, 'w')
+        f = open(pathToSaveTo, 'w')
         f.write(content)
         f.close()
 

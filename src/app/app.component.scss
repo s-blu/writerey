@@ -18,12 +18,14 @@
 
     .left {
         display: flex;
-        
+        wy-explorer {
+            flex-grow: 2;
+        }
     }
 }
 
 .main > * {
-     // FIXME uh. this is not so cool. is there a beter solution?
+     // FIXME uh. this is not so cool. is there a better solution?
     height: calc(100vh - 80px);
 }
 
