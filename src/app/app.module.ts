@@ -1,3 +1,4 @@
+import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
@@ -47,7 +48,8 @@ const matModules = [MatIconModule, MatButtonModule, MatTooltipModule,
       DocumentMarksComponent,
       FooterComponent,
       StripFileEndingPipe,
-      CreateNewFileDialogComponent
+      CreateNewFileDialogComponent,
+      LastModifiedComponent
    ],
    imports: [
       BrowserModule,

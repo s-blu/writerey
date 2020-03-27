@@ -1,8 +1,8 @@
 import { ParagraphService } from './services/paragraph.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { DocumentDefinition } from './interfaces/DocumentDefinition';
+import { DocumentDefinition } from './interfaces/documentDefinition.interface';
 import { Note } from './interfaces/note.interface';
+import { FileInfo } from './interfaces/fileInfo.interface';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +11,16 @@ import { Note } from './interfaces/note.interface';
 })
 export class AppComponent {
   title = 'writerey';
-  document: DocumentDefinition = { path: 'dummy/path/', name: 'DummyFile.html' };
+  // TODO get last opened document (local storage?)
+  document: FileInfo = { path: 'dummy/path/', name: 'DummyFile.html' };
   notes: Array<Note>;
 
   constructor(
-    private http: HttpClient,
     private paragraphService: ParagraphService
   ) { }
 
 
-  changeDoc(event) {
-    console.log('ooommmgggg!!!');
+  changeDoc(event: FileInfo) {
     this.document = event;
   }
 

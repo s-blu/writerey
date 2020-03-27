@@ -2,7 +2,8 @@
     "dateFormat": "dd/MM/yy hh:mm:ss",
     "explorer": {
         "rename": "Rename",
-        "newfile": "New document"
+        "newfile": "New document",
+        "newdir": "New directory"
     },
     "topbar": {
         "newfile": "Create a new file",

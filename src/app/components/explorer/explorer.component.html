@@ -1,4 +1,8 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
+  <button mat-button class="new-root-dir-button" (click)="addNewDirOnRoot()">
+    <i class="material-icons-outlined">create_new_folder</i>
+    <span>{{t('newdir')}}</span>
+  </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
       <button mat-icon-button [disabled]="!node.expandable" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
@@ -20,6 +24,10 @@
         <button mat-menu-item (click)="addNewFile(node)">
           <mat-icon>note_add</mat-icon>
           <span>{{t('newfile')}}</span>
+        </button>
+        <button mat-menu-item (click)="addNewDir(node)">
+          <mat-icon>create_new_folder</mat-icon>
+          <span>{{t('newdir')}}</span>
         </button>
       </mat-menu>
     </mat-tree-node>

@@ -2,7 +2,7 @@ import { debounceTime } from 'rxjs/operators';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
-import { DocumentDefinition } from '../../interfaces/DocumentDefinition';
+import { DocumentDefinition } from '../../interfaces/documentDefinition.interface';
 
 @Component({
   selector: 'wy-document-editor',
@@ -23,7 +23,8 @@ export class DocumentEditorComponent implements OnInit {
     this.documentService.getDocument(docDef.path, docDef.name)
       .subscribe((res) => {
         this.isLoading = false;
-        this.contentWrap.content = res;
+        this.contentWrap.content = res.content;
+        console.log('last edited is', res.last_edited)
       });
     // todo catch error 
   }

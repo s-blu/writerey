@@ -4,6 +4,9 @@ from pathlib import Path
 from writerey_config import basePath
 from pathUtils import PathUtils
 
+import os
+from stat import ST_MTIME
+
 
 class Documents(Resource):
     def get(self, doc_name):
@@ -11,8 +14,9 @@ class Documents(Resource):
         try:
             path = PathUtils.sanitizePathList([basePath, path, doc_name])
             f = open(path, encoding='utf-8')
+            fstats = os.stat(path)
             content = f.read()
-            return content
+            return { 'content': content, 'name': doc_name, 'last_edited': fstats[ST_MTIME] }
         except OSError as err:
             print('get paragraph meta failed', err)
             return ''
@@ -30,4 +34,4 @@ class Documents(Resource):
         f = request.files['file']
         f.save(filePath)
 
-        return {'path': pathToSaveTo, 'name': doc_name}
+        return {'path': PathUtils.sanitizePathString(pathToSaveTo, True), 'name': doc_name}

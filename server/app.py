@@ -6,6 +6,7 @@ from pathlib import Path
 from documents import Documents
 from paragraph_meta import ParagraphMeta
 from directories import Directories
+from tree import Tree
 from writerey_config import basePath, metaSubPath
 
 app = Flask(__name__)
@@ -14,7 +15,8 @@ CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
 api.add_resource(Documents, '/doc/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
-api.add_resource(Directories, '/dir')
+api.add_resource(Directories, '/dir/<string:dir_name>')
+api.add_resource(Tree, '/tree')
 
 if __name__ == '__main__':
     app.run(port=5002, debug=True)  # FIXME remove debug

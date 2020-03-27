@@ -3,6 +3,17 @@
     box-sizing: border-box;
     height: 100%;
 
+    .new-root-dir-button {
+        font-size: 14px;
+        width: 100%;
+        text-align: start;
+        
+        i {
+            font-size: 13pt;
+            margin-right: 5px; 
+        }
+    }
+
     .explorer-btn {
         height: 24px;
         width: 24px;
