@@ -7,12 +7,14 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor [document]="document" (hover)="onHover($event)"></wy-document-editor>
+        <wy-document-editor [document]="document" [content]="documentContent" (hover)="onHover($event)"
+          [isLoading]="isLoading">
+        </wy-document-editor>
       </div>
     </div>
     <div class="notes">
       <wy-notes [notes]="notes"></wy-notes>
     </div>
   </div>
-  <wy-footer [docDef]="document"></wy-footer>
+  <wy-footer [document]="document"></wy-footer>
 </div>

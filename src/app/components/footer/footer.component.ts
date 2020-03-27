@@ -7,8 +7,12 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  @Input() docDef: DocumentDefinition;
-
+  @Input() set document(doc: DocumentDefinition) {
+    this.lastSave = doc.last_edited;
+    this.docDef = doc;
+  }
+  docDef: DocumentDefinition;
+  lastSave: Date;
   dummyDate = new Date();
 
   constructor() { }

@@ -1,3 +1,4 @@
+import { DocumentService } from './services/document.service';
 import { ParagraphService } from './services/paragraph.service';
 import { Component } from '@angular/core';
 import { DocumentDefinition } from './interfaces/documentDefinition.interface';
@@ -12,20 +13,34 @@ import { FileInfo } from './interfaces/fileInfo.interface';
 export class AppComponent {
   title = 'writerey';
   // TODO get last opened document (local storage?)
-  document: FileInfo = { path: 'dummy/path/', name: 'DummyFile.html' };
+  fileInfo: FileInfo = { path: 'dummy/path/', name: 'DummyFile.html' };
+  document: DocumentDefinition;
+  documentContent: { content: string };
+  isLoading = false;
   notes: Array<Note>;
 
   constructor(
-    private paragraphService: ParagraphService
+    private paragraphService: ParagraphService,
+    private documentService: DocumentService
   ) { }
 
 
   changeDoc(event: FileInfo) {
-    this.document = event;
+    console.log('change doc event received', event)
+    this.fileInfo = event;
+    this.isLoading = true;
+    this.documentService.getDocument(event.path, event.name)
+      .subscribe((res) => {
+        this.isLoading = false;
+        this.documentContent = { content: res.content };
+        delete res.content;
+        this.document = res;
+        console.log('last edited is', res.last_edited);
+      });
   }
 
   onHover(event) {
-    this.paragraphService.getParagraphMeta(this.document.path, this.document.name, event, 'notes').subscribe(res => {
+    this.paragraphService.getParagraphMeta(this.fileInfo.path, this.fileInfo.name, event, 'notes').subscribe(res => {
       try {
         console.log('on hover app', res)
         if (res && res.length) {

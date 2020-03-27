@@ -1,12 +1,5 @@
 <div class="footer" *transloco="let t">
   <div id="ckeditor-word-count-container">Wordcount</div>
   <wy-breadcrumb [document]="docDef"></wy-breadcrumb>
-  <span class="saveInfo">
-    <span [matTooltip]="t('saveInfo.lastSaved')">
-      <mat-icon>save</mat-icon> {{dummyDate | date:t('dateFormat')}}
-    </span>
-    <span [matTooltip]="t('saveInfo.lastSnapshotted')">
-      <mat-icon>save_alt</mat-icon> {{dummyDate | date:t('dateFormat')}}
-    </span>
-  </span>
+  <wy-last-modified [lastSave]="lastSave" [lastSnapshot]="dummyDate"></wy-last-modified>
 </div>

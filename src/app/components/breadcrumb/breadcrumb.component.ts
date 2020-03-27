@@ -7,15 +7,16 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
   styleUrls: ['./breadcrumb.component.scss']
 })
 export class BreadcrumbComponent implements OnInit {
-  path: Array<string>;
-  name: string;
+  path: Array<string> = [];
+  name: string = '';
 
   @Input()
   set document(docDef: DocumentDefinition) {
+    if (!docDef) return;
     const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
     this.path = pathParts;
     this.name = docDef.name;
-    console.log(this.path)
+    console.log('breadcrumb', docDef, this.path)
   }
 
 

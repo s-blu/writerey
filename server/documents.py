@@ -16,9 +16,9 @@ class Documents(Resource):
             f = open(path, encoding='utf-8')
             fstats = os.stat(path)
             content = f.read()
-            return { 'content': content, 'name': doc_name, 'last_edited': fstats[ST_MTIME] }
+            return { 'content': content, 'name': doc_name, 'path': request.args.get('doc_path'), 'last_edited': fstats[ST_MTIME] }
         except OSError as err:
-            print('get paragraph meta failed', err)
+            print('get document failed', err)
             return ''
 
     def put(self, doc_name):

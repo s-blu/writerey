@@ -1,4 +1,3 @@
-import { debounceTime } from 'rxjs/operators';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
@@ -10,24 +9,10 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
   styleUrls: ['./document-editor.component.scss']
 })
 export class DocumentEditorComponent implements OnInit {
-  contentWrap = { content: '' };
   paragraphId: string;
-  docDef: DocumentDefinition;
-  isLoading: boolean;
-
-  @Input()
-  set document(docDef: DocumentDefinition) {
-    console.log('called setter for DocDef', docDef)
-    this.docDef = docDef;
-    this.isLoading = true;
-    this.documentService.getDocument(docDef.path, docDef.name)
-      .subscribe((res) => {
-        this.isLoading = false;
-        this.contentWrap.content = res.content;
-        console.log('last edited is', res.last_edited)
-      });
-    // todo catch error 
-  }
+  @Input() isLoading: boolean;
+  @Input() document: DocumentDefinition;
+  @Input() content: { content: string };
 
   @Output() hover: EventEmitter<any> = new EventEmitter();
 
@@ -56,10 +41,10 @@ export class DocumentEditorComponent implements OnInit {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
       this.paragraphId = event;
 
-      this.paragraphService.getParagraphMeta(this.docDef.path, this.docDef.name, this.paragraphId, 'notes')
+      this.paragraphService.getParagraphMeta(this.document.path, this.document.name, this.paragraphId, 'notes')
         .subscribe((res) => {
           if (res === '') {
-            this.paragraphService.setParagraphMeta(this.docDef.path, this.docDef.name, this.paragraphId, 'notes', dummyData)
+            this.paragraphService.setParagraphMeta(this.document.path, this.document.name, this.paragraphId, 'notes', dummyData)
               .subscribe((res2) => console.log('setPar called', res2));
           }
           this.hover.emit(event);
@@ -72,6 +57,6 @@ export class DocumentEditorComponent implements OnInit {
     // FIXME debounce trigger of save
     const htmlContent = event.editor.getData();
 
-    this.documentService.saveDocument(this.docDef.path, this.docDef.name, event.editor.getData()).subscribe(res => res);
+    this.documentService.saveDocument(this.document.path, this.document.name, event.editor.getData()).subscribe(res => res);
   }
 }
