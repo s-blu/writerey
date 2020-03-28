@@ -69,6 +69,7 @@ export class ParagraphService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
+    // FIXME rewrite this to a piped call
     return new Observable(subscriber => {
       this.getParagraphMeta(docPath, docName, paragraphId, metaType).subscribe(res => {
         const paragraphMeta = res || {};

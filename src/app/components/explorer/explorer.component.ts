@@ -1,10 +1,11 @@
+import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
 import { DocumentService } from './../../services/document.service';
 import { FileInfo } from '../../interfaces/fileInfo.interface';
 import { ApiService } from './../../services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
@@ -27,7 +28,7 @@ interface ExplorerNode {
   templateUrl: './explorer.component.html',
   styleUrls: ['./explorer.component.scss'],
 })
-export class ExplorerComponent implements OnInit {
+export class ExplorerComponent implements OnInit, OnDestroy {
   @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
   // tree data
   tree;
@@ -43,8 +44,14 @@ export class ExplorerComponent implements OnInit {
   );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
+  private subscription = new Subscription();
+
   ngOnInit() {
-    return this.fetchTree();
+    this.fetchTree();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   constructor(
@@ -56,14 +63,14 @@ export class ExplorerComponent implements OnInit {
   ) {}
 
   private fetchTree() {
-    return this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
+    this.subscription.add(this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
       try {
         this.tree = JSON.parse(res);
         this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
       } finally {
         console.log('tree init', this.tree);
       }
-    });
+    }));
   }
 
   openDocument(node) {
@@ -95,16 +102,16 @@ export class ExplorerComponent implements OnInit {
       data: { dirPath: path, typeOfDialog: type },
     });
 
-    dialogRef.afterClosed().subscribe(name => {
+    this.subscription.add(dialogRef.afterClosed().subscribe(name => {
       let createObservable;
       if (type === 'file') createObservable = this.documentService.createDocument(path, name);
       if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);
 
-      createObservable.subscribe((res: any) => {
+      this.subscription.add(createObservable.subscribe((res: any) => {
         this.fetchTree(); // FIXME implement way to only get the edited dir
         if (type === 'file') this.docChanged.emit({ name: res.name, path: res.path });
-      });
-    });
+      }));
+    }));
   }
 
   private prettifyPath(path, dirName) {

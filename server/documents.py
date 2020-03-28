@@ -17,7 +17,6 @@ class Documents(Resource):
             response = self.getResponseObject(f)
             content = f.read()
             response['content'] = content
-            print('content', content, f)
             return response
         except OSError as err:
             print('get document failed', err)

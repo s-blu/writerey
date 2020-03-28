@@ -1,64 +1,55 @@
 import { ParagraphService } from '../../services/paragraph.service';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDefinition } from '../../interfaces/documentDefinition.interface';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-document-editor',
   templateUrl: './document-editor.component.html',
   styleUrls: ['./document-editor.component.scss'],
 })
-export class DocumentEditorComponent implements OnInit {
-  paragraphId: string;
+export class DocumentEditorComponent implements OnInit, OnDestroy {
   @Input() isLoading: boolean;
   @Input() document: DocumentDefinition;
   @Input() content: { content: string };
 
   @Output() hover: EventEmitter<any> = new EventEmitter();
-  @Output() change: EventEmitter<any> = new EventEmitter();
+  @Output() changeContent: EventEmitter<any> = new EventEmitter();
+
+  private hoverSubject = new Subject();
+  private subscription = new Subscription();
 
   constructor(private documentService: DocumentService, private paragraphService: ParagraphService) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.subscription.add(
+      this.hoverSubject
+        .pipe(
+          distinctUntilChanged(),
+          debounceTime(150)
+        )
+        .subscribe((event) => this.hover.emit(event))
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   onHover(event) {
-    const dummyData = [];
-    const no = Math.random() * 10;
-    for (let i = 0; i < no; i++) {
-      dummyData.push({
-        type: 'info',
-        color: Math.random() > 0.7 ? (Math.random() > 0.4 ? '#d2fbd6' : '#fbd2d2') : '',
-        context: 'Paragraph',
-        text:
-          Math.random() > 0.7
-            ? Math.random() > 0.3
-              ? 'consetetur sadipscing elitr'
-              : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.'
-            : 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod.',
-      });
-    }
-
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
-      this.paragraphId = event;
-
-      this.paragraphService
-        .getParagraphMeta(this.document.path, this.document.name, this.paragraphId, 'notes')
-        .subscribe(res => {
-          if (res === '') {
-            this.paragraphService
-              .setParagraphMeta(this.document.path, this.document.name, this.paragraphId, 'notes', dummyData)
-              .subscribe(res2 => console.log('setPar called', res2));
-          }
-          this.hover.emit(event);
-        });
+      this.hoverSubject.next(event);
     }
   }
 
   onBlur(event) {
-    this.change.emit(event.editor.getData());
+    console.log('blurred')
+    this.changeContent.emit(event.editor.getData());
   }
 
   onChange(event) {
-    this.change.emit(event.editor.getData());
+    this.changeContent.emit(event.editor.getData());
   }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
 @Component({
@@ -8,8 +8,8 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './ckeditor.component.html',
   styleUrls: ['./ckeditor.component.scss'],
 })
-export class CkeditorComponent implements OnInit {
-  @Input() readonly: boolean = false;
+export class CkeditorComponent implements OnInit, OnDestroy {
+  @Input() readonly = false;
   @Input() content: { content: string };
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
@@ -45,12 +45,19 @@ export class CkeditorComponent implements OnInit {
   };
 
   private changeDebounce = new Subject();
+  private subscription = new Subscription();
   constructor() { }
 
   ngOnInit() {
-    this.changeDebounce
-      .pipe(debounceTime(1000))
-      .subscribe((event) => this.editorChange.emit(event));
+    this.subscription.add(
+      this.changeDebounce
+        .pipe(debounceTime(1000))
+        .subscribe((event) => this.editorChange.emit(event))
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   onBlur(event) {
