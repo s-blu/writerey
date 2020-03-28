@@ -8,6 +8,7 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
 })
 export class FooterComponent implements OnInit {
   @Input() set document(doc: DocumentDefinition) {
+    if (!doc) return;
     this.lastSave = doc.last_edited;
     this.docDef = doc;
   }

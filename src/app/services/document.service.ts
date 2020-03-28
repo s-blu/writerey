@@ -1,11 +1,14 @@
+import { FileInfo } from './../interfaces/fileInfo.interface';
 import { DocumentDefinition } from '../interfaces/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { catchError, flatMap, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
+
+const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 
 @Injectable({
   providedIn: 'root'
@@ -27,11 +30,12 @@ export class DocumentService {
           if (res.last_edited) {
             try {
               res.last_edited = new Date(res.last_edited * 1000);
-            } finally {}
+            } finally { }
 
             return res;
           }
-        })
+        }),
+        tap(res => localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }))),
       );
   }
 
@@ -59,5 +63,16 @@ export class DocumentService {
   createDocument(path: string, name: string, ) {
     name = sanitizeName(name);
     return this.saveDocument(path, name, '');
+  }
+
+  getLastSavedFileInfo(): FileInfo {
+    let lastSaved = null;
+    try {
+      lastSaved = localStorage.getItem(LAST_DOCUMENT_KEY);
+      lastSaved = JSON.parse(lastSaved);
+    } catch {
+      lastSaved = null;
+    }
+    return lastSaved;
   }
 }

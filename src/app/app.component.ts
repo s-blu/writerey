@@ -1,6 +1,6 @@
 import { DocumentService } from './services/document.service';
 import { ParagraphService } from './services/paragraph.service';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DocumentDefinition } from './interfaces/documentDefinition.interface';
 import { Note } from './interfaces/note.interface';
 import { FileInfo } from './interfaces/fileInfo.interface';
@@ -10,10 +10,9 @@ import { FileInfo } from './interfaces/fileInfo.interface';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'writerey';
-  // TODO get last opened document (local storage?)
-  fileInfo: FileInfo = { path: 'dummy/path/', name: 'DummyFile.html' };
+  fileInfo: FileInfo;
   document: DocumentDefinition;
   documentContent: { content: string };
   isLoading = false;
@@ -24,6 +23,12 @@ export class AppComponent {
     private documentService: DocumentService
   ) { }
 
+  ngOnInit() {
+    this.fileInfo = this.documentService.getLastSavedFileInfo();
+    if (this.fileInfo) {
+      this.changeDoc(this.fileInfo);
+    }
+  }
 
   changeDoc(event: FileInfo) {
     console.log('change doc event received', event)
@@ -35,7 +40,6 @@ export class AppComponent {
         this.documentContent = { content: res.content };
         delete res.content;
         this.document = res;
-        console.log('last edited is', res.last_edited);
       });
   }
 
