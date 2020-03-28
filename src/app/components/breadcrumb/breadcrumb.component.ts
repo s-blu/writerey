@@ -16,7 +16,6 @@ export class BreadcrumbComponent implements OnInit {
     const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
     this.path = pathParts;
     this.name = docDef.name;
-    console.log('breadcrumb', docDef, this.path);
   }
 
   constructor() {}

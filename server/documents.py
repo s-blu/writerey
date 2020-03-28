@@ -10,16 +10,18 @@ from stat import ST_MTIME
 
 class Documents(Resource):
     def get(self, doc_name):
-        path = request.args.get('doc_path')
         try:
-            path = PathUtils.sanitizePathList([basePath, path, doc_name])
+            path = PathUtils.sanitizePathList(
+                [basePath, request.args.get('doc_path'), doc_name])
             f = open(path, encoding='utf-8')
-            fstats = os.stat(path)
+            response = self.getResponseObject(f)
             content = f.read()
-            return { 'content': content, 'name': doc_name, 'path': request.args.get('doc_path'), 'last_edited': fstats[ST_MTIME] }
+            response['content'] = content
+            print('content', content, f)
+            return response
         except OSError as err:
             print('get document failed', err)
-            return ''
+            return ''  # TODO send an error back here
 
     def put(self, doc_name):
         if request.form['doc_path']:
@@ -33,5 +35,12 @@ class Documents(Resource):
         # TODO check if this is available
         f = request.files['file']
         f.save(filePath)
+        return self.getResponseObject(open(filePath, encoding='utf-8'))
 
-        return {'path': PathUtils.sanitizePathString(pathToSaveTo, True), 'name': doc_name}
+    def getResponseObject(self, file):
+        fstats = os.stat(file.name)
+        return {
+            'path': PathUtils.sanitizePathString(os.path.dirname(file.name), True),
+            'name': os.path.basename(file.name),
+            'last_edited': fstats[ST_MTIME]
+        }

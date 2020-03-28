@@ -14,33 +14,27 @@ const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
   providedIn: 'root',
 })
 export class DocumentService {
-  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
+  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) { }
 
   getDocument(path: string, name: string): Observable<any> {
     return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`).pipe(
       catchError(err => this.api.handleHttpError(err)),
-      map((res: any) => {
-        if (res.last_edited) {
-          try {
-            res.last_edited = new Date(res.last_edited * 1000);
-          } finally {
-          }
-
-          return res;
-        }
-      }),
-      tap(res => localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path })))
+      map((res: any) => this.transformLastEditedIntoDate(res)),
+      tap(res => {
+        if (res) localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }))
+      })
     );
   }
 
   saveDocument(path: string, name: string, content) {
     // TODO remove me again. enhancing needs to take place explicitly to save file as-is
-    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
-    console.log('===========================');
-    console.log('CONTENT TO SAVE', enhancedContent);
-    console.log('===========================');
+    // const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
+    // console.log('===========================');
+    // console.log('CONTENT TO SAVE', enhancedContent);
+    // console.log('===========================');
 
-    const blob = new Blob([enhancedContent], { type: 'text/html' });
+    // const blob = new Blob([enhancedContent], { type: 'text/html' });
+    const blob = new Blob([content], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
 
     const formdata = new FormData();
@@ -52,7 +46,10 @@ export class DocumentService {
 
     return this.httpClient
       .put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
-      .pipe(catchError(err => this.api.handleHttpError(err)));
+      .pipe(
+        catchError(err => this.api.handleHttpError(err)),
+        map((res: any) => this.transformLastEditedIntoDate(res))
+      );
   }
 
   createDocument(path: string, name: string) {
@@ -69,5 +66,15 @@ export class DocumentService {
       lastSaved = null;
     }
     return lastSaved;
+  }
+
+  private transformLastEditedIntoDate(res) {
+    if (res.last_edited) {
+      try {
+        res.last_edited = new Date(res.last_edited * 1000);
+      } finally {
+      }
+    }
+    return res;
   }
 }

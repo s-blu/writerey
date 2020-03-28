@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-ckeditor',
@@ -10,12 +12,10 @@ export class CkeditorComponent implements OnInit {
   @Input() readonly: boolean = false;
   @Input() content: { content: string };
 
-  // @Input() set content(value: string) {
-  //   this.contentWrap.content = value;
-  // }
-
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
+  @Output() editorChange: EventEmitter<any> = new EventEmitter();
   @Output() hover: EventEmitter<any> = new EventEmitter();
+  @Output() changed: EventEmitter<any> = new EventEmitter();
 
   public Editor = ClassicEditor;
   public config = {
@@ -36,7 +36,7 @@ export class CkeditorComponent implements OnInit {
       'redo',
     ],
     extraPlugins: [AllowClassesOnP],
-    wordCount: {
+    wordCount: { // FIXME
       container: document.getElementById('ckeditor-word-count-container'),
       onUpdate(event) {
         console.log('wordCount on update triggered', event);
@@ -44,14 +44,20 @@ export class CkeditorComponent implements OnInit {
     },
   };
 
-  constructor() {}
+  private changeDebounce = new Subject();
+  constructor() { }
 
   ngOnInit() {
-    console.log('osdugasud', document.getElementById('ckeditor-word-count-container'));
+    this.changeDebounce
+      .pipe(debounceTime(1000))
+      .subscribe((event) => this.editorChange.emit(event));
   }
 
   onBlur(event) {
     this.editorBlur.emit(event);
+  }
+  onChange(event) {
+    this.changeDebounce.next(event);
   }
 
   over(event) {
@@ -64,7 +70,7 @@ class AllowClassesOnP {
   constructor(editor) {
     this.editor = editor;
   }
-  init() {}
+  init() { }
 
   // all of this needs to happen in afterInit to make sure paragraph is already there
   afterInit() {

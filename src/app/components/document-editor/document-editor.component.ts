@@ -15,10 +15,11 @@ export class DocumentEditorComponent implements OnInit {
   @Input() content: { content: string };
 
   @Output() hover: EventEmitter<any> = new EventEmitter();
+  @Output() change: EventEmitter<any> = new EventEmitter();
 
-  constructor(private documentService: DocumentService, private paragraphService: ParagraphService) {}
+  constructor(private documentService: DocumentService, private paragraphService: ParagraphService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   onHover(event) {
     const dummyData = [];
@@ -54,12 +55,10 @@ export class DocumentEditorComponent implements OnInit {
   }
 
   onBlur(event) {
-    console.log('document editor on blur');
-    // FIXME debounce trigger of save
-    const htmlContent = event.editor.getData();
+    this.change.emit(event.editor.getData());
+  }
 
-    this.documentService
-      .saveDocument(this.document.path, this.document.name, event.editor.getData())
-      .subscribe(res => res);
+  onChange(event) {
+    this.change.emit(event.editor.getData());
   }
 }

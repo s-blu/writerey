@@ -1,6 +1,9 @@
 from functools import reduce
 from writerey_config import basePath
 import re
+import os
+
+# TODO try to use os.path.normpath here
 
 
 class PathUtils:
@@ -20,7 +23,6 @@ class PathUtils:
             if p.endswith('/'):
                 p = p[:-1]
             path = path + p
-            
         return path
 
     @staticmethod

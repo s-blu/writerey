@@ -4,6 +4,7 @@
     [config]="config"
     [ngModel]="content.content"
     (blur)="onBlur($event)"
+    (change)="onChange($event)"
     [disabled]="readonly"
   ></ckeditor>
 </div>

@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
   isLoading = false;
   notes: Array<Note>;
 
-  constructor(private paragraphService: ParagraphService, private documentService: DocumentService) {}
+  constructor(private paragraphService: ParagraphService, private documentService: DocumentService) { }
 
   ngOnInit() {
     this.fileInfo = this.documentService.getLastSavedFileInfo();
@@ -33,9 +33,11 @@ export class AppComponent implements OnInit {
     this.isLoading = true;
     this.documentService.getDocument(event.path, event.name).subscribe(res => {
       this.isLoading = false;
-      this.documentContent = { content: res.content };
-      delete res.content;
-      this.document = res;
+      if (res) {
+        this.documentContent = { content: res.content };
+        delete res.content;
+        this.document = res;
+      }
     });
   }
 
@@ -50,5 +52,13 @@ export class AppComponent implements OnInit {
         console.log('getting notes failed', err);
       }
     });
+  }
+
+  onChange(event) {
+    this.documentService
+      .saveDocument(this.document.path, this.document.name, event)
+      .subscribe((res: DocumentDefinition) => {
+        this.document = res;
+      });
   }
 }

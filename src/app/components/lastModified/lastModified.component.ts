@@ -12,6 +12,5 @@ export class LastModifiedComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    console.log(this.lastSave, this.lastSnapshot);
   }
 }

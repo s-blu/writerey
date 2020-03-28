@@ -16,7 +16,7 @@ export class FooterComponent implements OnInit {
   lastSave: Date;
   dummyDate = new Date();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 }

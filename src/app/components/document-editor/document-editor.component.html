@@ -3,6 +3,7 @@
   <wy-ckeditor
     *ngIf="content"
     (editorBlur)="onBlur($event)"
+    (editorChange)="onChange($event)"
     (hover)="onHover($event)"
     [(content)]="content"
     [readonly]="isLoading"
