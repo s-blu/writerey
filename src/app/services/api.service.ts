@@ -21,8 +21,13 @@ export class ApiService {
   getDirectoryRoute(dirName?: string) {
     return dirName ? `${this.serverAdress}/dir/${dirName}` : `${this.serverAdress}/dir`;
   }
+
   getTreeRoute() {
     return `${this.serverAdress}/tree`;
+  }
+
+  getGitRoute() {
+    return `${this.serverAdress}/git/commit`;
   }
 
   handleHttpError(error: HttpErrorResponse) {

@@ -6,7 +6,7 @@
     <button mat-button class="mode-switch" (click)="review()">Review</button>
   </div>
   <div class="right">
-    <button mat-icon-button [matTooltip]="t('snapshot')">
+    <button mat-icon-button (click)="snapshot()" [matTooltip]="t('snapshot')">
       <mat-icon>save_alt</mat-icon>
     </button>
     <button mat-icon-button [matTooltip]="t('tag')">
