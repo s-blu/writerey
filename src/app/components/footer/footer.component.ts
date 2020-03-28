@@ -4,7 +4,7 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
 @Component({
   selector: 'wy-footer',
   templateUrl: './footer.component.html',
-  styleUrls: ['./footer.component.scss']
+  styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
   @Input() set document(doc: DocumentDefinition) {
@@ -16,9 +16,7 @@ export class FooterComponent implements OnInit {
   lastSave: Date;
   dummyDate = new Date();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

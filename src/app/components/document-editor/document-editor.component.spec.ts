@@ -11,9 +11,8 @@ describe('DocumentEditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentEditorComponent ]
-    })
-    .compileComponents();
+      declarations: [DocumentEditorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

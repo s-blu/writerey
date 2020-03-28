@@ -7,8 +7,12 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor [document]="document" [content]="documentContent" (hover)="onHover($event)"
-          [isLoading]="isLoading">
+        <wy-document-editor
+          [document]="document"
+          [content]="documentContent"
+          (hover)="onHover($event)"
+          [isLoading]="isLoading"
+        >
         </wy-document-editor>
       </div>
     </div>

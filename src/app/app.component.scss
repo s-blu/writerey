@@ -1,39 +1,43 @@
-.main, .left, .editor, .notes, .scroll, .document-area  {
-    box-sizing: border-box;
-    height: 100%;
+.main,
+.left,
+.editor,
+.notes,
+.scroll,
+.document-area {
+  box-sizing: border-box;
+  height: 100%;
 }
 .notes {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 .app {
-    display: flex;
-    flex-direction: column;
-    word-wrap: break-word;
-    overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .main {
-    display: grid;
-    grid-template-columns: 1fr 750px 1fr;
+  display: grid;
+  grid-template-columns: 1fr 750px 1fr;
 
-    .left {
-        display: flex;
-        wy-explorer {
-            flex-grow: 2;
-        }
+  .left {
+    display: flex;
+    wy-explorer {
+      flex-grow: 2;
     }
+  }
 }
 
 .main > * {
-     // FIXME uh. this is not so cool. is there a better solution?
-    height: calc(100vh - 80px);
+  // FIXME uh. this is not so cool. is there a better solution?
+  height: calc(100vh - 80px);
 }
 
 .editor {
-    .document-area {
-        overflow: hidden;
-        padding: 0 2em;
-        box-sizing: content-box;
-    }
+  .document-area {
+    overflow: hidden;
+    padding: 0 2em;
+    box-sizing: content-box;
+  }
 }
-

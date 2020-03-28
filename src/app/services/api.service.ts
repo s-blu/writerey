@@ -3,12 +3,12 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ApiService {
   serverAdress = 'http://localhost:5002';
 
-  constructor() { }
+  constructor() {}
 
   getDocumentRoute(docName) {
     return docName ? `${this.serverAdress}/doc/${docName}` : `${this.serverAdress}/doc`;
@@ -24,7 +24,6 @@ export class ApiService {
   getTreeRoute() {
     return `${this.serverAdress}/tree`;
   }
-
 
   handleHttpError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {

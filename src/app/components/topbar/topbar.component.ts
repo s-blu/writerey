@@ -6,16 +6,12 @@ import { CreateNewFileDialogComponent } from '../createNewFileDialog/createNewFi
 @Component({
   selector: 'wy-topbar',
   templateUrl: './topbar.component.html',
-  styleUrls: ['./topbar.component.scss']
+  styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
-
-  review() {
-
-  }
+  review() {}
 }

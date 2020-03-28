@@ -11,9 +11,8 @@ describe('ExplorerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExplorerComponent ]
-    })
-    .compileComponents();
+      declarations: [ExplorerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

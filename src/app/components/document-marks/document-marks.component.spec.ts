@@ -11,9 +11,8 @@ describe('DocumentMarksComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentMarksComponent ]
-    })
-    .compileComponents();
+      declarations: [DocumentMarksComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

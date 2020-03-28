@@ -1,3 +1,9 @@
-<div (mouseover)='over($event)' class="ckeditor-wrap">
-    <ckeditor [editor]="Editor" [config]="config" [ngModel]="content.content" (blur)="onBlur($event)" [disabled]="readonly"></ckeditor>
+<div (mouseover)="over($event)" class="ckeditor-wrap">
+  <ckeditor
+    [editor]="Editor"
+    [config]="config"
+    [ngModel]="content.content"
+    (blur)="onBlur($event)"
+    [disabled]="readonly"
+  ></ckeditor>
 </div>

@@ -11,40 +11,34 @@ import { sanitizeName } from '../utils/name.util';
 const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DocumentService {
-
-  constructor(
-    private api: ApiService,
-    private httpClient: HttpClient,
-    private paragraphService: ParagraphService
-  ) { }
+  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
 
   getDocument(path: string, name: string): Observable<any> {
-
-    return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`)
-      .pipe(
-        catchError((err) => this.api.handleHttpError(err)),
-        map((res: any) => {
-          if (res.last_edited) {
-            try {
-              res.last_edited = new Date(res.last_edited * 1000);
-            } finally { }
-
-            return res;
+    return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      map((res: any) => {
+        if (res.last_edited) {
+          try {
+            res.last_edited = new Date(res.last_edited * 1000);
+          } finally {
           }
-        }),
-        tap(res => localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }))),
-      );
+
+          return res;
+        }
+      }),
+      tap(res => localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path })))
+    );
   }
 
   saveDocument(path: string, name: string, content) {
     // TODO remove me again. enhancing needs to take place explicitly to save file as-is
     const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
-    console.log('===========================')
-    console.log('CONTENT TO SAVE', enhancedContent)
-    console.log('===========================')
+    console.log('===========================');
+    console.log('CONTENT TO SAVE', enhancedContent);
+    console.log('===========================');
 
     const blob = new Blob([enhancedContent], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
@@ -56,11 +50,12 @@ export class DocumentService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
+    return this.httpClient
+      .put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
       .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 
-  createDocument(path: string, name: string, ) {
+  createDocument(path: string, name: string) {
     name = sanitizeName(name);
     return this.saveDocument(path, name, '');
   }

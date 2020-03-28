@@ -6,7 +6,7 @@ import { DirectoryService } from './directory.service';
 describe('Service: Directory', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DirectoryService]
+      providers: [DirectoryService],
     });
   });
 

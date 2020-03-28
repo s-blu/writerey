@@ -1,20 +1,19 @@
 .note {
-    margin-bottom: 0.5em;
-    padding: 0.5em;
-    background-color: #E5EAF2;
-    border-radius: 3px;
-    display: flex;
-    flex-direction: column;
-    font-size: 10pt;
-    
-    
-    .meta {
-        display: flex;
-        justify-content: space-between;
-    }
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  background-color: #e5eaf2;
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  font-size: 10pt;
 
-    .mat-icon {
-        font-size: 14pt;
-        color: #3F3F3F;
-    }
+  .meta {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .mat-icon {
+    font-size: 14pt;
+    color: #3f3f3f;
+  }
 }

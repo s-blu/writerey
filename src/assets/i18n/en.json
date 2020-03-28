@@ -1,33 +1,33 @@
 {
-    "dateFormat": "dd/MM/yy hh:mm:ss",
-    "explorer": {
-        "rename": "Rename",
-        "newfile": "New document",
-        "newdir": "New directory"
-    },
-    "topbar": {
-        "newfile": "Create a new file",
-        "newcategory": "Create a new category",
-        "snapshot": "Create Snapshot",
-        "tag": "Tag last snapshot",
-        "history": "Show snapshot history"
-    },
-    "saveInfo": {
-        "lastSaved": "Last saved on",
-        "lastSnapshotted": "Last snapshotted on"
-    },
-    "createFileDialog" : {
-       "title": "Create new document",
-       "message": "Name your new document.",
-       "input": "document name",
-       "cancel": "Cancel",
-       "create": "Create"
-    },
-    "createDirDialog" : {
-       "title": "Create new directory",
-       "message": "Name your new directory",
-       "input": "directory name",
-       "cancel": "Cancel",
-       "create": "Create"
-    }
+  "dateFormat": "dd/MM/yy hh:mm:ss",
+  "explorer": {
+    "rename": "Rename",
+    "newfile": "New document",
+    "newdir": "New directory"
+  },
+  "topbar": {
+    "newfile": "Create a new file",
+    "newcategory": "Create a new category",
+    "snapshot": "Create Snapshot",
+    "tag": "Tag last snapshot",
+    "history": "Show snapshot history"
+  },
+  "saveInfo": {
+    "lastSaved": "Last saved on",
+    "lastSnapshotted": "Last snapshotted on"
+  },
+  "createFileDialog": {
+    "title": "Create new document",
+    "message": "Name your new document.",
+    "input": "document name",
+    "cancel": "Cancel",
+    "create": "Create"
+  },
+  "createDirDialog": {
+    "title": "Create new directory",
+    "message": "Name your new directory",
+    "input": "directory name",
+    "cancel": "Cancel",
+    "create": "Create"
+  }
 }

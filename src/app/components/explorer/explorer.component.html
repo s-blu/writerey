@@ -1,50 +1,60 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
   <button mat-button class="new-root-dir-button" (click)="addNewDirOnRoot()">
     <i class="material-icons-outlined">create_new_folder</i>
-    <span>{{t('newdir')}}</span>
+    <span>{{ t('newdir') }}</span>
   </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
-      <button mat-icon-button [disabled]="!node.expandable" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
-        class='explorer-btn'>
+      <button
+        mat-icon-button
+        [disabled]="!node.expandable"
+        matTreeNodeToggle
+        [attr.aria-label]="'toggle ' + node.name"
+        class="explorer-btn"
+      >
         <mat-icon *ngIf="node.expandable" class="mat-icon-rtl-mirror">
-          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
         </mat-icon>
       </button>
-      <div class="name">{{node.name}}</div>
-      <button mat-icon-button class='explorer-btn' [matMenuTriggerFor]='dirMenu'>
+      <div class="name">{{ node.name }}</div>
+      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="dirMenu">
         <mat-icon class="menu">more_vert</mat-icon>
       </button>
 
       <mat-menu #dirMenu="matMenu">
         <button mat-menu-item (click)="renameDir(node)">
           <mat-icon>text_fields</mat-icon>
-          <span>{{t('rename')}}</span>
+          <span>{{ t('rename') }}</span>
         </button>
         <button mat-menu-item (click)="addNewFile(node)">
           <mat-icon>note_add</mat-icon>
-          <span>{{t('newfile')}}</span>
+          <span>{{ t('newfile') }}</span>
         </button>
         <button mat-menu-item (click)="addNewDir(node)">
           <mat-icon>create_new_folder</mat-icon>
-          <span>{{t('newdir')}}</span>
+          <span>{{ t('newdir') }}</span>
         </button>
       </mat-menu>
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: isFile" matTreeNodePadding matTreeNodePaddingIndent="15"
-      class="file-node">
-      <button mat-icon-button class='explorer-btn file-btn'>
-        <i class="material-icons-outlined">insert_drive_file</i></button>
-      <div (click)="openDocument(node)" class="name">{{node.name | stripFileEnding }}</div>
-      <button mat-icon-button class='explorer-btn' [matMenuTriggerFor]='fileMenu'>
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: isFile"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="15"
+      class="file-node"
+    >
+      <button mat-icon-button class="explorer-btn file-btn">
+        <i class="material-icons-outlined">insert_drive_file</i>
+      </button>
+      <div (click)="openDocument(node)" class="name">{{ node.name | stripFileEnding }}</div>
+      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="fileMenu">
         <mat-icon class="menu">more_vert</mat-icon>
       </button>
 
       <mat-menu #fileMenu="matMenu">
         <button mat-menu-item (click)="renameFile(node)">
           <mat-icon>text_fields</mat-icon>
-          <span>{{t('rename')}}</span>
+          <span>{{ t('rename') }}</span>
         </button>
       </mat-menu>
     </mat-tree-node>

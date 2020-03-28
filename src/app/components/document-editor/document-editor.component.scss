@@ -1,14 +1,15 @@
-:host, .document-editor {
-    display: block;
-    height:100%;
-    margin-bottom: 3em;
+:host,
+.document-editor {
+  display: block;
+  height: 100%;
+  margin-bottom: 3em;
 }
 
 .document-editor {
-    width: 640px;
-    overflow-wrap: break-word;
+  width: 640px;
+  overflow-wrap: break-word;
 
-    * {
-        box-sizing: border-box;
-    }
+  * {
+    box-sizing: border-box;
+  }
 }

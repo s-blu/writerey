@@ -1,16 +1,16 @@
 @import '../../variables';
 
 .footer {
-    height: 30px;
-    border-top: 1px solid $c_border;
-    padding: 0 1em;
-    display: grid;
-    grid-auto-columns: 1fr;
-    grid-auto-flow: column;
-    font-size: 10pt;
-    color: $c_hint;
+  height: 30px;
+  border-top: 1px solid $c_border;
+  padding: 0 1em;
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-flow: column;
+  font-size: 10pt;
+  color: $c_hint;
 
-    wy-breadcrumb {
-        justify-self: center;
-    }
+  wy-breadcrumb {
+    justify-self: center;
+  }
 }

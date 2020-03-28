@@ -1,63 +1,64 @@
 .explorer {
-    border-right: 1px solid #DDDDDD;
-    box-sizing: border-box;
-    height: 100%;
+  border-right: 1px solid #dddddd;
+  box-sizing: border-box;
+  height: 100%;
 
-    .new-root-dir-button {
-        font-size: 14px;
-        width: 100%;
-        text-align: start;
-        
-        i {
-            font-size: 13pt;
-            margin-right: 5px; 
-        }
+  .new-root-dir-button {
+    font-size: 14px;
+    width: 100%;
+    text-align: start;
+
+    i {
+      font-size: 13pt;
+      margin-right: 5px;
+    }
+  }
+
+  .explorer-btn {
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+
+    mat-icon,
+    i {
+      font-size: 12pt;
+    }
+  }
+
+  .file-btn {
+    width: 18px;
+
+    i {
+      font-size: 10pt;
+    }
+  }
+
+  .file-node {
+    .name:hover {
+      cursor: pointer;
+    }
+  }
+
+  .mat-tree-node {
+    min-height: 28px;
+    padding: 0 1em;
+    display: flex;
+
+    .name {
+      flex-grow: 2;
     }
 
-    .explorer-btn {
-        height: 24px;
-        width: 24px;
-        line-height: 24px;
-
-        mat-icon, i {
-            font-size: 12pt;
-        }
+    .menu {
+      display: none;
+      font-size: 10pt;
     }
 
-    .file-btn {
-        width: 18px;
+    &:hover {
+      background-color: aliceblue;
 
-        i {
-            font-size: 10pt;
-        }
+      .menu {
+        display: inline;
+      }
     }
-
-    .file-node {
-        .name:hover {
-            cursor: pointer;
-        }
-    }
-
-    .mat-tree-node {
-        min-height: 28px;
-        padding: 0 1em;
-        display: flex;
-
-        .name {
-            flex-grow: 2;
-        }
-
-        .menu {
-            display: none;
-            font-size: 10pt;
-        }
-
-        &:hover {
-            background-color: aliceblue;
-
-            .menu {
-                display: inline;
-            }
-        }
-    }
+  }
 }

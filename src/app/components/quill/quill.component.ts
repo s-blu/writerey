@@ -11,7 +11,7 @@ import { QuillEditorComponent } from 'ngx-quill';
 @Component({
   selector: 'wy-quill',
   templateUrl: './quill.component.html',
-  styleUrls: ['./quill.component.scss']
+  styleUrls: ['./quill.component.scss'],
 })
 export class QuillComponent implements OnInit {
   @Input() content: string;
@@ -27,24 +27,23 @@ export class QuillComponent implements OnInit {
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
       [{ align: [] }],
       ['clean'],
-    ]
+    ],
   };
   styles = {
     border: 'none',
-    'font-family': '\'Noto Serif\', \'Libertinus Serif\', \'Palatino Linotype\', \'Book Antiqua\', serif',
-    'font-size': '16px'
+    'font-family': "'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif",
+    'font-size': '16px',
   };
 
   @ViewChild('editor', {
-    static: true
-  }) editor: QuillEditorComponent;
+    static: true,
+  })
+  editor: QuillEditorComponent;
 
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onEditorCreated(event) {
-    console.log(event)
+    console.log(event);
     // this.form
     //   .controls
     //   .editor
@@ -57,16 +56,10 @@ export class QuillComponent implements OnInit {
     //     console.log('native fromControl value changes with debounce', data)
     //   })
 
-    this.editor
-      .onContentChanged
-      .pipe(
-        debounceTime(400),
-        distinctUntilChanged()
-      )
-      .subscribe((data) => {
-        // tslint:disable-next-line:no-console
-        console.log('view child + directly subscription', data)
-      })
+    this.editor.onContentChanged.pipe(debounceTime(400), distinctUntilChanged()).subscribe(data => {
+      // tslint:disable-next-line:no-console
+      console.log('view child + directly subscription', data);
+    });
   }
 
   onContentChange(event) {

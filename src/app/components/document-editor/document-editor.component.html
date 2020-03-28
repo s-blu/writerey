@@ -1,7 +1,11 @@
 <div class="document-editor">
-    <mat-progress-bar *ngIf="isLoading" mode="indeterminate">
-    </mat-progress-bar>
-    <wy-ckeditor *ngIf="content" (editorBlur)="onBlur($event)" (hover)="onHover($event)" [(content)]="content"
-        [readonly]="isLoading">
-    </wy-ckeditor>
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
+  <wy-ckeditor
+    *ngIf="content"
+    (editorBlur)="onBlur($event)"
+    (hover)="onHover($event)"
+    [(content)]="content"
+    [readonly]="isLoading"
+  >
+  </wy-ckeditor>
 </div>

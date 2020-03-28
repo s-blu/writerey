@@ -6,7 +6,7 @@ import { ParagraphService } from './paragraph.service';
 describe('Service: Paragraph', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ParagraphService]
+      providers: [ParagraphService],
     });
   });
 

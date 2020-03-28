@@ -1,23 +1,26 @@
 @import 'app/variables';
 
 /* You can add global styles to this file, and also import other style files */
-html, body, app-root, .app {
-    box-sizing: border-box;
-    height: 100%;
-    padding: 0;
-    margin: 0;
+html,
+body,
+app-root,
+.app {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 0;
+  margin: 0;
 
-    font-family: 'Roboto', Arial, Helvetica, sans-serif;
+  font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
 .app-body {
   .mat-menu-panel {
     $size: 32px;
     min-height: $size;
-  
+
     .mat-menu-item {
       height: $size;
       line-height: $size;
-  
+
       .mat-icon {
         height: $size;
         line-height: $size;
@@ -28,22 +31,20 @@ html, body, app-root, .app {
   }
 }
 
-
 //Scrollbar
 ::-webkit-scrollbar {
-    height: 16px;
-    width: 16px;
-    background-color: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    -webkit-box-shadow: inset 0 0 12px $c_border;
-    border: 4px solid transparent;
-    border-radius: 16px;
-    background-clip: padding-box;
-  }
-  
-  * {
-    scrollbar-color: $c_border transparent;
-    scrollbar-width: thin;
-  }
+  height: 16px;
+  width: 16px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 12px $c_border;
+  border: 4px solid transparent;
+  border-radius: 16px;
+  background-clip: padding-box;
+}
 
+* {
+  scrollbar-color: $c_border transparent;
+  scrollbar-width: thin;
+}

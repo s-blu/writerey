@@ -11,9 +11,8 @@ describe('LastModifiedComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LastModifiedComponent ]
-    })
-    .compileComponents();
+      declarations: [LastModifiedComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

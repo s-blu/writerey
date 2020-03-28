@@ -6,7 +6,7 @@ import { DocumentService } from './document.service';
 describe('Service: Document', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DocumentService]
+      providers: [DocumentService],
     });
   });
 

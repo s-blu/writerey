@@ -4,7 +4,7 @@ import { DocumentDefinition } from '../../interfaces/documentDefinition.interfac
 @Component({
   selector: 'wy-breadcrumb',
   templateUrl: './breadcrumb.component.html',
-  styleUrls: ['./breadcrumb.component.scss']
+  styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit {
   path: Array<string> = [];
@@ -16,13 +16,10 @@ export class BreadcrumbComponent implements OnInit {
     const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
     this.path = pathParts;
     this.name = docDef.name;
-    console.log('breadcrumb', docDef, this.path)
+    console.log('breadcrumb', docDef, this.path);
   }
 
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {
-  }
-
+  ngOnInit() {}
 }

@@ -8,7 +8,7 @@ import { FileInfo } from './interfaces/fileInfo.interface';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
   title = 'writerey';
@@ -18,10 +18,7 @@ export class AppComponent implements OnInit {
   isLoading = false;
   notes: Array<Note>;
 
-  constructor(
-    private paragraphService: ParagraphService,
-    private documentService: DocumentService
-  ) { }
+  constructor(private paragraphService: ParagraphService, private documentService: DocumentService) {}
 
   ngOnInit() {
     this.fileInfo = this.documentService.getLastSavedFileInfo();
@@ -31,27 +28,26 @@ export class AppComponent implements OnInit {
   }
 
   changeDoc(event: FileInfo) {
-    console.log('change doc event received', event)
+    console.log('change doc event received', event);
     this.fileInfo = event;
     this.isLoading = true;
-    this.documentService.getDocument(event.path, event.name)
-      .subscribe((res) => {
-        this.isLoading = false;
-        this.documentContent = { content: res.content };
-        delete res.content;
-        this.document = res;
-      });
+    this.documentService.getDocument(event.path, event.name).subscribe(res => {
+      this.isLoading = false;
+      this.documentContent = { content: res.content };
+      delete res.content;
+      this.document = res;
+    });
   }
 
   onHover(event) {
     this.paragraphService.getParagraphMeta(this.fileInfo.path, this.fileInfo.name, event, 'notes').subscribe(res => {
       try {
-        console.log('on hover app', res)
+        console.log('on hover app', res);
         if (res && res.length) {
           this.notes = res;
         }
       } catch (err) {
-        console.log('getting notes failed', err)
+        console.log('getting notes failed', err);
       }
     });
   }

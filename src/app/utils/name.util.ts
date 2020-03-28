@@ -1,3 +1,3 @@
 export function sanitizeName(name) {
-  return name.replace(/([/\\<>\*\?:\'"])/g, '_')
+  return name.replace(/([/\\<>\*\?:\'"])/g, '_');
 }

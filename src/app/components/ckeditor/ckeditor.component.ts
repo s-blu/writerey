@@ -4,7 +4,7 @@ import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 @Component({
   selector: 'wy-ckeditor',
   templateUrl: './ckeditor.component.html',
-  styleUrls: ['./ckeditor.component.scss']
+  styleUrls: ['./ckeditor.component.scss'],
 })
 export class CkeditorComponent implements OnInit {
   @Input() readonly: boolean = false;
@@ -19,20 +19,35 @@ export class CkeditorComponent implements OnInit {
 
   public Editor = ClassicEditor;
   public config = {
-    toolbar: ['heading', '|', 'bold', 'italic', '|', 'numberedList', 'bulletedList',
-      '|', 'blockQuote', 'indent', 'outdent', '|', 'undo', 'redo'],
+    toolbar: [
+      'heading',
+      '|',
+      'bold',
+      'italic',
+      '|',
+      'numberedList',
+      'bulletedList',
+      '|',
+      'blockQuote',
+      'indent',
+      'outdent',
+      '|',
+      'undo',
+      'redo',
+    ],
     extraPlugins: [AllowClassesOnP],
     wordCount: {
       container: document.getElementById('ckeditor-word-count-container'),
-      onUpdate(event) { console.log('wordCount on update triggered', event) }
-    }
+      onUpdate(event) {
+        console.log('wordCount on update triggered', event);
+      },
+    },
   };
 
-
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-    console.log('osdugasud', document.getElementById('ckeditor-word-count-container'))
+    console.log('osdugasud', document.getElementById('ckeditor-word-count-container'));
   }
 
   onBlur(event) {
@@ -49,20 +64,20 @@ class AllowClassesOnP {
   constructor(editor) {
     this.editor = editor;
   }
-  init() { }
+  init() {}
 
   // all of this needs to happen in afterInit to make sure paragraph is already there
   afterInit() {
     this.editor.model.schema.extend('paragraph', {
-      allowAttributes: 'class'
+      allowAttributes: 'class',
     });
 
     this.editor.conversion.for('upcast').attributeToAttribute({
       model: {
         name: 'p',
-        key: 'class'
+        key: 'class',
       },
-      view: 'class'
+      view: 'class',
     });
 
     this.editor.conversion.for('downcast').add(dispatcher => {

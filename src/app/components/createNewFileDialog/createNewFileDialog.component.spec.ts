@@ -11,9 +11,8 @@ describe('CreateNewFileDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateNewFileDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateNewFileDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

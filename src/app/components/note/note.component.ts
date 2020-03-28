@@ -4,7 +4,7 @@ import { Note } from '../../interfaces/note.interface';
 @Component({
   selector: 'wy-note',
   templateUrl: './note.component.html',
-  styleUrls: ['./note.component.scss']
+  styleUrls: ['./note.component.scss'],
 })
 export class NoteComponent implements OnInit {
   @Input() note: Note;
@@ -12,10 +12,9 @@ export class NoteComponent implements OnInit {
   typeIcon = 'info';
   noteStyles = '';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
-
     if (this.note.color) {
       this.noteStyles = 'background-color:' + this.note.color;
     }

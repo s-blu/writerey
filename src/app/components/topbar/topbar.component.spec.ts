@@ -11,9 +11,8 @@ describe('TopbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopbarComponent ]
-    })
-    .compileComponents();
+      declarations: [TopbarComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

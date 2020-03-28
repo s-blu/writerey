@@ -9,7 +9,6 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 
-
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
@@ -26,18 +25,22 @@ interface ExplorerNode {
 @Component({
   selector: 'wy-explorer',
   templateUrl: './explorer.component.html',
-  styleUrls: ['./explorer.component.scss']
+  styleUrls: ['./explorer.component.scss'],
 })
 export class ExplorerComponent implements OnInit {
   @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
   // tree data
   tree;
-  treeControl = new FlatTreeControl<ExplorerNode>(node => node.level, node => node.expandable);
+  treeControl = new FlatTreeControl<ExplorerNode>(
+    node => node.level,
+    node => node.expandable
+  );
   treeFlattener = new MatTreeFlattener(
     this._transformer,
     node => node.level,
     node => node.expandable,
-    node => [...node.dirs, ...node.files]);
+    node => [...node.dirs, ...node.files]
+  );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
   ngOnInit() {
@@ -50,9 +53,7 @@ export class ExplorerComponent implements OnInit {
     private api: ApiService,
     private documentService: DocumentService,
     private directoryService: DirectoryService
-  ) {
-
-  }
+  ) {}
 
   private fetchTree() {
     return this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
@@ -66,15 +67,15 @@ export class ExplorerComponent implements OnInit {
   }
 
   openDocument(node) {
-    console.log('openDocument', node)
+    console.log('openDocument', node);
     this.docChanged.emit({ name: node.name, path: node.path });
   }
 
   renameDir(node) {
-    console.log('rename dir', node)
+    console.log('rename dir', node);
   }
   renameFile(node) {
-    console.log('rename file', node)
+    console.log('rename file', node);
   }
   addNewFile(node) {
     this.createNewChild('file', node);
@@ -91,13 +92,13 @@ export class ExplorerComponent implements OnInit {
   private createNewChild(type, node) {
     const path = this.prettifyPath(node.path, node.name);
     const dialogRef = this.dialog.open(CreateNewFileDialogComponent, {
-      data: { dirPath: path, typeOfDialog: type }
+      data: { dirPath: path, typeOfDialog: type },
     });
 
     dialogRef.afterClosed().subscribe(name => {
       let createObservable;
-      if (type === 'file') createObservable = this.documentService.createDocument(path, name)
-      if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name)
+      if (type === 'file') createObservable = this.documentService.createDocument(path, name);
+      if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);
 
       createObservable.subscribe((res: any) => {
         this.fetchTree(); // FIXME implement way to only get the edited dir
@@ -123,7 +124,7 @@ export class ExplorerComponent implements OnInit {
       path: node.path,
       name: node.name,
       isFile: node.isFile,
-      level
+      level,
     };
   }
 }

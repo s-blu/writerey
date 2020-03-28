@@ -18,7 +18,6 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { DocumentEditorComponent } from './components/document-editor/document-editor.component';
@@ -32,38 +31,45 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
 import { FooterComponent } from './components/footer/footer.component';
 
-const matModules = [MatIconModule, MatButtonModule, MatTooltipModule,
-   MatTreeModule, MatMenuModule, MatProgressBarModule, MatDialogModule, MatInputModule, MatFormFieldModule];
+const matModules = [
+  MatIconModule,
+  MatButtonModule,
+  MatTooltipModule,
+  MatTreeModule,
+  MatMenuModule,
+  MatProgressBarModule,
+  MatDialogModule,
+  MatInputModule,
+  MatFormFieldModule,
+];
 
 @NgModule({
-   declarations: [
-      AppComponent,
-      DocumentEditorComponent,
-      CkeditorComponent,
-      TopbarComponent,
-      ExplorerComponent,
-      NotesComponent,
-      NoteComponent,
-      BreadcrumbComponent,
-      DocumentMarksComponent,
-      FooterComponent,
-      StripFileEndingPipe,
-      CreateNewFileDialogComponent,
-      LastModifiedComponent
-   ],
-   imports: [
-      BrowserModule,
-      HttpClientModule,
-      FormsModule,
-      ReactiveFormsModule,
-      CKEditorModule,
-      BrowserAnimationsModule,
-      ...matModules,
-      TranslocoRootModule
-   ],
-   providers: [],
-   bootstrap: [
-      AppComponent
-   ]
+  declarations: [
+    AppComponent,
+    DocumentEditorComponent,
+    CkeditorComponent,
+    TopbarComponent,
+    ExplorerComponent,
+    NotesComponent,
+    NoteComponent,
+    BreadcrumbComponent,
+    DocumentMarksComponent,
+    FooterComponent,
+    StripFileEndingPipe,
+    CreateNewFileDialogComponent,
+    LastModifiedComponent,
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CKEditorModule,
+    BrowserAnimationsModule,
+    ...matModules,
+    TranslocoRootModule,
+  ],
+  providers: [],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

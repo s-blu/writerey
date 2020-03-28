@@ -1,14 +1,14 @@
-<span *transloco="let t; read:typeOfDialog">
-  <h1 mat-dialog-title>{{t('title')}}</h1>
+<span *transloco="let t; read: typeOfDialog">
+  <h1 mat-dialog-title>{{ t('title') }}</h1>
   <div mat-dialog-content>
-    <p>{{t('message')}}</p>
+    <p>{{ t('message') }}</p>
     <mat-form-field>
-      <mat-label>{{t('input')}}</mat-label>
-      <input matInput [(ngModel)]="data.filename">
+      <mat-label>{{ t('input') }}</mat-label>
+      <input matInput [(ngModel)]="data.filename" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">{{t('cancel')}}</button>
-    <button mat-button [mat-dialog-close]="data.filename">{{t('create')}}</button>
+    <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
+    <button mat-button [mat-dialog-close]="data.filename">{{ t('create') }}</button>
   </div>
 </span>

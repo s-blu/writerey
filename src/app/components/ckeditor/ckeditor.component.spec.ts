@@ -11,9 +11,8 @@ describe('CkeditorComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CkeditorComponent ]
-    })
-    .compileComponents();
+      declarations: [CkeditorComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

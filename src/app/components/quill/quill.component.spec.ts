@@ -8,9 +8,8 @@ describe('QuillComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ QuillComponent ]
-    })
-    .compileComponents();
+      declarations: [QuillComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

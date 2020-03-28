@@ -1,22 +1,24 @@
 @import '../../variables';
 
 .topbar {
-    height: 50px;
-    box-sizing: border-box;
-    border-bottom: 1px solid $c_border;
+  height: 50px;
+  box-sizing: border-box;
+  border-bottom: 1px solid $c_border;
+  font-size: 14pt;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 1em;
+
+  .left > *,
+  .center > *,
+  .right > * {
+    margin: 10px;
+  }
+
+  .mode-switch {
     font-size: 14pt;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 0 1em;
-
-    .left > *, .center > *, .right > * {
-        margin: 10px;
-    }
-
-    .mode-switch {
-        font-size: 14pt;
-        background-color: white;
-    }
+    background-color: white;
+  }
 }
