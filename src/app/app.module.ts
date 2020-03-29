@@ -1,3 +1,4 @@
+import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
@@ -59,6 +60,7 @@ const matModules = [
     FooterComponent,
     StripFileEndingPipe,
     CreateNewFileDialogComponent,
+    TagDialogComponent,
     LastModifiedComponent,
   ],
   imports: [

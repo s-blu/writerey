@@ -24,6 +24,17 @@ export class SnapshotService {
       .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 
+  createTag(tagname) {
+    const formdata = new FormData();
+    formdata.append('tagname', tagname);
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'multipart/form-data');
+
+    return this.httpClient
+      .put(this.api.getTagRoute(), formdata, { headers: httpHeaders })
+      .pipe(catchError(err => this.api.handleHttpError(err)));
+  }
+
   getSnapshotInfo() {
     return this.httpClient
     .get(this.api.getGitRoute())

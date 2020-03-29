@@ -30,12 +30,23 @@
     "cancel": "Cancel",
     "create": "Create"
   },
+  "tagDialog": {
+    "title": "Create a tag",
+    "message": "Create a tag to mark your latest snapshot from {{date}}",
+    "input": "name of tag",
+    "cancel": "Cancel",
+    "create": "Create"
+  },
   "git": {
     "message": {
       "manualCommit": "Manual Snapshot from {{date}}"
     },
     "snackbar": {
-      "manualCommit": "Snapshot successfully created [{{date}}]"
+      "manualCommit": "Snapshot successfully created [{{date}}]",
+      "createTag": "Snapshot [{{date}}] is now marked with tag '{{name}}'!",
+      "error": {
+        "createTag": "Creating tag '{{tag}}' failed. :("
+      }
     }
   }
 }

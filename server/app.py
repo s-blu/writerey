@@ -7,6 +7,7 @@ from documents import Documents
 from paragraph_meta import ParagraphMeta
 from directories import Directories
 from git import GitAutomation
+from gitTag import Tag
 from tree import Tree
 from writerey_config import basePath, metaSubPath
 
@@ -19,6 +20,7 @@ api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
 api.add_resource(Directories, '/dir/<string:dir_name>')
 api.add_resource(Tree, '/tree')
 api.add_resource(GitAutomation, '/git/commit')
+api.add_resource(Tag, '/git/tag')
 
 if __name__ == '__main__':
     gitA = GitAutomation()
