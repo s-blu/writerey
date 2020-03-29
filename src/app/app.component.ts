@@ -1,3 +1,4 @@
+import { SnapshotService } from './services/snapshot.service';
 import { DocumentService } from './services/document.service';
 import { ParagraphService } from './services/paragraph.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -18,17 +19,28 @@ export class AppComponent implements OnInit, OnDestroy {
   document: DocumentDefinition;
   documentContent: { content: string };
   notes: Array<Note>;
+  snapshotDate: Date;
+
   isLoading = false;
 
   private subscription = new Subscription();
 
-  constructor(private paragraphService: ParagraphService, private documentService: DocumentService) { }
+  constructor(private paragraphService: ParagraphService, private documentService: DocumentService, private snapshotService: SnapshotService) { }
 
   ngOnInit() {
     this.fileInfo = this.documentService.getLastSavedFileInfo();
     if (this.fileInfo) {
       this.changeDoc(this.fileInfo);
     }
+    this.subscription.add(this.snapshotService.getSnapshotInfo().subscribe((res: any) => {
+      console.log('snapshotInfo received', res);
+      if (res.lastCommitDate) {
+        try {
+          this.snapshotDate = new Date(res.lastCommitDate);
+        } finally { }
+      }
+    })
+    );
   }
 
   ngOnDestroy() {
@@ -69,5 +81,9 @@ export class AppComponent implements OnInit, OnDestroy {
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
         }));
+  }
+
+  refreshSnapshotDate(event) {
+    this.snapshotDate = event;
   }
 }

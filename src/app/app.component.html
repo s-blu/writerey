@@ -1,5 +1,5 @@
 <div class="app">
-  <wy-topbar></wy-topbar>
+  <wy-topbar (snapshotted)="refreshSnapshotDate($event)" ></wy-topbar>
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
@@ -16,5 +16,5 @@
       <wy-notes [notes]="notes"></wy-notes>
     </div>
   </div>
-  <wy-footer [document]="document"></wy-footer>
+  <wy-footer [document]="document" [lastSnapshotDate]="snapshotDate"></wy-footer>
 </div>

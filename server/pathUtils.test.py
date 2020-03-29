@@ -35,6 +35,7 @@ class PathUtilsTest(unittest.TestCase):
             "path/With/emptyElement": ["path", "With", "", "emptyElement"],
             "incomplete/splitted/path/list": ["incomplete", "splitted/path/list"],
             "incomplete/splitted/windows/path/list": ["incomplete", "splitted\\windows/path\\list"],
+            "incomplete/mixed/windows/path/list": ["incomplete", "mixed/", "\\windows/path\\list"],
             "": [""],
             "": []
         }
@@ -44,7 +45,7 @@ class PathUtilsTest(unittest.TestCase):
     def test_sanitizeFilename(self):
         testData = {
             "aCompletely_ValidFilename-that-needs.no.substitution": "aCompletely_ValidFilename-that-needs.no.substitution",
-            "one_invalid_character": "one?invalid_character" ,
+            "one_invalid_character": "one?invalid_character",
             "_a__lot_of_invalid_characters_": "<a//lot?of*invalid'characters>",
             "": ""
         }

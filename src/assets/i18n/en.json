@@ -29,5 +29,13 @@
     "input": "directory name",
     "cancel": "Cancel",
     "create": "Create"
+  },
+  "git": {
+    "message": {
+      "manualCommit": "Manual Snapshot from {{date}}"
+    },
+    "snackbar": {
+      "manualCommit": "Snapshot successfully created [{{date}}]"
+    }
   }
 }

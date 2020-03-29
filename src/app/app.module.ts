@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ const matModules = [
   MatDialogModule,
   MatInputModule,
   MatFormFieldModule,
+  MatSnackBarModule
 ];
 
 @NgModule({
@@ -72,4 +74,4 @@ const matModules = [
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

@@ -12,9 +12,10 @@ export class FooterComponent implements OnInit {
     this.lastSave = doc.last_edited;
     this.docDef = doc;
   }
+  @Input() lastSnapshotDate: Date;
+
   docDef: DocumentDefinition;
   lastSave: Date;
-  dummyDate = new Date();
 
   constructor() { }
 
