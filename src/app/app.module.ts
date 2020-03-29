@@ -1,3 +1,4 @@
+import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
@@ -62,6 +63,7 @@ const matModules = [
     CreateNewFileDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
+    CheckForNameSafetyDirective
   ],
   imports: [
     BrowserModule,

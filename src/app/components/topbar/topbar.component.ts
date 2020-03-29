@@ -55,6 +55,7 @@ export class TopbarComponent implements OnInit {
         const snackBarMsg = this.translocoService.translate('git.snackbar.createTag', { date: displayDate, tag: name });
         this.showSnackBar(snackBarMsg);
       }, (err) => {
+        console.error('creation of tag failed', err)
         const snackBarMsg = this.translocoService.translate('git.snackbar.error.createTag', { tag: name });
         this.showSnackBar(snackBarMsg, '', 5000);
       });
