@@ -1,9 +1,9 @@
 <div class="topbar" *transloco="let t; read: 'topbar'">
   <div class="left"></div>
   <div class="center">
-    <button mat-button class="mode-switch">Read</button>
-    <button mat-button class="mode-switch">Write</button>
-    <button mat-button class="mode-switch" (click)="review()">Review</button>
+    <button mat-button class="mode-switch" [class]="isActive('read')" (click)="read()">Read</button>
+    <button mat-button class="mode-switch" [class]="isActive('write')" (click)="write()">Write</button>
+    <button mat-button class="mode-switch" [class]="isActive('review')" (click)="review()">Review</button>
   </div>
   <div class="right">
     <button mat-icon-button (click)="snapshot()" [matTooltip]="t('snapshot')">

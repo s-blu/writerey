@@ -26,14 +26,19 @@ export class DocumentService {
     );
   }
 
-  saveDocument(path: string, name: string, content) {
-    // TODO remove me again. enhancing needs to take place explicitly to save file as-is
-    // const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
-    // console.log('===========================');
-    // console.log('CONTENT TO SAVE', enhancedContent);
-    // console.log('===========================');
+  enhanceAndSaveDocument(path: string, name: string, content) {
+    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
+    console.log(enhancedContent)
+    return this.saveDocument(path, name, enhancedContent).pipe(
+      map(res => {
+        if (!res) return res;
+        res.content = enhancedContent;
+        return res;
+      })
+    )
+  }
 
-    // const blob = new Blob([enhancedContent], { type: 'text/html' });
+  saveDocument(path: string, name: string, content) {
     const blob = new Blob([content], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
 

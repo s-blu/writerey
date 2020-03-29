@@ -19,7 +19,7 @@ export class ParagraphService {
 
   paragraphMetaCache = {};
 
-  constructor(private api: ApiService, private httpClient: HttpClient) {}
+  constructor(private api: ApiService, private httpClient: HttpClient) { }
 
   enhanceDocumentWithParagraphIds(document: string) {
     let enhancedDocument = '';
@@ -35,7 +35,7 @@ export class ParagraphService {
       previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
     });
-
+    console.log('enhanced doc', enhancedDocument)
     return enhancedDocument;
   }
 

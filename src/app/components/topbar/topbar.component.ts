@@ -1,3 +1,4 @@
+import { DOC_MODES } from './../../interfaces/docModes.enum';
 import { TagDialogComponent } from './../tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
 import { SnapshotService } from './../../services/snapshot.service';
@@ -17,7 +18,9 @@ export class TopbarComponent implements OnInit {
   @Input() lastSnapshotDate: Date;
 
   @Output() snapshotted = new EventEmitter<any>();
+  @Output() switchMode = new EventEmitter<any>();
 
+  private activeMode: 'read' | 'write' | 'review';
   private subscription = new Subscription();
 
   constructor(
@@ -29,7 +32,19 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit() { }
 
-  review() { }
+  review() {
+    console.log('clicked review')
+    this.activeMode = DOC_MODES.REVIEW;
+    this.switchMode.emit(DOC_MODES.REVIEW);
+  }
+
+  read() { }
+
+  write() { }
+
+  isActive(mode) {
+    return { active: this.activeMode === mode };
+  }
 
   snapshot() {
     const date = new Date();

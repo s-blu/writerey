@@ -20,5 +20,11 @@
   .mode-switch {
     font-size: 14pt;
     background-color: white;
+
+    &.active {
+      background: aliceblue;
+      color: midnightblue;
+      
+    }
   }
 }

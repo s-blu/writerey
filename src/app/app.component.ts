@@ -6,6 +6,7 @@ import { DocumentDefinition } from './interfaces/documentDefinition.interface';
 import { Note } from './interfaces/note.interface';
 import { FileInfo } from './interfaces/fileInfo.interface';
 import { Subscription } from 'rxjs';
+import { DOC_MODES } from './interfaces/docModes.enum';
 
 @Component({
   selector: 'app-root',
@@ -62,9 +63,10 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onHover(event) {
+    console.log('on hover app', event);
     this.subscription.add(this.paragraphService.getParagraphMeta(this.fileInfo.path, this.fileInfo.name, event, 'notes').subscribe(res => {
       try {
-        console.log('on hover app', res);
+        console.log('on hover app res', res);
         if (res && res.length) {
           this.notes = res;
         }
@@ -75,15 +77,28 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onChange(event) {
+    console.log('saving on debounce...')
     this.subscription.add(
       this.documentService
         .saveDocument(this.document.path, this.document.name, event)
         .subscribe((res: DocumentDefinition) => {
+          console.log('saved. will update document and content')
           this.document = res;
+          this.documentContent.content = event;
         }));
   }
 
   refreshSnapshotDate(event) {
     this.snapshotDate = event;
+  }
+
+  switchDocumentMode(mode) {
+    if (mode === DOC_MODES.REVIEW) {
+      this.isLoading = true;
+      this.documentService.enhanceAndSaveDocument(this.document.path, this.document.name, this.documentContent.content).subscribe(res => {
+        this.documentContent.content = res.content;
+        this.isLoading = false;
+      })
+    }
   }
 }
