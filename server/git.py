@@ -11,13 +11,11 @@ import re
 # FIXME REMOVE ME AND IMPORT REAL BASEPATH
 basePath = 'D:/projekte/_writerey_data'
 
-
 class GitAutomation(Resource):
     logger = Logger('GitAutomation')
     workingDir = os.getcwd()
 
     def init(self):
-        self.switchDir()
         if not os.path.exists('.git'):
             self.run(['dir'])
             self.run(['git', 'init'])
@@ -30,26 +28,14 @@ class GitAutomation(Resource):
             f.close()
         else:
             self.logger.logDebug('git is already initialized, do nothing')
-        self.switchDir(True)
+        return
 
     def get(self):
-        # git log -1 --format=%cd # date of last local commit
-        # git log -1 --format=%cd TAG # date of tag TAG
-
-        # git log -1 --format=%cd
-        # git describe # remove last two elements separated with - to get tag name
-        # git log -1 <TAGNAME>
-        self.switchDir()
-        lastGitCommit = self.getOutput(['git', 'log', '-1', r'--format=%cd'])
-        lastGitCommit = lastGitCommit.replace("\n", "")
-        lastTagName = self.getOutput(['git', 'describe'])
-        print('result!', lastGitCommit, lastTagName)
+        lastGitCommit = self.getCommitDate()
+        lastTagName = self.run(['git', 'describe'])
         lastTagName = re.sub(
             r"(-[0-9]+-[a-z0-9]+\n$)", "", lastTagName)
-        lastTagDate = self.getOutput(
-            ['git', 'log', '-1', lastTagName, r'--format=%cd'])
-        lastTagDate = lastTagDate.replace("\n", "")
-        self.switchDir(True)
+        lastTagDate = self.getCommitDate(lastTagName)
         return {
             'lastCommitDate': lastGitCommit,
             'lastTagName': lastTagName,
@@ -57,23 +43,21 @@ class GitAutomation(Resource):
         }
 
     def put(self):
-        self.switchDir()
         msg = request.form['message']
         if not msg:
             msg = 'Snapshot'
         self.run(["git", "add", '.'])
         self.run(["git", "commit", '-m', msg])
-        self.switchDir(True)
         return 'bazooonga'
 
-    def switchDir(self, backToWorkingDir=False):
-        if backToWorkingDir:
-            os.chdir(self.workingDir)
-        else:
-            os.chdir(basePath)
-
     def run(self, cmds: [str]):
-        return subprocess.run(cmds, shell=True, check=True)
+        switchDir = ['cd', basePath, '&&']
+        return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
 
-    def getOutput(self, cmds: [str]):
-        return subprocess.check_output(cmds, text=True)
+    def getCommitDate(self, tag: str = None):
+        if tag:
+            cmds = ['git', 'log', '-1', tag, r'--format=%cd']
+        else:
+            cmds = ['git', 'log', '-1', r'--format=%cd']
+        date = self.run(cmds)
+        return date.replace("\n", "")

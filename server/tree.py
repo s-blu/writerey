@@ -17,6 +17,7 @@ class Tree(Resource):
             'dirs': [],
             'files': []
         }
+        log.logDebug('getting tree', os.getcwd()), basePath, os.walk(basePath)
         for (dirpath, dirnames, filenames) in os.walk(basePath):
             filePath = PathUtils.sanitizePathString(dirpath, True)
             path = filePath.split('/')
