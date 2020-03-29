@@ -1,3 +1,4 @@
+import { TranslocoService } from '@ngneat/transloco';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
@@ -16,17 +17,17 @@ export class ParagraphService {
   private PARAGRAPH_DELIMITER_REGEX = RegExp(
     `<p(?: class="${this.UUID_V4_REGEX_STR}")?>` + this.PARAGRAPH_DELIMITER_WO_OPENING
   );
+  private defaultContextForParagraphs = ['paragraph', 'document']
+  private paragraphMetaCache = {};
 
-  paragraphMetaCache = {};
-
-  constructor(private api: ApiService, private httpClient: HttpClient) { }
+  constructor(private api: ApiService, private httpClient: HttpClient) {
+  }
 
   enhanceDocumentWithParagraphIds(document: string) {
     let enhancedDocument = '';
     let previousUuid = '';
     let currentUuidBeforeEnhance = '';
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
-    console.log('paragraphs', paragraphs);
     paragraphs.forEach((p, i) => {
       if (p === '') return;
       const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
@@ -35,7 +36,6 @@ export class ParagraphService {
       previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
     });
-    console.log('enhanced doc', enhancedDocument)
     return enhancedDocument;
   }
 
@@ -116,6 +116,11 @@ export class ParagraphService {
         }
       })
     );
+  }
+
+  getContextesForParagraph(paragraphId) {
+    // TODO get paragraph meta, look at the marks on t he paragraph and add them to this list
+    return this.defaultContextForParagraphs;
   }
 
   private _getParagraphTagWithIdentifier(id: string) {

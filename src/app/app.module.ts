@@ -1,3 +1,4 @@
+import { CreateNewNoteComponent } from './components/createNewNote/createNewNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
@@ -20,6 +21,8 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -44,7 +47,9 @@ const matModules = [
   MatDialogModule,
   MatInputModule,
   MatFormFieldModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatSelectModule,
+  MatExpansionModule
 ];
 
 @NgModule({
@@ -63,6 +68,7 @@ const matModules = [
     CreateNewFileDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
+    CreateNewNoteComponent,
     CheckForNameSafetyDirective
   ],
   imports: [

@@ -30,6 +30,17 @@
     "cancel": "Cancel",
     "create": "Create"
   },
+  "notes": {
+    "createNew": "Create a note"
+  },
+  "createNote": {
+    "context": "Context",
+    "comment": "Note",
+    "contexts": {
+      "paragraph": "Paragraph",
+      "document": "Document"
+    }
+  },
   "tagDialog": {
     "title": "Create a tag",
     "message": "Create a tag to mark your latest snapshot from {{date}}",

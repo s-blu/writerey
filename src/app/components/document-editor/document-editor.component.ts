@@ -28,9 +28,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       this.hoverSubject
         .pipe(
           distinctUntilChanged(),
-          debounceTime(150)
+          debounceTime(300)
         )
-        .subscribe((event) => this.hover.emit(event))
+        .subscribe(event => this.hover.emit(event))
     );
   }
 

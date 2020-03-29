@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-ckeditor',
@@ -51,7 +51,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.changeDebounce
-        .pipe(debounceTime(1000))
+        .pipe(distinctUntilChanged(), debounceTime(1000))
         .subscribe((event) => this.editorChange.emit(event))
     );
   }

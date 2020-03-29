@@ -1,5 +1,6 @@
 <div class="app">
-  <wy-topbar (snapshotted)="refreshSnapshotDate($event)" [lastSnapshotDate]="snapshotDate" (switchMode)="switchDocumentMode($event)"></wy-topbar>
+  <wy-topbar (snapshotted)="refreshSnapshotDate($event)" [lastSnapshotDate]="snapshotDate"
+    (switchMode)="switchDocumentMode($event)"></wy-topbar>
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
@@ -13,7 +14,7 @@
       </div>
     </div>
     <div class="notes">
-      <wy-notes [notes]="notes"></wy-notes>
+      <wy-notes [paragraphId]="paragraphId" [fileInfo]="fileInfo" [isReviewMode]="activeMode === 'review'"></wy-notes>
     </div>
   </div>
   <wy-footer [document]="document" [lastSnapshotDate]="snapshotDate"></wy-footer>

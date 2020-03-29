@@ -19,10 +19,11 @@ export class AppComponent implements OnInit, OnDestroy {
   fileInfo: FileInfo;
   document: DocumentDefinition;
   documentContent: { content: string };
-  notes: Array<Note>;
   snapshotDate: Date;
+  paragraphId: string;
 
   isLoading = false;
+  activeMode: DOC_MODES = DOC_MODES.WRITE;
 
   private subscription = new Subscription();
 
@@ -64,16 +65,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onHover(event) {
     console.log('on hover app', event);
-    this.subscription.add(this.paragraphService.getParagraphMeta(this.fileInfo.path, this.fileInfo.name, event, 'notes').subscribe(res => {
-      try {
-        console.log('on hover app res', res);
-        if (res && res.length) {
-          this.notes = res;
-        }
-      } catch (err) {
-        console.log('getting notes failed', err);
-      }
-    }));
+    this.paragraphId = event;
   }
 
   onChange(event) {
@@ -94,11 +86,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   switchDocumentMode(mode) {
     if (mode === DOC_MODES.REVIEW) {
+      this.activeMode = mode;
       this.isLoading = true;
       this.documentService.enhanceAndSaveDocument(this.document.path, this.document.name, this.documentContent.content).subscribe(res => {
         this.documentContent.content = res.content;
         this.isLoading = false;
-      })
+      });
     }
   }
 }
