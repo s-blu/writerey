@@ -1,10 +1,4 @@
-<div (mouseover)="over($event)" class="ckeditor-wrap">
-  <ckeditor
-    [editor]="Editor"
-    [config]="config"
-    [ngModel]="content.content"
-    (blur)="onBlur($event)"
-    (change)="onChange($event)"
-    [disabled]="readonly"
-  ></ckeditor>
+<div (click)="onEditorClick($event)" class="ckeditor-wrap">
+  <ckeditor [editor]="Editor" [config]="config" [ngModel]="content.content" (blur)="onBlur($event)"
+    (change)="onChange($event)" [disabled]="readonly"></ckeditor>
 </div>

@@ -4,10 +4,15 @@
 .ckeditor-wrap,
 ckeditor {
   height: 100%;
+  width: 100%;
   display: inline-block;
 }
 
 :host ::ng-deep {
+  .ck-editor, .ck-editor__main, .ck-content {
+    min-height: 50vh;
+  }
+
   .ck-editor,
   .ck-content {
     border: none;

@@ -1,6 +1,6 @@
 {
   "name": "writerey",
-  "version": "0.0.0",
+  "version": "0.5.0-SNAPSHOT",
   "main": "main.js",
   "scripts": {
     "ng": "ng",

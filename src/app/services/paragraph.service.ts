@@ -10,7 +10,7 @@ import { Observable, of } from 'rxjs';
   providedIn: 'root',
 })
 export class ParagraphService {
-  public UUID_V4_REGEX_STR = '[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
+  public UUID_V4_REGEX_STR = 'p[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
   private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
   private PARAGRAPH_DELIMITER_WO_OPENING = `&nbsp;</p>`;
   private PARAGRAPH_DELIMITER = `<p>${this.PARAGRAPH_DELIMITER_WO_OPENING}`;
@@ -107,10 +107,8 @@ export class ParagraphService {
   }
 
   private parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType?) {
-    console.log('parseAndExtractParagraphMetaResponse', res, docPath, docName, context, metaType)
     if (!res || res === '') return res;
     try {
-      console.log('parseAndExtractParagraphMetaResponse', res)
       const data = JSON.parse(res);
       const result = metaType ? data[metaType] : data;
 
@@ -123,7 +121,7 @@ export class ParagraphService {
   }
 
   private _getParagraphTagWithIdentifier(id: string) {
-    return `<p class="${id}">`;
+    return `<p class="p${id}">`;
   }
 
   private _extractUuid(p) {
@@ -132,7 +130,6 @@ export class ParagraphService {
     if (p && p !== '') {
       uuidExec = RegExp(this.UUID_V4_REGEX_STR).exec(p);
       if (uuidExec) pUuid = uuidExec[0];
-      console.log('uuid exec', pUuid);
     }
     return pUuid;
   }

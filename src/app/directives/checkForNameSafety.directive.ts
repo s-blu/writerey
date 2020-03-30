@@ -16,7 +16,6 @@ export class CheckForNameSafetyDirective implements Validator {
   constructor() { }
 
   validate(control: AbstractControl): { [key: string]: any } | null {
-    console.log('valval...')
     const regex = this.forbiddenCharatersRe[this.typeOfName];
     return regex ? this.nameValidator(regex)(control)
       : null;
@@ -25,7 +24,6 @@ export class CheckForNameSafetyDirective implements Validator {
   nameValidator(regex): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const forbidden = regex.test(control.value);
-      console.log('validate validate', forbidden)
       return forbidden ? { forbiddenName: { value: control.value } } : null;
     };
   }

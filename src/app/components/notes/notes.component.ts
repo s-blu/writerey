@@ -1,3 +1,4 @@
+import { DOC_MODES } from './../../interfaces/docModes.enum';
 import { NotesService } from './../../services/notes.service';
 import { DocumentDefinition } from './../../interfaces/documentDefinition.interface';
 import { ParagraphService } from './../../services/paragraph.service';
@@ -12,14 +13,19 @@ import { FileInfo } from 'src/app/interfaces/fileInfo.interface';
   styleUrls: ['./notes.component.scss'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  @Input() isReviewMode: boolean;
-  @Input() fileInfo: FileInfo;
+  @Input() mode: DOC_MODES;
+  @Input() set file(info: FileInfo) {
+    this.fileInfo = info;
+    this.fetchNotesForParagraph();
+  }
   @Input() set paragraphId(pId: string) {
     this.fetchNotesForParagraph(pId);
   }
 
+  MODES = DOC_MODES;
   noteContexts;
   parId: string;
+  fileInfo: FileInfo;
   notes: any = {
     paragraph: []
   };
@@ -34,13 +40,12 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe()
+    this.subscription.unsubscribe();
   }
 
   createNewNote(event) {
     if (!event) return;
     const context = event.context === 'paragraph' ? this.parId : event.context;
-    console.log('time to create a new note!', event)
     const newNote: Note = {
       type: 'info',
       context: event.context,
@@ -60,16 +65,15 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notes = {};
     this.noteContexts = [];
 
-    if (!this.fileInfo || !pId) return;
-    if (this.parId === pId) return;
+    if (!this.fileInfo && !pId) return;
+    if (pId && this.parId === pId) return;
     this.parId = pId;
-    console.log('fetching notes from server ...')
+
     this.noteContexts = this.notesService.getContextesForParagraph(this.parId);
     this.subscription.add(this.notesService.getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, pId, this.noteContexts)
       .subscribe(res => {
         try {
           if (res) {
-            console.log('got notes!', res)
             this.notes = res;
           }
         } catch (err) {

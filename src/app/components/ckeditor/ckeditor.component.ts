@@ -14,7 +14,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
-  @Output() hover: EventEmitter<any> = new EventEmitter();
+  @Output() click: EventEmitter<any> = new EventEmitter();
   @Output() changed: EventEmitter<any> = new EventEmitter();
 
   public Editor = ClassicEditor;
@@ -67,10 +67,11 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     this.changeDebounce.next(event);
   }
 
-  over(event) {
-    this.hover.emit(event?.srcElement?.className);
+  onEditorClick(event) {
+    this.click.emit(event?.srcElement?.className);
   }
 }
+
 
 class AllowClassesOnP {
   editor;

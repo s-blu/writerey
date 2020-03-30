@@ -32,15 +32,22 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit() { }
 
-  review() {
-    console.log('clicked review')
-    this.activeMode = DOC_MODES.REVIEW;
-    this.switchMode.emit(DOC_MODES.REVIEW);
+  switch(mode) {
+    this.activeMode = mode;
+    this.switchMode.emit(mode);
   }
 
-  read() { }
+  review() {
+    this.switch(DOC_MODES.REVIEW);
+  }
 
-  write() { }
+  read() {
+    this.switch(DOC_MODES.READ);
+  }
+
+  write() {
+    this.switch(DOC_MODES.WRITE);
+  }
 
   isActive(mode) {
     return { active: this.activeMode === mode };

@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { DOC_MODES } from './../../interfaces/docModes.enum';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
-  styleUrls: ['./document-marks.component.css'],
+  styleUrls: ['./document-marks.component.scss'],
 })
 export class DocumentMarksComponent implements OnInit {
+  @Input() mode: DOC_MODES;
   constructor() {}
 
+  MODES = DOC_MODES;
   ngOnInit() {}
 }

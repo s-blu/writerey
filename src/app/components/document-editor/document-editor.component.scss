@@ -1,4 +1,7 @@
-:host,
+:host {
+  display: flex;
+  justify-content: center
+}
 .document-editor {
   display: block;
   height: 100%;
@@ -12,4 +15,9 @@
   * {
     box-sizing: border-box;
   }
+}
+
+wy-ckeditor {
+  width: 100%;
+  min-height: 50vh;
 }

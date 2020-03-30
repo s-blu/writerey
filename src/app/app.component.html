@@ -4,7 +4,7 @@
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
-      <wy-document-marks></wy-document-marks>
+      <wy-document-marks [mode]="activeMode"></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="notes">
-      <wy-notes [paragraphId]="paragraphId" [fileInfo]="fileInfo" [isReviewMode]="activeMode === 'review'"></wy-notes>
+      <wy-notes [paragraphId]="paragraphId" [file]="fileInfo" [mode]="activeMode"></wy-notes>
     </div>
   </div>
   <wy-footer [document]="document" [lastSnapshotDate]="snapshotDate"></wy-footer>

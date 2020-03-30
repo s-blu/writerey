@@ -68,21 +68,19 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         this.tree = JSON.parse(res);
         this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
       } finally {
-        console.log('tree init', this.tree);
       }
     }));
   }
 
   openDocument(node) {
-    console.log('openDocument', node);
     this.docChanged.emit({ name: node.name, path: node.path });
   }
 
   renameDir(node) {
-    console.log('rename dir', node);
+    console.warn('rename dir not implemented yet', node);
   }
   renameFile(node) {
-    console.log('rename file', node);
+    console.warn('rename file not implemented yet', node);
   }
   addNewFile(node) {
     this.createNewChild('file', node);

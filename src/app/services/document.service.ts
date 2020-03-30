@@ -28,7 +28,6 @@ export class DocumentService {
 
   enhanceAndSaveDocument(path: string, name: string, content) {
     const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
-    console.log(enhancedContent)
     return this.saveDocument(path, name, enhancedContent).pipe(
       map(res => {
         if (!res) return res;

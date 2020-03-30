@@ -35,7 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.changeDoc(this.fileInfo);
     }
     this.subscription.add(this.snapshotService.getSnapshotInfo().subscribe((res: any) => {
-      console.log('snapshotInfo received', res);
       if (res.lastCommitDate) {
         try {
           this.snapshotDate = new Date(res.lastCommitDate);
@@ -50,7 +49,6 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   changeDoc(event: FileInfo) {
-    console.log('change doc event received', event);
     this.fileInfo = event;
     this.paragraphId = null;
     this.isLoading = true;
@@ -65,17 +63,15 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onHover(event) {
-    console.log('on hover app', event);
     this.paragraphId = event;
   }
 
   onChange(event) {
-    console.log('saving on debounce...')
     this.subscription.add(
       this.documentService
         .saveDocument(this.document.path, this.document.name, event)
         .subscribe((res: DocumentDefinition) => {
-          console.log('saved. will update document and content')
+          console.log('saved. will update document and content', res)
           this.document = res;
           this.documentContent.content = event;
         }));
@@ -86,8 +82,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   switchDocumentMode(mode) {
+    this.activeMode = mode;
     if (mode === DOC_MODES.REVIEW) {
-      this.activeMode = mode;
       this.isLoading = true;
       this.documentService.enhanceAndSaveDocument(this.document.path, this.document.name, this.documentContent.content).subscribe(res => {
         this.documentContent.content = res.content;
