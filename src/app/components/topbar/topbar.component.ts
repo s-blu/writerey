@@ -51,8 +51,16 @@ export class TopbarComponent implements OnInit {
   snapshot() {
     const date = new Date();
     const commitMsg = this.translocoService.translate('git.message.manualCommit', { date: date.toLocaleString() });
-    const snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });
-    this.snapshotService.createSnapshot(commitMsg).subscribe((res) => {
+    this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number, text: string }) => {
+      let snackBarMsg = '';
+      if (res?.status === 0) {
+        snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });
+      } else if (res?.status === -1) {
+        snackBarMsg = this.translocoService.translate('git.snackbar.workingDirClean');
+      } else {
+        snackBarMsg = this.translocoService.translate('git.snackbar.unknownResponse');
+        console.error('snapshot failed for some reason', res);
+      }
       this.showSnackBar(snackBarMsg);
     });
     this.snapshotted.emit(date);

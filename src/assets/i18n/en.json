@@ -66,9 +66,11 @@
     },
     "snackbar": {
       "manualCommit": "Snapshot successfully created [{{date}}]",
+      "workingDirClean": "No changes since last snapshot, so nothing to snapshot!",
       "createTag": "Snapshot [{{date}}] is now marked with tag '{{name}}'!",
       "error": {
-        "createTag": "Creating tag '{{tag}}' failed. :("
+        "createTag": "Creating tag '{{tag}}' failed. :(",
+        "commit": "Snapshot could not be created :("
       }
     }
   }

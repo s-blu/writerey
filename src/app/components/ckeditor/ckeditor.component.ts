@@ -14,7 +14,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
-  @Output() click: EventEmitter<any> = new EventEmitter();
+  @Output() editorClicked: EventEmitter<any> = new EventEmitter();
   @Output() changed: EventEmitter<any> = new EventEmitter();
 
   public Editor = ClassicEditor;
@@ -35,7 +35,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       'undo',
       'redo',
     ],
-    extraPlugins: [AllowClassesOnP],
+    extraPlugins: [],
     wordCount: { // FIXME
       container: document.getElementById('ckeditor-word-count-container'),
       onUpdate(event) {
@@ -51,7 +51,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.changeDebounce
-        .pipe(distinctUntilChanged(), debounceTime(1000))
+        .pipe(distinctUntilChanged(), debounceTime(600))
         .subscribe((event) => this.editorChange.emit(event))
     );
   }
@@ -68,7 +68,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onEditorClick(event) {
-    this.click.emit(event?.srcElement?.className);
+    this.editorClicked.emit(event?.srcElement?.className);
   }
 }
 

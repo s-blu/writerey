@@ -41,9 +41,12 @@ class GitAutomation(Resource):
         msg = request.form['message']
         if not msg:
             msg = 'Snapshot'
+        changesAvailable = self.git.run(['git', 'status', '--porcelain'])
+        if not changesAvailable:
+            return {'status': -1, 'text': 'Working dir is clean'}
         self.git.run(["git", "add", '.'])
-        self.git.run(["git", "commit", '-m', msg])
-        return 'bazooonga'
+        commitReturn = self.git.run(["git", "commit", '-m', msg])
+        return {'status': 0, 'text': commitReturn}
 
     def getCommitDate(self, tag: str = None):
         if tag:
