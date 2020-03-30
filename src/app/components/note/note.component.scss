@@ -1,3 +1,24 @@
 .mat-card-header {
   max-height: 1.5em;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+
+  i {
+    height: 1em;
+    width: 1em;
+    font-size: 14pt;
+  }
+}
+::ng-deep div.mat-card-header-text {
+  margin-left: 0;
+  padding-left: 0;
+  margin: 0;
+  .mat-card-subtitle {
+    font-size: 8pt;
+  }
+}
+
+.mat-card {
+  margin-bottom: 5px;
+  padding: 1em;
 }

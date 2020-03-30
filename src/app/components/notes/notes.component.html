@@ -1,6 +1,5 @@
 <div class="notes" *transloco="let t; read: 'notes'">
   <h3>*{{parId}}*</h3>
-  <p>{{notes | json }}</p>
   <div *ngFor="let key of noteContexts" class="note">
     <wy-note *ngFor="let n of notes[key]" [note]="n"></wy-note>
   </div>

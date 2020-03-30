@@ -46,15 +46,14 @@ export class NotesComponent implements OnInit, OnDestroy {
       context: event.context,
       text: event.text
     }
-    // FIXME kaputt.
+    const newContext = [newNote];
     if (this.notes && this.notes[event.context]) {
-      this.notes[event.context] = [newNote, ...this.notes[event.context]];
-    } else {
-      if (!this.notes) this.notes = {};
-      this.notes[event.context] = [newNote];
+      newContext.push(...this.notes[event.context])
     }
-    this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, context, 'notes', this.notes[event.context])
-      .subscribe(res => { console.log('createNewNote, got res', res) })
+    this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, context, 'notes', newContext)
+      .subscribe(res => {
+        this.notes[event.context] = res;
+      });
   }
 
   private fetchNotesForParagraph(pId?) {

@@ -8,8 +8,8 @@ from writerey_config import basePath, metaSubPath
 class ParagraphMeta(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
-        pId = request.args.get('p_id')
-        filename = doc_name + '_' + pId
+        context = request.args.get('context')
+        filename = doc_name + '_' + context
         try:
             path = PathUtils.sanitizePathList(
                 [basePath, path, metaSubPath, filename])
@@ -21,8 +21,8 @@ class ParagraphMeta(Resource):
             return ''
 
     def put(self, doc_name):
-        pId = request.form['p_id']
-        filename = doc_name + '_' + pId
+        context = request.form['context']
+        filename = doc_name + '_' + context
         if request.form['doc_path']:
             dirPath = PathUtils.sanitizePathList(
                 [basePath, request.form['doc_path'], metaSubPath])

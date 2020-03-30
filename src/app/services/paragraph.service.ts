@@ -64,7 +64,7 @@ export class ParagraphService {
   setParagraphMeta(docPath, docName, context, metaType, metaContent) {
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
-    formdata.append('p_id', context);
+    formdata.append('context', context);
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
@@ -95,7 +95,7 @@ export class ParagraphService {
     }
     const params = {
       doc_path: docPath,
-      p_id: context,
+      context,
     };
 
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params }).pipe(

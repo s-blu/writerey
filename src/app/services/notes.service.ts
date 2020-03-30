@@ -35,7 +35,7 @@ export class NotesService {
         catchError(err => this.api.handleHttpError(err)),
         flatMap(pRes => {
           notesWrap[DEFAULT_CONTEXTS.PARAGRAPH] = pRes || [];
-          return this.paragraphService.getParagraphMeta(docPath, docName, 'document', 'notes')
+          return this.paragraphService.getParagraphMeta(docPath, docName, 'document', 'notes');
         }),
         flatMap(docRes => {
           notesWrap[DEFAULT_CONTEXTS.DOCUMENT] = docRes || [];
