@@ -8,24 +8,23 @@ import { FormBuilder } from '@angular/forms';
   styleUrls: ['./createNewNote.component.scss']
 })
 export class CreateNewNoteComponent implements OnInit {
-  @Input() contexts: Array<string>;
+  @Input() contexts: Array<string> = [];
   @Output() noteCreated = new EventEmitter<any>();
 
-
-  selectedContext = 'paragraph';
-  comment: string;
   createNewForm;
   private translatedContextNames = {
     paragraph: 'paragraph',
     document: 'document'
-  }
+  };
 
   constructor(
     private translocoService: TranslocoService,
     private formBuilder: FormBuilder,
   ) {
     this.createNewForm = this.formBuilder.group({
-      context: 'paragraph',
+      type: 'info',
+      color: '',
+      context: this.contexts[0] || 'paragraph',
       text: ''
     });
   }
@@ -38,15 +37,10 @@ export class CreateNewNoteComponent implements OnInit {
   onSubmit(data) {
     this.noteCreated.emit(data);
     this.createNewForm.reset();
-    this.createNewForm.patchValue({ context: 'paragraph' });
+    this.createNewForm.patchValue({ context: this.contexts[0] || 'paragraph', type: 'info' });
   }
 
   getContextName(context: string) {
     return this.translatedContextNames[context] || context;
   }
-
-  create() {
-
-  }
-
 }

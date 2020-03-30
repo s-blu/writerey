@@ -15,10 +15,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   @Input() document: DocumentDefinition;
   @Input() content: { content: string };
 
-  @Output() hover: EventEmitter<any> = new EventEmitter();
+  @Output() clicked: EventEmitter<any> = new EventEmitter();
   @Output() changeContent: EventEmitter<any> = new EventEmitter();
 
-  private hoverSubject = new Subject();
+  private clickSubject = new Subject();
   private subscription = new Subscription();
   private style;
 
@@ -31,13 +31,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.style = style.sheet;
 
     this.subscription.add(
-      this.hoverSubject
+      this.clickSubject
         .pipe(
           distinctUntilChanged(),
           debounceTime(300)
         )
         .subscribe(event => {
-          this.hover.emit(event)
+          this.clicked.emit(event);
         })
     );
   }
@@ -49,18 +49,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   onClick(event) {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
       const rule = `p.${event} {
-        // margin-left: -4px;
-        // border-left: 1px solid coral;
-        // z-index: 5;
-        // display: block;
-        // position: relative;
-        // padding-left: 2px;
         background-color: aliceblue;
       }`;
       if (this.style.cssRules.length > 0) this.style.deleteRule(0);
       this.style.insertRule(rule);
-
-      this.hoverSubject.next(event);
+      this.clickSubject.next(event);
     }
   }
 

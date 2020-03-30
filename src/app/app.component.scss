@@ -36,8 +36,7 @@
 
 .editor {
   .document-area {
-    overflow: hidden;
+    overflow: scroll;
     padding: 0 2em;
-    box-sizing: content-box;
   }
 }

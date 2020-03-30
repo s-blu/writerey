@@ -16,11 +16,11 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TopbarComponent implements OnInit {
   @Input() lastSnapshotDate: Date;
+  @Input() mode: DOC_MODES;
 
   @Output() snapshotted = new EventEmitter<any>();
   @Output() switchMode = new EventEmitter<any>();
 
-  private activeMode: 'read' | 'write' | 'review';
   private subscription = new Subscription();
 
   constructor(
@@ -32,25 +32,20 @@ export class TopbarComponent implements OnInit {
 
   ngOnInit() { }
 
-  switch(mode) {
-    this.activeMode = mode;
-    this.switchMode.emit(mode);
-  }
-
   review() {
-    this.switch(DOC_MODES.REVIEW);
+    this.switchMode.emit(DOC_MODES.REVIEW);
   }
 
   read() {
-    this.switch(DOC_MODES.READ);
+    this.switchMode.emit(DOC_MODES.READ);
   }
 
   write() {
-    this.switch(DOC_MODES.WRITE);
+    this.switchMode.emit(DOC_MODES.WRITE);
   }
 
   isActive(mode) {
-    return { active: this.activeMode === mode };
+    return { active: this.mode === mode };
   }
 
   snapshot() {

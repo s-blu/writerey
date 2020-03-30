@@ -22,20 +22,8 @@ ckeditor {
     height: 100%;
     display: block;
   }
-  .ck-content {
-    margin-bottom: 2em;
-  }
   .ck-content p {
     margin: 0;
-  }
-
-  .paragraph-wrap:hover {
-    margin-left: -4px;
-    border-left: 1px solid coral;
-    z-index: 5;
-    display: block;
-    position: relative;
-    padding-left: 3px;
   }
 
   .ck.ck-editor__main > .ck-editor__editable:not(.ck-focused),
@@ -54,8 +42,8 @@ ckeditor {
   .ck.ck-editor__top,
   .ck.ck-editor__top > * {
     position: sticky;
-    top: calc(-2em - 5px);
-    z-index: 3230;
+    top: -1px;
+    z-index: 10;
   }
 
   .ck-toolbar,

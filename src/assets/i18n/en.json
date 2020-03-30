@@ -39,6 +39,18 @@
     "contexts": {
       "paragraph": "Paragraph",
       "document": "Document"
+    },
+    "type": {
+      "title": "Note Type",
+      "info": "Info",
+      "todo": "To Do"
+    },
+    "color": {
+      "title": "Color",
+      "none": "None",
+      "orange": "Orange",
+      "blue": "Blue",
+      "green": "Green"
     }
   },
   "tagDialog": {

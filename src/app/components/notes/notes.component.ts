@@ -47,7 +47,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     if (!event) return;
     const context = event.context === 'paragraph' ? this.parId : event.context;
     const newNote: Note = {
-      type: 'info',
+      type: event.type,
+      color: event.color,
       context: event.context,
       text: event.text
     }

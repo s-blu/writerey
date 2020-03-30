@@ -1,14 +1,7 @@
-:host {
-  display: flex;
-  justify-content: center
-}
-.document-editor {
-  display: block;
-  height: 100%;
-  margin-bottom: 3em;
-}
+
 
 .document-editor {
+  margin:auto;
   width: 640px;
   overflow-wrap: break-word;
 

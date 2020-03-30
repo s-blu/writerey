@@ -47,7 +47,6 @@ export class DocumentService {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-
     return this.httpClient
       .put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
       .pipe(

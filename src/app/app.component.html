@@ -1,6 +1,6 @@
 <div class="app">
   <wy-topbar (snapshotted)="refreshSnapshotDate($event)" [lastSnapshotDate]="snapshotDate"
-    (switchMode)="switchDocumentMode($event)"></wy-topbar>
+    (switchMode)="switchDocumentMode($event)" [mode]="activeMode"></wy-topbar>
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
@@ -8,7 +8,7 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor [document]="document" [content]="documentContent" (hover)="onHover($event)"
+        <wy-document-editor [document]="document" [content]="documentContent" (clicked)="onEditorClick($event)"
           (changeContent)="onChange($event)" [isLoading]="isLoading">
         </wy-document-editor>
       </div>

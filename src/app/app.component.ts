@@ -49,10 +49,19 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   changeDoc(event: FileInfo) {
+    let loadObs;
+    // save old doc before switching
+    if (this.document) {
+      loadObs = this.documentService.saveDocument(this.document.path, this.document.name, event)
+        .pipe(() => this.documentService.getDocument(event.path, event.name));
+    } else {
+      loadObs = this.documentService.getDocument(event.path, event.name);
+    }
+
     this.fileInfo = event;
     this.paragraphId = null;
     this.isLoading = true;
-    this.subscription.add(this.documentService.getDocument(event.path, event.name).subscribe(res => {
+    this.subscription.add(loadObs.subscribe(res => {
       this.isLoading = false;
       if (res) {
         this.documentContent = { content: res.content };
@@ -62,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
     }));
   }
 
-  onHover(event) {
+  onEditorClick(event) {
     this.paragraphId = event;
   }
 
@@ -71,7 +80,6 @@ export class AppComponent implements OnInit, OnDestroy {
       this.documentService
         .saveDocument(this.document.path, this.document.name, event)
         .subscribe((res: DocumentDefinition) => {
-          console.log('saved. will update document and content', res)
           this.document = res;
           this.documentContent.content = event;
         }));

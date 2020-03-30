@@ -22,7 +22,7 @@ export class NotesService {
 
   getContextesForParagraph(paragraphId) {
     // TODO get paragraph meta, look at the marks on t he paragraph and add them to this list
-    return this.defaultContextForParagraphs;
+    return paragraphId ? this.defaultContextForParagraphs : ['document'];
   }
 
   getNotesForParagraph(docPath, docName, paragraphId, contexts) {
