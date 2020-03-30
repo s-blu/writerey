@@ -3,7 +3,7 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, flatMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -17,7 +17,7 @@ export class ParagraphService {
   private PARAGRAPH_DELIMITER_REGEX = RegExp(
     `<p(?: class="${this.UUID_V4_REGEX_STR}")?>` + this.PARAGRAPH_DELIMITER_WO_OPENING
   );
-  private defaultContextForParagraphs = ['paragraph', 'document']
+
   private paragraphMetaCache = {};
 
   constructor(private api: ApiService, private httpClient: HttpClient) {
@@ -61,66 +61,65 @@ export class ParagraphService {
     }
   }
 
-  setParagraphMeta(docPath, docName, paragraphId, metaType, metaContent) {
+  setParagraphMeta(docPath, docName, context, metaType, metaContent) {
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
-    formdata.append('p_id', paragraphId);
+    formdata.append('p_id', context);
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    // FIXME rewrite this to a piped call
-    return new Observable(subscriber => {
-      this.getParagraphMeta(docPath, docName, paragraphId, metaType).subscribe(res => {
-        const paragraphMeta = res || {};
-        paragraphMeta[metaType] = metaContent;
-        formdata.append('content', JSON.stringify(paragraphMeta));
+    return this.getParagraphMeta(docPath, docName, context)
+      .pipe(
+        catchError(err => this.api.handleHttpError(err)),
+        flatMap(getRes => {
+          const paragraphMeta = getRes || {};
+          paragraphMeta[metaType] = metaContent;
 
-        this.httpClient
-          .put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders })
-          .pipe(catchError(err => this.api.handleHttpError(err)))
-          .subscribe((putRes: string) => {
-            try {
-              putRes = JSON.parse(putRes);
-              this.setCacheItem(docPath, docName, paragraphId, putRes);
-            } finally {
-              subscriber.next(putRes);
-              subscriber.complete();
-            }
-          });
-      });
-    });
+          const blob = new Blob([JSON.stringify(paragraphMeta)], { type: 'application/json' });
+          const file = new File([blob], name, { type: 'application/json' });
+          formdata.append('file', file);
+
+          return this.httpClient.put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders });
+        }),
+        map((putRes: string) => {
+          return this.parseAndExtractParagraphMetaResponse(putRes, docPath, docName, context, metaType);
+        })
+      );
   }
 
-  getParagraphMeta(docPath, docName, paragraphId, metaType?): Observable<any> {
-    const cachedMeta = this.getCacheItem(docPath, docName, paragraphId);
+  getParagraphMeta(docPath, docName, context, metaType?): Observable<any> {
+    const cachedMeta = this.getCacheItem(docPath, docName, context);
     if (cachedMeta) {
       return metaType ? of(cachedMeta[metaType]) : of(cachedMeta);
     }
     const params = {
       doc_path: docPath,
-      p_id: paragraphId,
+      p_id: context,
     };
 
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        if (!res || res === '') return res;
-        try {
-          const data = JSON.parse(res);
-          this.setCacheItem(docPath, docName, paragraphId, data);
-          return metaType ? data[metaType] : data;
-        } catch {
-          console.warn('Was not able to parse paragraph meta. Returning result as-is.');
-          return res;
-        }
+        return this.parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType);
       })
     );
   }
 
-  getContextesForParagraph(paragraphId) {
-    // TODO get paragraph meta, look at the marks on t he paragraph and add them to this list
-    return this.defaultContextForParagraphs;
+  private parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType?) {
+    console.log('parseAndExtractParagraphMetaResponse', res, docPath, docName, context, metaType)
+    if (!res || res === '') return res;
+    try {
+      console.log('parseAndExtractParagraphMetaResponse', res)
+      const data = JSON.parse(res);
+      const result = metaType ? data[metaType] : data;
+
+      this.setCacheItem(docPath, docName, context, data);
+      return result;
+    } catch {
+      console.warn('Was not able to parse paragraph meta. Returning result as-is.');
+      return res;
+    }
   }
 
   private _getParagraphTagWithIdentifier(id: string) {

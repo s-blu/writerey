@@ -1,5 +1,6 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'wy-create-new-note',
@@ -13,18 +14,31 @@ export class CreateNewNoteComponent implements OnInit {
 
   selectedContext = 'paragraph';
   comment: string;
+  createNewForm;
   private translatedContextNames = {
     paragraph: 'paragraph',
     document: 'document'
   }
 
   constructor(
-    private translocoService: TranslocoService
-  ) { }
+    private translocoService: TranslocoService,
+    private formBuilder: FormBuilder,
+  ) {
+    this.createNewForm = this.formBuilder.group({
+      context: 'paragraph',
+      text: ''
+    });
+  }
 
   ngOnInit() {
     this.translatedContextNames.paragraph = this.translocoService.translate('createNote.contexts.paragraph');
     this.translatedContextNames.document = this.translocoService.translate('createNote.contexts.document');
+  }
+
+  onSubmit(data) {
+    this.noteCreated.emit(data);
+    this.createNewForm.reset();
+    this.createNewForm.patchValue({ context: 'paragraph' });
   }
 
   getContextName(context: string) {
@@ -32,7 +46,7 @@ export class CreateNewNoteComponent implements OnInit {
   }
 
   create() {
-    
+
   }
 
 }

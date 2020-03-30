@@ -1,7 +1,8 @@
 <div class="notes" *transloco="let t; read: 'notes'">
   <h3>*{{parId}}*</h3>
-  <div *ngFor="let n of notes" class="note">
-    <wy-note [note]="n"></wy-note>
+  <p>{{notes | json }}</p>
+  <div *ngFor="let key of noteContexts" class="note">
+    <wy-note *ngFor="let n of notes[key]" [note]="n"></wy-note>
   </div>
 
   <mat-expansion-panel *ngIf="isReviewMode">

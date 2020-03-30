@@ -1,15 +1,17 @@
 <div class="create-note" *transloco="let t; read: 'createNote'">
-  <mat-form-field>
-    <mat-label>{{t('context')}}</mat-label>
-    <mat-select [(value)]="selectedContext">
-      <mat-option *ngFor="let con of contexts" [value]="con">{{getContextName(con)}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field (keyup.enter)="create()">
-    <mat-label>{{t('comment')}}</mat-label>
-    <textarea matInput required [(ngModel)]="comment"></textarea>
-  </mat-form-field>
-  <button mat-icon-button>
-    <mat-icon (click)="create()">add</mat-icon>
-  </button>
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field>
+      <mat-label>{{t('context')}}</mat-label>
+      <mat-select formControlName="context" required>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{getContextName(con)}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field (keyup.enter)="create()">
+      <mat-label>{{t('comment')}}</mat-label>
+      <textarea rows="4" matInput required formControlName="text"></textarea>
+    </mat-form-field>
+    <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+      <mat-icon>add</mat-icon>
+    </button>
+  </form>
 </div>

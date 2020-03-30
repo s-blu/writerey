@@ -1,9 +1,13 @@
-<div class="note" [style]="noteStyles">
-  <div class="meta">
+<mat-card class="note" [style]="noteStyles">
+  <mat-card-header>
     <mat-icon *ngIf="typeIcon">{{ typeIcon }}</mat-icon>
-    <span class="context">{{ note.context }}</span>
-  </div>
-  <div class="text">
+    <mat-card-subtitle>{{note.context}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
     {{ note.text }}
-  </div>
-</div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-icon-button><mat-icon>done</mat-icon></button>
+  </mat-card-actions>
+</mat-card>
+

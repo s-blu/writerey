@@ -52,6 +52,7 @@ export class AppComponent implements OnInit, OnDestroy {
   changeDoc(event: FileInfo) {
     console.log('change doc event received', event);
     this.fileInfo = event;
+    this.paragraphId = null;
     this.isLoading = true;
     this.subscription.add(this.documentService.getDocument(event.path, event.name).subscribe(res => {
       this.isLoading = false;

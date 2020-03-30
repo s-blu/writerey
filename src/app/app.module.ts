@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatCardModule } from '@angular/material/card';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -49,7 +50,8 @@ const matModules = [
   MatFormFieldModule,
   MatSnackBarModule,
   MatSelectModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatCardModule
 ];
 
 @NgModule({

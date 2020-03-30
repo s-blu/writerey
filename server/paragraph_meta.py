@@ -24,18 +24,21 @@ class ParagraphMeta(Resource):
         pId = request.form['p_id']
         filename = doc_name + '_' + pId
         if request.form['doc_path']:
-            pathToSaveTo = PathUtils.sanitizePathList(
-                [basePath, request.form['doc_path'], metaSubPath, filename])
-            Path(pathToSaveTo).mkdir(parents=True, exist_ok=True)
+            dirPath = PathUtils.sanitizePathList(
+                [basePath, request.form['doc_path'], metaSubPath])
+            Path(dirPath).mkdir(parents=True, exist_ok=True)
+            pathToSaveTo = PathUtils.sanitizePathList([dirPath, filename])
         else:
             pathToSaveTo = PathUtils.sanitizePathList(
                 [basePath, metaSubPath, filename])
         # TODO do this here and sent content as file obj
-        # f = request.files['file']
-        # f.save(filePath)
-        content = request.form['content']
-        f = open(pathToSaveTo, 'w')
-        f.write(content)
-        f.close()
+        f = request.files['file']
+        f.save(pathToSaveTo)
+        #content = request.form['content']
+        #f = open(pathToSaveTo, 'w')
+        # f.write(content)
+        # f.close()
+        savedF = open(pathToSaveTo, 'r', encoding='utf-8')
+        newContent = savedF.read()
 
-        return content
+        return newContent

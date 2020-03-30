@@ -4,7 +4,7 @@ import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map, tap } from 'rxjs/operators';
+import { catchError, map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
 
