@@ -1,4 +1,4 @@
-<div (click)="onEditorClick($event)">
+<div (click)="onEditorClick($event)" [class]="{'readonly': readOnly}">
   <!-- <quill-editor #editor [ngModel]="content" [modules]="modules" bounds="self" classes="wy-quill" [styles]="styles"
   (onContentChanged)="onContentChange($event)" (onEditorCreated)="onEditorCreated($event)">
 </quill-editor>   -->

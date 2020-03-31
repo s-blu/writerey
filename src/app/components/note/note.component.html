@@ -1,7 +1,7 @@
-<mat-card class="note" [style]="noteStyles">
+<mat-card [style]="noteStyles" [class]="classes">
   <mat-card-header>
-    <i *ngIf="typeIcon === 'info'" class="material-icons-outlined">info</i>
-    <i *ngIf="typeIcon === 'todo'" class="material-icons-outlined">assignment</i>
+    <i *ngIf="note.type === 'info'" class="material-icons-outlined">info</i>
+    <i *ngIf="note.type === 'todo'" class="material-icons-outlined">assignment</i>
     <mat-card-subtitle>{{note.context}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>

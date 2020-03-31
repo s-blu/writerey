@@ -3,3 +3,15 @@
   font-family: 'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif;
   font-size: 16px;
 }
+
+::ng-deep .ql-toolbar {
+  position: sticky;
+  top: -2px;
+  z-index: 10;
+  background: white;
+}
+
+::ng-deep .readonly .ql-toolbar {
+  visibility: hidden;
+}
+

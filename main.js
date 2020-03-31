@@ -5,12 +5,12 @@ let win;
 function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
-    width: 600,
-    height: 670,
+    width: 1280,
+    height: 960,
     icon: `file://${__dirname}/dist/assets/logo.png`,
   });
 
-  win.loadURL(`./dist/index.html`);
+  win.loadURL(`./dist/writerey/index.html`);
 
   // uncomment below to open the DevTools.
   // win.webContents.openDevTools()

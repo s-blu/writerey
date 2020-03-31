@@ -8,9 +8,19 @@
   * {
     box-sizing: border-box;
   }
+
+  &.loading {
+    color: grey;
+  }
+
 }
 
 wy-ckeditor {
   width: 100%;
   min-height: 50vh;
+}
+
+.load-indicator {
+  position: sticky;
+  top: 1px;
 }

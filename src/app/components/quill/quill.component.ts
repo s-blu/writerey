@@ -19,7 +19,7 @@ const Quill: any = QuillNamespace;
 export class QuillComponent implements OnInit {
   @Input() content: string;
   @Input() readOnly: boolean;
- 
+
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
   @Output() editorClicked: EventEmitter<any> = new EventEmitter();
 
@@ -45,19 +45,15 @@ export class QuillComponent implements OnInit {
   editor: QuillEditorComponent;
 
   ngOnInit() {
-    console.log('wy quill loaded', this.content)
   }
 
-  onEditorCreated() {
-    this.editor.onContentChanged.pipe(debounceTime(400), distinctUntilChanged()).subscribe(data => {
-      // tslint:disable-next-line:no-console
-      console.log('view child + directly subscription');
+  onEditorCreated(event) {
+    this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
       this.contentChanged.emit(data.html);
     });
   }
 
   onEditorClick(event) {
-    console.log('on clicked', event)
     this.editorClicked.emit(event?.srcElement?.className);
   }
 }

@@ -14,7 +14,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
   @Input() set fileInfo(info: FileInfo) {
-    console.log('fileinfo in doc editor', info, this.document)
     if (!info) return;
     let loadObs;
     // save old doc before switching
@@ -110,6 +109,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
           this.documentChanged.emit(res);
+          console.log('saved', new Date().toLocaleString())
         }));
     this.changeContent.emit(event);
   }

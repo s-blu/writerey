@@ -22,7 +22,7 @@ export class CreateNewNoteComponent implements OnInit {
     private formBuilder: FormBuilder,
   ) {
     this.createNewForm = this.formBuilder.group({
-      type: 'info',
+      type: 'todo',
       color: '',
       context: this.contexts[0] || 'paragraph',
       text: ''
@@ -37,7 +37,7 @@ export class CreateNewNoteComponent implements OnInit {
   onSubmit(data) {
     this.noteCreated.emit(data);
     this.createNewForm.reset();
-    this.createNewForm.patchValue({ context: this.contexts[0] || 'paragraph', type: 'info' });
+    this.createNewForm.patchValue({ context: this.contexts[0] || 'paragraph', type: 'todo', color: '' });
   }
 
   getContextName(context: string) {

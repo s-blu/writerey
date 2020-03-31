@@ -9,14 +9,15 @@ import { Note } from '../../interfaces/note.interface';
 export class NoteComponent implements OnInit {
   @Input() note: Note;
 
-  typeIcon = 'info';
   noteStyles = '';
+  classes = 'note'
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (this.note.color) {
       this.noteStyles = 'background-color:' + this.note.color;
+      this.classes += `type-${this.note.type}`;
     }
   }
 }

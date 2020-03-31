@@ -11,10 +11,9 @@ export class WyInitService {
   constructor() { }
 
   init() {
-    console.log('INIT')
     const Parchment = Quill.import('parchment');
-    let Width = new Parchment.Attributor.Attribute('class', 'class');
-    Parchment.register(Width);
+    const allowClasses = new Parchment.Attributor.Attribute('class', 'class');
+    Parchment.register(allowClasses);
 
 
     // let config = { scope: Parchment.Scope.BLOCK };

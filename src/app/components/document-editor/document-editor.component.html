@@ -1,5 +1,6 @@
-<div class="document-editor">
-  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
-  <wy-quill [content]="content" (editorClicked)="onClick($event)" (contentChanged)="onChange($event)" [readOnly]="isLoading">
+<div class="document-editor" [class]="{loading: isLoading}">
+  <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
+  <wy-quill [content]="content" (editorClicked)="onClick($event)" (contentChanged)="onChange($event)"
+    [readOnly]="isLoading || docMode === 'read'">
   </wy-quill>
 </div>
