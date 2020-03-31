@@ -1,11 +1,11 @@
 import { DOC_MODES } from './../../interfaces/docModes.enum';
 import { NotesService } from './../../services/notes.service';
-import { DocumentDefinition } from './../../interfaces/documentDefinition.interface';
 import { ParagraphService } from './../../services/paragraph.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { Note } from '../../interfaces/note.interface';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/interfaces/fileInfo.interface';
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'wy-notes',
@@ -43,22 +43,38 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  deleteNote(note) {
+    let notes = this.notes[note.context];
+    if (!notes) {
+      console.warn('Could not find context collection for note. Do nothing.', note);
+      return;
+    }
+    notes = notes.filter(n => n.id !== note.id);
+    console.log('filtered out note', notes);
+    this.updateParagraphMeta(note.context, notes);
+  }
+
   createNewNote(event) {
     if (!event) return;
-    const context = event.context === 'paragraph' ? this.parId : event.context;
     const newNote: Note = {
+      id: uuid.v4(),
       type: event.type,
       color: event.color,
       context: event.context,
       text: event.text
     }
-    const newContext = [newNote];
+    const updatedMetaData = [newNote];
     if (this.notes && this.notes[event.context]) {
-      newContext.push(...this.notes[event.context])
+      updatedMetaData.push(...this.notes[event.context])
     }
-    this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, context, 'notes', newContext)
+    this.updateParagraphMeta(event.context, updatedMetaData);
+  }
+
+  private updateParagraphMeta(context, data) {
+    const con = context === 'paragraph' ? this.parId : context;
+    this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data)
       .subscribe(res => {
-        this.notes[event.context] = res;
+        this.notes[context] = res;
       });
   }
 

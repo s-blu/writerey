@@ -18,7 +18,44 @@
   }
 }
 
+.done-button {
+  position: absolute;
+  z-index: 5;
+  bottom: 24px;
+  right: 12px;
+  background-color: white;
+  display:none;
+}
+
+.done-button:hover {
+  display: inline;
+}
+
 .mat-card {
   margin-bottom: 5px;
   padding: 1em;
+
+  &:hover {
+    .done-button {
+      display: inline;
+      animation: fadeIn 300ms;
+    }
+  }
+}
+
+.type-todo {
+  border: 1px solid #808080;
+}
+
+.mat-card-actions {
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

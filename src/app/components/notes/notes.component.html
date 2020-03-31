@@ -1,7 +1,7 @@
 <div class="notes" *transloco="let t; read: 'notes'">
   <div *ngIf="mode !== MODES.READ">
     <div *ngFor="let key of noteContexts" class="note">
-      <wy-note *ngFor="let n of notes[key]" [note]="n"></wy-note>
+      <wy-note *ngFor="let n of notes[key]" [note]="n" (deleteNote)="deleteNote($event)"></wy-note>
     </div>
 
     <mat-expansion-panel *ngIf="mode === MODES.REVIEW">

@@ -1,4 +1,4 @@
-<mat-card [style]="noteStyles" [class]="classes">
+<mat-card [style]="noteStyles" class="{{classes}}">
   <mat-card-header>
     <i *ngIf="note.type === 'info'" class="material-icons-outlined">info</i>
     <i *ngIf="note.type === 'todo'" class="material-icons-outlined">assignment</i>
@@ -7,7 +7,5 @@
   <mat-card-content>
     {{ note.text }}
   </mat-card-content>
-  <!-- <mat-card-actions>
-    <button mat-icon-button><mat-icon>done</mat-icon></button>
-  </mat-card-actions> -->
+  <button mat-icon-button class="done-button" (click)="delete()"><mat-icon>done</mat-icon></button>
 </mat-card>
