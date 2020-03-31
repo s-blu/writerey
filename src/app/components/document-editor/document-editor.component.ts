@@ -1,3 +1,5 @@
+import { FileInfo } from './../../interfaces/fileInfo.interface';
+import { DOC_MODES } from './../../interfaces/docModes.enum';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
@@ -11,12 +13,47 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./document-editor.component.scss'],
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
-  @Input() isLoading: boolean;
-  @Input() document: DocumentDefinition;
-  @Input() content: { content: string };
+  @Input() set fileInfo(info: FileInfo) {
+    console.log('fileinfo in doc editor', info, this.document)
+    if (!info) return;
+    let loadObs;
+    // save old doc before switching
+    if (this.document) {
+      loadObs = this.documentService.saveDocument(this.document.path, this.document.name, this.content)
+        .pipe(() => this.documentService.getDocument(info.path, info.name));
+    } else {
+      loadObs = this.documentService.getDocument(info.path, info.name);
+    }
+
+    this.isLoading = true;
+    this.subscription.add(loadObs.subscribe(res => {
+      this.content = res.content;
+      delete res.content;
+      this.document = res;
+      this.isLoading = false;
+      this.documentChanged.emit(this.document)
+    }));
+  }
+  @Input() set mode(m: DOC_MODES) {
+    this.docMode = m;
+    if (m === DOC_MODES.REVIEW) {
+      this.isLoading = true;
+      this.documentService.enhanceAndSaveDocument(this.document.path, this.document.name, this.content).subscribe(res => {
+        this.content = res.content;
+        this.isLoading = false;
+      });
+    }
+
+  };
 
   @Output() clicked: EventEmitter<any> = new EventEmitter();
   @Output() changeContent: EventEmitter<any> = new EventEmitter();
+  @Output() documentChanged: EventEmitter<any> = new EventEmitter();
+
+  content: string;
+  docMode: DOC_MODES;
+  isLoading: boolean;
+  document: DocumentDefinition;
 
   private clickSubject = new Subject();
   private subscription = new Subscription();
@@ -42,28 +79,38 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     );
   }
 
+
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
 
   onClick(event) {
-    console.log('editor clicked', event)
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
-      const rule = `p.${event} {
-        background-color: aliceblue;
-      }`;
-      if (this.style.cssRules.length > 0) this.style.deleteRule(0);
-      this.style.insertRule(rule);
+      if (this.docMode === DOC_MODES.REVIEW) {
+        const rule = `p.${event} {
+          background-color: aliceblue;
+        }`;
+        if (this.style.cssRules.length > 0) this.style.deleteRule(0);
+        this.style.insertRule(rule);
+      }
       this.clickSubject.next(event);
     }
   }
 
   onBlur(event) {
-    this.changeContent.emit(event.editor.getData());
+    this.changeContent.emit(event);
   }
 
   onChange(event) {
-    //console.log('doc ed change', event)
+    if (!this.document) return;
+    this.content = event;
+    this.subscription.add(
+      this.documentService
+        .saveDocument(this.document.path, this.document.name, event)
+        .subscribe((res: DocumentDefinition) => {
+          this.document = res;
+          this.documentChanged.emit(res);
+        }));
     this.changeContent.emit(event);
   }
 }

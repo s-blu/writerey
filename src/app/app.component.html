@@ -8,8 +8,8 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor [document]="document" [content]="documentContent" (clicked)="onEditorClick($event)"
-          (changeContent)="onChange($event)" [isLoading]="isLoading">
+        <wy-document-editor [fileInfo]="fileInfo" [mode]="activeMode" (clicked)="onEditorClick($event)"
+          (documentChanged)="documentChanged($event)">
         </wy-document-editor>
       </div>
     </div>

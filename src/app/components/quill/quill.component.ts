@@ -18,19 +18,19 @@ const Quill: any = QuillNamespace;
 })
 export class QuillComponent implements OnInit {
   @Input() content: string;
-
+  @Input() readOnly: boolean;
+ 
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
   @Output() editorClicked: EventEmitter<any> = new EventEmitter();
 
   modules = {
     toolbar: [
+      [{ header: [1, 2, 3, 4, 5, 6, false] }],
       ['bold', 'italic', 'underline', 'strike'],
       ['blockquote', 'code-block'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ indent: '-1' }, { indent: '+1' }],
-      [{ header: [1, 2, 3, 4, 5, 6, false] }],
-      [{ align: [] }],
-      ['clean'],
+      [{ align: [] }]
     ],
   };
   styles = {
@@ -48,38 +48,12 @@ export class QuillComponent implements OnInit {
     console.log('wy quill loaded', this.content)
   }
 
-  onEditorCreated(event) {
-    console.log('quill editor created', event);
-    //console.log(Quill.imports);
-    // const Parchment = Quill.import('parchment');
-    // let Width = new Parchment.Attributor.Attribute('class', 'class');
-    // Parchment.register(Width);
-
-
-    // let config = { scope: Parchment.Scope.BLOCK };
-    // let SpanBlockClass = new Parchment.Attributor.Class('span-block', 'span', config);
-    // Quill.register(SpanBlockClass, true);
-    // this.form
-    //   .controls
-    //   .editor
-    //   .valueChanges.pipe(
-    //     debounceTime(400),
-    //     distinctUntilChanged()
-    //   )
-    //   .subscribe((data) => {
-    //     // tslint:disable-next-line:no-console
-    //     console.log('native fromControl value changes with debounce', data)
-    //   })
-
+  onEditorCreated() {
     this.editor.onContentChanged.pipe(debounceTime(400), distinctUntilChanged()).subscribe(data => {
       // tslint:disable-next-line:no-console
-      //console.log('view child + directly subscription', data);
+      console.log('view child + directly subscription');
+      this.contentChanged.emit(data.html);
     });
-  }
-
-  onContentChange(event) {
-    console.log('onContentChange')
-    this.contentChanged.emit(event.html);
   }
 
   onEditorClick(event) {

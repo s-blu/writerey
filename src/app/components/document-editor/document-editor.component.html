@@ -1,8 +1,5 @@
 <div class="document-editor">
   <mat-progress-bar *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
-  <wy-quill [content]="content.content" (editorClicked)="onClick($event)" (contentChanged)="onChange($event)">
+  <wy-quill [content]="content" (editorClicked)="onClick($event)" (contentChanged)="onChange($event)" [readOnly]="isLoading">
   </wy-quill>
-  <!-- <wy-ckeditor *ngIf="content" (editorBlur)="onBlur($event)" (editorChange)="onChange($event)" (click)="onClick($event)"
-    [(content)]="content" [readonly]="isLoading">
-  </wy-ckeditor> -->
 </div>

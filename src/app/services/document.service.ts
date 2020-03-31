@@ -16,8 +16,13 @@ const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 export class DocumentService {
   constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) { }
 
-  getDocument(path: string, name: string): Observable<any> {
-    return this.httpClient.get(this.api.getDocumentRoute(name) + `?doc_path=${path}`).pipe(
+  getDocument(path: string, name: string, withContent = true): Observable<any> {
+    const params: any = {
+      doc_path: path
+    };
+    if (withContent) params.with_content = 'true';
+
+    return this.httpClient.get(this.api.getDocumentRoute(name), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.transformLastEditedIntoDate(res)),
       tap(res => {
@@ -27,7 +32,9 @@ export class DocumentService {
   }
 
   enhanceAndSaveDocument(path: string, name: string, content) {
+    console.log('content to enhance', content)
     const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
+    console.log('enhanced content', enhancedContent)
     return this.saveDocument(path, name, enhancedContent).pipe(
       map(res => {
         if (!res) return res;

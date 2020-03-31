@@ -29,7 +29,6 @@ import { MatCardModule } from '@angular/material/card';
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { DocumentEditorComponent } from './components/document-editor/document-editor.component';
-import { CkeditorComponent } from './components/ckeditor/ckeditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplorerComponent } from './components/explorer/explorer.component';
@@ -64,7 +63,6 @@ const matModules = [
   declarations: [
     AppComponent,
     DocumentEditorComponent,
-    CkeditorComponent,
     TopbarComponent,
     ExplorerComponent,
     NotesComponent,

@@ -1,5 +1,5 @@
 {
-  "dateFormat": "dd/MM/yy hh:mm:ss",
+  "dateFormat": "dd/MM/yy HH:mm:ss",
   "explorer": {
     "rename": "Rename",
     "newfile": "New document",

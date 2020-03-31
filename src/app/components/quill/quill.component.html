@@ -1,5 +1,8 @@
 <div (click)="onEditorClick($event)">
-  <quill-editor #editor [ngModel]="content" [modules]="modules" bounds="self" classes="wy-quill" [styles]="styles"
+  <!-- <quill-editor #editor [ngModel]="content" [modules]="modules" bounds="self" classes="wy-quill" [styles]="styles"
   (onContentChanged)="onContentChange($event)" (onEditorCreated)="onEditorCreated($event)">
-</quill-editor>
+</quill-editor>   -->
+  <quill-editor #editor [ngModel]="content" [modules]="modules" classes="wy-quill" [styles]="styles"
+    (onEditorCreated)="onEditorCreated($event)" [readOnly]="readOnly">
+  </quill-editor>
 </div>
