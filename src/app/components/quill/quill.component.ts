@@ -6,6 +6,9 @@ import { throwError, from, Observable } from 'rxjs';
 import { CompileTemplateMetadata } from '@angular/compiler';
 import { QuillEditorComponent } from 'ngx-quill';
 
+
+import * as QuillNamespace from 'quill';
+const Quill: any = QuillNamespace;
 // FIXME if we wont use Quill anymore, remove the component
 
 @Component({
@@ -16,7 +19,8 @@ import { QuillEditorComponent } from 'ngx-quill';
 export class QuillComponent implements OnInit {
   @Input() content: string;
 
-  @Output() contentChange: EventEmitter<any> = new EventEmitter();
+  @Output() contentChanged: EventEmitter<any> = new EventEmitter();
+  @Output() editorClicked: EventEmitter<any> = new EventEmitter();
 
   modules = {
     toolbar: [
@@ -40,10 +44,21 @@ export class QuillComponent implements OnInit {
   })
   editor: QuillEditorComponent;
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('wy quill loaded', this.content)
+  }
 
   onEditorCreated(event) {
-    console.log(event);
+    console.log('quill editor created', event);
+    //console.log(Quill.imports);
+    // const Parchment = Quill.import('parchment');
+    // let Width = new Parchment.Attributor.Attribute('class', 'class');
+    // Parchment.register(Width);
+
+
+    // let config = { scope: Parchment.Scope.BLOCK };
+    // let SpanBlockClass = new Parchment.Attributor.Class('span-block', 'span', config);
+    // Quill.register(SpanBlockClass, true);
     // this.form
     //   .controls
     //   .editor
@@ -58,11 +73,17 @@ export class QuillComponent implements OnInit {
 
     this.editor.onContentChanged.pipe(debounceTime(400), distinctUntilChanged()).subscribe(data => {
       // tslint:disable-next-line:no-console
-      console.log('view child + directly subscription', data);
+      //console.log('view child + directly subscription', data);
     });
   }
 
   onContentChange(event) {
-    this.contentChange.emit(event);
+    console.log('onContentChange')
+    this.contentChanged.emit(event.html);
+  }
+
+  onEditorClick(event) {
+    console.log('on clicked', event)
+    this.editorClicked.emit(event?.srcElement?.className);
   }
 }

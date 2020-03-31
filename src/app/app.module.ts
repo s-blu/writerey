@@ -1,3 +1,4 @@
+import { QuillComponent } from './components/quill/quill.component';
 import { CreateNewNoteComponent } from './components/createNewNote/createNewNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
@@ -5,7 +6,7 @@ import { LastModifiedComponent } from './components/lastModified/lastModified.co
 import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -37,6 +38,11 @@ import { NoteComponent } from './components/note/note.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { QuillModule } from 'ngx-quill';
+
+import * as QuillNamespace from 'quill';
+import { initializeApp, WyInitService } from './services/wy-init.service';
+const Quill: any = QuillNamespace;
 
 const matModules = [
   MatIconModule,
@@ -71,7 +77,8 @@ const matModules = [
     TagDialogComponent,
     LastModifiedComponent,
     CreateNewNoteComponent,
-    CheckForNameSafetyDirective
+    CheckForNameSafetyDirective,
+    QuillComponent
   ],
   imports: [
     BrowserModule,
@@ -82,8 +89,16 @@ const matModules = [
     BrowserAnimationsModule,
     ...matModules,
     TranslocoRootModule,
+    QuillModule.forRoot(
+      //config goes here
+    )
   ],
-  providers: [],
+  providers: [
+    { provide: APP_INITIALIZER,useFactory: initializeApp, deps: [WyInitService], multi: true}
+  ],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {
+
+}
+

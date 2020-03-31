@@ -47,6 +47,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   onClick(event) {
+    console.log('editor clicked', event)
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
       const rule = `p.${event} {
         background-color: aliceblue;
@@ -62,6 +63,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   onChange(event) {
-    this.changeContent.emit(event.editor.getData());
+    //console.log('doc ed change', event)
+    this.changeContent.emit(event);
   }
 }
