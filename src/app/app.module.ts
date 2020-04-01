@@ -1,3 +1,4 @@
+import { DocumentTreeComponent } from './components/documentTree/documentTree.component';
 import { QuillComponent } from './components/quill/quill.component';
 import { CreateNewNoteComponent } from './components/createNewNote/createNewNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
@@ -25,6 +26,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -56,7 +58,8 @@ const matModules = [
   MatSnackBarModule,
   MatSelectModule,
   MatExpansionModule,
-  MatCardModule
+  MatCardModule,
+  MatTabsModule
 ];
 
 @NgModule({
@@ -76,7 +79,8 @@ const matModules = [
     LastModifiedComponent,
     CreateNewNoteComponent,
     CheckForNameSafetyDirective,
-    QuillComponent
+    QuillComponent,
+    DocumentTreeComponent
   ],
   imports: [
     BrowserModule,
@@ -92,7 +96,7 @@ const matModules = [
     )
   ],
   providers: [
-    { provide: APP_INITIALIZER,useFactory: initializeApp, deps: [WyInitService], multi: true}
+    { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true }
   ],
   bootstrap: [AppComponent],
 })
