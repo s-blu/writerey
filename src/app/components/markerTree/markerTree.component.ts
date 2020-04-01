@@ -49,6 +49,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit() {
+
     this.fetchTree();
   }
 
@@ -64,13 +65,10 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   ) { }
 
   private fetchTree() {
-    this.subscription.add(this.httpClient.get(this.api.getMarkerRoute()).subscribe((res: string) => {
-      try {
-        this.tree = JSON.parse(res);
-        this.dataSource.data = [res];
-      } finally {
-      }
-    }));
+    this.markerService.getMarkerDefinitions().subscribe((res) => {
+      console.log('got definitions from marker service', res)
+      this.dataSource.data = res;
+    })
   }
 
   openMarkerCategory(node) {
@@ -90,6 +88,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
     this.subscription.add(dialogRef.afterClosed().subscribe(data => {
       this.subscription.add(this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
+        console.log('created marker got res', res)
         this.fetchTree(); // FIXME implement way to only get the edited dir
         this.markerChanged.emit({ id: res.id });
       }));

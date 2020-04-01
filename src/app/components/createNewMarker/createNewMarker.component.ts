@@ -1,15 +1,29 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'wy-createNewMarker',
   templateUrl: './createNewMarker.component.html',
-  styleUrls: ['./createNewMarker.component.css']
+  styleUrls: ['./createNewMarker.component.scss']
 })
 export class CreateNewMarkerComponent implements OnInit {
+  createNewForm;
 
-  constructor() { }
+  constructor(public dialogRef: MatDialogRef<CreateNewMarkerComponent>, private formBuilder: FormBuilder ) { }
 
-  ngOnInit() {
+  cancel(): void {
+    this.dialogRef.close();
   }
 
+  ngOnInit() {
+    this.createNewForm = this.formBuilder.group({
+      type: '',
+      name: ''
+    });
+  }
+
+  onSubmit(data) {
+    this.dialogRef.close(data);
+  }
 }

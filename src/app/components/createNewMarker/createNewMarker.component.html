@@ -1,3 +1,22 @@
-<p>
-  createNewMarker works!
-</p>
+<div class="create-note" *transloco="let t; read: 'createMarker'">
+  <h3>{{t('title')}}</h3>
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field>
+      <mat-label>{{t('type.title')}}</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option value="text">{{t('type.text')}}</mat-option>
+        <mat-option value="numeric">{{t('type.numeric')}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{t('name')}}</mat-label>
+      <input matInput required formControlName="name" />
+    </mat-form-field>
+    <div class="actions">
+      <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+        <mat-icon>add</mat-icon>
+      </button>
+      <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
+    </div>
+  </form>
+</div>
