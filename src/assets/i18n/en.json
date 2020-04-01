@@ -1,11 +1,13 @@
 {
   "dateFormat": "dd/MM/yy HH:mm:ss",
   "explorer": {
-    "newmarker": "New Marker",
     "tabs": {
       "documenttree": "Documents",
       "markers": "Markers"
     }
+  },
+  "markerTree": {
+    "newmarker": "New Marker"
   },
   "documentTree": {
     "rename": "Rename",

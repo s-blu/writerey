@@ -1,3 +1,5 @@
+import { CreateNewMarkerComponent } from './components/createNewMarker/createNewMarker.component';
+import { MarkerTreeComponent } from './components/markerTree/markerTree.component';
 import { DocumentTreeComponent } from './components/documentTree/documentTree.component';
 import { QuillComponent } from './components/quill/quill.component';
 import { CreateNewNoteComponent } from './components/createNewNote/createNewNote.component';
@@ -80,7 +82,9 @@ const matModules = [
     CreateNewNoteComponent,
     CheckForNameSafetyDirective,
     QuillComponent,
-    DocumentTreeComponent
+    DocumentTreeComponent,
+    MarkerTreeComponent,
+    CreateNewMarkerComponent
   ],
   imports: [
     BrowserModule,

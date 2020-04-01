@@ -4,10 +4,7 @@
       <wy-document-tree (docChanged)="openDocument($event)"></wy-document-tree>
     </mat-tab>
     <mat-tab [label]="t('tabs.markers')">
-      <button mat-button class="new-marker-button">
-        <i class="material-icons-outlined">add_location</i>
-        <span>{{ t('newmarker') }}</span>
-      </button>
+      <wy-marker-tree></wy-marker-tree>
     </mat-tab>
   </mat-tab-group>
 </div>

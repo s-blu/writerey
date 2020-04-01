@@ -1,0 +1,21 @@
+<div class="document-tree" *transloco="let t; read: 'markerTree'">
+  <button mat-button class="new-marker-button" (click)="addNewMarkerCategory()">
+    <i class="material-icons-outlined">add_location</i>
+    <span>{{ t('newmarker') }}</span>
+  </button>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="marker-node">
+      <div class="name">{{ node.name }}</div>
+      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="markerMenu">
+        <mat-icon class="menu">more_vert</mat-icon>
+      </button>
+
+      <mat-menu #markerMenu="matMenu">
+        <button mat-menu-item (click)="removeMarker(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('remove') }}</span>
+        </button>
+      </mat-menu>
+    </mat-tree-node>
+  </mat-tree>
+</div>
