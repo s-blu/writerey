@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
 import { DocumentService } from './../../services/document.service';
-import { FileInfo } from '../../interfaces/fileInfo.interface';
+import { FileInfo } from '../../models/fileInfo.interface';
 import { ApiService } from './../../services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
@@ -11,7 +11,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { MarkerService } from 'src/app/services/marker.service';
-import { MarkerDefinition } from 'src/app/interfaces/markerDefinition.class';
+import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 
 /**
  * Food data with nested structure.

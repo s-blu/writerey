@@ -5,10 +5,21 @@
       <input matInput required formControlName="name" />
     </mat-form-field>
 
-    <div *ngIf="markerDef?.type === types.NUMERIC">
-
+    <div *ngIf="markerType === types.NUMERIC">
+      <mat-form-field>
+        <mat-label>{{t('start')}}</mat-label>
+        <input matInput type="number" required formControlName="start" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{t('end')}}</mat-label>
+        <input matInput type="number" required formControlName="end" />
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{t('interval')}}</mat-label>
+        <input matInput type="number" required formControlName="interval" />
+      </mat-form-field>
     </div>
-    <div *ngIf="markerDef?.type === types.TEXT">
+    <div *ngIf="markerType === types.TEXT">
       <ng-container formArrayName="values">
         <div *ngFor="let _ of values.controls; index as i">
           <mat-form-field [formGroupName]="i">
@@ -20,15 +31,15 @@
           </button>
         </div>
       </ng-container>
-      <button mat-button (click)="addNewValue()">{{t('addNewValue')}}</button>
+      <button mat-button (click)="addNewValue()">
+        <mat-icon>add</mat-icon> {{t('addNewValue')}}
+      </button>
     </div>
     <div class="actions">
       <button mat-button [disabled]="editForm.invalid" type="submit">
-        <mat-icon>add</mat-icon>
         {{t('save')}}
       </button>
       <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
     </div>
   </form>
-  {{markerDef | json}}
 </div>

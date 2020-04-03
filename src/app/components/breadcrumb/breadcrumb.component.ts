@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DocumentDefinition } from '../../interfaces/documentDefinition.interface';
+import { DocumentDefinition } from '../../models/documentDefinition.interface';
 
 @Component({
   selector: 'wy-breadcrumb',

@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { MarkerTypes } from 'src/app/interfaces/markerDefinition.class';
+import { MarkerTypes } from 'src/app/models/markerDefinition.class';
 
 @Component({
   selector: 'wy-createNewMarker',

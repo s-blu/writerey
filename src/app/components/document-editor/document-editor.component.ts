@@ -1,9 +1,9 @@
-import { FileInfo } from './../../interfaces/fileInfo.interface';
-import { DOC_MODES } from './../../interfaces/docModes.enum';
+import { FileInfo } from '../../models/fileInfo.interface';
+import { DOC_MODES } from '../../models/docModes.enum';
 import { ParagraphService } from '../../services/paragraph.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
-import { DocumentDefinition } from '../../interfaces/documentDefinition.interface';
+import { DocumentDefinition } from '../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 

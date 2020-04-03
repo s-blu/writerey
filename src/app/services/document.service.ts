@@ -1,5 +1,5 @@
-import { FileInfo } from './../interfaces/fileInfo.interface';
-import { DocumentDefinition } from '../interfaces/documentDefinition.interface';
+import { FileInfo } from '../models/fileInfo.interface';
+import { DocumentDefinition } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';

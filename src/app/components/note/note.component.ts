@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Note } from '../../interfaces/note.interface';
+import { Note } from '../../models/note.interface';
 
 @Component({
   selector: 'wy-note',

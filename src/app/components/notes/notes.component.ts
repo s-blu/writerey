@@ -1,10 +1,10 @@
-import { DOC_MODES } from './../../interfaces/docModes.enum';
+import { DOC_MODES } from '../../models/docModes.enum';
 import { NotesService } from './../../services/notes.service';
 import { ParagraphService } from './../../services/paragraph.service';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { Note } from '../../interfaces/note.interface';
+import { Note } from '../../models/note.interface';
 import { Subscription } from 'rxjs';
-import { FileInfo } from 'src/app/interfaces/fileInfo.interface';
+import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
 
 @Component({

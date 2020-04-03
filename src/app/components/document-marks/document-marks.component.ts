@@ -1,4 +1,4 @@
-import { DOC_MODES } from './../../interfaces/docModes.enum';
+import { DOC_MODES } from '../../models/docModes.enum';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

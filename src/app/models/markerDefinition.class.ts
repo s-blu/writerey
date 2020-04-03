@@ -14,6 +14,9 @@ export class MarkerDefinition {
   name: string;
   type: MarkerTypes;
   values: Array<MarkerValue>;
+  start: number;
+  end: number;
+  interval: number;
 
   constructor(name: string, type: MarkerTypes) {
     this.id = uuid.v4();

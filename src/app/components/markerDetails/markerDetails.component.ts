@@ -1,6 +1,6 @@
 import { MarkerService } from 'src/app/services/marker.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { MarkerDefinition, MarkerTypes } from 'src/app/interfaces/markerDefinition.class';
+import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 
@@ -10,31 +10,19 @@ import * as uuid from 'uuid';
   styleUrls: ['./markerDetails.component.scss']
 })
 export class MarkerDetailsComponent implements OnInit {
-  @Input() markerDef: MarkerDefinition;
+  @Input() set markerDef(md: MarkerDefinition) {
+    this.initializeForm(md);
+    this.markerType = md.type;
+  };
 
   editForm;
+  markerType: MarkerTypes;
   types = MarkerTypes;
   values;
 
   constructor(private formBuilder: FormBuilder, private markerService: MarkerService) { }
 
   ngOnInit() {
-    // TODO set these values when markerDef gets changed!
-    this.editForm = this.formBuilder.group({
-      type: '',
-      name: this.markerDef.name,
-      values: new FormArray([])
-    });
-
-    this.values = this.editForm.get('values') as FormArray;
-    (this.markerDef?.values || []).forEach(val => {
-      console.log('valuuuuueeee!', val)
-      this.values.push(new FormGroup({
-        name: new FormControl(val.name),
-        id: new FormControl(val.id)
-      }));
-    });
-
   }
 
   addNewValue() {
@@ -55,9 +43,41 @@ export class MarkerDetailsComponent implements OnInit {
 
   onSubmit(newValues) {
     // TODO take over new values to obj
-    this.markerService.updateMarkerDefinition(this.markerDef).subscribe((res) => {
+    console.log('onSubmit', newValues)
+    this.markerService.updateMarkerDefinition(newValues).subscribe((res) => {
       // TODO show snackbar
       console.log('saved marker', res)
     })
+  }
+
+  private initializeForm(markerDef) {
+    if (!markerDef) {
+      console.warn('got no marker definition, cannot initialize form');
+      return;
+    }
+
+    this.editForm = this.formBuilder.group({
+      id: markerDef.id,
+      type: markerDef.type,
+      name: markerDef.name,
+      values: new FormArray([])
+    });
+
+    if (markerDef.type === MarkerTypes.TEXT) {
+      this.values = this.editForm.get('values') as FormArray;
+      (markerDef.values || []).forEach(val => {
+        console.log('valuuuuueeee!', val)
+        this.values.push(new FormGroup({
+          name: new FormControl(val.name),
+          id: new FormControl(val.id)
+        }));
+      });
+    } else if (markerDef.type === MarkerTypes.NUMERIC) {
+      this.editForm.addControl('start', new FormControl(markerDef.start || 1, Validators.required));
+      this.editForm.addControl('end', new FormControl(markerDef.end || 10, Validators.required));
+      this.editForm.addControl('interval', new FormControl(markerDef.interval || 1, Validators.required));
+    } else {
+      console.error('Could not determine type of markerDefinition, cannot render edit form', markerDef)
+    }
   }
 }

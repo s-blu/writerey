@@ -2,7 +2,7 @@ import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
 import { DocumentService } from './../../services/document.service';
-import { FileInfo } from '../../interfaces/fileInfo.interface';
+import { FileInfo } from '../../models/fileInfo.interface';
 import { ApiService } from './../../services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map } from 'rxjs/operators';
-import { MarkerDefinition, MarkerTypes } from '../interfaces/markerDefinition.class';
+import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
 
 @Injectable({
   providedIn: 'root'

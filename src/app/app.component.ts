@@ -1,11 +1,11 @@
-import { DocumentDefinition } from './interfaces/documentDefinition.interface';
+import { DocumentDefinition } from './models/documentDefinition.interface';
 import { SnapshotService } from './services/snapshot.service';
 import { DocumentService } from './services/document.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FileInfo } from './interfaces/fileInfo.interface';
+import { FileInfo } from './models/fileInfo.interface';
 import { Subscription } from 'rxjs';
-import { DOC_MODES } from './interfaces/docModes.enum';
-import { MarkerDefinition } from './interfaces/markerDefinition.class';
+import { DOC_MODES } from './models/docModes.enum';
+import { MarkerDefinition } from './models/markerDefinition.class';
 
 @Component({
   selector: 'app-root',
