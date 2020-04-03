@@ -3,14 +3,15 @@
     (switchMode)="switchDocumentMode($event)" [mode]="activeMode"></wy-topbar>
   <div class="main">
     <div class="left">
-      <wy-explorer (docChanged)="changeDoc($event)"></wy-explorer>
+      <wy-explorer (docChanged)="changeDoc($event)" (markerChanged)="changeMarker($event)"></wy-explorer>
       <wy-document-marks [mode]="activeMode"></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor [fileInfo]="fileInfo" [mode]="activeMode" (clicked)="onEditorClick($event)"
+        <wy-document-editor *ngIf="fileInfo" [fileInfo]="fileInfo" [mode]="activeMode" (clicked)="onEditorClick($event)"
           (documentChanged)="documentChanged($event)">
         </wy-document-editor>
+        <wy-marker-details *ngIf="markerDef" [markerDef]="markerDef"></wy-marker-details>
       </div>
     </div>
     <div class="notes">

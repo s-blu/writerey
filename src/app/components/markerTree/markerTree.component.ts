@@ -11,6 +11,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { MarkerService } from 'src/app/services/marker.service';
+import { MarkerDefinition } from 'src/app/interfaces/markerDefinition.class';
 
 /**
  * Food data with nested structure.
@@ -32,8 +33,7 @@ interface MarkerNode {
 export class MarkerTreeComponent implements OnInit, OnDestroy {
 
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
-  // tree data
-  tree;
+  markerDefinitions: Array<MarkerDefinition>;
   treeControl = new FlatTreeControl<MarkerNode>(
     node => node.level,
     node => node.expandable
@@ -49,7 +49,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit() {
-
     this.fetchTree();
   }
 
@@ -59,37 +58,35 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private httpClient: HttpClient,
-    private api: ApiService,
     private markerService: MarkerService
   ) { }
 
   private fetchTree() {
     this.markerService.getMarkerDefinitions().subscribe((res) => {
-      console.log('got definitions from marker service', res)
+      console.log('got definitions from marker service', res);
+      this.markerDefinitions = res;
       this.dataSource.data = res;
     })
   }
 
   openMarkerCategory(node) {
-    this.markerChanged.emit({ id: node.id });
+    const markerDef = this.markerDefinitions.find(el => el.id === node.id);
+    console.log('emitting marker def', markerDef)
+    this.markerChanged.emit(markerDef);
   }
 
   removeMarker(node) {
-
+    console.warn('removing markers isnt implemented yet')
   }
 
   addNewMarkerCategory() {
-    this.createNewChild('dir', { path: '/', name: '' });
-  }
-
-  private createNewChild(type, node) {
     const dialogRef = this.dialog.open(CreateNewMarkerComponent);
 
     this.subscription.add(dialogRef.afterClosed().subscribe(data => {
+      if (!data) return;
       this.subscription.add(this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
-        console.log('created marker got res', res)
-        this.fetchTree(); // FIXME implement way to only get the edited dir
+        console.log('created marker got res', res);
+        this.dataSource.data = res;
         this.markerChanged.emit({ id: res.id });
       }));
     }));

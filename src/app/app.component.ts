@@ -5,6 +5,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileInfo } from './interfaces/fileInfo.interface';
 import { Subscription } from 'rxjs';
 import { DOC_MODES } from './interfaces/docModes.enum';
+import { MarkerDefinition } from './interfaces/markerDefinition.class';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'writerey';
 
   fileInfo: FileInfo;
+  markerDef: any; // FIXME
   document: DocumentDefinition;
   snapshotDate: Date;
   paragraphId: string;
@@ -46,7 +48,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   changeDoc(event: FileInfo) {
+    this.resetLoadedData()
     this.fileInfo = event;
+  }
+
+  changeMarker(event: MarkerDefinition) {
+    this.resetLoadedData();
+    this.markerDef = event;
   }
 
   documentChanged(event: DocumentDefinition) {
@@ -63,5 +71,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   switchDocumentMode(mode) {
     this.activeMode = mode;
+  }
+
+  private resetLoadedData() {
+    this.markerDef = null;
+    this.document = null;
+    this.fileInfo = null;
   }
 }

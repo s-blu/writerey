@@ -1,10 +1,9 @@
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map } from 'rxjs/operators';
-
-import * as uuid from 'uuid';
+import { MarkerDefinition, MarkerTypes } from '../interfaces/markerDefinition.class';
 
 @Injectable({
   providedIn: 'root'
@@ -42,6 +41,28 @@ export class MarkerService {
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseMarkerValueResponse(res);
+      })
+    );
+  }
+
+  updateMarkerDefinition(markerDef: MarkerDefinition) {
+    return this.getMarkerDefinitions().pipe(
+      flatMap(markerDefRes => {
+        let updatedMarkerDefs;
+        if (!markerDefRes) {
+          console.error('Could not get any marker definitions, even though I try to update an existing one. Aborting.');
+          return;
+        } else {
+          const oldIndex = markerDefRes.findIndex(el => el.id === markerDef.id);
+          if (oldIndex === -1) {
+            console.warn('could not find old item for markerDef. Inserting new.', markerDef);
+            updatedMarkerDefs = [markerDef, ...markerDefRes];
+          } else {
+            updatedMarkerDefs = markerDefRes;
+            updatedMarkerDefs.splice(oldIndex, 1, markerDef);
+          }
+        }
+        return this.setMarkerDefinitions(updatedMarkerDefs);
       })
     );
   }
@@ -111,29 +132,5 @@ export class MarkerService {
       console.warn('Was not able to parse marker value meta. Returning result as-is.');
       return res;
     }
-  }
-
-}
-
-enum MarkerTypes {
-  NUMERIC = 'numeric',
-  TEXT = 'text'
-}
-
-interface MarkerValue {
-  id: string;
-  name: string;
-}
-class MarkerDefinition {
-  id: string;
-  name: string;
-  type: MarkerTypes;
-  values: Array<MarkerValue>;
-
-  constructor(name: string, type: MarkerTypes) {
-    this.id = uuid.v4();
-    this.name = name;
-    this.type = type;
-    this.values = [];
   }
 }

@@ -1,5 +1,5 @@
 <div class="create-note" *transloco="let t; read: 'createMarker'">
-  <h3>{{t('title')}}</h3>
+  <h1>{{t('title')}}</h1>
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
     <mat-form-field>
       <mat-label>{{t('type.title')}}</mat-label>
@@ -13,8 +13,9 @@
       <input matInput required formControlName="name" />
     </mat-form-field>
     <div class="actions">
-      <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+      <button mat-button [disabled]="createNewForm.invalid" type="submit">
         <mat-icon>add</mat-icon>
+        {{t('create')}}
       </button>
       <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
     </div>

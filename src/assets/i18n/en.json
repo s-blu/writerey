@@ -1,4 +1,23 @@
 {
+  "createMarker": {
+    "title": "Create a new Marker",
+    "type": {
+      "title": "Marker type",
+      "text": "Text",
+      "numeric": "Numeric"
+    },
+    "name": "Name of Marker",
+    "create": "Create",
+    "cancel": "Cancel"
+  },
+  "markerDetails": {
+    "name": "Name of Marker Category",
+    "textvalue": "Value",
+    "addNewValue": "Add a new value",
+    "removeValue": "Remove Value",
+    "save": "Save",
+    "cancel": "Cancel"
+  },
   "dateFormat": "dd/MM/yy HH:mm:ss",
   "explorer": {
     "tabs": {

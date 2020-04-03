@@ -43,9 +43,8 @@ import { DocumentMarksComponent } from './components/document-marks/document-mar
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
-import * as QuillNamespace from 'quill';
 import { initializeApp, WyInitService } from './services/wy-init.service';
-const Quill: any = QuillNamespace;
+import { MarkerDetailsComponent } from './components/markerDetails/markerDetails.component';
 
 const matModules = [
   MatIconModule,
@@ -84,7 +83,8 @@ const matModules = [
     QuillComponent,
     DocumentTreeComponent,
     MarkerTreeComponent,
-    CreateNewMarkerComponent
+    CreateNewMarkerComponent,
+    MarkerDetailsComponent
   ],
   imports: [
     BrowserModule,

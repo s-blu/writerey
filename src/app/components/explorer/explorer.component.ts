@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ExplorerComponent implements OnInit, OnDestroy {
   @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
+  @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
 
   ngOnInit() {
@@ -26,14 +27,14 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   }
 
   constructor(
-    public dialog: MatDialog,
-    private httpClient: HttpClient,
-    private api: ApiService,
-    private documentService: DocumentService,
-    private directoryService: DirectoryService
-  ) {}
+    public dialog: MatDialog
+  ) { }
 
-  openDocument(node) {
-    this.docChanged.emit({ name: node.name, path: node.path });
+  openDocument(event) {
+    this.docChanged.emit(event);
+  }
+
+  openMarker(event) {
+    this.markerChanged.emit(event);
   }
 }

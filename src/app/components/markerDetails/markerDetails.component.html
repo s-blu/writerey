@@ -1,0 +1,34 @@
+<div *transloco="let t; read:'markerDetails'">
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
+    <mat-form-field>
+      <mat-label>{{t('name')}}</mat-label>
+      <input matInput required formControlName="name" />
+    </mat-form-field>
+
+    <div *ngIf="markerDef?.type === types.NUMERIC">
+
+    </div>
+    <div *ngIf="markerDef?.type === types.TEXT">
+      <ng-container formArrayName="values">
+        <div *ngFor="let _ of values.controls; index as i">
+          <mat-form-field [formGroupName]="i">
+            <mat-label>{{t('textvalue')}}</mat-label>
+            <input matInput formControlName="name" />
+          </mat-form-field>
+          <button mat-icon-button (click)="removeValue(i)" [matTooltip]="t('removeValue')">
+            <mat-icon>remove</mat-icon>
+          </button>
+        </div>
+      </ng-container>
+      <button mat-button (click)="addNewValue()">{{t('addNewValue')}}</button>
+    </div>
+    <div class="actions">
+      <button mat-button [disabled]="editForm.invalid" type="submit">
+        <mat-icon>add</mat-icon>
+        {{t('save')}}
+      </button>
+      <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
+    </div>
+  </form>
+  {{markerDef | json}}
+</div>

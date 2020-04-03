@@ -4,7 +4,7 @@
       <wy-document-tree (docChanged)="openDocument($event)"></wy-document-tree>
     </mat-tab>
     <mat-tab [label]="t('tabs.markers')">
-      <wy-marker-tree></wy-marker-tree>
+      <wy-marker-tree (markerChanged)="openMarker($event)"></wy-marker-tree>
     </mat-tab>
   </mat-tab-group>
 </div>

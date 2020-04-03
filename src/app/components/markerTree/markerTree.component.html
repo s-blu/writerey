@@ -4,7 +4,10 @@
     <span>{{ t('newmarker') }}</span>
   </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="marker-node">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="marker-node"
+      (click)="openMarkerCategory(node)">
+      <button mat-icon-button disabled matTreeNodeToggle class="explorer-btn">
+      </button>
       <div class="name">{{ node.name }}</div>
       <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="markerMenu">
         <mat-icon class="menu">more_vert</mat-icon>
