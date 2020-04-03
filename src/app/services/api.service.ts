@@ -8,7 +8,7 @@ import { throwError } from 'rxjs';
 export class ApiService {
   serverAdress = 'http://localhost:5002';
 
-  constructor() { }
+  constructor() {}
 
   getDocumentRoute(docName) {
     return docName ? `${this.serverAdress}/doc/${docName}` : `${this.serverAdress}/doc`;

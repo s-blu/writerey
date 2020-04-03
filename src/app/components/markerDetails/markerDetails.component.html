@@ -1,25 +1,26 @@
-<div class="marker-details" *transloco="let t; read:'markerDetails'">
-  <h2>{{t('title', {name: markerDefinition.name})}}
-    {{t(markerDefinition.type === types.NUMERIC ? 'type.numeric' : 'type.text', {name: markerDefinition.name})}}
+<div class="marker-details" *transloco="let t; read: 'markerDetails'">
+  <h2>
+    {{ t('title', { name: markerDefinition.name }) }}
+    {{ t(markerDefinition.type === types.NUMERIC ? 'type.numeric' : 'type.text', { name: markerDefinition.name }) }}
   </h2>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
     <mat-form-field>
-      <mat-label>{{t('name')}}</mat-label>
+      <mat-label>{{ t('name') }}</mat-label>
       <input matInput required formControlName="name" />
     </mat-form-field>
 
-    <h3>{{t('titleValues')}}</h3>
+    <h3>{{ t('titleValues') }}</h3>
     <div class="value-container" *ngIf="markerDefinition.type === types.NUMERIC">
       <mat-form-field>
-        <mat-label>{{t('start')}}</mat-label>
+        <mat-label>{{ t('start') }}</mat-label>
         <input matInput type="number" required formControlName="start" />
       </mat-form-field>
       <mat-form-field>
-        <mat-label>{{t('end')}}</mat-label>
+        <mat-label>{{ t('end') }}</mat-label>
         <input matInput type="number" required formControlName="end" />
       </mat-form-field>
       <mat-form-field>
-        <mat-label>{{t('interval')}}</mat-label>
+        <mat-label>{{ t('interval') }}</mat-label>
         <input matInput type="number" required formControlName="interval" />
       </mat-form-field>
     </div>
@@ -27,7 +28,7 @@
       <ng-container formArrayName="values">
         <div *ngFor="let _ of values.controls; index as i">
           <mat-form-field [formGroupName]="i">
-            <mat-label>{{t('textvalue')}}</mat-label>
+            <mat-label>{{ t('textvalue') }}</mat-label>
             <input matInput formControlName="name" />
           </mat-form-field>
           <button mat-icon-button (click)="removeValue(i)" [matTooltip]="t('removeValue')">
@@ -35,13 +36,11 @@
           </button>
         </div>
       </ng-container>
-      <button mat-stroked-button (click)="addNewValue()">
-        <mat-icon>add</mat-icon> {{t('addNewValue')}}
-      </button>
+      <button mat-stroked-button (click)="addNewValue()"><mat-icon>add</mat-icon> {{ t('addNewValue') }}</button>
     </div>
     <div class="actions">
       <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">
-        {{t('save')}}
+        {{ t('save') }}
       </button>
       <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
     </div>

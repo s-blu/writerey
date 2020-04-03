@@ -11,9 +11,8 @@ describe('MarkerDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MarkerDetailsComponent ]
-    })
-    .compileComponents();
+      declarations: [MarkerDetailsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

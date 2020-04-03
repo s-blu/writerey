@@ -6,7 +6,7 @@ import { NotesService } from './notes.service';
 describe('Service: Notes', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotesService]
+      providers: [NotesService],
     });
   });
 

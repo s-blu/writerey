@@ -3,22 +3,21 @@ import { NG_VALIDATORS, Validator, AbstractControl, ValidatorFn } from '@angular
 
 @Directive({
   selector: '[wyCheckForNameSafety]',
-  providers: [{ provide: NG_VALIDATORS, useExisting: CheckForNameSafetyDirective, multi: true }]
+  providers: [{ provide: NG_VALIDATORS, useExisting: CheckForNameSafetyDirective, multi: true }],
 })
 export class CheckForNameSafetyDirective implements Validator {
   @Input('wyCheckForNameSafety') typeOfName: 'tag' | 'explorer';
 
   private forbiddenCharatersRe = {
     explorer: /([/\\<>\*\?:\'"])*/,
-    tag: /([\s\.~\^:\?\*\[@\\])*/
-  }
+    tag: /([\s\.~\^:\?\*\[@\\])*/,
+  };
 
-  constructor() { }
+  constructor() {}
 
   validate(control: AbstractControl): { [key: string]: any } | null {
     const regex = this.forbiddenCharatersRe[this.typeOfName];
-    return regex ? this.nameValidator(regex)(control)
-      : null;
+    return regex ? this.nameValidator(regex)(control) : null;
   }
 
   nameValidator(regex): ValidatorFn {

@@ -28,10 +28,9 @@ interface MarkerNode {
 @Component({
   selector: 'wy-marker-tree',
   templateUrl: './markerTree.component.html',
-  styleUrls: ['./markerTree.component.scss']
+  styleUrls: ['./markerTree.component.scss'],
 })
 export class MarkerTreeComponent implements OnInit, OnDestroy {
-
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
   markerDefinitions: Array<MarkerDefinition>;
   treeControl = new FlatTreeControl<MarkerNode>(
@@ -56,40 +55,41 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  constructor(
-    public dialog: MatDialog,
-    private markerService: MarkerService
-  ) { }
+  constructor(public dialog: MatDialog, private markerService: MarkerService) {}
 
   private fetchTree() {
-    this.markerService.getMarkerDefinitions().subscribe((res) => {
+    this.markerService.getMarkerDefinitions().subscribe(res => {
       console.log('got definitions from marker service', res);
       this.markerDefinitions = res;
       this.dataSource.data = res;
-    })
+    });
   }
 
   openMarkerCategory(node) {
     const markerDef = this.markerDefinitions.find(el => el.id === node.id);
-    console.log('emitting marker def', markerDef)
+    console.log('emitting marker def', markerDef);
     this.markerChanged.emit(markerDef);
   }
 
   removeMarker(node) {
-    console.warn('removing markers isnt implemented yet')
+    console.warn('removing markers isnt implemented yet');
   }
 
   addNewMarkerCategory() {
     const dialogRef = this.dialog.open(CreateNewMarkerComponent);
 
-    this.subscription.add(dialogRef.afterClosed().subscribe(data => {
-      if (!data) return;
-      this.subscription.add(this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
-        console.log('created marker got res', res);
-        this.dataSource.data = res;
-        this.markerChanged.emit({ id: res.id });
-      }));
-    }));
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(data => {
+        if (!data) return;
+        this.subscription.add(
+          this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
+            console.log('created marker got res', res);
+            this.dataSource.data = res;
+            this.markerChanged.emit({ id: res.id });
+          })
+        );
+      })
+    );
   }
 
   /**
@@ -102,7 +102,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
       expandable: false,
       name: node.name,
       id: node.id,
-      level
+      level,
     };
   }
 }

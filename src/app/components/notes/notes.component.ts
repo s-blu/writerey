@@ -27,17 +27,13 @@ export class NotesComponent implements OnInit, OnDestroy {
   parId: string;
   fileInfo: FileInfo;
   notes: any = {
-    paragraph: []
+    paragraph: [],
   };
   private subscription = new Subscription();
 
-  constructor(
-    private paragraphService: ParagraphService,
-    private notesService: NotesService
-  ) { }
+  constructor(private paragraphService: ParagraphService, private notesService: NotesService) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -61,18 +57,19 @@ export class NotesComponent implements OnInit, OnDestroy {
       type: event.type,
       color: event.color,
       context: event.context,
-      text: event.text
-    }
+      text: event.text,
+    };
     const updatedMetaData = [newNote];
     if (this.notes && this.notes[event.context]) {
-      updatedMetaData.push(...this.notes[event.context])
+      updatedMetaData.push(...this.notes[event.context]);
     }
     this.updateParagraphMeta(event.context, updatedMetaData);
   }
 
   private updateParagraphMeta(context, data) {
     const con = context === 'paragraph' ? this.parId : context;
-    this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data)
+    this.paragraphService
+      .setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data)
       .subscribe(res => {
         this.notes[context] = res;
       });
@@ -87,16 +84,18 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.parId = pId;
 
     this.noteContexts = this.notesService.getContextesForParagraph(this.parId);
-    this.subscription.add(this.notesService.getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, pId, this.noteContexts)
-      .subscribe(res => {
-        try {
-          if (res) {
-            this.notes = res;
+    this.subscription.add(
+      this.notesService
+        .getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, pId, this.noteContexts)
+        .subscribe(res => {
+          try {
+            if (res) {
+              this.notes = res;
+            }
+          } catch (err) {
+            console.error('getting notes failed', err);
           }
-        } catch (err) {
-          console.error('getting notes failed', err);
-        }
-      }));
+        })
+    );
   }
-
 }

@@ -4,17 +4,15 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 @Component({
   selector: 'wy-tagDialog',
   templateUrl: './tagDialog.component.html',
-  styleUrls: ['./tagDialog.component.scss']
+  styleUrls: ['./tagDialog.component.scss'],
 })
 export class TagDialogComponent implements OnInit {
+  constructor(public dialogRef: MatDialogRef<TagDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {}
 
-  constructor(public dialogRef: MatDialogRef<TagDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) { }
-
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   isTagNameValid() {
-    console.log('isTagNameValid', this.data.tagName)
+    console.log('isTagNameValid', this.data.tagName);
     if (!this.data.tagName || this.data.tagName === '') return true;
     return this.data.tagName.match(/(0-9A-Za-z:\/)/);
   }
@@ -22,5 +20,4 @@ export class TagDialogComponent implements OnInit {
   cancel(): void {
     this.dialogRef.close();
   }
-
 }

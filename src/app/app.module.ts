@@ -60,7 +60,7 @@ const matModules = [
   MatSelectModule,
   MatExpansionModule,
   MatCardModule,
-  MatTabsModule
+  MatTabsModule,
 ];
 
 @NgModule({
@@ -84,7 +84,7 @@ const matModules = [
     DocumentTreeComponent,
     MarkerTreeComponent,
     CreateNewMarkerComponent,
-    MarkerDetailsComponent
+    MarkerDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -95,16 +95,12 @@ const matModules = [
     BrowserAnimationsModule,
     ...matModules,
     TranslocoRootModule,
-    QuillModule.forRoot(
+    QuillModule
+      .forRoot
       //config goes here
-    )
+      (),
   ],
-  providers: [
-    { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true }
-  ],
+  providers: [{ provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true }],
   bootstrap: [AppComponent],
 })
-export class AppModule {
-
-}
-
+export class AppModule {}

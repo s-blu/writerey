@@ -1,7 +1,7 @@
 <span *transloco="let t; read: 'tagDialog'">
   <h1 mat-dialog-title>{{ t('title') }}</h1>
   <div mat-dialog-content>
-    <p>{{ t('message', {date: data.lastSnapshotDate}) }}</p>
+    <p>{{ t('message', { date: data.lastSnapshotDate }) }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
       <input matInput wyCheckForNameSafety="tag" [(ngModel)]="data.tagname" />

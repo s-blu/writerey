@@ -11,7 +11,9 @@
   padding: 0 1em;
   justify-items: center;
 
-  .left, .center, .right {
+  .left,
+  .center,
+  .right {
     display: flex;
     width: 100%;
   }
@@ -32,7 +34,6 @@
       border-radius: 0;
       background: aliceblue;
       color: #232b74;
-      
     }
   }
 }

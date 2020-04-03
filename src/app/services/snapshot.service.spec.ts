@@ -6,7 +6,7 @@ import { SnapshotService } from './snapshot.service';
 describe('Service: Snapshot', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SnapshotService]
+      providers: [SnapshotService],
     });
   });
 

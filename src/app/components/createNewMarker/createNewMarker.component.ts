@@ -6,13 +6,12 @@ import { MarkerTypes } from 'src/app/models/markerDefinition.class';
 @Component({
   selector: 'wy-createNewMarker',
   templateUrl: './createNewMarker.component.html',
-  styleUrls: ['./createNewMarker.component.scss']
+  styleUrls: ['./createNewMarker.component.scss'],
 })
 export class CreateNewMarkerComponent implements OnInit {
   createNewForm;
 
-
-  constructor(public dialogRef: MatDialogRef<CreateNewMarkerComponent>, private formBuilder: FormBuilder ) { }
+  constructor(public dialogRef: MatDialogRef<CreateNewMarkerComponent>, private formBuilder: FormBuilder) {}
 
   cancel(): void {
     this.dialogRef.close();
@@ -21,7 +20,7 @@ export class CreateNewMarkerComponent implements OnInit {
   ngOnInit() {
     this.createNewForm = this.formBuilder.group({
       type: '',
-      name: ''
+      name: '',
     });
   }
 

@@ -5,8 +5,13 @@
   </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
-      <button mat-icon-button [disabled]="!node.expandable" matTreeNodeToggle [attr.aria-label]="'toggle ' + node.name"
-        class="explorer-btn">
+      <button
+        mat-icon-button
+        [disabled]="!node.expandable"
+        matTreeNodeToggle
+        [attr.aria-label]="'toggle ' + node.name"
+        class="explorer-btn"
+      >
         <mat-icon *ngIf="node.expandable" class="mat-icon-rtl-mirror">
           {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
         </mat-icon>
@@ -32,8 +37,12 @@
       </mat-menu>
     </mat-tree-node>
 
-    <mat-tree-node *matTreeNodeDef="let node; when: isFile" matTreeNodePadding matTreeNodePaddingIndent="15"
-      class="file-node">
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: isFile"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="15"
+      class="file-node"
+    >
       <button mat-icon-button class="explorer-btn file-btn">
         <i class="material-icons-outlined">insert_drive_file</i>
       </button>

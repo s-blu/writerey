@@ -5,7 +5,7 @@ import { FormBuilder } from '@angular/forms';
 @Component({
   selector: 'wy-create-new-note',
   templateUrl: './createNewNote.component.html',
-  styleUrls: ['./createNewNote.component.scss']
+  styleUrls: ['./createNewNote.component.scss'],
 })
 export class CreateNewNoteComponent implements OnInit {
   @Input() contexts: Array<string> = [];
@@ -14,18 +14,15 @@ export class CreateNewNoteComponent implements OnInit {
   createNewForm;
   private translatedContextNames = {
     paragraph: 'paragraph',
-    document: 'document'
+    document: 'document',
   };
 
-  constructor(
-    private translocoService: TranslocoService,
-    private formBuilder: FormBuilder,
-  ) {
+  constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({
       type: 'todo',
       color: '',
       context: this.contexts[0] || 'paragraph',
-      text: ''
+      text: '',
     });
   }
 

@@ -1,8 +1,8 @@
-<mat-card [style]="noteStyles" class="{{classes}}">
+<mat-card [style]="noteStyles" class="{{ classes }}">
   <mat-card-header>
     <i *ngIf="note.type === 'info'" class="material-icons-outlined">info</i>
     <i *ngIf="note.type === 'todo'" class="material-icons-outlined">assignment</i>
-    <mat-card-subtitle>{{note.context}}</mat-card-subtitle>
+    <mat-card-subtitle>{{ note.context }}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
     {{ note.text }}

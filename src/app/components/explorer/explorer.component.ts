@@ -19,16 +19,11 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
+  ngOnInit() {}
 
-  ngOnInit() {
-  }
+  ngOnDestroy() {}
 
-  ngOnDestroy() {
-  }
-
-  constructor(
-    public dialog: MatDialog
-  ) { }
+  constructor(public dialog: MatDialog) {}
 
   openDocument(event) {
     this.docChanged.emit(event);

@@ -5,13 +5,10 @@ import { catchError } from 'rxjs/operators';
 import { ApiService } from './api.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SnapshotService {
-
-  constructor(
-    private httpClient: HttpClient,
-    private api: ApiService) { }
+  constructor(private httpClient: HttpClient, private api: ApiService) {}
 
   createSnapshot(msg) {
     const formdata = new FormData();
@@ -36,8 +33,6 @@ export class SnapshotService {
   }
 
   getSnapshotInfo() {
-    return this.httpClient
-    .get(this.api.getGitRoute())
-    .pipe(catchError(err => this.api.handleHttpError(err)));
+    return this.httpClient.get(this.api.getGitRoute()).pipe(catchError(err => this.api.handleHttpError(err)));
   }
 }

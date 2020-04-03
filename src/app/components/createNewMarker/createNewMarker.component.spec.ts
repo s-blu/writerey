@@ -11,9 +11,8 @@ describe('CreateNewMarkerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CreateNewMarkerComponent ]
-    })
-    .compileComponents();
+      declarations: [CreateNewMarkerComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

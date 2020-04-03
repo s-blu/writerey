@@ -17,7 +17,7 @@ export class FooterComponent implements OnInit {
   docDef: DocumentDefinition;
   lastSave: Date;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 }

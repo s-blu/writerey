@@ -11,9 +11,8 @@ describe('DocumentTreeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DocumentTreeComponent ]
-    })
-    .compileComponents();
+      declarations: [DocumentTreeComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

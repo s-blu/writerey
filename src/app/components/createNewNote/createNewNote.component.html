@@ -1,29 +1,29 @@
 <div class="create-note" *transloco="let t; read: 'createNote'">
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
     <mat-form-field>
-      <mat-label>{{t('type.title')}}</mat-label>
+      <mat-label>{{ t('type.title') }}</mat-label>
       <mat-select formControlName="type" required>
-        <mat-option value="info">{{t('type.info')}}</mat-option>
-        <mat-option value="todo">{{t('type.todo')}}</mat-option>
+        <mat-option value="info">{{ t('type.info') }}</mat-option>
+        <mat-option value="todo">{{ t('type.todo') }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>{{t('color.title')}}</mat-label>
+      <mat-label>{{ t('color.title') }}</mat-label>
       <mat-select formControlName="color">
-        <mat-option value="">{{t('color.none')}}</mat-option>
-        <mat-option value="#ffd4a0">{{t('color.orange')}}</mat-option>
-        <mat-option value="#aafc58">{{t('color.green')}}</mat-option>
-        <mat-option value="#99ccff">{{t('color.blue')}}</mat-option>
+        <mat-option value="">{{ t('color.none') }}</mat-option>
+        <mat-option value="#ffd4a0">{{ t('color.orange') }}</mat-option>
+        <mat-option value="#aafc58">{{ t('color.green') }}</mat-option>
+        <mat-option value="#99ccff">{{ t('color.blue') }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>{{t('context')}}</mat-label>
+      <mat-label>{{ t('context') }}</mat-label>
       <mat-select formControlName="context" required>
-        <mat-option *ngFor="let con of contexts" [value]="con">{{getContextName(con)}}</mat-option>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ getContextName(con) }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>{{t('comment')}}</mat-label>
+      <mat-label>{{ t('comment') }}</mat-label>
       <textarea rows="4" matInput required formControlName="text"></textarea>
     </mat-form-field>
     <div class="actions">

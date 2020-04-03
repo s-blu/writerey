@@ -11,9 +11,8 @@ describe('TagDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TagDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [TagDialogComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

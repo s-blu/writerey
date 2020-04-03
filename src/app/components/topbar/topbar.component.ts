@@ -28,9 +28,9 @@ export class TopbarComponent implements OnInit {
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     public dialog: MatDialog
-  ) { }
+  ) {}
 
-  ngOnInit() { }
+  ngOnInit() {}
 
   review() {
     this.switchMode.emit(DOC_MODES.REVIEW);
@@ -51,7 +51,7 @@ export class TopbarComponent implements OnInit {
   snapshot() {
     const date = new Date();
     const commitMsg = this.translocoService.translate('git.message.manualCommit', { date: date.toLocaleString() });
-    this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number, text: string }) => {
+    this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number; text: string }) => {
       let snackBarMsg = '';
       if (res?.status === 0) {
         snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });
@@ -71,26 +71,34 @@ export class TopbarComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TagDialogComponent, {
       data: { lastSnapshotDate: displayDate },
-      width: '400px'
+      width: '400px',
     });
 
-    this.subscription.add(dialogRef.afterClosed().subscribe(name => {
-      if (!name) return;
-      this.snapshotService.createTag(name).subscribe(() => {
-        const snackBarMsg = this.translocoService.translate('git.snackbar.createTag', { date: displayDate, tag: name });
-        this.showSnackBar(snackBarMsg);
-      }, (err) => {
-        console.error('creation of tag failed', err)
-        const snackBarMsg = this.translocoService.translate('git.snackbar.error.createTag', { tag: name });
-        this.showSnackBar(snackBarMsg, '', 5000);
-      });
-    }));
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(name => {
+        if (!name) return;
+        this.snapshotService.createTag(name).subscribe(
+          () => {
+            const snackBarMsg = this.translocoService.translate('git.snackbar.createTag', {
+              date: displayDate,
+              tag: name,
+            });
+            this.showSnackBar(snackBarMsg);
+          },
+          err => {
+            console.error('creation of tag failed', err);
+            const snackBarMsg = this.translocoService.translate('git.snackbar.error.createTag', { tag: name });
+            this.showSnackBar(snackBarMsg, '', 5000);
+          }
+        );
+      })
+    );
   }
 
   private showSnackBar(msg, action = '', duration = 2000) {
     this.snackBar.open(msg, action, {
       duration,
-      horizontalPosition: 'right'
+      horizontalPosition: 'right',
     });
   }
 }

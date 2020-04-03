@@ -12,9 +12,9 @@ export class NoteComponent implements OnInit {
   @Output() deleteNote = new EventEmitter<any>();
 
   noteStyles = '';
-  classes = 'note'
+  classes = 'note';
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
     this.classes += ` type-${this.note.type}`;

@@ -6,7 +6,6 @@ import { throwError, from, Observable } from 'rxjs';
 import { CompileTemplateMetadata } from '@angular/compiler';
 import { QuillEditorComponent } from 'ngx-quill';
 
-
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
 // FIXME if we wont use Quill anymore, remove the component
@@ -30,7 +29,7 @@ export class QuillComponent implements OnInit {
       ['blockquote', 'code-block'],
       [{ list: 'ordered' }, { list: 'bullet' }],
       [{ indent: '-1' }, { indent: '+1' }],
-      [{ align: [] }]
+      [{ align: [] }],
     ],
   };
   styles = {
@@ -44,8 +43,7 @@ export class QuillComponent implements OnInit {
   })
   editor: QuillEditorComponent;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onEditorCreated(event) {
     this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {

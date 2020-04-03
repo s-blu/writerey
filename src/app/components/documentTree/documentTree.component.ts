@@ -26,10 +26,9 @@ interface ExplorerNode {
 @Component({
   selector: 'wy-document-tree',
   templateUrl: './documentTree.component.html',
-  styleUrls: ['./documentTree.component.scss']
+  styleUrls: ['./documentTree.component.scss'],
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
-
   @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
   // tree data
   tree;
@@ -61,16 +60,18 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     private api: ApiService,
     private documentService: DocumentService,
     private directoryService: DirectoryService
-  ) { }
+  ) {}
 
   private fetchTree() {
-    this.subscription.add(this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
-      try {
-        this.tree = JSON.parse(res);
-        this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
-      } finally {
-      }
-    }));
+    this.subscription.add(
+      this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
+        try {
+          this.tree = JSON.parse(res);
+          this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
+        } finally {
+        }
+      })
+    );
   }
 
   openDocument(node) {
@@ -101,16 +102,20 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       data: { dirPath: path, typeOfDialog: type },
     });
 
-    this.subscription.add(dialogRef.afterClosed().subscribe(name => {
-      let createObservable;
-      if (type === 'file') createObservable = this.documentService.createDocument(path, name);
-      if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(name => {
+        let createObservable;
+        if (type === 'file') createObservable = this.documentService.createDocument(path, name);
+        if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);
 
-      this.subscription.add(createObservable.subscribe((res: any) => {
-        this.fetchTree(); // FIXME implement way to only get the edited dir
-        if (type === 'file') this.docChanged.emit({ name: res.name, path: res.path });
-      }));
-    }));
+        this.subscription.add(
+          createObservable.subscribe((res: any) => {
+            this.fetchTree(); // FIXME implement way to only get the edited dir
+            if (type === 'file') this.docChanged.emit({ name: res.name, path: res.path });
+          })
+        );
+      })
+    );
   }
 
   private prettifyPath(path, dirName) {

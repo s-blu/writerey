@@ -11,6 +11,5 @@ export class LastModifiedComponent implements OnInit {
 
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

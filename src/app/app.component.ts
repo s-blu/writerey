@@ -26,20 +26,22 @@ export class AppComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private documentService: DocumentService, private snapshotService: SnapshotService) { }
+  constructor(private documentService: DocumentService, private snapshotService: SnapshotService) {}
 
   ngOnInit() {
     this.fileInfo = this.documentService.getLastSavedFileInfo();
     if (this.fileInfo) {
       this.changeDoc(this.fileInfo);
     }
-    this.subscription.add(this.snapshotService.getSnapshotInfo().subscribe((res: any) => {
-      if (res.lastCommitDate) {
-        try {
-          this.snapshotDate = new Date(res.lastCommitDate);
-        } finally { }
-      }
-    })
+    this.subscription.add(
+      this.snapshotService.getSnapshotInfo().subscribe((res: any) => {
+        if (res.lastCommitDate) {
+          try {
+            this.snapshotDate = new Date(res.lastCommitDate);
+          } finally {
+          }
+        }
+      })
     );
   }
 
@@ -48,7 +50,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   changeDoc(event: FileInfo) {
-    this.resetLoadedData()
+    this.resetLoadedData();
     this.fileInfo = event;
   }
 

@@ -6,7 +6,7 @@ import { MarkerService } from './marker.service';
 describe('Service: Marker', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [MarkerService]
+      providers: [MarkerService],
     });
   });
 

@@ -6,7 +6,7 @@ import { WyInitService } from './wy-init.service';
 describe('Service: WyInit', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [WyInitService]
+      providers: [WyInitService],
     });
   });
 

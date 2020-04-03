@@ -14,11 +14,11 @@ const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
   providedIn: 'root',
 })
 export class DocumentService {
-  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) { }
+  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
 
   getDocument(path: string, name: string, withContent = true): Observable<any> {
     const params: any = {
-      doc_path: path
+      doc_path: path,
     };
     if (withContent) params.with_content = 'true';
 
@@ -26,7 +26,7 @@ export class DocumentService {
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.transformLastEditedIntoDate(res)),
       tap(res => {
-        if (res) localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }))
+        if (res) localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }));
       })
     );
   }
@@ -39,7 +39,7 @@ export class DocumentService {
         res.content = enhancedContent;
         return res;
       })
-    )
+    );
   }
 
   saveDocument(path: string, name: string, content) {
@@ -52,12 +52,10 @@ export class DocumentService {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient
-      .put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders })
-      .pipe(
-        catchError(err => this.api.handleHttpError(err)),
-        map((res: any) => this.transformLastEditedIntoDate(res))
-      );
+    return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      map((res: any) => this.transformLastEditedIntoDate(res))
+    );
   }
 
   createDocument(path: string, name: string) {

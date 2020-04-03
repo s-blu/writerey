@@ -9,7 +9,7 @@ import * as uuid from 'uuid';
 @Component({
   selector: 'wy-marker-details',
   templateUrl: './markerDetails.component.html',
-  styleUrls: ['./markerDetails.component.scss']
+  styleUrls: ['./markerDetails.component.scss'],
 })
 export class MarkerDetailsComponent implements OnInit {
   @Input() set markerDef(md: MarkerDefinition) {
@@ -22,16 +22,23 @@ export class MarkerDetailsComponent implements OnInit {
   types = MarkerTypes;
   values;
 
-  constructor(private formBuilder: FormBuilder, private markerService: MarkerService, private snackBar: MatSnackBar, private translocoService: TranslocoService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private markerService: MarkerService,
+    private snackBar: MatSnackBar,
+    private translocoService: TranslocoService
+  ) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   addNewValue() {
-    this.values.insert(this.values.length, new FormGroup({
-      name: new FormControl(''),
-      id: new FormControl(uuid.v4())
-    }));
+    this.values.insert(
+      this.values.length,
+      new FormGroup({
+        name: new FormControl(''),
+        id: new FormControl(uuid.v4()),
+      })
+    );
   }
 
   removeValue(index: number) {
@@ -45,13 +52,13 @@ export class MarkerDetailsComponent implements OnInit {
 
   onSubmit(newValues) {
     // TODO take over new values to obj
-    console.log('onSubmit', newValues)
-    this.markerService.updateMarkerDefinition(newValues).subscribe((res) => {
+    console.log('onSubmit', newValues);
+    this.markerService.updateMarkerDefinition(newValues).subscribe(res => {
       // TODO refresh tree
-      const msg = this.translocoService.translate('markerDetails.saved');// TODO show snackbar
+      const msg = this.translocoService.translate('markerDetails.saved'); // TODO show snackbar
       this.snackBar.open(msg, '', {
         duration: 2000,
-        horizontalPosition: 'right'
+        horizontalPosition: 'right',
       });
     });
   }
@@ -66,24 +73,26 @@ export class MarkerDetailsComponent implements OnInit {
       id: markerDef.id,
       type: markerDef.type,
       name: markerDef.name,
-      values: new FormArray([])
+      values: new FormArray([]),
     });
 
     if (markerDef.type === MarkerTypes.TEXT) {
       this.values = this.editForm.get('values') as FormArray;
       (markerDef.values || []).forEach(val => {
-        console.log('valuuuuueeee!', val)
-        this.values.push(new FormGroup({
-          name: new FormControl(val.name),
-          id: new FormControl(val.id)
-        }));
+        console.log('valuuuuueeee!', val);
+        this.values.push(
+          new FormGroup({
+            name: new FormControl(val.name),
+            id: new FormControl(val.id),
+          })
+        );
       });
     } else if (markerDef.type === MarkerTypes.NUMERIC) {
       this.editForm.addControl('start', new FormControl(markerDef.start || 1, Validators.required));
       this.editForm.addControl('end', new FormControl(markerDef.end || 10, Validators.required));
       this.editForm.addControl('interval', new FormControl(markerDef.interval || 1, Validators.required));
     } else {
-      console.error('Could not determine type of markerDefinition, cannot render edit form', markerDef)
+      console.error('Could not determine type of markerDefinition, cannot render edit form', markerDef);
     }
   }
 }

@@ -7,7 +7,7 @@
     <mat-expansion-panel *ngIf="mode === MODES.REVIEW">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          {{t('createNew')}}
+          {{ t('createNew') }}
         </mat-panel-title>
       </mat-expansion-panel-header>
       <wy-create-new-note [contexts]="noteContexts" (noteCreated)="createNewNote($event)"></wy-create-new-note>

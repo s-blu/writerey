@@ -6,14 +6,10 @@ import { catchError, flatMap, map } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class MarkerService {
-
-  constructor(
-    private api: ApiService,
-    private httpClient: HttpClient
-  ) { }
+  constructor(private api: ApiService, private httpClient: HttpClient) {}
 
   createNewMarkerCategory(name: string, type: MarkerTypes) {
     const newMarker = new MarkerDefinition(name, type);
@@ -94,17 +90,15 @@ export class MarkerService {
 
     const params = {
       marker_id: markerId,
-      value_id: valueId
+      value_id: valueId,
     };
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient
-      .put(this.api.getMarkerRoute(markerId), formdata, { headers: httpHeaders, params })
-      .pipe(
-        catchError(err => this.api.handleHttpError(err)),
-        map((res: any) => this.parseMarkerValueResponse(res))
-      );
+    return this.httpClient.put(this.api.getMarkerRoute(markerId), formdata, { headers: httpHeaders, params }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      map((res: any) => this.parseMarkerValueResponse(res))
+    );
   }
 
   getMarkerValueNotes(contextId): Observable<any> {

@@ -20,8 +20,7 @@ export class ParagraphService {
 
   private paragraphMetaCache = {};
 
-  constructor(private api: ApiService, private httpClient: HttpClient) {
-  }
+  constructor(private api: ApiService, private httpClient: HttpClient) {}
 
   enhanceDocumentWithParagraphIds(document: string) {
     let enhancedDocument = '';
@@ -69,23 +68,22 @@ export class ParagraphService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.getParagraphMeta(docPath, docName, context)
-      .pipe(
-        catchError(err => this.api.handleHttpError(err)),
-        flatMap(getRes => {
-          const paragraphMeta = getRes || {};
-          paragraphMeta[metaType] = metaContent;
+    return this.getParagraphMeta(docPath, docName, context).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      flatMap(getRes => {
+        const paragraphMeta = getRes || {};
+        paragraphMeta[metaType] = metaContent;
 
-          const blob = new Blob([JSON.stringify(paragraphMeta)], { type: 'application/json' });
-          const file = new File([blob], name, { type: 'application/json' });
-          formdata.append('file', file);
+        const blob = new Blob([JSON.stringify(paragraphMeta)], { type: 'application/json' });
+        const file = new File([blob], name, { type: 'application/json' });
+        formdata.append('file', file);
 
-          return this.httpClient.put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders });
-        }),
-        map((putRes: string) => {
-          return this.parseAndExtractParagraphMetaResponse(putRes, docPath, docName, context, metaType);
-        })
-      );
+        return this.httpClient.put(this.api.getParagraphRoute(docName), formdata, { headers: httpHeaders });
+      }),
+      map((putRes: string) => {
+        return this.parseAndExtractParagraphMetaResponse(putRes, docPath, docName, context, metaType);
+      })
+    );
   }
 
   getParagraphMeta(docPath, docName, context, metaType?): Observable<any> {

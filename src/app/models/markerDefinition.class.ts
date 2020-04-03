@@ -2,7 +2,7 @@ import * as uuid from 'uuid';
 
 export enum MarkerTypes {
   NUMERIC = 'numeric',
-  TEXT = 'text'
+  TEXT = 'text',
 }
 
 interface MarkerValue {

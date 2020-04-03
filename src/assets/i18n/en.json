@@ -20,8 +20,8 @@
     "title": "Edit Marker '{{name}}'",
     "titleValues": "Values",
     "type": {
-      "text": "[Text Marker Category]",
-      "numeric": "[Numerical Marker Category]"
+      "text": "[Text]",
+      "numeric": "[Numerical]"
     },
     "saved": "Saved!",
     "start": "Start",

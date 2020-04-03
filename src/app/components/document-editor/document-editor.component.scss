@@ -1,7 +1,5 @@
-
-
 .document-editor {
-  margin:auto;
+  margin: auto;
   width: 640px;
   overflow-wrap: break-word;
 
@@ -12,7 +10,6 @@
   &.loading {
     color: grey;
   }
-
 }
 
 wy-ckeditor {

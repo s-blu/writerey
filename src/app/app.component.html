@@ -1,6 +1,10 @@
 <div class="app">
-  <wy-topbar (snapshotted)="refreshSnapshotDate($event)" [lastSnapshotDate]="snapshotDate"
-    (switchMode)="switchDocumentMode($event)" [mode]="activeMode"></wy-topbar>
+  <wy-topbar
+    (snapshotted)="refreshSnapshotDate($event)"
+    [lastSnapshotDate]="snapshotDate"
+    (switchMode)="switchDocumentMode($event)"
+    [mode]="activeMode"
+  ></wy-topbar>
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)" (markerChanged)="changeMarker($event)"></wy-explorer>
@@ -8,8 +12,13 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor *ngIf="fileInfo" [fileInfo]="fileInfo" [mode]="activeMode" (clicked)="onEditorClick($event)"
-          (documentChanged)="documentChanged($event)">
+        <wy-document-editor
+          *ngIf="fileInfo"
+          [fileInfo]="fileInfo"
+          [mode]="activeMode"
+          (clicked)="onEditorClick($event)"
+          (documentChanged)="documentChanged($event)"
+        >
         </wy-document-editor>
         <wy-marker-details *ngIf="markerDef" [markerDef]="markerDef"></wy-marker-details>
       </div>
