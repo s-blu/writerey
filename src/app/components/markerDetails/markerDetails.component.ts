@@ -1,3 +1,5 @@
+import { TranslocoService } from '@ngneat/transloco';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MarkerService } from 'src/app/services/marker.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
@@ -12,15 +14,15 @@ import * as uuid from 'uuid';
 export class MarkerDetailsComponent implements OnInit {
   @Input() set markerDef(md: MarkerDefinition) {
     this.initializeForm(md);
-    this.markerType = md.type;
-  };
+    this.markerDefinition = md;
+  }
 
   editForm;
-  markerType: MarkerTypes;
+  markerDefinition: MarkerDefinition;
   types = MarkerTypes;
   values;
 
-  constructor(private formBuilder: FormBuilder, private markerService: MarkerService) { }
+  constructor(private formBuilder: FormBuilder, private markerService: MarkerService, private snackBar: MatSnackBar, private translocoService: TranslocoService) { }
 
   ngOnInit() {
   }
@@ -45,9 +47,13 @@ export class MarkerDetailsComponent implements OnInit {
     // TODO take over new values to obj
     console.log('onSubmit', newValues)
     this.markerService.updateMarkerDefinition(newValues).subscribe((res) => {
-      // TODO show snackbar
-      console.log('saved marker', res)
-    })
+      // TODO refresh tree
+      const msg = this.translocoService.translate('markerDetails.saved');// TODO show snackbar
+      this.snackBar.open(msg, '', {
+        duration: 2000,
+        horizontalPosition: 'right'
+      });
+    });
   }
 
   private initializeForm(markerDef) {

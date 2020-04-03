@@ -16,7 +16,17 @@
     "addNewValue": "Add a new value",
     "removeValue": "Remove Value",
     "save": "Save",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "title": "Edit Marker '{{name}}'",
+    "titleValues": "Values",
+    "type": {
+      "text": "[Text Marker Category]",
+      "numeric": "[Numerical Marker Category]"
+    },
+    "saved": "Saved!",
+    "start": "Start",
+    "end": "End",
+    "interval": "Interval"
   },
   "dateFormat": "dd/MM/yy HH:mm:ss",
   "explorer": {
@@ -26,7 +36,8 @@
     }
   },
   "markerTree": {
-    "newmarker": "New Marker"
+    "newmarker": "New Marker",
+    "remove": "Remove Marker"
   },
   "documentTree": {
     "rename": "Rename",

@@ -1,11 +1,15 @@
-<div *transloco="let t; read:'markerDetails'">
+<div class="marker-details" *transloco="let t; read:'markerDetails'">
+  <h2>{{t('title', {name: markerDefinition.name})}}
+    {{t(markerDefinition.type === types.NUMERIC ? 'type.numeric' : 'type.text', {name: markerDefinition.name})}}
+  </h2>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
     <mat-form-field>
       <mat-label>{{t('name')}}</mat-label>
       <input matInput required formControlName="name" />
     </mat-form-field>
 
-    <div *ngIf="markerType === types.NUMERIC">
+    <h3>{{t('titleValues')}}</h3>
+    <div class="value-container" *ngIf="markerDefinition.type === types.NUMERIC">
       <mat-form-field>
         <mat-label>{{t('start')}}</mat-label>
         <input matInput type="number" required formControlName="start" />
@@ -19,7 +23,7 @@
         <input matInput type="number" required formControlName="interval" />
       </mat-form-field>
     </div>
-    <div *ngIf="markerType === types.TEXT">
+    <div *ngIf="markerDefinition.type === types.TEXT">
       <ng-container formArrayName="values">
         <div *ngFor="let _ of values.controls; index as i">
           <mat-form-field [formGroupName]="i">
@@ -31,12 +35,12 @@
           </button>
         </div>
       </ng-container>
-      <button mat-button (click)="addNewValue()">
+      <button mat-stroked-button (click)="addNewValue()">
         <mat-icon>add</mat-icon> {{t('addNewValue')}}
       </button>
     </div>
     <div class="actions">
-      <button mat-button [disabled]="editForm.invalid" type="submit">
+      <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">
         {{t('save')}}
       </button>
       <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
