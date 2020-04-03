@@ -8,6 +8,7 @@ import { DOC_MODES } from './models/docModes.enum';
 import { MarkerDefinition } from './models/markerDefinition.class';
 
 @Component({
+  // tslint:disable-next-line: component-selector
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],

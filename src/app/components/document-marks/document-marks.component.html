@@ -1,3 +1,7 @@
 <div>
-  <div *ngIf="mode !== MODES.READ"></div>
+  <div *ngIf="mode === MODES.WRITE">
+    {{ markers | json }}
+    {{ paragraphId }}
+  </div>
+  <div *ngIf="mode === MODES.REVIEW"></div>
 </div>

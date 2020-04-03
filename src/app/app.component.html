@@ -8,7 +8,7 @@
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)" (markerChanged)="changeMarker($event)"></wy-explorer>
-      <wy-document-marks [mode]="activeMode"></wy-document-marks>
+      <wy-document-marks [mode]="activeMode" [paragraphId]="paragraphId" [fileInfo]="fileInfo"></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
