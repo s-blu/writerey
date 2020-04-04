@@ -82,14 +82,26 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   onClick(event) {
-    if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event)) {
+    if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event) && this.docMode !== DOC_MODES.READ) {
+      let rule = '';
       if (this.docMode === DOC_MODES.REVIEW) {
-        const rule = `p.${event} {
+        rule = `p.${event} {
           background-color: aliceblue;
         }`;
-        if (this.style.cssRules.length > 0) this.style.deleteRule(0);
-        this.style.insertRule(rule);
+      } else {
+        // margin-left: -padding-left + -1px
+        rule = `p.${event} {
+          margin-left: -9px;
+          border-left: 1px solid rgb(193, 215, 234);
+          z-index: 5;
+          // display: block;
+          // position: relative;
+          padding-left: 8px;
+        }`;
       }
+
+      if (this.style.cssRules.length > 0) this.style.deleteRule(0);
+      this.style.insertRule(rule);
       this.clickSubject.next(event);
     }
   }

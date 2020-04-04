@@ -1,7 +1,9 @@
-<div>
-  <div *ngIf="mode === MODES.WRITE">
-    {{ markers | json }}
-    {{ paragraphId }}
+<div class="document-markers">
+  <div class="write-mode" *ngIf="mode === MODES.WRITE">
+    <div *ngFor="let marker of markers">
+      <span class="marker-name">[{{ marker.name }}]</span>
+      <span class="value-name"> {{ marker.valueName }}</span>
+    </div>
   </div>
   <div *ngIf="mode === MODES.REVIEW"></div>
 </div>
