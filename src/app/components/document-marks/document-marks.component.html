@@ -9,7 +9,7 @@
     <div *ngFor="let def of markerDefinitions">
       <mat-form-field *ngIf="def.type === TYPES.TEXT">
         <mat-label>{{ def.name }}</mat-label>
-        <mat-select [value]="getValue(def.id)" (selectionChange)="setValOfTextMarker(def, $event)">
+        <mat-select [value]="values[def.id] || ''" (selectionChange)="setValOfTextMarker(def, $event)">
           <mat-option value="">{{ t('noneValue') }}</mat-option>
           <mat-option *ngFor="let val of def.values" [value]="val.id">{{ val.name }}</mat-option>
         </mat-select>
@@ -20,24 +20,18 @@
           <mat-option (onSelectionChange)="setValOfNumMarker(def, $event)" *ngFor="let val of def.values" value="val.id">{{ val.name }}</mat-option>
         </mat-select> -->
 
-        <!-- TODO: PRESET WITH CURRENT VALUE IF AVAILABLE -->
         <mat-slider
           color="primary"
           (change)="setValOfNumMarker(def.id, $event)"
-          [min]="def.start"
+          [min]="def.start - 1"
           [max]="def.end"
           [step]="def.interval"
-          [value]="getValue(def.id)"
+          [value]="values[def.id]"
           thumbLabel
           [tickInterval]="def.interval"
         ></mat-slider>
-        <span>{{ getValue(def.id) }}</span>
+        <span>{{ values[def.id] || '' }}</span>
       </div>
     </div>
-    <!-- TODO display all definitions here -->
-    <!-- TODO display text as dropdown -->
-    <!-- TODO  display numeric <= 10 as dropdown-->
-    <!-- TODO  display numeric > 10 as slider -->
-    <!-- TODO  have a none value-->
   </div>
 </div>

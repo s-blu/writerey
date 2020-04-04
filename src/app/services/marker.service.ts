@@ -97,7 +97,7 @@ export class MarkerService {
     );
   }
 
-  saveMarkerValueNotes(markerId: string, valueId: string, content) {
+  saveNotesForMarkerValue(markerId: string, valueId: string, content) {
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
 
@@ -117,7 +117,7 @@ export class MarkerService {
     );
   }
 
-  getMarkerValueNotes(contextId): Observable<any> {
+  getNotesForMarkerValue(contextId): Observable<any> {
     const { markerId, valueId } = contextId.split(':');
     const params = {
       marker_id: markerId,
@@ -130,6 +130,23 @@ export class MarkerService {
         return this.parseMarkerValueResponse(res);
       })
     );
+  }
+
+  addMarkerToParagraph(path, name, paragraphId, markers, markerId, valueId) {
+    console.warn('addMarkerToParagraph is not implemented yet');
+    // TODO pipe saveMarkers to directly save
+    return markers;
+  }
+
+  removeMarkerFromParagraph(path, name, paragraphId, markers, markerId) {
+    console.warn('addMarkerToParagraph is not implemented yet');
+    // TODO pipe saveMarkers to directly save
+    return markers;
+  }
+
+  saveMarkersForParagraph(path, name, paragraphId, markers) {
+    console.warn('saveMarkersForParagraph is not implemented yet');
+    return markers;
   }
 
   private parseMarkerValueResponse(res) {
