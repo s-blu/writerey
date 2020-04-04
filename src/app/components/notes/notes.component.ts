@@ -1,3 +1,4 @@
+import { MarkerService } from 'src/app/services/marker.service';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { NotesService } from './../../services/notes.service';
 import { ParagraphService } from './../../services/paragraph.service';
@@ -6,6 +7,7 @@ import { Note } from '../../models/note.interface';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
+import { map, flatMap, mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-notes',
@@ -24,14 +26,20 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   MODES = DOC_MODES;
   noteContexts;
+  markerDefinitions;
   parId: string;
   fileInfo: FileInfo;
   notes: any = {
     paragraph: [],
   };
+
   private subscription = new Subscription();
 
-  constructor(private paragraphService: ParagraphService, private notesService: NotesService) {}
+  constructor(
+    private paragraphService: ParagraphService,
+    private notesService: NotesService,
+    private markerService: MarkerService
+  ) {}
 
   ngOnInit() {}
 
@@ -66,12 +74,17 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   private updateParagraphMeta(context, data) {
-    const con = context === 'paragraph' ? this.parId : context;
-    this.paragraphService
-      .setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data)
-      .subscribe(res => {
-        this.notes[context] = res;
-      });
+    let obs;
+    if (context.includes(':')) {
+      obs = this.markerService.saveNotesForMarkerValue(context, data);
+    } else {
+      const con = context === 'paragraph' ? this.parId : context;
+      obs = this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data);
+    }
+
+    obs.subscribe(res => {
+      this.notes[context] = res;
+    });
   }
 
   private fetchNotesForParagraph(pId?) {
@@ -82,11 +95,28 @@ export class NotesComponent implements OnInit, OnDestroy {
     if (pId && this.parId === pId) return;
     this.parId = pId;
 
-    this.noteContexts = this.notesService.getContextesForParagraph(this.parId);
     this.subscription.add(
       this.notesService
-        .getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, pId, this.noteContexts)
+        .getContextes(this.fileInfo.path, this.fileInfo.name, this.parId)
+        .pipe(
+          mergeMap(res => {
+            console.log('notecontext', res);
+            this.noteContexts = res;
+            return this.markerService.getMarkerDefinitions();
+          }),
+          mergeMap(markerDefs => {
+            console.log('markerdesf', markerDefs);
+            this.markerDefinitions = markerDefs;
+            return this.notesService.getNotesForParagraph(
+              this.fileInfo.path,
+              this.fileInfo.name,
+              pId,
+              this.noteContexts
+            );
+          })
+        )
         .subscribe(res => {
+          console.log('got res in notes comp', res);
           try {
             if (res) {
               this.notes = res;

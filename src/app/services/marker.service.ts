@@ -1,7 +1,7 @@
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map, tap } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
@@ -99,7 +99,8 @@ export class MarkerService {
     );
   }
 
-  saveNotesForMarkerValue(markerId: string, valueId: string, content) {
+  saveNotesForMarkerValue(contextId, content) {
+    const [markerId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
 
@@ -120,12 +121,14 @@ export class MarkerService {
   }
 
   getNotesForMarkerValue(contextId): Observable<any> {
-    const { markerId, valueId } = contextId.split(':');
+    console.log('getNotesForMarkerValue', contextId);
+    if (!contextId) return of([]);
+    const [markerId, valueId] = contextId.split(':');
     const params = {
       marker_id: markerId,
       value_id: valueId,
     };
-
+    console.log('trying to get obs', markerId, valueId);
     return this.httpClient.get(this.api.getMarkerRoute(markerId), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
@@ -139,11 +142,19 @@ export class MarkerService {
       console.error('addMarkerToParagraph was called with invalid data, aborting');
       return;
     }
-    const newMarker: Marker = {
-      id: markerId,
-      valueId,
-    };
-    const newMarkers = [...markers, newMarker];
+    const newMarkers = [...markers];
+    const existingMaker = newMarkers.find(m => m.id === markerId);
+    if (existingMaker) {
+      console.warn('called addMarkerToParagraph for an existing marker. Will update value instead.');
+      existingMaker.valueId = valueId;
+    } else {
+      const newMarker: Marker = {
+        id: markerId,
+        valueId,
+      };
+      newMarkers.push(newMarker);
+    }
+
     console.log('calling setParMeta with', path, name, paragraphId, 'markers', newMarkers);
     return this.paragraphService
       .setParagraphMeta(path, name, paragraphId, 'markers', newMarkers)

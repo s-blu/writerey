@@ -1,7 +1,12 @@
 <div class="notes" *transloco="let t; read: 'notes'">
   <div *ngIf="mode !== MODES.READ">
     <div *ngFor="let key of noteContexts" class="note">
-      <wy-note *ngFor="let n of notes[key]" [note]="n" (deleteNote)="deleteNote($event)"></wy-note>
+      <wy-note
+        *ngFor="let n of notes[key]"
+        [note]="n"
+        [markerDefs]="markerDefinitions"
+        (deleteNote)="deleteNote($event)"
+      ></wy-note>
     </div>
 
     <mat-expansion-panel *ngIf="mode === MODES.REVIEW">
@@ -10,7 +15,11 @@
           {{ t('createNew') }}
         </mat-panel-title>
       </mat-expansion-panel-header>
-      <wy-create-new-note [contexts]="noteContexts" (noteCreated)="createNewNote($event)"></wy-create-new-note>
+      <wy-create-new-note
+        [contexts]="noteContexts"
+        [markerDefs]="markerDefinitions"
+        (noteCreated)="createNewNote($event)"
+      ></wy-create-new-note>
     </mat-expansion-panel>
   </div>
 </div>

@@ -1,8 +1,9 @@
+import { MarkerService } from 'src/app/services/marker.service';
 import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
 import { Injectable } from '@angular/core';
 import { catchError, map, flatMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin, merge } from 'rxjs';
 
 enum DEFAULT_CONTEXTS {
   PARAGRAPH = 'paragraph',
@@ -15,11 +16,24 @@ enum DEFAULT_CONTEXTS {
 export class NotesService {
   private defaultContextForParagraphs = [DEFAULT_CONTEXTS.PARAGRAPH, DEFAULT_CONTEXTS.DOCUMENT];
 
-  constructor(private paragraphService: ParagraphService, private api: ApiService) {}
+  constructor(
+    private paragraphService: ParagraphService,
+    private api: ApiService,
+    private markerService: MarkerService
+  ) {}
 
-  getContextesForParagraph(paragraphId) {
-    // TODO get paragraph meta, look at the marks on t he paragraph and add them to this list
-    return paragraphId ? this.defaultContextForParagraphs : ['document'];
+  getContextes(docPath: string, docName: string, paragraphId?: string) {
+    const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
+    if (paragraphId) contexts.push(DEFAULT_CONTEXTS.PARAGRAPH);
+    return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(
+      map(markers => {
+        if (!markers) return contexts;
+        for (const m of markers) {
+          contexts.push(`${m.id}:${m.valueId}`);
+        }
+        return contexts;
+      })
+    );
   }
 
   getNotesForParagraph(docPath, docName, paragraphId, contexts) {
@@ -35,12 +49,23 @@ export class NotesService {
       }),
       flatMap(docRes => {
         notesWrap[DEFAULT_CONTEXTS.DOCUMENT] = docRes || [];
+
+        const markerContexts = [];
+        for (const c of contexts) {
+          if (c.includes(':')) {
+            markerContexts.push(this.markerService.getNotesForMarkerValue(c));
+          }
+        }
+
+        return markerContexts.length > 0 ? forkJoin(markerContexts) : of(notesWrap);
+      }),
+      flatMap((markerRes: Array<any>) => {
+        for (const markerNotes of markerRes) {
+          const contextOnNote = markerNotes[0]?.context;
+          if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
+        }
         return of(notesWrap);
-        // return this.markerService.getMetaForMarkers(contexts)
       })
-      // map(markerRes => {
-      //   // TODO map the marker map to the notesWrap and return
-      // })
     );
   }
 }

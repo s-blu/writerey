@@ -7,6 +7,7 @@ import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.c
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
 import { Marker } from 'src/app/models/marker.interfacte';
+import { ReturnStatement } from '@angular/compiler';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
@@ -44,8 +45,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       this.paragraphService
         .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'markers')
         .subscribe(res => {
-          if (!res) return;
-          this.markersFromServer = res;
+          this.markersFromServer = res || [];
           this.updateDisplayInfo(res);
         })
     );
@@ -165,9 +165,11 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   private updateDisplayInfo(responseFromServer) {
-    responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
     this.markers = [];
     this.values = {};
+    if (!responseFromServer) return;
+    responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
+
     for (const m of responseFromServer) {
       this.enhanceMarkerWithNames(m);
       if (m.type === MarkerTypes.TEXT) {
