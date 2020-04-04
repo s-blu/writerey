@@ -1,3 +1,4 @@
+import { DeletionService } from './../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MarkerService } from 'src/app/services/marker.service';
@@ -26,7 +27,8 @@ export class MarkerDetailsComponent implements OnInit {
     private formBuilder: FormBuilder,
     private markerService: MarkerService,
     private snackBar: MatSnackBar,
-    private translocoService: TranslocoService
+    private translocoService: TranslocoService,
+    private deletionService: DeletionService
   ) {}
 
   ngOnInit() {}
@@ -41,9 +43,12 @@ export class MarkerDetailsComponent implements OnInit {
     );
   }
 
-  removeValue(index: number) {
-    // TODO show a confirm plz
-    this.values.removeAt(index);
+  removeValue(index: number, value) {
+    console.log('control', value);
+    this.deletionService.showDeleteConfirmDialog(value.name, 'markerValue').subscribe(res => {
+      if (!res) return;
+      this.values.removeAt(index);
+    });
   }
 
   cancel() {
@@ -52,7 +57,6 @@ export class MarkerDetailsComponent implements OnInit {
 
   onSubmit(newValues) {
     // TODO take over new values to obj
-    console.log('onSubmit', newValues);
     this.markerService.updateMarkerDefinition(newValues).subscribe(res => {
       // TODO refresh tree
       const msg = this.translocoService.translate('markerDetails.saved'); // TODO show snackbar
@@ -79,7 +83,6 @@ export class MarkerDetailsComponent implements OnInit {
     if (markerDef.type === MarkerTypes.TEXT) {
       this.values = this.editForm.get('values') as FormArray;
       (markerDef.values || []).forEach(val => {
-        console.log('valuuuuueeee!', val);
         this.values.push(
           new FormGroup({
             name: new FormControl(val.name),

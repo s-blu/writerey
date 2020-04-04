@@ -57,6 +57,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   changeMarker(event: MarkerDefinition) {
     this.resetLoadedData();
+    this.activeMode = DOC_MODES.WRITE;
     this.markerDef = event;
   }
 

@@ -46,7 +46,6 @@ export class NotesComponent implements OnInit, OnDestroy {
       return;
     }
     notes = notes.filter(n => n.id !== note.id);
-    console.log('filtered out note', notes);
     this.updateParagraphMeta(note.context, notes);
   }
 

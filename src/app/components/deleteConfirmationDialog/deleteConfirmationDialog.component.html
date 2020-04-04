@@ -1,0 +1,12 @@
+<div *transloco="let t; read: 'deleteDialog'">
+  <h1 mat-dialog-title>{{ t('title', { name: data.name }) }}</h1>
+  <div mat-dialog-content>
+    <p>{{ t('msg', { name: data.name }) }}</p>
+  </div>
+  <div mat-dialog-actions class="actions">
+    <button mat-raised-button color="warn" (click)="confirm()" cdkFocusInitial>
+      {{ t('confirm', { name: data.name }) }}
+    </button>
+    <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
+  </div>
+</div>

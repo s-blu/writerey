@@ -89,7 +89,6 @@ export class ParagraphService {
   getParagraphMeta(docPath, docName, context, metaType?): Observable<any> {
     const cachedMeta = this.getCacheItem(docPath, docName, context);
     if (cachedMeta && (!metaType || cachedMeta[metaType])) {
-      console.log('CACHE ITEM FUCK', metaType, cachedMeta);
       return metaType ? of(cachedMeta[metaType]) : of(cachedMeta);
     }
     const params = {
@@ -100,8 +99,6 @@ export class ParagraphService {
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        console.log('got server response');
-        console.log(res);
         return this.parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType);
       })
     );
@@ -111,7 +108,6 @@ export class ParagraphService {
     if (!res || res === '') return res;
     try {
       const data = JSON.parse(res);
-      console.log('parse result', data, data[metaType]);
       const result = metaType ? data[metaType] : data;
 
       this.setCacheItem(docPath, docName, context, data);

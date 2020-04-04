@@ -31,12 +31,14 @@
             <mat-label>{{ t('textvalue') }}</mat-label>
             <input matInput formControlName="name" />
           </mat-form-field>
-          <button mat-icon-button (click)="removeValue(i)" [matTooltip]="t('removeValue')">
+          <button mat-icon-button type="button" (click)="removeValue(i, _.value)" [matTooltip]="t('removeValue')">
             <mat-icon>remove</mat-icon>
           </button>
         </div>
       </ng-container>
-      <button mat-stroked-button (click)="addNewValue()"><mat-icon>add</mat-icon> {{ t('addNewValue') }}</button>
+      <button mat-stroked-button type="button" (click)="addNewValue()">
+        <mat-icon>add</mat-icon> {{ t('addNewValue') }}
+      </button>
     </div>
     <div class="actions">
       <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">

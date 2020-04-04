@@ -1,3 +1,4 @@
+import { MarkerTypes } from './../../models/markerDefinition.class';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
 import { DOC_MODES } from '../../models/docModes.enum';
@@ -17,9 +18,10 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() paragraphId: string;
   @Input() fileInfo: FileInfo;
 
-  markers: Array<Marker>;
+  markers: Array<Marker> = [];
   markerDefinitions: Array<MarkerDefinition>;
   MODES = DOC_MODES;
+  TYPES = MarkerTypes;
 
   private subscription = new Subscription();
 
@@ -47,6 +49,24 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
           this.markers = res;
         })
     );
+  }
+
+  getValue(markerId) {
+    console.log(
+      'getvalue',
+      markerId,
+      this.markers.find(m => m.id === markerId),
+      this.markers.find(m => m.id === markerId)?.valueId
+    );
+    return this.markers.find(m => m.id === markerId)?.valueId;
+  }
+
+  setValOfTextMarker(def, event) {
+    console.log('setValOfTextMarker', def, event);
+  }
+
+  setValOfNumMarker(def, event) {
+    console.log('setValOfNumMarker', def, event);
   }
 
   private enhanceMarkerWithNames(marker) {

@@ -1,3 +1,4 @@
+import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewMarkerComponent } from './components/createNewMarker/createNewMarker.component';
 import { MarkerTreeComponent } from './components/markerTree/markerTree.component';
 import { DocumentTreeComponent } from './components/documentTree/documentTree.component';
@@ -29,6 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -61,6 +63,7 @@ const matModules = [
   MatExpansionModule,
   MatCardModule,
   MatTabsModule,
+  MatSliderModule,
 ];
 
 @NgModule({
@@ -85,6 +88,7 @@ const matModules = [
     MarkerTreeComponent,
     CreateNewMarkerComponent,
     MarkerDetailsComponent,
+    DeleteConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,

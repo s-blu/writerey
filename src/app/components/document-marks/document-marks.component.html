@@ -1,9 +1,43 @@
-<div class="document-markers">
+<div class="document-markers" *transloco="let t; read: 'documentMarkers'">
   <div class="write-mode" *ngIf="mode === MODES.WRITE">
     <div *ngFor="let marker of markers">
       <span class="marker-name">[{{ marker.name }}]</span>
       <span class="value-name"> {{ marker.valueName }}</span>
     </div>
   </div>
-  <div *ngIf="mode === MODES.REVIEW"></div>
+  <div *ngIf="mode === MODES.REVIEW">
+    <div *ngFor="let def of markerDefinitions">
+      <mat-form-field *ngIf="def.type === TYPES.TEXT">
+        <mat-label>{{ def.name }}</mat-label>
+        <mat-select [value]="getValue(def.id)" (selectionChange)="setValOfTextMarker(def, $event)">
+          <mat-option value="">{{ t('noneValue') }}</mat-option>
+          <mat-option *ngFor="let val of def.values" [value]="val.id">{{ val.name }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="def.type === TYPES.NUMERIC">
+        <mat-label>{{ def.name }}</mat-label>
+        <!-- <mat-select>
+          <mat-option (onSelectionChange)="setValOfNumMarker(def, $event)" *ngFor="let val of def.values" value="val.id">{{ val.name }}</mat-option>
+        </mat-select> -->
+
+        <!-- TODO: PRESET WITH CURRENT VALUE IF AVAILABLE -->
+        <mat-slider
+          color="primary"
+          (change)="setValOfNumMarker(def.id, $event)"
+          [min]="def.start"
+          [max]="def.end"
+          [step]="def.interval"
+          [value]="getValue(def.id)"
+          thumbLabel
+          [tickInterval]="def.interval"
+        ></mat-slider>
+        <span>{{ getValue(def.id) }}</span>
+      </div>
+    </div>
+    <!-- TODO display all definitions here -->
+    <!-- TODO display text as dropdown -->
+    <!-- TODO  display numeric <= 10 as dropdown-->
+    <!-- TODO  display numeric > 10 as slider -->
+    <!-- TODO  have a none value-->
+  </div>
 </div>

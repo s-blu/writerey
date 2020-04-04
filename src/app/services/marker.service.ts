@@ -27,6 +27,22 @@ export class MarkerService {
     );
   }
 
+  deleteMarkerCategory(markerId: string) {
+    if (!markerId) return;
+    // TODO REMOVE META FILES
+
+    return this.getMarkerDefinitions().pipe(
+      flatMap(markerDefRes => {
+        if (!markerDefRes) return;
+        const index = markerDefRes.findIndex(m => m.id === markerId);
+        if (index > -1) {
+          markerDefRes.splice(index, 1);
+          return this.setMarkerDefinitions(markerDefRes);
+        }
+      })
+    );
+  }
+
   getMarkerDefinitions() {
     const params = {
       marker_id: 'definitions',
@@ -117,7 +133,6 @@ export class MarkerService {
   }
 
   private parseMarkerValueResponse(res) {
-    console.log('parseMarkerValueResponse', res);
     if (!res || res === '') return res;
     try {
       const data = JSON.parse(res);

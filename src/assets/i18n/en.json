@@ -28,6 +28,24 @@
     "end": "End",
     "interval": "Interval"
   },
+  "documentMarkers": {
+    "noneValue": "Unset"
+  },
+  "deleteDialog": {
+    "title": "Delete {{name}}",
+    "msg": "Do you really want to delete {{type}} '{{name}}'?",
+    "cancel": "Cancel",
+    "confirm": "Delete {{name}}"
+  },
+  "deletion": {
+    "type": {
+      "file": "File",
+      "dir": "Directory",
+      "marker": "Marker",
+      "markerValue": "Marker Value"
+    },
+    "snapshot": "Snapshot before deletion of {{type}} '{{name}}'"
+  },
   "dateFormat": "dd/MM/yy HH:mm:ss",
   "explorer": {
     "tabs": {
