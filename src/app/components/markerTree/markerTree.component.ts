@@ -79,7 +79,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   removeMarker(node) {
     this.subscription.add(
       this.deletionService.showDeleteConfirmDialog(node.name, 'marker').subscribe(result => {
-        console.log('got result for deletion', Date.now(), result);
         if (!result) return;
         this.markerService.deleteMarkerCategory(node.id).subscribe(res => {
           this.fetchTree();
@@ -93,7 +92,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       dialogRef.afterClosed().subscribe(data => {
-        console.log('creation data', data);
         if (!data) return;
         this.subscription.add(
           this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {

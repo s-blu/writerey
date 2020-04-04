@@ -60,9 +60,13 @@ export class NotesService {
         return markerContexts.length > 0 ? forkJoin(markerContexts) : of(notesWrap);
       }),
       flatMap((markerRes: Array<any>) => {
-        for (const markerNotes of markerRes) {
-          const contextOnNote = markerNotes[0]?.context;
-          if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
+        if (markerRes && markerRes instanceof Array) {
+          for (const markerNotes of markerRes) {
+            const contextOnNote = markerNotes[0]?.context;
+            if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
+          }
+        } else {
+          console.log('could not iterate markerRes', markerRes);
         }
         return of(notesWrap);
       })

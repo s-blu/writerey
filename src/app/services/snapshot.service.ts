@@ -16,10 +16,9 @@ export class SnapshotService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.httpClient.put(this.api.getGitRoute(), formdata, { headers: httpHeaders }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
-      tap(r => console.log('made snapshot', Date.now()))
-    );
+    return this.httpClient
+      .put(this.api.getGitRoute(), formdata, { headers: httpHeaders })
+      .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 
   createTag(tagname) {

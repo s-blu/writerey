@@ -33,7 +33,6 @@ export class DeletionService {
         }
       }),
       map(res => {
-        console.log('second res', !!res);
         return !!res;
       })
     );

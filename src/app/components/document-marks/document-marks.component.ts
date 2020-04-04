@@ -65,7 +65,6 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       markerFromServer.valueId = valueDef.id;
       marker.valueId = valueDef.id;
       marker.valueName = valueDef.name;
-      console.log('thismarkers after edit of one marker', this.markers);
       this.saveMarkers();
     } else {
       this.addMarker(def.id, newValue);
@@ -73,13 +72,11 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   setValOfNumMarker(def, event) {
-    console.log('setValOfNumMarker', def, event);
     const newValue = event.value;
     const marker = this.markers.find(m => m.id === def.id);
     const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
 
     if (newValue < def.start) {
-      console.log('new value is smaller remove marker');
       this.removeMarker(def.id);
       return;
     }

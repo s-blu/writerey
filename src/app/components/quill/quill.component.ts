@@ -20,7 +20,7 @@ export class QuillComponent implements OnInit {
   @Input() readOnly: boolean;
 
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
-  @Output() editorClicked: EventEmitter<any> = new EventEmitter();
+  @Output() updateParagraphMeta: EventEmitter<any> = new EventEmitter();
 
   modules = {
     toolbar: [
@@ -49,9 +49,14 @@ export class QuillComponent implements OnInit {
     this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
       this.contentChanged.emit(data.html);
     });
+
+    this.editor.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
+      const el = (data?.editor?.getLine(data.range.index) || [])[0]?.domNode;
+      if (el) this.updateParagraphMeta.emit(el.className);
+    });
   }
 
   onEditorClick(event) {
-    this.editorClicked.emit(event?.srcElement?.className);
+    this.updateParagraphMeta.emit(event?.srcElement?.className);
   }
 }

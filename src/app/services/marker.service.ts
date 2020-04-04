@@ -121,14 +121,12 @@ export class MarkerService {
   }
 
   getNotesForMarkerValue(contextId): Observable<any> {
-    console.log('getNotesForMarkerValue', contextId);
     if (!contextId) return of([]);
     const [markerId, valueId] = contextId.split(':');
     const params = {
       marker_id: markerId,
       value_id: valueId,
     };
-    console.log('trying to get obs', markerId, valueId);
     return this.httpClient.get(this.api.getMarkerRoute(markerId), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
@@ -155,10 +153,7 @@ export class MarkerService {
       newMarkers.push(newMarker);
     }
 
-    console.log('calling setParMeta with', path, name, paragraphId, 'markers', newMarkers);
-    return this.paragraphService
-      .setParagraphMeta(path, name, paragraphId, 'markers', newMarkers)
-      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', newMarkers);
   }
 
   removeMarkerFromParagraph(path, name, paragraphId, markers, markerId) {
@@ -173,10 +168,7 @@ export class MarkerService {
     }
     const updatedMarkers = [...markers];
     updatedMarkers.splice(indexToRemove, 1);
-    console.log('calling setParMeta with', path, name, paragraphId, 'markers', updatedMarkers);
-    return this.paragraphService
-      .setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers)
-      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
   }
 
   saveMarkersForParagraph(path, name, paragraphId, markers) {
@@ -184,7 +176,6 @@ export class MarkerService {
       console.error('saveMarkersForParagraph was called with invalid data, aborting');
       return;
     }
-    console.log('calling setParMeta with', path, name, paragraphId, 'markers', markers);
     return this.paragraphService
       .setParagraphMeta(path, name, paragraphId, 'markers', markers)
       .pipe(tap(res => console.log('got back res from setPara with markers', res)));

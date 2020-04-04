@@ -44,7 +44,6 @@ export class MarkerDetailsComponent implements OnInit {
   }
 
   removeValue(index: number, value) {
-    console.log('control', value);
     this.deletionService.showDeleteConfirmDialog(value.name, 'markerValue').subscribe(res => {
       if (!res) return;
       this.values.removeAt(index);

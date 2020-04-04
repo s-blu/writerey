@@ -2,7 +2,7 @@
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
   <wy-quill
     [content]="content"
-    (editorClicked)="onClick($event)"
+    (updateParagraphMeta)="onClick($event)"
     (contentChanged)="onChange($event)"
     [readOnly]="isLoading || docMode === 'read'"
   >
