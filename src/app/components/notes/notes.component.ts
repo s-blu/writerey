@@ -100,12 +100,12 @@ export class NotesComponent implements OnInit, OnDestroy {
         .getContextes(this.fileInfo.path, this.fileInfo.name, this.parId)
         .pipe(
           mergeMap(res => {
-            console.log('notecontext', res);
             this.noteContexts = res;
+            // sort reversed alphabetically to have paragraph > document > markers
+            this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
             return this.markerService.getMarkerDefinitions();
           }),
           mergeMap(markerDefs => {
-            console.log('markerdesf', markerDefs);
             this.markerDefinitions = markerDefs;
             return this.notesService.getNotesForParagraph(
               this.fileInfo.path,
@@ -115,16 +115,7 @@ export class NotesComponent implements OnInit, OnDestroy {
             );
           })
         )
-        .subscribe(res => {
-          console.log('got res in notes comp', res);
-          try {
-            if (res) {
-              this.notes = res;
-            }
-          } catch (err) {
-            console.error('getting notes failed', err);
-          }
-        })
+        .subscribe(res => (this.notes = res))
     );
   }
 }
