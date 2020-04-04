@@ -13,4 +13,11 @@
     width: 100%;
     display: flex;
   }
+
+  .numeric-values {
+    mat-input-field {
+      display: block;
+      width: 100%;
+    }
+  }
 }

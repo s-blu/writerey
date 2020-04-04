@@ -10,7 +10,7 @@
     </mat-form-field>
 
     <h3>{{ t('titleValues') }}</h3>
-    <div class="value-container" *ngIf="markerDefinition.type === types.NUMERIC">
+    <div class="value-container numeric-values" *ngIf="markerDefinition.type === types.NUMERIC">
       <mat-form-field>
         <mat-label>{{ t('start') }}</mat-label>
         <input matInput type="number" required formControlName="start" />

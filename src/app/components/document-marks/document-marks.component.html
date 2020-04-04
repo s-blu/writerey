@@ -22,7 +22,7 @@
 
         <mat-slider
           color="primary"
-          (change)="setValOfNumMarker(def.id, $event)"
+          (change)="setValOfNumMarker(def, $event)"
           [min]="def.start - 1"
           [max]="def.end"
           [step]="def.interval"

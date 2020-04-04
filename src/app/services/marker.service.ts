@@ -1,15 +1,17 @@
+import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { catchError, flatMap, map, tap } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
+import { Marker } from '../models/marker.interfacte';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarkerService {
-  constructor(private api: ApiService, private httpClient: HttpClient) {}
+  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
 
   createNewMarkerCategory(name: string, type: MarkerTypes) {
     const newMarker = new MarkerDefinition(name, type);
@@ -133,20 +135,48 @@ export class MarkerService {
   }
 
   addMarkerToParagraph(path, name, paragraphId, markers, markerId, valueId) {
-    console.warn('addMarkerToParagraph is not implemented yet');
-    // TODO pipe saveMarkers to directly save
-    return markers;
+    if (!markerId || !valueId) {
+      console.error('addMarkerToParagraph was called with invalid data, aborting');
+      return;
+    }
+    const newMarker: Marker = {
+      id: markerId,
+      valueId,
+    };
+    const newMarkers = [...markers, newMarker];
+    console.log('calling setParMeta with', path, name, paragraphId, 'markers', newMarkers);
+    return this.paragraphService
+      .setParagraphMeta(path, name, paragraphId, 'markers', newMarkers)
+      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
   }
 
   removeMarkerFromParagraph(path, name, paragraphId, markers, markerId) {
-    console.warn('addMarkerToParagraph is not implemented yet');
-    // TODO pipe saveMarkers to directly save
-    return markers;
+    if (!markerId) {
+      console.error('removeMarkerFromParagraph was called with invalid data, aborting');
+      return;
+    }
+    const indexToRemove = (markers || []).findIndex(m => m.id === markerId);
+    if (indexToRemove === -1) {
+      console.warn('removeMarkerFromParagraph could not find item to remove, do nothing', markers, markerId);
+      return;
+    }
+    const updatedMarkers = [...markers];
+    updatedMarkers.splice(indexToRemove, 1);
+    console.log('calling setParMeta with', path, name, paragraphId, 'markers', updatedMarkers);
+    return this.paragraphService
+      .setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers)
+      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
   }
 
   saveMarkersForParagraph(path, name, paragraphId, markers) {
-    console.warn('saveMarkersForParagraph is not implemented yet');
-    return markers;
+    if (!markers) {
+      console.error('saveMarkersForParagraph was called with invalid data, aborting');
+      return;
+    }
+    console.log('calling setParMeta with', path, name, paragraphId, 'markers', markers);
+    return this.paragraphService
+      .setParagraphMeta(path, name, paragraphId, 'markers', markers)
+      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
   }
 
   private parseMarkerValueResponse(res) {

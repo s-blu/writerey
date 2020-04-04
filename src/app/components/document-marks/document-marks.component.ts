@@ -1,13 +1,12 @@
-import { MarkerTypes } from './../../models/markerDefinition.class';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { Component, OnInit, Input, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { Marker } from 'src/app/models/marker.interfacte';
+import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
+import { Marker } from 'src/app/models/marker.interfacte';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
@@ -45,81 +44,46 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       this.paragraphService
         .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'markers')
         .subscribe(res => {
-          this.markersFromServer = JSON.parse(JSON.stringify(res));
           if (!res) return;
-          for (const m of res) {
-            this.enhanceMarkerWithNames(m);
-            this.values[m.id] = m.valueId;
-          }
-          this.markers = res;
+          this.markersFromServer = res;
+          this.updateDisplayInfo(res);
         })
     );
   }
 
   setValOfTextMarker(def, event) {
-    let newValue = event.value;
-    let marker = this.markers.find(m => m.id === def.id);
+    const newValue = event.value;
     if (!newValue) {
-      this.subscription.add(
-        this.markerService
-          .removeMarkerFromParagraph(
-            this.fileInfo.path,
-            this.fileInfo.name,
-            this.paragraphId,
-            this.markersFromServer,
-            def.id
-          )
-          .subscribe()
-      );
+      this.removeMarker(def.id);
+      return;
     }
+    const marker = this.markers.find(m => m.id === def.id);
+    const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
+    const valueDef = def.values.find(v => v.id === newValue);
 
-    const valueDef = def.values.find(v => v.value === newValue);
     if (marker) {
+      markerFromServer.valueId = valueDef.id;
       marker.valueId = valueDef.id;
       marker.valueName = valueDef.name;
-      this.subscription.add(
-        (this.markersFromServer = this.markerService.saveMarkersForParagraph(
-          this.fileInfo.path,
-          this.fileInfo.name,
-          this.paragraphId,
-          this.markersFromServer
-        ))
-      );
+      console.log('thismarkers after edit of one marker', this.markers);
+      this.saveMarkers();
     } else {
-      this.subscription.add(
-        (this.markersFromServer = this.markerService.addMarkerToParagraph(
-          this.fileInfo.path,
-          this.fileInfo.name,
-          this.markersFromServer,
-          this.paragraphId,
-          def.id,
-          newValue
-        ))
-      );
+      this.addMarker(def.id, newValue);
     }
-
-    console.log('setValOfTextMarker', def, event);
   }
 
   setValOfNumMarker(def, event) {
-    let newValue = event.value;
-    let marker = this.markers.find(m => m.id === def.id);
+    console.log('setValOfNumMarker', def, event);
+    const newValue = event.value;
+    const marker = this.markers.find(m => m.id === def.id);
+    const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
 
     if (newValue < def.start) {
       console.log('new value is smaller remove marker');
-      if (marker) {
-        this.subscription.add(
-          this.markerService.removeMarkerFromParagraph(
-            this.fileInfo.path,
-            this.fileInfo.name,
-            this.paragraphId,
-            this.markersFromServer,
-            def.id
-          )
-        );
-      }
+      this.removeMarker(def.id);
+      return;
     }
-    let valueDef = def.values.find(v => v.value === newValue);
+    let valueDef = def.values.find(v => v.name === newValue);
     if (!valueDef) {
       valueDef = {
         id: uuid.v4(),
@@ -132,28 +96,14 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         })
       );
     }
+
     if (marker) {
+      markerFromServer.valueId = valueDef.id;
       marker.valueId = valueDef.id;
       marker.valueName = valueDef.name;
-      this.subscription.add(
-        (this.markersFromServer = this.markerService.saveMarkersForParagraph(
-          this.fileInfo.path,
-          this.fileInfo.name,
-          this.paragraphId,
-          this.markersFromServer
-        ))
-      );
+      this.saveMarkers();
     } else {
-      this.subscription.add(
-        (this.markersFromServer = this.markerService.addMarkerToParagraph(
-          this.fileInfo.path,
-          this.fileInfo.name,
-          this.paragraphId,
-          this.markersFromServer,
-          def.id,
-          newValue
-        ))
-      );
+      this.addMarker(def.id, valueDef.id);
     }
   }
 
@@ -161,8 +111,71 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     const markerDef = this.markerDefinitions.find(m => m.id === marker.id);
     if (markerDef) {
       marker.name = markerDef.name;
+      marker.type = markerDef.type;
       const value = markerDef.values.find(val => val.id === marker.valueId);
       if (value) marker.valueName = value.name;
     }
+  }
+
+  private removeMarker(markerId) {
+    if (!markerId) return;
+    const index = this.markers.findIndex(m => m.id === markerId);
+    if (index === -1) return;
+
+    this.subscription.add(
+      this.markerService
+        .removeMarkerFromParagraph(
+          this.fileInfo.path,
+          this.fileInfo.name,
+          this.paragraphId,
+          this.markersFromServer,
+          markerId
+        )
+        .subscribe(res => {
+          this.values[markerId] = undefined;
+          this.markers.splice(index, 1);
+        })
+    );
+  }
+
+  private saveMarkers() {
+    this.subscription.add(
+      this.markerService
+        .saveMarkersForParagraph(this.fileInfo.path, this.fileInfo.name, this.paragraphId, this.markersFromServer)
+        .subscribe(res => {
+          this.markersFromServer = res;
+          this.updateDisplayInfo(res);
+        })
+    );
+  }
+
+  private addMarker(markerId, valueId) {
+    this.subscription.add(
+      this.markerService
+        .addMarkerToParagraph(
+          this.fileInfo.path,
+          this.fileInfo.name,
+          this.paragraphId,
+          this.markersFromServer,
+          markerId,
+          valueId
+        )
+        .subscribe(res => (this.markersFromServer = res))
+    );
+  }
+
+  private updateDisplayInfo(responseFromServer) {
+    responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
+    this.markers = [];
+    this.values = {};
+    for (const m of responseFromServer) {
+      this.enhanceMarkerWithNames(m);
+      if (m.type === MarkerTypes.TEXT) {
+        this.values[m.id] = m.valueId;
+      } else {
+        this.values[m.id] = m.valueName;
+      }
+    }
+    this.markers = responseFromServer;
   }
 }
