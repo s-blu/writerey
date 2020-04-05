@@ -1,3 +1,9 @@
+@import '../../variables';
+
 ::ng-deep .explorer .mat-tab-label {
   height: 40px;
+}
+
+:host {
+  border-right: 1px solid $c_border;
 }

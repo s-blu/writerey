@@ -31,7 +31,8 @@
     "interval": "Interval"
   },
   "documentMarkers": {
-    "noneValue": "Unset"
+    "noneValue": "Unset",
+    "title": "Markers"
   },
   "deleteDialog": {
     "title": "Delete {{name}}",

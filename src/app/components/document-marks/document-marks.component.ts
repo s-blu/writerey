@@ -1,7 +1,7 @@
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
 import { DOC_MODES } from '../../models/docModes.enum';
-import { Component, OnInit, Input, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, OnChanges, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
 import { MarkerService } from 'src/app/services/marker.service';
@@ -17,6 +17,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() mode: DOC_MODES;
   @Input() paragraphId: string;
   @Input() fileInfo: FileInfo;
+
+  @Output() addedMarker = new EventEmitter<any>();
 
   markers: Array<Marker> = [];
   markersFromServer: Array<Marker> = [];
@@ -157,6 +159,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         .subscribe(res => {
           this.markersFromServer = res;
           this.updateDisplayInfo(res);
+          this.addedMarker.emit(res);
         })
     );
   }

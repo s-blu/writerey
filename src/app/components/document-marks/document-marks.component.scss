@@ -1,5 +1,8 @@
 @import '../../variables.scss';
 
+:host {
+  margin-top: 1em;
+}
 .marker-name {
   color: $c_marker;
   margin-right: 0.5em;
@@ -13,4 +16,16 @@
 .write-mode {
   padding-top: 3em;
   text-align: end;
+}
+
+.review-mode {
+  padding: 0 1em;
+}
+
+mat-slider,
+mat-form-field {
+  width: 100%;
+}
+.numeric-marker mat-label {
+  display: block;
 }
