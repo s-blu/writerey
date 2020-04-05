@@ -3,10 +3,16 @@
     {{ t('title', { name: markerDefinition.name }) }}
     {{ t(markerDefinition.type === types.NUMERIC ? 'type.numeric' : 'type.text', { name: markerDefinition.name }) }}
   </h2>
+
+  <h3>{{ t('titleMarkerProps') }}</h3>
   <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
     <mat-form-field>
       <mat-label>{{ t('name') }}</mat-label>
       <input matInput required formControlName="name" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ t('index') }}</mat-label>
+      <input matInput type="number" formControlName="index" />
     </mat-form-field>
 
     <h3>{{ t('titleValues') }}</h3>
@@ -26,7 +32,7 @@
     </div>
     <div *ngIf="markerDefinition.type === types.TEXT">
       <ng-container formArrayName="values">
-        <div *ngFor="let _ of values.controls; index as i">
+        <div class="text-value-container" *ngFor="let _ of values.controls; index as i">
           <mat-form-field [formGroupName]="i">
             <mat-label>{{ t('textvalue') }}</mat-label>
             <input matInput formControlName="name" />

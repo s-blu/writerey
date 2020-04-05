@@ -17,8 +17,10 @@
     "removeValue": "Remove Value",
     "save": "Save",
     "cancel": "Cancel",
+    "index": "Index",
     "title": "Edit Marker '{{name}}'",
     "titleValues": "Values",
+    "titleMarkerProps": "Marker Properties",
     "type": {
       "text": "[Text]",
       "numeric": "[Numerical]"

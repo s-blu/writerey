@@ -55,6 +55,15 @@ export class MarkerService {
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseMarkerValueResponse(res);
+      }),
+      map((res: any) => {
+        res = res.sort((markerA, markerB) => {
+          if (markerA.index === undefined) return 1;
+          if (markerA.index < markerB.index) return -1;
+          if (markerA.index > markerB.index) return 1;
+          return 0;
+        });
+        return res;
       })
     );
   }
@@ -176,9 +185,7 @@ export class MarkerService {
       console.error('saveMarkersForParagraph was called with invalid data, aborting');
       return;
     }
-    return this.paragraphService
-      .setParagraphMeta(path, name, paragraphId, 'markers', markers)
-      .pipe(tap(res => console.log('got back res from setPara with markers', res)));
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', markers);
   }
 
   private parseMarkerValueResponse(res) {

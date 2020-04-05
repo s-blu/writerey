@@ -13,6 +13,7 @@ export class MarkerDefinition {
   id: string;
   name: string;
   type: MarkerTypes;
+  index: number;
   values: Array<MarkerValue>;
   start: number;
   end: number;

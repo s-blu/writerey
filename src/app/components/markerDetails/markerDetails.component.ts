@@ -76,6 +76,7 @@ export class MarkerDetailsComponent implements OnInit {
       id: markerDef.id,
       type: markerDef.type,
       name: markerDef.name,
+      index: markerDef.index,
       values: new FormArray([]),
     });
 

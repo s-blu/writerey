@@ -1,7 +1,7 @@
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { Subscription } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { MarkerService } from 'src/app/services/marker.service';
 
@@ -10,7 +10,7 @@ import { MarkerService } from 'src/app/services/marker.service';
   templateUrl: './createNewNote.component.html',
   styleUrls: ['./createNewNote.component.scss'],
 })
-export class CreateNewNoteComponent implements OnInit {
+export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() markerDefs: Array<MarkerDefinition> = [];
   @Output() noteCreated = new EventEmitter<any>();
@@ -35,10 +35,7 @@ export class CreateNewNoteComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.translatedContextNames.paragraph = this.translocoService.translate('createNote.contexts.paragraph');
-    this.translatedContextNames.document = this.translocoService.translate('createNote.contexts.document');
-
+  ngOnChanges() {
     for (const context of this.contexts) {
       if (context.includes(':')) {
         const [markerId, valueId] = context.split(':');
@@ -47,6 +44,11 @@ export class CreateNewNoteComponent implements OnInit {
         this.translatedContextNames[context] = `[${markerDef?.name}] ${valueName}`;
       }
     }
+  }
+
+  ngOnInit() {
+    this.translatedContextNames.paragraph = this.translocoService.translate('createNote.contexts.paragraph');
+    this.translatedContextNames.document = this.translocoService.translate('createNote.contexts.document');
   }
 
   onSubmit(data) {

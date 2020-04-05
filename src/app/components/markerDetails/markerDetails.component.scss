@@ -1,5 +1,6 @@
 .marker-details {
   margin: 1em;
+  max-width: 480px;
 
   .actions {
     margin: 1em;
@@ -9,9 +10,17 @@
     }
   }
 
-  .value-container {
-    width: 100%;
+  .mat-form-field {
+    display: block;
+  }
+
+  .text-value-container {
     display: flex;
+    flex-direction: row;
+
+    .mat-form-field {
+      flex-grow: 2;
+    }
   }
 
   .numeric-values {

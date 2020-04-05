@@ -67,7 +67,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   private fetchTree() {
     this.markerService.getMarkerDefinitions().subscribe(res => {
       this.markerDefinitions = res;
-      this.dataSource.data = res;
+      this.dataSource.data = this.markerDefinitions;
     });
   }
 
@@ -96,7 +96,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
         this.subscription.add(
           this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
             this.dataSource.data = res;
-            this.markerChanged.emit({ id: res.id });
+            this.markerChanged.emit(res[0]);
           })
         );
       })

@@ -30,7 +30,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private paragraphService: ParagraphService, private markerService: MarkerService) {}
 
   ngOnInit() {
-    this.subscription.add(this.markerService.getMarkerDefinitions().subscribe(res => (this.markerDefinitions = res)));
+    this.setMarkerDefinitions();
   }
 
   ngOnDestroy() {
@@ -87,11 +87,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         name: newValue,
       };
       def.values.push(valueDef);
-      this.subscription.add(
-        this.markerService.setMarkerDefinitions(this.markerDefinitions).subscribe(res => {
-          this.markerDefinitions = res;
-        })
-      );
+      this.setMarkerDefinitions();
     }
 
     if (marker) {
@@ -176,5 +172,13 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       }
     }
     this.markers = responseFromServer;
+  }
+
+  private setMarkerDefinitions() {
+    this.subscription.add(
+      this.markerService.getMarkerDefinitions().subscribe(res => {
+        this.markerDefinitions = res;
+      })
+    );
   }
 }
