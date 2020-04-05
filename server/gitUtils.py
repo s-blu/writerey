@@ -11,7 +11,7 @@ class GitUtils:
 
     def setGitConfig(self):
         pathToGitConfig = PathUtils.sanitizePathList(
-            [basePath, '/.git/config'])
+            ['.git/config'])
         f = open(pathToGitConfig, 'a')
         f.write('[user]\n')
         f.write('\tname = Writerey\n')

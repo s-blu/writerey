@@ -11,6 +11,7 @@ from git import GitAutomation
 from gitTag import Tag
 from tree import Tree
 from writerey_config import basePath, metaSubPath
+from waitress import serve
 
 app = Flask(__name__)
 api = Api(app)
@@ -27,4 +28,5 @@ api.add_resource(Tag, '/git/tag')
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-    app.run(port=5002)  # FIXME remove debug
+
+    serve(app, listen='localhost:5002')

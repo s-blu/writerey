@@ -3,6 +3,7 @@ from flask_restful import Resource
 from pathlib import Path
 from pathUtils import PathUtils
 from logger import Logger
+from writerey_config import basePath
 
 import subprocess
 import os
@@ -13,14 +14,16 @@ from gitUtils import GitUtils
 
 class GitAutomation(Resource):
     logger = Logger('GitAutomation')
-    workingDir = os.getcwd()
     git = GitUtils()
 
     def init(self):
         if not os.path.exists('.git'):
-            self.git.run(['dir'])
-            self.git.run(['git', 'init'])
+            Path(basePath).mkdir(exist_ok=True)
+            subprocess.run(['git', 'init'], shell=True, check=True)
             self.git.setGitConfig()
+            subprocess.run(['git', 'add', '.'], shell=True, check=True)
+            subprocess.run(
+                ['git', 'commit', '-m', '"(please ignore me) initial application commit"'], shell=True, check=True)
         else:
             self.logger.logDebug('git is already initialized, do nothing')
         return
