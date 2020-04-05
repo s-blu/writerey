@@ -1,3 +1,4 @@
+import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewMarkerComponent } from './components/createNewMarker/createNewMarker.component';
 import { MarkerTreeComponent } from './components/markerTree/markerTree.component';
@@ -89,6 +90,7 @@ const matModules = [
     CreateNewMarkerComponent,
     MarkerDetailsComponent,
     DeleteConfirmationDialogComponent,
+    NameSnapshotDialogComponent,
   ],
   imports: [
     BrowserModule,

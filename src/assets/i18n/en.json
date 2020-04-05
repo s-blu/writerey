@@ -34,6 +34,13 @@
     "noneValue": "Unset",
     "title": "Markers"
   },
+  "snapshotDialog": {
+    "title": "Snapshot message",
+    "message": "Give a descriptive name for the snapshot.",
+    "input": "Snapshot message",
+    "cancel": "Cancel",
+    "create": "Snapshot"
+  },
   "deleteDialog": {
     "title": "Delete {{name}}",
     "msg": "Do you really want to delete {{type}} '{{name}}'?",

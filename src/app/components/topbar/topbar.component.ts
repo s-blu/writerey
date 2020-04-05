@@ -1,3 +1,4 @@
+import { NameSnapshotDialogComponent } from './../nameSnapshotDialog/nameSnapshotDialog.component';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { TagDialogComponent } from './../tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
@@ -51,19 +52,30 @@ export class TopbarComponent implements OnInit {
   snapshot() {
     const date = new Date();
     const commitMsg = this.translocoService.translate('git.message.manualCommit', { date: date.toLocaleString() });
-    this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number; text: string }) => {
-      let snackBarMsg = '';
-      if (res?.status === 0) {
-        snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });
-      } else if (res?.status === -1) {
-        snackBarMsg = this.translocoService.translate('git.snackbar.workingDirClean');
-      } else {
-        snackBarMsg = this.translocoService.translate('git.snackbar.unknownResponse');
-        console.error('snapshot failed for some reason', res);
-      }
-      this.showSnackBar(snackBarMsg);
+
+    const dialogRef = this.dialog.open(NameSnapshotDialogComponent, {
+      data: { msg: commitMsg },
+      width: '500px',
     });
-    this.snapshotted.emit(date);
+
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(msg => {
+        if (!msg) return;
+        this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number; text: string }) => {
+          let snackBarMsg = '';
+          if (res?.status === 0) {
+            snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });
+          } else if (res?.status === -1) {
+            snackBarMsg = this.translocoService.translate('git.snackbar.workingDirClean');
+          } else {
+            snackBarMsg = this.translocoService.translate('git.snackbar.unknownResponse');
+            console.error('snapshot failed for some reason', res);
+          }
+          this.showSnackBar(snackBarMsg);
+        });
+        this.snapshotted.emit(date);
+      })
+    );
   }
 
   tag() {
