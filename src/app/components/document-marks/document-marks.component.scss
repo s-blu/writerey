@@ -2,6 +2,12 @@
 
 .marker-name {
   color: $c_marker;
+  margin-right: 0.5em;
+}
+
+.value-name {
+  min-width: 3em;
+  display: inline-block;
 }
 
 .write-mode {

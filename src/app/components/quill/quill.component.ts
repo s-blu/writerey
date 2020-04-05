@@ -51,7 +51,7 @@ export class QuillComponent implements OnInit {
     });
 
     this.editor.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
-      const el = (data?.editor?.getLine(data.range.index) || [])[0]?.domNode;
+      const el = (data?.editor?.getLine(data?.range?.index) || [])[0]?.domNode;
       if (el) this.updateParagraphMeta.emit(el.className);
     });
   }

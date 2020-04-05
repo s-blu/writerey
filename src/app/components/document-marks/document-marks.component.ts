@@ -67,11 +67,24 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       marker.valueName = valueDef.name;
       this.saveMarkers();
     } else {
+      this.values[def.id] = valueDef.id;
       this.addMarker(def.id, newValue);
     }
   }
 
   setValOfNumMarker(def, event) {
+    const setNewValToMarker = () => {
+      if (marker) {
+        markerFromServer.valueId = valueDef.id;
+        marker.valueId = valueDef.id;
+        marker.valueName = valueDef.name;
+        this.saveMarkers();
+      } else {
+        this.values[def.id] = valueDef.name;
+        this.addMarker(def.id, valueDef.id);
+      }
+    };
+
     const newValue = event.value;
     const marker = this.markers.find(m => m.id === def.id);
     const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
@@ -87,26 +100,14 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         name: newValue,
       };
       def.values.push(valueDef);
-      this.setMarkerDefinitions();
-    }
-
-    if (marker) {
-      markerFromServer.valueId = valueDef.id;
-      marker.valueId = valueDef.id;
-      marker.valueName = valueDef.name;
-      this.saveMarkers();
+      this.subscription.add(
+        this.markerService.setMarkerDefinitions(this.markerDefinitions).subscribe(res => {
+          this.markerDefinitions = res;
+          setNewValToMarker();
+        })
+      );
     } else {
-      this.addMarker(def.id, valueDef.id);
-    }
-  }
-
-  private enhanceMarkerWithNames(marker) {
-    const markerDef = this.markerDefinitions.find(m => m.id === marker.id);
-    if (markerDef) {
-      marker.name = markerDef.name;
-      marker.type = markerDef.type;
-      const value = markerDef.values.find(val => val.id === marker.valueId);
-      if (value) marker.valueName = value.name;
+      setNewValToMarker();
     }
   }
 
@@ -153,7 +154,10 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
           markerId,
           valueId
         )
-        .subscribe(res => (this.markersFromServer = res))
+        .subscribe(res => {
+          this.markersFromServer = res;
+          this.updateDisplayInfo(res);
+        })
     );
   }
 
@@ -161,17 +165,35 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     this.markers = [];
     this.values = {};
     if (!responseFromServer) return;
+    console.log('updateDisplayInfo', responseFromServer);
     responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
-
+    console.log('updateDisplayInfo2', responseFromServer);
     for (const m of responseFromServer) {
-      this.enhanceMarkerWithNames(m);
+      this.enhanceMarkerWithDisplayInfo(m);
       if (m.type === MarkerTypes.TEXT) {
         this.values[m.id] = m.valueId;
       } else {
+        console.log('setting value for numeric marker', m);
         this.values[m.id] = m.valueName;
       }
     }
-    this.markers = responseFromServer;
+    this.markers = responseFromServer.sort((markerA, markerB) => {
+      if (markerA.index === undefined) return 1;
+      if (markerA.index < markerB.index) return -1;
+      if (markerA.index > markerB.index) return 1;
+      return 0;
+    });
+  }
+
+  private enhanceMarkerWithDisplayInfo(marker) {
+    const markerDef = this.markerDefinitions.find(m => m.id === marker.id);
+    if (markerDef) {
+      marker.name = markerDef.name;
+      marker.type = markerDef.type;
+      marker.index = markerDef.index;
+      const value = markerDef.values.find(val => val.id === marker.valueId);
+      if (value) marker.valueName = value.name;
+    }
   }
 
   private setMarkerDefinitions() {

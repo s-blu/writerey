@@ -5,7 +5,7 @@
       <span class="value-name"> {{ marker.valueName }}</span>
     </div>
   </div>
-  <div *ngIf="mode === MODES.REVIEW">
+  <div *ngIf="mode === MODES.REVIEW && paragraphId">
     <div *ngFor="let def of markerDefinitions">
       <mat-form-field *ngIf="def.type === TYPES.TEXT">
         <mat-label>{{ def.name }}</mat-label>
@@ -28,6 +28,5 @@
         <span>{{ values[def.id] || '' }}</span>
       </div>
     </div>
-    {{ markerDefinitions | json }}
   </div>
 </div>
