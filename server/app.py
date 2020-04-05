@@ -27,4 +27,4 @@ api.add_resource(Tag, '/git/tag')
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-    app.run(port=5002, debug=True)  # FIXME remove debug
+    app.run(port=5002)  # FIXME remove debug

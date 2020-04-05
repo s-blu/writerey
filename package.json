@@ -67,6 +67,6 @@
     }
   },
   "lint-staged": {
-    "*": "prettier --write"
+    "*!.py": "prettier --write"
   }
 }

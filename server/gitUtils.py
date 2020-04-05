@@ -1,9 +1,7 @@
 
 import subprocess
 from pathUtils import PathUtils
-
-# FIXME REMOVE ME AND IMPORT REAL BASEPATH
-basePath = 'D:/projekte/_writerey_data'
+from writerey_config import basePath
 
 
 class GitUtils:
