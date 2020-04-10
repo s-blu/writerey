@@ -102,7 +102,7 @@ export class NotesComponent implements OnInit, OnDestroy {
           mergeMap(res => {
             this.noteContexts = res;
             // sort reversed alphabetically to have paragraph > document > markers
-            this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
+            if (res && res instanceof Array) this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
             return this.markerService.getMarkerDefinitions();
           }),
           mergeMap(markerDefs => {

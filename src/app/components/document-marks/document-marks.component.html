@@ -16,7 +16,9 @@
         </mat-select>
       </mat-form-field>
       <div class="numeric-marker" *ngIf="def.type === TYPES.NUMERIC">
-        <mat-label>{{ def.name }}</mat-label>
+        <mat-label
+          >{{ def.name }} <span *ngIf="values[def.id] !== undefined"> [{{ values[def.id] }}]</span></mat-label
+        >
         <mat-slider
           color="primary"
           (change)="setValOfNumMarker(def, $event)"
@@ -26,7 +28,6 @@
           [value]="values[def.id]"
           thumbLabel
         ></mat-slider>
-        <span>{{ values[def.id] || '' }}</span>
       </div>
     </div>
   </div>

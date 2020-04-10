@@ -168,15 +168,12 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     this.markers = [];
     this.values = {};
     if (!responseFromServer) return;
-    console.log('updateDisplayInfo', responseFromServer);
     responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
-    console.log('updateDisplayInfo2', responseFromServer);
     for (const m of responseFromServer) {
       this.enhanceMarkerWithDisplayInfo(m);
       if (m.type === MarkerTypes.TEXT) {
         this.values[m.id] = m.valueId;
       } else {
-        console.log('setting value for numeric marker', m);
         this.values[m.id] = m.valueName;
       }
     }

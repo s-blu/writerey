@@ -57,12 +57,15 @@ export class MarkerService {
         return this.parseMarkerValueResponse(res);
       }),
       map((res: any) => {
-        res = res.sort((markerA, markerB) => {
-          if (markerA.index === undefined) return 1;
-          if (markerA.index < markerB.index) return -1;
-          if (markerA.index > markerB.index) return 1;
-          return 0;
-        });
+        if (res && res instanceof Array) {
+          res = res.sort((markerA, markerB) => {
+            if (markerA.index === undefined) return 1;
+            if (markerA.index < markerB.index) return -1;
+            if (markerA.index > markerB.index) return 1;
+            return 0;
+          });
+        }
+
         return res;
       })
     );

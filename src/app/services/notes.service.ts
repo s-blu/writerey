@@ -65,8 +65,6 @@ export class NotesService {
             const contextOnNote = markerNotes[0]?.context;
             if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
           }
-        } else {
-          console.log('could not iterate markerRes', markerRes);
         }
         return of(notesWrap);
       })
