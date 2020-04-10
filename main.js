@@ -3,17 +3,34 @@ const { app, BrowserWindow } = require("electron");
 let win;
 
 function createWindow() {
-  // Create the browser window.
-  win = new BrowserWindow({
-    width: 1280,
-    height: 960,
-    icon: `file://${__dirname}/dist/assets/logo.png`,
+  let { PythonShell } = require("python-shell");
+
+  shell = PythonShell.run(
+    `${__dirname}/dist/writerey/server/app.py`,
+    null,
+    function (err) {
+      if (err) throw err;
+      console.log("app.py finished");
+    }
+  );
+  shell.on("message", function (message) {
+    console.log("[Python]", message);
   });
 
-  win.loadURL(`./dist/writerey/index.html`);
+  // Create the browser window.
+  win = new BrowserWindow({
+    width: 1680,
+    height: 1050,
+    icon: `file://${__dirname}/dist/assets/logo.png`,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
+
+  win.loadURL(`${__dirname}/dist/writerey/index.html`);
 
   // uncomment below to open the DevTools.
-  // win.webContents.openDevTools()
+  // win.webContents.openDevTools();
 
   // Event when the window is closed.
   win.on("closed", function () {
