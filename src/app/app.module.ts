@@ -15,8 +15,6 @@ import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -97,14 +95,10 @@ const matModules = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    CKEditorModule,
     BrowserAnimationsModule,
     ...matModules,
     TranslocoRootModule,
-    QuillModule
-      .forRoot
-      //config goes here
-      (),
+    QuillModule.forRoot(),
   ],
   providers: [{ provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true }],
   bootstrap: [AppComponent],
