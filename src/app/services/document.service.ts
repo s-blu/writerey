@@ -60,6 +60,8 @@ export class DocumentService {
 
   createDocument(path: string, name: string) {
     name = sanitizeName(name);
+    if (!/\.html$/.test(name)) name += '.html';
+
     return this.saveDocument(path, name, '');
   }
 

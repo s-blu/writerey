@@ -26,13 +26,13 @@
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
         </button>
-        <button mat-menu-item (click)="addNewFile(node)">
-          <mat-icon>note_add</mat-icon>
-          <span>{{ t('newfile') }}</span>
-        </button>
         <button mat-menu-item (click)="addNewDir(node)">
           <mat-icon>create_new_folder</mat-icon>
           <span>{{ t('newdir') }}</span>
+        </button>
+        <button mat-menu-item (click)="addNewFile(node)">
+          <mat-icon>note_add</mat-icon>
+          <span>{{ t('newfile') }}</span>
         </button>
       </mat-menu>
     </mat-tree-node>

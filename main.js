@@ -14,7 +14,13 @@ function createWindow() {
     }
   );
   shell.on("message", function (message) {
-    console.log("[Python]", message);
+    console.log("[Python] Log", message);
+  });
+  shell.on("stdout", function (message) {
+    console.log("[Python] stdout", message);
+  });
+  shell.on("stderr", function (stderr) {
+    console.error("[Python] [[ERR]]", stderr);
   });
 
   // Create the browser window.
