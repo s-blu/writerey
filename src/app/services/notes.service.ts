@@ -1,3 +1,4 @@
+import { ContextStore } from './../stores/context.store';
 import { MarkerService } from 'src/app/services/marker.service';
 import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
@@ -19,18 +20,21 @@ export class NotesService {
   constructor(
     private paragraphService: ParagraphService,
     private api: ApiService,
-    private markerService: MarkerService
-  ) {}
+    private markerService: MarkerService,
+    private contextStore: ContextStore
+  ) { }
 
   getContextes(docPath: string, docName: string, paragraphId?: string) {
     const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
     if (paragraphId) contexts.push(DEFAULT_CONTEXTS.PARAGRAPH);
     return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(
       map(markers => {
-        if (!markers) return contexts;
-        for (const m of markers) {
-          contexts.push(`${m.id}:${m.valueId}`);
+        if (markers) {
+          for (const m of markers) {
+            contexts.push(this.markerService.getContextStringForMarker(m));
+          }
         }
+        this.contextStore.setContexts(contexts);
         return contexts;
       })
     );

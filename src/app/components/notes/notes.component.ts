@@ -1,3 +1,4 @@
+import { ContextStore } from './../../stores/context.store';
 import { MarkerService } from 'src/app/services/marker.service';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { NotesService } from './../../services/notes.service';
@@ -18,10 +19,12 @@ export class NotesComponent implements OnInit, OnDestroy {
   @Input() mode: DOC_MODES;
   @Input() set file(info: FileInfo) {
     this.fileInfo = info;
-    this.fetchNotesForParagraph();
+    this.parId = null;
+    this.getContexts();
   }
   @Input() set paragraphId(pId: string) {
-    this.fetchNotesForParagraph(pId);
+    this.parId = pId;
+    this.getContexts();
   }
 
   MODES = DOC_MODES;
@@ -38,10 +41,17 @@ export class NotesComponent implements OnInit, OnDestroy {
   constructor(
     private paragraphService: ParagraphService,
     private notesService: NotesService,
-    private markerService: MarkerService
-  ) {}
+    private markerService: MarkerService,
+    private contextStore: ContextStore
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription.add(
+      this.contextStore.contexts$.subscribe((contexts) => {
+        this.updateContexts(contexts);
+      })
+    )
+  }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -87,35 +97,40 @@ export class NotesComponent implements OnInit, OnDestroy {
     });
   }
 
-  private fetchNotesForParagraph(pId?) {
+  private fetchNotesForParagraph() {
     this.notes = {};
-    this.noteContexts = [];
-
-    if (!this.fileInfo && !pId) return;
-    if (pId && this.parId === pId) return;
-    this.parId = pId;
+    if (!this.fileInfo && !this.parId) return;
 
     this.subscription.add(
-      this.notesService
-        .getContextes(this.fileInfo.path, this.fileInfo.name, this.parId)
+      this.markerService.getMarkerDefinitions()
         .pipe(
-          mergeMap(res => {
-            this.noteContexts = res;
-            // sort reversed alphabetically to have paragraph > document > markers
-            if (res && res instanceof Array) this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
-            return this.markerService.getMarkerDefinitions();
-          }),
           mergeMap(markerDefs => {
             this.markerDefinitions = markerDefs;
             return this.notesService.getNotesForParagraph(
               this.fileInfo.path,
               this.fileInfo.name,
-              pId,
+              this.parId,
               this.noteContexts
             );
           })
         )
         .subscribe(res => (this.notes = res))
     );
+  }
+
+  private getContexts() {
+    this.subscription.add(
+      this.notesService.getContextes(this.fileInfo.path, this.fileInfo.name, this.parId)
+        .subscribe((res) => {
+          this.updateContexts(res);
+        })
+    );
+  }
+
+  private updateContexts(contexts) {
+    this.noteContexts = contexts;
+    // sort reversed alphabetically to have paragraph > document > markers
+    if (contexts && contexts instanceof Array) this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
+    this.fetchNotesForParagraph();
   }
 }

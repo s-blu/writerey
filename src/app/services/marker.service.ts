@@ -1,3 +1,4 @@
+import { Marker } from 'src/app/models/marker.interfacte';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
@@ -5,13 +6,14 @@ import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map, tap } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
-import { Marker } from '../models/marker.interfacte';
+import { ContextStore } from '../stores/context.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarkerService {
-  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
+  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService,
+    private contextStore: ContextStore) { }
 
   createNewMarkerCategory(name: string, type: MarkerTypes) {
     const newMarker = new MarkerDefinition(name, type);
@@ -111,6 +113,8 @@ export class MarkerService {
     );
   }
 
+  //FIXME REFACTOR THIS INTO NOTES SERVICE
+
   saveNotesForMarkerValue(contextId, content) {
     const [markerId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
@@ -147,22 +151,24 @@ export class MarkerService {
     );
   }
 
-  addMarkerToParagraph(path, name, paragraphId, markers, markerId, valueId) {
+  upsertMarkerForParagraph(path, name, paragraphId, markers, markerId, valueId) {
     if (!markerId || !valueId) {
-      console.error('addMarkerToParagraph was called with invalid data, aborting');
+      console.error('upsertMarkerForParagraph was called with invalid data, aborting');
       return;
     }
     const newMarkers = [...markers];
-    const existingMaker = newMarkers.find(m => m.id === markerId);
-    if (existingMaker) {
-      console.warn('called addMarkerToParagraph for an existing marker. Will update value instead.');
-      existingMaker.valueId = valueId;
+    const existingMarker = newMarkers.find(m => m.id === markerId);
+    if (existingMarker) {
+      const oldContext = this.getContextStringForMarker(existingMarker);
+      existingMarker.valueId = valueId;
+      this.contextStore.replaceContext(oldContext, this.getContextStringForMarker(existingMarker));
     } else {
       const newMarker: Marker = {
         id: markerId,
         valueId,
       };
       newMarkers.push(newMarker);
+      this.contextStore.addContext(this.getContextStringForMarker(newMarker));
     }
 
     return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', newMarkers);
@@ -173,22 +179,35 @@ export class MarkerService {
       console.error('removeMarkerFromParagraph was called with invalid data, aborting');
       return;
     }
+    const updatedMarkers = this.removeMarkerFromList(markers, markerId);
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
+  }
+
+  public getContextStringForMarker(marker: Marker) {
+    if (!marker) return '';
+    return `${marker.id}:${marker.valueId}`;
+  }
+
+  public getMarkerFromContextString(context: string) {
+    if (!context) return null;
+    const [id, valueId] = context.split(':');
+    const newMarker: Marker = {
+      id,
+      valueId
+    };
+    return newMarker;
+  }
+
+  private removeMarkerFromList(markers, markerId) {
     const indexToRemove = (markers || []).findIndex(m => m.id === markerId);
     if (indexToRemove === -1) {
       console.warn('removeMarkerFromParagraph could not find item to remove, do nothing', markers, markerId);
       return;
     }
     const updatedMarkers = [...markers];
-    updatedMarkers.splice(indexToRemove, 1);
-    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
-  }
-
-  saveMarkersForParagraph(path, name, paragraphId, markers) {
-    if (!markers) {
-      console.error('saveMarkersForParagraph was called with invalid data, aborting');
-      return;
-    }
-    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', markers);
+    const [removedMarker] = updatedMarkers.splice(indexToRemove, 1);
+    this.contextStore.removeContext(this.getContextStringForMarker(removedMarker));
+    return updatedMarkers;
   }
 
   private parseMarkerValueResponse(res) {

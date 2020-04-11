@@ -18,8 +18,6 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() paragraphId: string;
   @Input() fileInfo: FileInfo;
 
-  @Output() addedMarker = new EventEmitter<any>();
-
   markers: Array<Marker> = [];
   markersFromServer: Array<Marker> = [];
   values: any = {};
@@ -29,7 +27,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private paragraphService: ParagraphService, private markerService: MarkerService) {}
+  constructor(private paragraphService: ParagraphService, private markerService: MarkerService) { }
 
   ngOnInit() {
     this.setMarkerDefinitions();
@@ -60,36 +58,12 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     const marker = this.markers.find(m => m.id === def.id);
-    const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
-    const valueDef = def.values.find(v => v.id === newValue);
 
-    if (marker) {
-      markerFromServer.valueId = valueDef.id;
-      marker.valueId = valueDef.id;
-      marker.valueName = valueDef.name;
-      this.saveMarkers();
-    } else {
-      this.values[def.id] = valueDef.id;
-      this.addMarker(def.id, newValue);
-    }
+    this.upsertMarker(marker.id, newValue);
   }
 
   setValOfNumMarker(def, event) {
-    const setNewValToMarker = () => {
-      if (marker) {
-        markerFromServer.valueId = valueDef.id;
-        marker.valueId = valueDef.id;
-        marker.valueName = valueDef.name;
-        this.saveMarkers();
-      } else {
-        this.values[def.id] = valueDef.name;
-        this.addMarker(def.id, valueDef.id);
-      }
-    };
-
     const newValue = event.value;
-    const marker = this.markers.find(m => m.id === def.id);
-    const markerFromServer = this.markersFromServer.find(m => m.id === def.id);
 
     if (newValue < def.start) {
       this.removeMarker(def.id);
@@ -105,11 +79,11 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       this.subscription.add(
         this.markerService.setMarkerDefinitions(this.markerDefinitions).subscribe(res => {
           this.markerDefinitions = res;
-          setNewValToMarker();
+          this.upsertMarker(def.id, valueDef.id);
         })
       );
     } else {
-      setNewValToMarker();
+      this.upsertMarker(def.id, valueDef.id);
     }
   }
 
@@ -130,36 +104,18 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         .subscribe(res => {
           this.values[markerId] = undefined;
           this.markers.splice(index, 1);
+          this.markersFromServer = res;
         })
     );
   }
 
-  private saveMarkers() {
+  private upsertMarker(markerId, valueId) {
     this.subscription.add(
       this.markerService
-        .saveMarkersForParagraph(this.fileInfo.path, this.fileInfo.name, this.paragraphId, this.markersFromServer)
+        .upsertMarkerForParagraph(this.fileInfo.path, this.fileInfo.name, this.paragraphId, this.markersFromServer, markerId, valueId)
         .subscribe(res => {
           this.markersFromServer = res;
           this.updateDisplayInfo(res);
-        })
-    );
-  }
-
-  private addMarker(markerId, valueId) {
-    this.subscription.add(
-      this.markerService
-        .addMarkerToParagraph(
-          this.fileInfo.path,
-          this.fileInfo.name,
-          this.paragraphId,
-          this.markersFromServer,
-          markerId,
-          valueId
-        )
-        .subscribe(res => {
-          this.markersFromServer = res;
-          this.updateDisplayInfo(res);
-          this.addedMarker.emit(res);
         })
     );
   }
