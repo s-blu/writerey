@@ -67,6 +67,6 @@
     }
   },
   "lint-staged": {
-    "!.py": "prettier --write"
+    ".ts|.html|.scss": "prettier --write"
   }
 }
