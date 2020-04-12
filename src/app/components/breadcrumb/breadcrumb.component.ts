@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DocumentDefinition } from '../../models/documentDefinition.interface';
+import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
   selector: 'wy-breadcrumb',
@@ -8,17 +9,16 @@ import { DocumentDefinition } from '../../models/documentDefinition.interface';
 })
 export class BreadcrumbComponent implements OnInit {
   path: Array<string> = [];
-  name: string = '';
+  name = '';
 
-  @Input()
-  set document(docDef: DocumentDefinition) {
-    if (!docDef) return;
-    const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
-    this.path = pathParts;
-    this.name = docDef.name;
+  constructor(private documentStore: DocumentStore) {}
+
+  ngOnInit() {
+    this.documentStore.document$.subscribe(docDef => {
+      if (!docDef) return;
+      const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
+      this.path = pathParts;
+      this.name = docDef.name;
+    });
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

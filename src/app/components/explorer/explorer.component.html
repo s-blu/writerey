@@ -1,7 +1,7 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
   <mat-tab-group [dynamicHeight]="true">
     <mat-tab [label]="t('tabs.documenttree')">
-      <wy-document-tree (docChanged)="openDocument($event)"></wy-document-tree>
+      <wy-document-tree></wy-document-tree>
     </mat-tab>
     <mat-tab [label]="t('tabs.markers')">
       <wy-marker-tree (markerChanged)="openMarker($event)"></wy-marker-tree>

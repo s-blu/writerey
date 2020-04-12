@@ -9,6 +9,7 @@ import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.c
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
 import { Marker } from 'src/app/models/marker.interfacte';
+import { DocumentStore } from 'src/app/stores/document.store';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
@@ -16,8 +17,8 @@ import { Marker } from 'src/app/models/marker.interfacte';
 })
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   @Input() paragraphId: string;
-  @Input() fileInfo: FileInfo;
 
+  fileInfo: FileInfo;
   markers: Array<Marker> = [];
   markersFromServer: Array<Marker> = [];
   values: any = {};
@@ -32,7 +33,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     private paragraphService: ParagraphService,
     private markerService: MarkerService,
     private markerStore: MarkerStore,
-    private documentModeStore: DocumentModeStore
+    private documentModeStore: DocumentModeStore,
+    private documentStore: DocumentStore
   ) {}
 
   ngOnInit() {
@@ -42,6 +44,12 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
+    this.subscription.add(
+      this.documentStore.fileInfo$.subscribe(fileInfo => {
+        this.fileInfo = fileInfo;
+        this.refresh();
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -49,17 +57,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (!this.fileInfo || !this.paragraphId) return;
-    this.markers = [];
-    this.values = {};
-    this.subscription.add(
-      this.paragraphService
-        .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'markers')
-        .subscribe(res => {
-          this.markersFromServer = res || [];
-          this.updateDisplayInfo(res);
-        })
-    );
+    this.refresh();
   }
 
   setValOfTextMarker(def, event) {
@@ -98,6 +96,19 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  private refresh() {
+    if (!this.fileInfo || !this.paragraphId) return;
+    this.markers = [];
+    this.values = {};
+    this.subscription.add(
+      this.paragraphService
+        .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'markers')
+        .subscribe(res => {
+          this.markersFromServer = res || [];
+          this.updateDisplayInfo(res);
+        })
+    );
+  }
   private removeMarker(markerId) {
     if (!markerId) return;
     const index = this.markers.findIndex(m => m.id === markerId);

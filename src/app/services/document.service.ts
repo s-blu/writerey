@@ -4,9 +4,10 @@ import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map, tap, flatMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
+import { DocumentStore } from '../stores/document.store';
 
 const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 
@@ -14,7 +15,12 @@ const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
   providedIn: 'root',
 })
 export class DocumentService {
-  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService) {}
+  constructor(
+    private api: ApiService,
+    private httpClient: HttpClient,
+    private paragraphService: ParagraphService,
+    private documentStore: DocumentStore
+  ) {}
 
   getDocument(path: string, name: string, withContent = true): Observable<any> {
     const params: any = {
@@ -74,6 +80,22 @@ export class DocumentService {
       lastSaved = null;
     }
     return lastSaved;
+  }
+
+  init() {
+    const lastSaved = this.getLastSavedFileInfo();
+    if (lastSaved) this.documentStore.setFileInfo(lastSaved);
+
+    // FIXME unsubscribe me somehow
+    this.documentStore.fileInfo$
+      .pipe(
+        flatMap((fileInfo: FileInfo) => {
+          return this.getDocument(fileInfo.path, fileInfo.name, false);
+        })
+      )
+      .subscribe((document: DocumentDefinition) => {
+        this.documentStore.setDocument(document);
+      });
   }
 
   private transformLastEditedIntoDate(res) {

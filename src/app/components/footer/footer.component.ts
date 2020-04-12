@@ -9,14 +9,6 @@ import { DocumentDefinition } from '../../models/documentDefinition.interface';
   styleUrls: ['./footer.component.scss'],
 })
 export class FooterComponent implements OnInit {
-  @Input() set document(doc: DocumentDefinition) {
-    if (!doc) return;
-    this.lastSave = doc.last_edited;
-    this.docDef = doc;
-  }
-  docDef: DocumentDefinition;
-  lastSave: Date;
-
   constructor() {}
 
   ngOnInit() {

@@ -11,6 +11,7 @@ import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
 import { map, flatMap, mergeMap } from 'rxjs/operators';
 import { MarkerStore } from 'src/app/stores/marker.store';
+import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
   selector: 'wy-notes',
@@ -18,11 +19,6 @@ import { MarkerStore } from 'src/app/stores/marker.store';
   styleUrls: ['./notes.component.scss'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  @Input() set file(info: FileInfo) {
-    this.fileInfo = info;
-    this.parId = null;
-    this.getContexts();
-  }
   @Input() set paragraphId(pId: string) {
     this.parId = pId;
     this.getContexts();
@@ -46,7 +42,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     private markerService: MarkerService,
     private contextStore: ContextStore,
     private markerStore: MarkerStore,
-    private documentModeStore: DocumentModeStore
+    private documentModeStore: DocumentModeStore,
+    private documentStore: DocumentStore
   ) {}
 
   ngOnInit() {
@@ -62,6 +59,13 @@ export class NotesComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.documentModeStore.mode$.subscribe((mode) => this.mode = mode)
+    );
+    this.subscription.add(
+      this.documentStore.fileInfo$.subscribe((fileInfo) => {
+        this.fileInfo = fileInfo;
+        this.parId = null;
+        this.getContexts();
+      })
     );
   }
 

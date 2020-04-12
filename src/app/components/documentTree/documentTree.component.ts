@@ -1,3 +1,4 @@
+import { DocumentStore } from './../../stores/document.store';
 import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
@@ -29,8 +30,6 @@ interface ExplorerNode {
   styleUrls: ['./documentTree.component.scss'],
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
-  @Output() docChanged: EventEmitter<FileInfo> = new EventEmitter<FileInfo>();
-  // tree data
   tree;
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
@@ -59,7 +58,8 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     private httpClient: HttpClient,
     private api: ApiService,
     private documentService: DocumentService,
-    private directoryService: DirectoryService
+    private directoryService: DirectoryService,
+    private documentStore: DocumentStore
   ) {}
 
   private fetchTree() {
@@ -75,7 +75,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   }
 
   openDocument(node) {
-    this.docChanged.emit({ name: node.name, path: node.path });
+    this.documentStore.setFileInfo({ name: node.name, path: node.path });
   }
 
   renameDir(node) {
@@ -111,7 +111,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
         this.subscription.add(
           createObservable.subscribe((res: any) => {
             this.fetchTree(); // FIXME implement way to only get the edited dir
-            if (type === 'file') this.docChanged.emit({ name: res.name, path: res.path });
+            if (type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
           })
         );
       })

@@ -1,3 +1,4 @@
+import { DocumentStore } from './../../stores/document.store';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
@@ -8,15 +9,15 @@ import { SnapshotStore } from 'src/app/stores/snapshot.store';
   styleUrls: ['./lastModified.component.scss'],
 })
 export class LastModifiedComponent implements OnInit, OnDestroy {
-  @Input() lastSave: Date;
-
   lastSnapshot: Date;
+  lastSave: Date;
 
   private subscription = new Subscription();
-  constructor(private snapshotStore: SnapshotStore) {}
+  constructor(private snapshotStore: SnapshotStore, private documentStore: DocumentStore) {}
 
   ngOnInit() {
     this.subscription.add(this.snapshotStore.snapshotDate$.subscribe(res => (this.lastSnapshot = res)));
+    this.subscription.add(this.documentStore.lastSaved$.subscribe(res => (this.lastSave = res)));
   }
 
   ngOnDestroy() {
