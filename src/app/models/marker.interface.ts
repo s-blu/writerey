@@ -1,7 +1,7 @@
 export interface Marker {
-  index: number;
   id: string;
   valueId: string;
+  index?: number;
   name?: string;
   valueName?: string;
 }

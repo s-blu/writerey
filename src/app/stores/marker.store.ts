@@ -1,4 +1,4 @@
-import { Marker } from 'src/app/models/marker.interfacte';
+import { Marker } from 'src/app/models/marker.interface';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';

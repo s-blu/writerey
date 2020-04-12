@@ -1,4 +1,4 @@
-import { Marker } from 'src/app/models/marker.interfacte';
+import { Marker } from 'src/app/models/marker.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';

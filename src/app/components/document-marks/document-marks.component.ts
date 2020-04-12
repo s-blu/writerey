@@ -8,7 +8,7 @@ import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
-import { Marker } from 'src/app/models/marker.interfacte';
+import { Marker } from 'src/app/models/marker.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
 @Component({
   selector: 'wy-document-marks',
