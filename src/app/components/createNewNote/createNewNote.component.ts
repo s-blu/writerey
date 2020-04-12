@@ -1,9 +1,7 @@
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { Subscription } from 'rxjs';
 import { TranslocoService } from '@ngneat/transloco';
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { MarkerService } from 'src/app/services/marker.service';
 
 @Component({
   selector: 'wy-create-new-note',
@@ -16,6 +14,18 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Output() noteCreated = new EventEmitter<any>();
 
   createNewForm;
+  quillModules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      [{ indent: '-1' }, { indent: '+1' }],
+    ],
+  };
+  
+  quillStyle = {
+    'font-family': 'Roboto, "Helvetica Neue", sans-serif',
+    'font-size': '14px'
+  };
 
   private translatedContextNames = {
     paragraph: 'paragraph',
@@ -24,8 +34,7 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
 
   constructor(
     private translocoService: TranslocoService,
-    private formBuilder: FormBuilder,
-    private markerService: MarkerService
+    private formBuilder: FormBuilder
   ) {
     this.createNewForm = this.formBuilder.group({
       type: 'todo',

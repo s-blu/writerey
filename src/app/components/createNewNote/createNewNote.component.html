@@ -22,10 +22,12 @@
         <mat-option *ngFor="let con of contexts" [value]="con">{{ getContextName(con) }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{ t('comment') }}</mat-label>
-      <textarea rows="4" matInput required formControlName="text"></textarea>
-    </mat-form-field>
+    <quill-editor
+      [formControl]="createNewForm.controls['text']"
+      [modules]="quillModules"
+      [styles]="quillStyle"
+      [placeholder]="t('comment')"
+    ></quill-editor>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
         <mat-icon>add</mat-icon>

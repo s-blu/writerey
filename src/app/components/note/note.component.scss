@@ -9,6 +9,7 @@
     font-size: 14pt;
   }
 }
+
 ::ng-deep div.mat-card-header-text {
   margin-left: 0;
   padding-left: 0;
@@ -48,6 +49,12 @@
 
 .type-todo {
   //border: 1px solid #808080;
+}
+
+::ng-deep .note-text .ql-editor {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  padding: 4px;
 }
 
 .mat-card-actions {
