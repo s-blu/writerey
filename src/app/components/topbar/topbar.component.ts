@@ -62,7 +62,7 @@ export class TopbarComponent implements OnInit {
     this.subscription.add(
       dialogRef.afterClosed().subscribe(msg => {
         if (!msg) return;
-        this.snapshotService.createSnapshot(commitMsg).subscribe((res: { status: number; text: string }) => {
+        this.snapshotService.createSnapshot(msg).subscribe((res: { status: number; text: string }) => {
           let snackBarMsg = '';
           if (res?.status === 0) {
             snackBarMsg = this.translocoService.translate('git.snackbar.manualCommit', { date: date.toLocaleString() });

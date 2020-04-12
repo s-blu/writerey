@@ -34,6 +34,9 @@
 .mat-card {
   margin-bottom: 5px;
   padding: 1em;
+  .mat-card-content {
+    margin-bottom: 0px;
+  }
 
   &:hover {
     .done-button {
