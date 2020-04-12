@@ -18,4 +18,8 @@ export class CreateNewFileDialogComponent implements OnInit {
   cancel(): void {
     this.dialogRef.close();
   }
+
+  submit() {
+    this.dialogRef.close(this.data.filename);
+  }
 }

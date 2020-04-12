@@ -53,8 +53,7 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
 
   onSubmit(data) {
     this.noteCreated.emit(data);
-    this.createNewForm.reset();
-    this.createNewForm.patchValue({ context: this.contexts[0] || 'paragraph', type: 'todo', color: '' });
+    this.createNewForm.patchValue({ text: '' });
   }
 
   getContextName(context: string) {

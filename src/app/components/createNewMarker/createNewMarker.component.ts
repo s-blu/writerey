@@ -25,6 +25,7 @@ export class CreateNewMarkerComponent implements OnInit {
   }
 
   onSubmit(data) {
+    if (this.createNewForm.invalid) return;
     this.dialogRef.close(data);
   }
 }

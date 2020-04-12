@@ -10,7 +10,7 @@
     </mat-form-field>
     <mat-form-field>
       <mat-label>{{ t('name') }}</mat-label>
-      <input matInput required formControlName="name" />
+      <input (keyup.enter)="onSubmit(createNewForm.value)" matInput required formControlName="name" />
     </mat-form-field>
     <div class="actions">
       <button mat-button [disabled]="createNewForm.invalid" type="submit">

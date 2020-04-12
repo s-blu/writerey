@@ -104,6 +104,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       dialogRef.afterClosed().subscribe(name => {
+        if (!name) return;
         let createObservable;
         if (type === 'file') createObservable = this.documentService.createDocument(path, name);
         if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);

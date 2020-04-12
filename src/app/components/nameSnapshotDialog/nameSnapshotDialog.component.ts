@@ -14,4 +14,8 @@ export class NameSnapshotDialogComponent implements OnInit {
   cancel(): void {
     this.dialogRef.close();
   }
+
+  submit() {
+    this.dialogRef.close(this.data.msg);
+  }
 }
