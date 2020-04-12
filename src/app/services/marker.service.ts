@@ -4,16 +4,22 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map, tap } from 'rxjs/operators';
+import { catchError, flatMap, map, tap, take } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
 import { ContextStore } from '../stores/context.store';
+import { MarkerStore } from '../stores/marker.store';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MarkerService {
-  constructor(private api: ApiService, private httpClient: HttpClient, private paragraphService: ParagraphService,
-    private contextStore: ContextStore) { }
+  constructor(
+    private api: ApiService,
+    private httpClient: HttpClient,
+    private paragraphService: ParagraphService,
+    private contextStore: ContextStore,
+    private markerStore: MarkerStore
+  ) {}
 
   createNewMarkerCategory(name: string, type: MarkerTypes) {
     const newMarker = new MarkerDefinition(name, type);
@@ -67,10 +73,16 @@ export class MarkerService {
             return 0;
           });
         }
-
+        this.markerStore.setMarkerDefinitions(res);
         return res;
       })
     );
+  }
+
+  init() {
+    this.getMarkerDefinitions().pipe(
+      take(1)
+    ).subscribe();
   }
 
   updateMarkerDefinition(markerDef: MarkerDefinition) {
@@ -108,12 +120,14 @@ export class MarkerService {
     return this.httpClient.put(this.api.getMarkerRoute('definitions'), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        return this.parseMarkerValueResponse(res);
+        const result = this.parseMarkerValueResponse(res);
+        this.markerStore.setMarkerDefinitions(result);
+        return result;
       })
     );
   }
 
-  //FIXME REFACTOR THIS INTO NOTES SERVICE
+  // FIXME REFACTOR THIS INTO NOTES SERVICE
 
   saveNotesForMarkerValue(contextId, content) {
     const [markerId, valueId] = contextId.split(':');
@@ -179,7 +193,15 @@ export class MarkerService {
       console.error('removeMarkerFromParagraph was called with invalid data, aborting');
       return;
     }
-    const updatedMarkers = this.removeMarkerFromList(markers, markerId);
+    const indexToRemove = (markers || []).findIndex(m => m.id === markerId);
+    if (indexToRemove === -1) {
+      console.warn('removeMarkerFromParagraph could not find item to remove, do nothing', markers, markerId);
+      return;
+    }
+    const updatedMarkers = [...markers];
+    const [removedMarker] = updatedMarkers.splice(indexToRemove, 1);
+    this.contextStore.removeContext(this.getContextStringForMarker(removedMarker));
+
     return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
   }
 
@@ -193,21 +215,9 @@ export class MarkerService {
     const [id, valueId] = context.split(':');
     const newMarker: Marker = {
       id,
-      valueId
+      valueId,
     };
     return newMarker;
-  }
-
-  private removeMarkerFromList(markers, markerId) {
-    const indexToRemove = (markers || []).findIndex(m => m.id === markerId);
-    if (indexToRemove === -1) {
-      console.warn('removeMarkerFromParagraph could not find item to remove, do nothing', markers, markerId);
-      return;
-    }
-    const updatedMarkers = [...markers];
-    const [removedMarker] = updatedMarkers.splice(indexToRemove, 1);
-    this.contextStore.removeContext(this.getContextStringForMarker(removedMarker));
-    return updatedMarkers;
   }
 
   private parseMarkerValueResponse(res) {

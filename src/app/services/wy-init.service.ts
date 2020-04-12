@@ -1,3 +1,4 @@
+import { MarkerService } from './marker.service';
 import { Injectable } from '@angular/core';
 
 import * as QuillNamespace from 'quill';
@@ -7,16 +8,17 @@ const Quill: any = QuillNamespace;
   providedIn: 'root',
 })
 export class WyInitService {
-  constructor() {}
+  constructor(private markerService: MarkerService) {}
 
   init() {
+    this.configureClassesForQuill();
+    this.markerService.init();
+  }
+
+  private configureClassesForQuill() {
     const Parchment = Quill.import('parchment');
     const allowClasses = new Parchment.Attributor.Attribute('class', 'class');
     Parchment.register(allowClasses);
-
-    // let config = { scope: Parchment.Scope.BLOCK };
-    // let SpanBlockClass = new Parchment.Attributor.Class('span-block', 'span', config);
-    // Quill.register(SpanBlockClass, true);
   }
 }
 

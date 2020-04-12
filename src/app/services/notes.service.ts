@@ -22,7 +22,7 @@ export class NotesService {
     private api: ApiService,
     private markerService: MarkerService,
     private contextStore: ContextStore
-  ) { }
+  ) {}
 
   getContextes(docPath: string, docName: string, paragraphId?: string) {
     const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];

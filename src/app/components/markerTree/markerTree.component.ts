@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MarkerService } from 'src/app/services/marker.service';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { ReturnStatement } from '@angular/compiler';
+import { MarkerStore } from 'src/app/stores/marker.store';
 
 /**
  * Food data with nested structure.
@@ -35,6 +36,7 @@ interface MarkerNode {
 })
 export class MarkerTreeComponent implements OnInit, OnDestroy {
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
+
   markerDefinitions: Array<MarkerDefinition>;
   treeControl = new FlatTreeControl<MarkerNode>(
     node => node.level,
@@ -50,25 +52,24 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
   private subscription = new Subscription();
 
+  constructor(
+    private dialog: MatDialog,
+    private deletionService: DeletionService,
+    private markerService: MarkerService,
+    private markerStore: MarkerStore
+  ) {}
+
   ngOnInit() {
-    this.fetchTree();
+    this.subscription.add(
+      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
+        this.markerDefinitions = markerDefs;
+        this.dataSource.data = this.markerDefinitions;
+      })
+    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
-  }
-
-  constructor(
-    private dialog: MatDialog,
-    private deletionService: DeletionService,
-    private markerService: MarkerService
-  ) {}
-
-  private fetchTree() {
-    this.markerService.getMarkerDefinitions().subscribe(res => {
-      this.markerDefinitions = res;
-      this.dataSource.data = this.markerDefinitions;
-    });
   }
 
   openMarkerCategory(node) {
@@ -81,7 +82,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
       this.deletionService.showDeleteConfirmDialog(node.name, 'marker').subscribe(result => {
         if (!result) return;
         this.markerService.deleteMarkerCategory(node.id).subscribe(res => {
-          this.fetchTree();
+          // TODO show snackbar
         });
       })
     );
@@ -95,7 +96,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
         if (!data) return;
         this.subscription.add(
           this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
-            this.dataSource.data = res;
             this.markerChanged.emit(res[0]);
           })
         );

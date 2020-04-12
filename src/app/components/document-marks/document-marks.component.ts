@@ -1,3 +1,4 @@
+import { MarkerStore } from './../../stores/marker.store';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
 import { DOC_MODES } from '../../models/docModes.enum';
@@ -7,7 +8,6 @@ import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.c
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
 import { Marker } from 'src/app/models/marker.interfacte';
-import { ReturnStatement } from '@angular/compiler';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
@@ -27,10 +27,18 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
 
   private subscription = new Subscription();
 
-  constructor(private paragraphService: ParagraphService, private markerService: MarkerService) { }
+  constructor(
+    private paragraphService: ParagraphService,
+    private markerService: MarkerService,
+    private markerStore: MarkerStore
+  ) {}
 
   ngOnInit() {
-    this.setMarkerDefinitions();
+    this.subscription.add(
+      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
+        this.markerDefinitions = markerDefs;
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -112,7 +120,14 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   private upsertMarker(markerId, valueId) {
     this.subscription.add(
       this.markerService
-        .upsertMarkerForParagraph(this.fileInfo.path, this.fileInfo.name, this.paragraphId, this.markersFromServer, markerId, valueId)
+        .upsertMarkerForParagraph(
+          this.fileInfo.path,
+          this.fileInfo.name,
+          this.paragraphId,
+          this.markersFromServer,
+          markerId,
+          valueId
+        )
         .subscribe(res => {
           this.markersFromServer = res;
           this.updateDisplayInfo(res);
@@ -150,13 +165,5 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       const value = markerDef.values.find(val => val.id === marker.valueId);
       if (value) marker.valueName = value.name;
     }
-  }
-
-  private setMarkerDefinitions() {
-    this.subscription.add(
-      this.markerService.getMarkerDefinitions().subscribe(res => {
-        this.markerDefinitions = res;
-      })
-    );
   }
 }

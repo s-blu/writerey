@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
 import { map, flatMap, mergeMap } from 'rxjs/operators';
+import { MarkerStore } from 'src/app/stores/marker.store';
 
 @Component({
   selector: 'wy-notes',
@@ -42,15 +43,21 @@ export class NotesComponent implements OnInit, OnDestroy {
     private paragraphService: ParagraphService,
     private notesService: NotesService,
     private markerService: MarkerService,
-    private contextStore: ContextStore
-  ) { }
+    private contextStore: ContextStore,
+    private markerStore: MarkerStore
+  ) {}
 
   ngOnInit() {
     this.subscription.add(
-      this.contextStore.contexts$.subscribe((contexts) => {
+      this.contextStore.contexts$.subscribe(contexts => {
         this.updateContexts(contexts);
       })
-    )
+    );
+    this.subscription.add(
+      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
+        this.markerDefinitions = markerDefs;
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -102,28 +109,18 @@ export class NotesComponent implements OnInit, OnDestroy {
     if (!this.fileInfo && !this.parId) return;
 
     this.subscription.add(
-      this.markerService.getMarkerDefinitions()
-        .pipe(
-          mergeMap(markerDefs => {
-            this.markerDefinitions = markerDefs;
-            return this.notesService.getNotesForParagraph(
-              this.fileInfo.path,
-              this.fileInfo.name,
-              this.parId,
-              this.noteContexts
-            );
-          })
-        )
+      this.notesService
+        .getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, this.parId, this.noteContexts)
         .subscribe(res => (this.notes = res))
     );
   }
 
   private getContexts() {
+    if (!this.fileInfo) return;
     this.subscription.add(
-      this.notesService.getContextes(this.fileInfo.path, this.fileInfo.name, this.parId)
-        .subscribe((res) => {
-          this.updateContexts(res);
-        })
+      this.notesService.getContextes(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
+        this.updateContexts(res);
+      })
     );
   }
 

@@ -21,7 +21,6 @@ import { map } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ContextStore {
-
   private readonly _contextsSubject = new BehaviorSubject<List<string>>(List());
 
   readonly contexts$ = this._contextsSubject.asObservable().pipe(
@@ -41,7 +40,7 @@ export class ContextStore {
 
   public setContexts(newContexts: Array<string>) {
     if (!newContexts || !(newContexts instanceof Array)) {
-      console.warn('setContext was called with invalid data, will reset to an empty array', newContexts)
+      console.warn('setContext was called with invalid data, will reset to an empty array', newContexts);
       newContexts = [];
     }
     this.contextsSubject = List(newContexts);
