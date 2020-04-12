@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './../../stores/documentMode.store';
 import { ContextStore } from './../../stores/context.store';
 import { MarkerService } from 'src/app/services/marker.service';
 import { DOC_MODES } from '../../models/docModes.enum';
@@ -17,7 +18,6 @@ import { MarkerStore } from 'src/app/stores/marker.store';
   styleUrls: ['./notes.component.scss'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  @Input() mode: DOC_MODES;
   @Input() set file(info: FileInfo) {
     this.fileInfo = info;
     this.parId = null;
@@ -29,6 +29,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   MODES = DOC_MODES;
+  mode: DOC_MODES;
   noteContexts;
   markerDefinitions;
   parId: string;
@@ -44,7 +45,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     private notesService: NotesService,
     private markerService: MarkerService,
     private contextStore: ContextStore,
-    private markerStore: MarkerStore
+    private markerStore: MarkerStore,
+    private documentModeStore: DocumentModeStore
   ) {}
 
   ngOnInit() {
@@ -57,6 +59,9 @@ export class NotesComponent implements OnInit, OnDestroy {
       this.markerStore.markerDefinitions$.subscribe(markerDefs => {
         this.markerDefinitions = markerDefs;
       })
+    );
+    this.subscription.add(
+      this.documentModeStore.mode$.subscribe((mode) => this.mode = mode)
     );
   }
 

@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './../../stores/documentMode.store';
 import { MarkerStore } from './../../stores/marker.store';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
@@ -14,7 +15,6 @@ import { Marker } from 'src/app/models/marker.interfacte';
   styleUrls: ['./document-marks.component.scss'],
 })
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() mode: DOC_MODES;
   @Input() paragraphId: string;
   @Input() fileInfo: FileInfo;
 
@@ -23,6 +23,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   values: any = {};
   markerDefinitions: Array<MarkerDefinition>;
   MODES = DOC_MODES;
+  mode: DOC_MODES;
   TYPES = MarkerTypes;
 
   private subscription = new Subscription();
@@ -30,7 +31,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private paragraphService: ParagraphService,
     private markerService: MarkerService,
-    private markerStore: MarkerStore
+    private markerStore: MarkerStore,
+    private documentModeStore: DocumentModeStore
   ) {}
 
   ngOnInit() {
@@ -39,6 +41,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         this.markerDefinitions = markerDefs;
       })
     );
+    this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
   }
 
   ngOnDestroy() {

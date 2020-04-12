@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './stores/documentMode.store';
 import { DocumentDefinition } from './models/documentDefinition.interface';
 import { SnapshotService } from './services/snapshot.service';
 import { DocumentService } from './services/document.service';
@@ -23,11 +24,14 @@ export class AppComponent implements OnInit, OnDestroy {
   paragraphId: string;
 
   isLoading = false;
-  activeMode: DOC_MODES = DOC_MODES.WRITE;
 
   private subscription = new Subscription();
 
-  constructor(private documentService: DocumentService, private snapshotService: SnapshotService) {}
+  constructor(
+    private documentService: DocumentService,
+    private snapshotService: SnapshotService,
+    private documentModeStore: DocumentModeStore
+  ) {}
 
   ngOnInit() {
     this.fileInfo = this.documentService.getLastSavedFileInfo();
@@ -57,7 +61,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   changeMarker(event: MarkerDefinition) {
     this.resetLoadedData();
-    this.activeMode = DOC_MODES.WRITE;
+    this.documentModeStore.setMode(DOC_MODES.WRITE);
     this.markerDef = event;
   }
 
@@ -71,10 +75,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   refreshSnapshotDate(event) {
     this.snapshotDate = event;
-  }
-
-  switchDocumentMode(mode) {
-    this.activeMode = mode;
   }
 
   private resetLoadedData() {

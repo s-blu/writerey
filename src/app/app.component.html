@@ -2,20 +2,17 @@
   <wy-topbar
     (snapshotted)="refreshSnapshotDate($event)"
     [lastSnapshotDate]="snapshotDate"
-    (switchMode)="switchDocumentMode($event)"
-    [mode]="activeMode"
   ></wy-topbar>
   <div class="main">
     <div class="left">
       <wy-explorer (docChanged)="changeDoc($event)" (markerChanged)="changeMarker($event)"></wy-explorer>
-      <wy-document-marks [mode]="activeMode" [paragraphId]="paragraphId" [fileInfo]="fileInfo"></wy-document-marks>
+      <wy-document-marks [paragraphId]="paragraphId" [fileInfo]="fileInfo"></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
         <wy-document-editor
           *ngIf="fileInfo"
           [fileInfo]="fileInfo"
-          [mode]="activeMode"
           (clicked)="onEditorClick($event)"
           (documentChanged)="documentChanged($event)"
         >
@@ -24,7 +21,7 @@
       </div>
     </div>
     <div class="notes">
-      <wy-notes [paragraphId]="paragraphId" [file]="fileInfo" [mode]="activeMode"></wy-notes>
+      <wy-notes [paragraphId]="paragraphId" [file]="fileInfo"></wy-notes>
     </div>
   </div>
   <wy-footer [document]="document" [lastSnapshotDate]="snapshotDate"></wy-footer>

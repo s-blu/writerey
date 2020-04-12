@@ -49,24 +49,4 @@ export class MarkerStore {
     }
     this.markerDefinitionSubject = List(newMarkerDefinitions);
   }
-
-  public removeMarkerDefinition(markerDef: string) {
-    if (!markerDef) return;
-    this.markerDefinitionSubject = this.markerDefinitionSubject.filter(c => c !== markerDef);
-  }
-
-  public replaceMarkerDefinition(oldMarkerDef: MarkerDefinition, newMarkerDef: MarkerDefinition) {
-    if (!oldMarkerDef || !newMarkerDef) return;
-    const index = this.markerDefinitionSubject.indexOf(oldMarkerDef);
-    if (index === -1) {
-      console.error('Could not find marker def to replace doing nothing');
-      return;
-    }
-    this.markerDefinitionSubject = this.markerDefinitionSubject.splice(index, 1, newMarkerDef);
-  }
-
-  public addMarkerDefinition(markerDef: MarkerDefinition) {
-    if (!markerDef) return;
-    this.markerDefinitionSubject = this.markerDefinitionSubject.concat(markerDef);
-  }
 }

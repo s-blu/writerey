@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './../../stores/documentMode.store';
 import { FileInfo } from '../../models/fileInfo.interface';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { ParagraphService } from '../../services/paragraph.service';
@@ -15,38 +16,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 export class DocumentEditorComponent implements OnInit, OnDestroy {
   @Input() set fileInfo(info: FileInfo) {
     if (!info) return;
-    let loadObs;
-    // save old doc before switching
-    if (this.document) {
-      loadObs = this.documentService
-        .saveDocument(this.document.path, this.document.name, this.content)
-        .pipe(() => this.documentService.getDocument(info.path, info.name));
-    } else {
-      loadObs = this.documentService.getDocument(info.path, info.name);
-    }
-
-    this.isLoading = true;
-    this.subscription.add(
-      loadObs.subscribe(res => {
-        this.content = res.content;
-        delete res.content;
-        this.document = res;
-        this.isLoading = false;
-        this.documentChanged.emit(this.document);
-      })
-    );
-  }
-  @Input() set mode(m: DOC_MODES) {
-    this.docMode = m;
-    if (m === DOC_MODES.REVIEW) {
-      this.isLoading = true;
-      this.documentService
-        .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
-        .subscribe(res => {
-          this.content = res.content;
-          this.isLoading = false;
-        });
-    }
+    this.switchDocument(info);
   }
 
   @Output() clicked: EventEmitter<any> = new EventEmitter();
@@ -62,7 +32,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
   private style;
 
-  constructor(private documentService: DocumentService, private paragraphService: ParagraphService) {}
+  constructor(
+    private documentService: DocumentService,
+    private paragraphService: ParagraphService,
+    private documentModeStore: DocumentModeStore
+  ) {}
 
   ngOnInit(): void {
     const style = document.createElement('style');
@@ -73,6 +47,22 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.clickSubject.pipe(distinctUntilChanged(), debounceTime(300)).subscribe(event => {
         this.clicked.emit(event);
+      })
+    );
+
+    this.subscription.add(
+      this.documentModeStore.mode$.subscribe(m => {
+        this.docMode = m;
+        if (this.style?.cssRules?.length > 0) this.style.deleteRule(0);
+        if (m === DOC_MODES.REVIEW) {
+          this.isLoading = true;
+          this.documentService
+            .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
+            .subscribe(res => {
+              this.content = res.content;
+              this.isLoading = false;
+            });
+        }
       })
     );
   }
@@ -123,5 +113,27 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         })
     );
     this.changeContent.emit(event);
+  }
+
+  private switchDocument(info: FileInfo) {
+    let loadObs;
+    // save old doc before switching
+    if (this.document) {
+      loadObs = this.documentService
+        .saveDocument(this.document.path, this.document.name, this.content)
+        .pipe(() => this.documentService.getDocument(info.path, info.name));
+    } else {
+      loadObs = this.documentService.getDocument(info.path, info.name);
+    }
+    this.isLoading = true;
+    this.subscription.add(
+      loadObs.subscribe(res => {
+        this.content = res.content;
+        delete res.content;
+        this.document = res;
+        this.isLoading = false;
+        this.documentChanged.emit(this.document);
+      })
+    );
   }
 }

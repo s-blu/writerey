@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './../../stores/documentMode.store';
 import { NameSnapshotDialogComponent } from './../nameSnapshotDialog/nameSnapshotDialog.component';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { TagDialogComponent } from './../tagDialog/tagDialog.component';
@@ -17,32 +18,34 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class TopbarComponent implements OnInit {
   @Input() lastSnapshotDate: Date;
-  @Input() mode: DOC_MODES;
 
   @Output() snapshotted = new EventEmitter<any>();
-  @Output() switchMode = new EventEmitter<any>();
 
   private subscription = new Subscription();
+  private mode;
 
   constructor(
     private snapshotService: SnapshotService,
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private documentModeStore: DocumentModeStore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
+  }
 
   review() {
-    this.switchMode.emit(DOC_MODES.REVIEW);
+    this.switchMode(DOC_MODES.REVIEW);
   }
 
   read() {
-    this.switchMode.emit(DOC_MODES.READ);
+    this.switchMode(DOC_MODES.READ);
   }
 
   write() {
-    this.switchMode.emit(DOC_MODES.WRITE);
+    this.switchMode(DOC_MODES.WRITE);
   }
 
   isActive(mode) {
@@ -112,5 +115,10 @@ export class TopbarComponent implements OnInit {
       duration,
       horizontalPosition: 'right',
     });
+  }
+
+  private switchMode(newMode) {
+    if (!newMode || this.mode === newMode) return;
+    this.documentModeStore.setMode(newMode);
   }
 }
