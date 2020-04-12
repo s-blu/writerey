@@ -1,3 +1,4 @@
+import { SnapshotService } from './snapshot.service';
 import { MarkerService } from './marker.service';
 import { Injectable } from '@angular/core';
 
@@ -8,11 +9,12 @@ const Quill: any = QuillNamespace;
   providedIn: 'root',
 })
 export class WyInitService {
-  constructor(private markerService: MarkerService) {}
+  constructor(private markerService: MarkerService, private snapshotService: SnapshotService) {}
 
   init() {
     this.configureClassesForQuill();
     this.markerService.init();
+    this.snapshotService.init();
   }
 
   private configureClassesForQuill() {

@@ -29,11 +29,13 @@ class GitAutomation(Resource):
         return
 
     def get(self):
+        lastTagDate = None
         lastGitCommit = self.getCommitDate()
         lastTagName = self.git.run(['git', 'describe'])
         lastTagName = re.sub(
             r"(-[0-9]+-[a-z0-9]+\n$)", "", lastTagName)
-        lastTagDate = self.getCommitDate(lastTagName)
+        if lastTagName: 
+            lastTagDate = self.getCommitDate(lastTagName)
         return {
             'lastCommitDate': lastGitCommit,
             'lastTagName': lastTagName,

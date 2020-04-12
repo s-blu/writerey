@@ -1,6 +1,5 @@
 import { DocumentModeStore } from './stores/documentMode.store';
 import { DocumentDefinition } from './models/documentDefinition.interface';
-import { SnapshotService } from './services/snapshot.service';
 import { DocumentService } from './services/document.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileInfo } from './models/fileInfo.interface';
@@ -20,7 +19,6 @@ export class AppComponent implements OnInit, OnDestroy {
   fileInfo: FileInfo;
   markerDef: any; // FIXME
   document: DocumentDefinition;
-  snapshotDate: Date;
   paragraphId: string;
 
   isLoading = false;
@@ -29,7 +27,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private documentService: DocumentService,
-    private snapshotService: SnapshotService,
     private documentModeStore: DocumentModeStore
   ) {}
 
@@ -38,16 +35,6 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.fileInfo) {
       this.changeDoc(this.fileInfo);
     }
-    this.subscription.add(
-      this.snapshotService.getSnapshotInfo().subscribe((res: any) => {
-        if (res.lastCommitDate) {
-          try {
-            this.snapshotDate = new Date(res.lastCommitDate);
-          } finally {
-          }
-        }
-      })
-    );
   }
 
   ngOnDestroy() {
@@ -71,10 +58,6 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onEditorClick(event) {
     this.paragraphId = event;
-  }
-
-  refreshSnapshotDate(event) {
-    this.snapshotDate = event;
   }
 
   private resetLoadedData() {

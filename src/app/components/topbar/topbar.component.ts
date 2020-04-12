@@ -4,8 +4,6 @@ import { DOC_MODES } from '../../models/docModes.enum';
 import { TagDialogComponent } from './../tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
 import { SnapshotService } from './../../services/snapshot.service';
-import { ApiService } from './../../services/api.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';

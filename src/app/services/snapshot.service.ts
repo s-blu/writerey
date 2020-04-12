@@ -1,6 +1,7 @@
+import { SnapshotStore } from './../stores/snapshot.store';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, tap, take } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
 
@@ -8,7 +9,7 @@ import { ApiService } from './api.service';
   providedIn: 'root',
 })
 export class SnapshotService {
-  constructor(private httpClient: HttpClient, private api: ApiService) {}
+  constructor(private httpClient: HttpClient, private api: ApiService, private snapshotStore: SnapshotStore) {}
 
   createSnapshot(msg) {
     const formdata = new FormData();
@@ -33,6 +34,18 @@ export class SnapshotService {
   }
 
   getSnapshotInfo() {
-    return this.httpClient.get(this.api.getGitRoute()).pipe(catchError(err => this.api.handleHttpError(err)));
+    return this.httpClient.get(this.api.getGitRoute()).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      tap((res: any) => {
+        if (!res) return;
+        if (res.lastCommitDate) this.snapshotStore.setLastSnapshotDate(res.lastCommitDate);
+        if (res.lastTagDate) this.snapshotStore.setLastTagDate(res.lastTagDate);
+        if (res.lastTagName) this.snapshotStore.setLastTagName(res.lastTagName);
+      })
+    );
+  }
+
+  init() {
+    this.getSnapshotInfo().pipe(take(1)).subscribe();
   }
 }

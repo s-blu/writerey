@@ -1,3 +1,5 @@
+import { Subscription } from 'rxjs';
+import { SnapshotStore } from './../../stores/snapshot.store';
 import { Component, OnInit, Input } from '@angular/core';
 import { DocumentDefinition } from '../../models/documentDefinition.interface';
 
@@ -12,12 +14,11 @@ export class FooterComponent implements OnInit {
     this.lastSave = doc.last_edited;
     this.docDef = doc;
   }
-  @Input() lastSnapshotDate: Date;
-
   docDef: DocumentDefinition;
   lastSave: Date;
 
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 }
