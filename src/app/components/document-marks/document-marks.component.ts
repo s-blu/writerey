@@ -71,9 +71,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       this.removeMarker(def.id);
       return;
     }
-    const marker = this.markers.find(m => m.id === def.id);
 
-    this.upsertMarker(marker.id, newValue);
+    this.upsertMarker(def.id, newValue);
   }
 
   setValOfNumMarker(def, event) {
