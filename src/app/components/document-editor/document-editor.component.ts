@@ -14,8 +14,6 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
   styleUrls: ['./document-editor.component.scss'],
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
-  @Output() clicked: EventEmitter<any> = new EventEmitter();
-
   content: string;
   docMode: DOC_MODES;
   isLoading: boolean;
@@ -39,8 +37,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.style = style.sheet;
 
     this.subscription.add(
-      this.clickSubject.pipe(distinctUntilChanged(), debounceTime(300)).subscribe(event => {
-        this.clicked.emit(event);
+      this.clickSubject.pipe(distinctUntilChanged(), debounceTime(300)).subscribe((event: string) => {
+        this.documentStore.setParagraphId(event);
       })
     );
 

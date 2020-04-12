@@ -19,10 +19,6 @@ import { DocumentStore } from 'src/app/stores/document.store';
   styleUrls: ['./notes.component.scss'],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  @Input() set paragraphId(pId: string) {
-    this.parId = pId;
-    this.getContexts();
-  }
 
   MODES = DOC_MODES;
   mode: DOC_MODES;
@@ -57,14 +53,20 @@ export class NotesComponent implements OnInit, OnDestroy {
         this.markerDefinitions = markerDefs;
       })
     );
+    this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
     this.subscription.add(
-      this.documentModeStore.mode$.subscribe((mode) => this.mode = mode)
-    );
-    this.subscription.add(
-      this.documentStore.fileInfo$.subscribe((fileInfo) => {
+      this.documentStore.fileInfo$.subscribe(fileInfo => {
         this.fileInfo = fileInfo;
         this.parId = null;
         this.getContexts();
+      })
+    );
+    this.subscription.add(
+      this.documentStore.paragraphId$.subscribe(id => {
+        if (id !== this.parId) {
+          this.parId = id;
+          this.getContexts();
+        }
       })
     );
   }

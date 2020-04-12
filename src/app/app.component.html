@@ -3,16 +3,16 @@
   <div class="main">
     <div class="left">
       <wy-explorer (markerChanged)="changeMarker($event)"></wy-explorer>
-      <wy-document-marks [paragraphId]="paragraphId"></wy-document-marks>
+      <wy-document-marks></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor *ngIf="!markerDef" (clicked)="onEditorClick($event)"> </wy-document-editor>
+        <wy-document-editor *ngIf="!markerDef"> </wy-document-editor>
         <wy-marker-details *ngIf="markerDef" [markerDef]="markerDef"></wy-marker-details>
       </div>
     </div>
     <div class="notes">
-      <wy-notes [paragraphId]="paragraphId"></wy-notes>
+      <wy-notes></wy-notes>
     </div>
   </div>
   <wy-footer></wy-footer>

@@ -16,8 +16,7 @@ import { DocumentStore } from 'src/app/stores/document.store';
   styleUrls: ['./document-marks.component.scss'],
 })
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
-  @Input() paragraphId: string;
-
+  paragraphId: string;
   fileInfo: FileInfo;
   markers: Array<Marker> = [];
   markersFromServer: Array<Marker> = [];
@@ -44,6 +43,12 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
+    this.subscription.add(
+      this.documentStore.paragraphId$.subscribe(id => {
+        this.paragraphId = id;
+        this.refresh();
+      })
+    );
     this.subscription.add(
       this.documentStore.fileInfo$.subscribe(fileInfo => {
         this.fileInfo = fileInfo;
@@ -155,14 +160,20 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     if (!responseFromServer) return;
     responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
     for (const m of responseFromServer) {
-      this.enhanceMarkerWithDisplayInfo(m);
-      if (m.type === MarkerTypes.TEXT) {
-        this.values[m.id] = m.valueId;
-      } else {
-        this.values[m.id] = m.valueName;
+      try {
+        this.enhanceMarkerWithDisplayInfo(m);
+        this.markers.push(m);
+        if (m.type === MarkerTypes.TEXT) {
+          this.values[m.id] = m.valueId;
+        } else {
+          this.values[m.id] = m.valueName;
+        }
+      } catch (err) {
+        console.warn('Was not able to find a marker definition for a marker. Will remove it since it is invalid.', m);
       }
     }
-    this.markers = responseFromServer.sort((markerA, markerB) => {
+
+    this.markers = this.markers.sort((markerA, markerB) => {
       if (markerA.index === undefined) return 1;
       if (markerA.index < markerB.index) return -1;
       if (markerA.index > markerB.index) return 1;
@@ -178,6 +189,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       marker.index = markerDef.index;
       const value = markerDef.values.find(val => val.id === marker.valueId);
       if (value) marker.valueName = value.name;
+    } else {
+      throw Error('Could not find Markerdefinition');
     }
   }
 }

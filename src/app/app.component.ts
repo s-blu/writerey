@@ -16,8 +16,6 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'writerey';
 
   markerDef: MarkerDefinition;
-  paragraphId: string;
-
   isLoading = false;
 
   private subscription = new Subscription();
@@ -36,9 +34,5 @@ export class AppComponent implements OnInit, OnDestroy {
   changeMarker(event: MarkerDefinition) {
     this.documentModeStore.setMode(DOC_MODES.WRITE);
     this.markerDef = event;
-  }
-
-  onEditorClick(event) {
-    this.paragraphId = event;
   }
 }

@@ -24,21 +24,13 @@ import { map } from 'rxjs/operators';
 export class DocumentStore {
   private readonly _documentSubject = new BehaviorSubject<DocumentDefinition>(null);
   private readonly _fileInfoSubject = new BehaviorSubject<FileInfo>(null);
+  private readonly _paragraphIdSubject = new BehaviorSubject<string>('');
 
   readonly document$ = this._documentSubject.asObservable();
   readonly fileInfo$ = this._fileInfoSubject.asObservable();
+  readonly paragraphId$ = this._paragraphIdSubject.asObservable();
 
-  // readonly fileInfo$ = this._documentSubject.asObservable().pipe(
-  //   map((res: DocumentDefinition) => {
-  //     const fileInfo: FileInfo = {
-  //       name: res.name,
-  //       path: res.path,
-  //     };
-  //     return fileInfo;
-  //   })
-  // );
-
-  readonly lastSaved$ = this._documentSubject.asObservable().pipe(map((res: DocumentDefinition) => res.last_edited));
+  readonly lastSaved$ = this._documentSubject.asObservable().pipe(map((res: DocumentDefinition) => res?.last_edited));
 
   private get documentSubject(): DocumentDefinition {
     return this._documentSubject.getValue();
@@ -51,7 +43,7 @@ export class DocumentStore {
 
   public setDocument(newDocument: DocumentDefinition) {
     if (!newDocument) {
-      console.error('setContext was called with invalid data, will ignore value', newDocument);
+      console.error('setDocument was called with invalid data, will ignore value', newDocument);
       return;
     }
     this.documentSubject = newDocument;
@@ -64,9 +56,17 @@ export class DocumentStore {
 
   public setFileInfo(newInfo: FileInfo) {
     if (!newInfo) {
-      console.error('setContext was called with invalid data, will ignore value', newInfo);
+      console.error('setFileInfo was called with invalid data, will ignore value', newInfo);
       return;
     }
     this.fileInfoSubject = newInfo;
+  }
+
+  private set paragraphIdSubject(val: string) {
+    this._paragraphIdSubject.next(val);
+  }
+
+  public setParagraphId(paragraphdId: string) {
+    this.paragraphIdSubject = paragraphdId;
   }
 }

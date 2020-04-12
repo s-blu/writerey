@@ -5,7 +5,7 @@ import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map, tap, flatMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 
@@ -90,10 +90,12 @@ export class DocumentService {
     this.documentStore.fileInfo$
       .pipe(
         flatMap((fileInfo: FileInfo) => {
+          if (!fileInfo) return of(null);
           return this.getDocument(fileInfo.path, fileInfo.name, false);
         })
       )
       .subscribe((document: DocumentDefinition) => {
+        if (!document) return;
         this.documentStore.setDocument(document);
       });
   }
