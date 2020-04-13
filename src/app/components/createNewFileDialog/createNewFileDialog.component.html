@@ -1,7 +1,7 @@
 <span *transloco="let t; read: typeOfDialog">
   <h1 mat-dialog-title>{{ t('title') }}</h1>
   <div mat-dialog-content>
-    <p>{{ t('message') }}</p>
+    <p class="message">{{ t('message') }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
       <input (keyup.enter)="submit()" matInput [(ngModel)]="data.filename" />

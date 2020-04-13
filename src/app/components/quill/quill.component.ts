@@ -46,11 +46,11 @@ export class QuillComponent implements OnInit {
   ngOnInit() {}
 
   onEditorCreated(event) {
-    this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
+    this.editor?.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
       this.contentChanged.emit(data.html);
     });
 
-    this.editor.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
+    this.editor?.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
       const el = (data?.editor?.getLine(data?.range?.index) || [])[0]?.domNode;
       if (el) this.updateParagraphMeta.emit(el.className);
     });

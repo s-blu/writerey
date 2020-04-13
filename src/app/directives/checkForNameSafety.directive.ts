@@ -6,6 +6,8 @@ import { NG_VALIDATORS, Validator, AbstractControl, ValidatorFn } from '@angular
   providers: [{ provide: NG_VALIDATORS, useExisting: CheckForNameSafetyDirective, multi: true }],
 })
 export class CheckForNameSafetyDirective implements Validator {
+  // FIXME: I AM BROKEN
+
   @Input('wyCheckForNameSafety') typeOfName: 'tag' | 'explorer';
 
   private forbiddenCharatersRe = {

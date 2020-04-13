@@ -18,6 +18,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class ExplorerComponent implements OnInit, OnDestroy {
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
+  selectedProject = null;
+
   ngOnInit() {}
 
   ngOnDestroy() {}

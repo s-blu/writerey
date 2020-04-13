@@ -1,0 +1,9 @@
+<div class="projects" *transloco="let t; read: 'projects'">
+  <button mat-button class="new-button" (click)="addNewProject()">
+    <i class="material-icons-outlined">library_add</i>
+    <span>{{ t('new') }}</span>
+  </button>
+  <mat-list>
+    <mat-list-item *ngFor="let project of projects"> {{ project.name }} </mat-list-item>
+  </mat-list>
+</div>

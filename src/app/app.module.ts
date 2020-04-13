@@ -1,3 +1,4 @@
+import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewMarkerComponent } from './components/createNewMarker/createNewMarker.component';
@@ -30,6 +31,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatListModule } from '@angular/material/list';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -63,6 +65,7 @@ const matModules = [
   MatCardModule,
   MatTabsModule,
   MatSliderModule,
+  MatListModule,
 ];
 
 @NgModule({
@@ -89,6 +92,7 @@ const matModules = [
     MarkerDetailsComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
+    ProjectsComponent,
   ],
   imports: [
     BrowserModule,

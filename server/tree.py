@@ -39,6 +39,9 @@ class Tree(Resource):
                     continue
             log.logDebug('crawling content', currDir, filePath)
             self.crawlDirContent(dirnames, filenames, currDir, filePath)
+            if request.args.get('root_only'):
+                print('got root only, stopping')
+                break
         return json.dumps(directoryStructure)
 
     @staticmethod

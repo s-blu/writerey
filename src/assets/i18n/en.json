@@ -97,6 +97,20 @@
     "cancel": "Cancel",
     "create": "Create"
   },
+  "createProjectDialog": {
+    "title": "Create new project",
+    "message": "Create a new project as starting point for a new novel, writing project, topic, ...",
+    "input": "Name of project",
+    "cancel": "Cancel",
+    "create": "Create"
+  },
+  "createUnkownDialog": {
+    "title": "Create new item",
+    "message": "Create a new item",
+    "input": "Name",
+    "cancel": "Cancel",
+    "create": "Create"
+  },
   "notes": {
     "createNew": "Create a note"
   },
@@ -143,5 +157,8 @@
   },
   "editor": {
     "placeholder": "Fill this space with your thoughts and ideas ..."
+  },
+  "projects": {
+    "new": "New Project"
   }
 }
