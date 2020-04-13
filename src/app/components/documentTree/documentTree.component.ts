@@ -6,7 +6,7 @@ import { DocumentService } from './../../services/document.service';
 import { FileInfo } from '../../models/fileInfo.interface';
 import { ApiService } from './../../services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
@@ -30,6 +30,8 @@ interface ExplorerNode {
   styleUrls: ['./documentTree.component.scss'],
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
+  @Input() project: string;
+
   tree;
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
@@ -55,21 +57,19 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private httpClient: HttpClient,
-    private api: ApiService,
     private documentService: DocumentService,
     private directoryService: DirectoryService,
     private documentStore: DocumentStore
   ) {}
 
   private fetchTree() {
+    const params = {
+      base: this.project || '',
+    };
     this.subscription.add(
-      this.httpClient.get(this.api.getTreeRoute()).subscribe((res: string) => {
-        try {
-          this.tree = JSON.parse(res);
-          this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
-        } finally {
-        }
+      this.directoryService.getTree(params).subscribe(res => {
+        this.tree = res;
+        this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
       })
     );
   }

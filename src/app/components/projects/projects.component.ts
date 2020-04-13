@@ -1,7 +1,7 @@
 import { DirectoryService } from './../../services/directory.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CreateNewFileDialogComponent } from '../createNewFileDialog/createNewFileDialog.component';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from 'src/app/services/api.service';
@@ -12,18 +12,20 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./projects.component.scss'],
 })
 export class ProjectsComponent implements OnInit {
+  @Output() projectSelected = new EventEmitter<string>();
+
   projects;
 
   private subscription = new Subscription();
-  constructor(
-    private dialog: MatDialog,
-    private directoryService: DirectoryService,
-    private httpClient: HttpClient,
-    private api: ApiService
-  ) {}
+
+  constructor(private dialog: MatDialog, private directoryService: DirectoryService) {}
 
   ngOnInit() {
     this.fetchProjects();
+  }
+
+  selectProject(projectname) {
+    this.projectSelected.emit(projectname);
   }
 
   addNewProject() {
@@ -39,7 +41,7 @@ export class ProjectsComponent implements OnInit {
         this.subscription.add(
           this.directoryService.createDirectory('/', name).subscribe((res: any) => {
             this.fetchProjects();
-            // TODO SELECT PROJECT
+            this.selectProject(name);
           })
         );
       })
@@ -52,13 +54,8 @@ export class ProjectsComponent implements OnInit {
     };
 
     this.subscription.add(
-      this.httpClient.get(this.api.getTreeRoute(), { params }).subscribe((res: string) => {
-        try {
-          const parsedRes = JSON.parse(res);
-          this.projects = parsedRes.dirs;
-        } finally {
-          console.log('PROJECTS', this.projects);
-        }
+      this.directoryService.getTree(params).subscribe(res => {
+        this.projects = res?.dirs;
       })
     );
   }

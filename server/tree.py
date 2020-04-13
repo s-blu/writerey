@@ -17,19 +17,45 @@ class Tree(Resource):
             'dirs': [],
             'files': []
         }
-        log.logDebug('getting tree', os.getcwd()), basePath, os.walk(basePath)
+        treeBase = request.args.get('base')
+        # baseForWalking = basePath
+        # if treeBase:
+        #     baseForWalking = PathUtils.sanitizePathList([basePath, treeBase])
+        #     directoryStructure['dirs'].append({
+        #         {
+        #             'name': treeBase,
+        #             'path': filePath,
+        #             'dirs': [],
+        #             'files': []
+        #         }
+        #     })
+        log.logDebug('========== GET TREE =========')       
+        log.logDebug('os.getcwd:', os.getcwd())
+        log.logDebug('base:', treeBase)
+        log.logDebug('==========')
         for (dirpath, dirnames, filenames) in os.walk(basePath):
             filePath = PathUtils.sanitizePathString(dirpath, True)
             path = filePath.split('/')
-            log.logDebug('starting with', path)
+            # if base and len(path) > 1:
+            #     log.logDebug('popping first item', path)
+            #     path.pop(0)
+            log.logDebug('starting with', path, dirpath)
 
+            if (metaSubPath in dirnames):
+                log.logDebug('removing metaSubPath from dirnames to exclude them from walking')
+                dirnames.remove(metaSubPath) # do not visit metaSubPaths
+            
             if (len(path) == 0 or metaSubPath in path):
                 log.logDebug('skipping path', path)
                 continue  # skip meta paths
 
+            if (treeBase and len(path) > 1 and treeBase not in path):
+                log.logDebug('skipping path since its not part of treeBase', path)
+                continue 
+
             if len(path) == 1 and path[0] == '':
                 currDir = directoryStructure
-                log.logDebug('Got root, using directory Structure directly')
+                log.logDebug('Got tree root, using directory Structure directly')
             else:
                 log.logDebug('walking for', dirpath, path)
                 currDir = self.walkToDir(directoryStructure, path)
@@ -40,9 +66,14 @@ class Tree(Resource):
             log.logDebug('crawling content', currDir, filePath)
             self.crawlDirContent(dirnames, filenames, currDir, filePath)
             if request.args.get('root_only'):
-                print('got root only, stopping')
                 break
-        return json.dumps(directoryStructure)
+        result = directoryStructure
+        print('directoryStructure[dirs]', directoryStructure['dirs'])
+        if (treeBase): 
+            result = next(x for x in directoryStructure['dirs'] if x['name'] == treeBase)
+
+        print('SEEORUGEOURG RESULT', result)
+        return json.dumps(result)
 
     @staticmethod
     def walkToDir(tree, path):

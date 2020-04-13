@@ -29,4 +29,8 @@ export class ExplorerComponent implements OnInit, OnDestroy {
   openMarker(event) {
     this.markerChanged.emit(event);
   }
+
+  selectProject(event) {
+    this.selectedProject = event;
+  }
 }

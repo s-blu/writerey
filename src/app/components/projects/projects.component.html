@@ -4,6 +4,8 @@
     <span>{{ t('new') }}</span>
   </button>
   <mat-list>
-    <mat-list-item *ngFor="let project of projects"> {{ project.name }} </mat-list-item>
+    <mat-list-item class="project-item" *ngFor="let project of projects" (click)="selectProject(project.name)">
+      {{ project.name }}
+    </mat-list-item>
   </mat-list>
 </div>
