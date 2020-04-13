@@ -140,5 +140,8 @@
         "commit": "Snapshot could not be created :("
       }
     }
+  },
+  "editor": {
+    "placeholder": "Fill this space with your thoughts and ideas ..."
   }
 }

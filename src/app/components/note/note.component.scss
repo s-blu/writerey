@@ -19,6 +19,12 @@
   }
 }
 
+::ng-deep .note-text .ql-editor {
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+  font-size: 14px;
+  padding: 4px;
+}
+
 .done-button {
   position: absolute;
   z-index: 5;
@@ -49,12 +55,6 @@
 
 .type-todo {
   //border: 1px solid #808080;
-}
-
-::ng-deep .note-text .ql-editor {
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  font-size: 14px;
-  padding: 4px;
 }
 
 .mat-card-actions {
