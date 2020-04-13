@@ -1,13 +1,3 @@
-.new-button {
-  font-size: 14px;
-  width: 100%;
-  text-align: start;
-
-  i {
-    font-size: 13pt;
-    margin-right: 5px;
-  }
-}
 
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
@@ -17,4 +7,23 @@
 .project-item:hover {
   cursor: pointer;
   background-color: aliceblue;
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+
+  .title {
+    flex-grow: 2;
+  }
+}
+
+.empty-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  color: #bfbfbf;
+  padding: 1.5em;
 }

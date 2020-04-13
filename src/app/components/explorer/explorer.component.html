@@ -1,11 +1,5 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
   <div *ngIf="!selectedProject">
-    <div class="project-title">
-      <button  disabled mat-icon-button>
-        <i class="project-icon material-icons-outlined">library_books</i>
-      </button>
-      <span>{{ t('project-title') }}</span>
-    </div>
       <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
   </div>
   <div *ngIf="selectedProject">

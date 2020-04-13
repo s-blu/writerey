@@ -1,11 +1,21 @@
 <div class="projects" *transloco="let t; read: 'projects'">
-  <button mat-button class="new-button" (click)="addNewProject()">
-    <i class="material-icons-outlined">library_add</i>
-    <span>{{ t('new') }}</span>
-  </button>
+  <div class="project-title">
+    <button disabled mat-icon-button>
+      <i class="project-icon material-icons-outlined">library_books</i>
+    </button>
+    <span class="title">{{ t('title') }}</span>
+    <button mat-icon-button color="primary" class="new-button" (click)="addNewProject()" [matTooltip]="t('new')">
+      <i class="material-icons-outlined">library_add</i>
+    </button>
+  </div>
+
   <mat-list>
     <mat-list-item class="project-item" *ngFor="let project of projects" (click)="selectProject(project.name)">
       {{ project.name }}
     </mat-list-item>
   </mat-list>
+
+  <div class="empty-hint" *ngIf="!projects || projects?.length === 0">
+    {{ t('empty-hint') }}
+  </div>
 </div>

@@ -25,4 +25,8 @@
       </mat-menu>
     </mat-tree-node>
   </mat-tree>
+
+  <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
+    {{ t('empty-tree')}}
+  </div>
 </div>
