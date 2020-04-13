@@ -1,10 +1,11 @@
+import { ProjectStore } from './../stores/project.store';
 import { Marker } from 'src/app/models/marker.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, OnDestroy } from '@angular/core';
+import { Observable, of, Subscription } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map, tap, take } from 'rxjs/operators';
+import { catchError, flatMap, map, take } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
 import { ContextStore } from '../stores/context.store';
 import { MarkerStore } from '../stores/marker.store';
@@ -12,14 +13,22 @@ import { MarkerStore } from '../stores/marker.store';
 @Injectable({
   providedIn: 'root',
 })
-export class MarkerService {
+export class MarkerService implements OnDestroy {
+  private subscription = new Subscription();
+  private project: string;
+
   constructor(
     private api: ApiService,
     private httpClient: HttpClient,
     private paragraphService: ParagraphService,
     private contextStore: ContextStore,
-    private markerStore: MarkerStore
+    private markerStore: MarkerStore,
+    private projectStore: ProjectStore
   ) {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   createNewMarkerCategory(name: string, type: MarkerTypes) {
     const newMarker = new MarkerDefinition(name, type);
@@ -55,11 +64,10 @@ export class MarkerService {
 
   getMarkerDefinitions() {
     const params = {
-      marker_id: 'definitions',
-      value_id: '',
+      project: this.project,
     };
 
-    return this.httpClient.get(this.api.getMarkerRoute('definitions')).pipe(
+    return this.httpClient.get(this.api.getMarkerRoute('definitions'), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseMarkerValueResponse(res);
@@ -80,9 +88,13 @@ export class MarkerService {
   }
 
   init() {
-    this.getMarkerDefinitions().pipe(
-      take(1)
-    ).subscribe();
+    this.subscription.add(
+      this.projectStore.project$.subscribe(project => {
+        this.project = project;
+        if (!project) return;
+        this.getMarkerDefinitions().pipe(take(1)).subscribe();
+      })
+    );
   }
 
   updateMarkerDefinition(markerDef: MarkerDefinition) {
@@ -113,6 +125,7 @@ export class MarkerService {
 
     const formdata = new FormData();
     formdata.append('file', file);
+    formdata.append('project', this.project);
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
@@ -136,15 +149,12 @@ export class MarkerService {
 
     const formdata = new FormData();
     formdata.append('file', file);
-
-    const params = {
-      marker_id: markerId,
-      value_id: valueId,
-    };
+    formdata.append('project', this.project);
+    formdata.append('value_id', valueId);
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient.put(this.api.getMarkerRoute(markerId), formdata, { headers: httpHeaders, params }).pipe(
+    return this.httpClient.put(this.api.getMarkerRoute(markerId), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.parseMarkerValueResponse(res))
     );
@@ -154,8 +164,8 @@ export class MarkerService {
     if (!contextId) return of([]);
     const [markerId, valueId] = contextId.split(':');
     const params = {
-      marker_id: markerId,
       value_id: valueId,
+      project: this.project,
     };
     return this.httpClient.get(this.api.getMarkerRoute(markerId), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),

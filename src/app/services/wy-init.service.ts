@@ -1,3 +1,4 @@
+import { DirectoryService } from './directory.service';
 import { DocumentService } from './document.service';
 import { SnapshotService } from './snapshot.service';
 import { MarkerService } from './marker.service';
@@ -13,7 +14,8 @@ export class WyInitService {
   constructor(
     private markerService: MarkerService,
     private snapshotService: SnapshotService,
-    private documentService: DocumentService
+    private documentService: DocumentService,
+    private directoryService: DirectoryService
   ) {}
 
   init() {
@@ -21,6 +23,7 @@ export class WyInitService {
     this.markerService.init();
     this.snapshotService.init();
     this.documentService.init();
+    this.directoryService.init();
   }
 
   private configureClassesForQuill() {

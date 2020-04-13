@@ -60,10 +60,11 @@ export class ParagraphService {
     }
   }
 
-  setParagraphMeta(docPath, docName, context, metaType, metaContent) {
+  setParagraphMeta(docPath, docName, context, metaType, metaContent, project?) {
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
     formdata.append('context', context);
+    if (project) formdata.append('project', project);
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');

@@ -61,7 +61,8 @@
     "tabs": {
       "documenttree": "Documents",
       "markers": "Markers"
-    }
+    },
+    "project-title": "Projects"
   },
   "markerTree": {
     "newmarker": "New Marker",

@@ -7,3 +7,21 @@
 :host {
   border-right: 1px solid $c_border;
 }
+
+.project-name:hover {
+  .back {
+    display: inline-block;
+  }
+  .project-icon {
+    display: none;
+  }
+}
+
+.project-name {
+  .back {
+    display: none;
+  }
+  .project-icon {
+    display: inline;
+  }
+}

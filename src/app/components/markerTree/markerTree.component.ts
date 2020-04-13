@@ -8,7 +8,7 @@ import { DocumentService } from './../../services/document.service';
 import { FileInfo } from '../../models/fileInfo.interface';
 import { ApiService } from './../../services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
@@ -35,6 +35,8 @@ interface MarkerNode {
   styleUrls: ['./markerTree.component.scss'],
 })
 export class MarkerTreeComponent implements OnInit, OnDestroy {
+  @Input() project;
+
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
   markerDefinitions: Array<MarkerDefinition>;

@@ -1,9 +1,21 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
   <div *ngIf="!selectedProject">
-    <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
+    <div class="project-title">
+      <button  disabled mat-icon-button>
+        <i class="project-icon material-icons-outlined">library_books</i>
+      </button>
+      <span>{{ t('project-title') }}</span>
+    </div>
+      <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
   </div>
   <div *ngIf="selectedProject">
-    <div>{{ selectedProject }}</div>
+    <div class="project-name">
+      <button class="project-button" (click)="resetProject()" mat-icon-button>
+        <mat-icon class="back">arrow_back</mat-icon>
+        <i class="project-icon material-icons-outlined">library_books</i>
+      </button>
+      <span>{{ selectedProject }}</span>
+    </div>
     <mat-tab-group [dynamicHeight]="true">
       <mat-tab [label]="t('tabs.documenttree')">
         <wy-document-tree [project]="selectedProject"></wy-document-tree>

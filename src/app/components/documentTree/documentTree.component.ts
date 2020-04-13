@@ -121,6 +121,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   private prettifyPath(path, dirName) {
     if (!path || path === '') return dirName;
+    if (path === '/') path = this.project;
     return path + '/' + dirName;
   }
 

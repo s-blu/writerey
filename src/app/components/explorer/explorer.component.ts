@@ -1,3 +1,4 @@
+import { ProjectStore } from './../../stores/project.store';
 import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
@@ -20,17 +21,26 @@ export class ExplorerComponent implements OnInit, OnDestroy {
 
   selectedProject = null;
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.projectStore.project$.subscribe(project => {
+      this.selectedProject = project;
+    });
+  }
 
   ngOnDestroy() {}
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private projectStore: ProjectStore) {}
 
   openMarker(event) {
     this.markerChanged.emit(event);
   }
 
   selectProject(event) {
-    this.selectedProject = event;
+    if (!event) return;
+    this.projectStore.setProject(event);
+  }
+
+  resetProject() {
+    this.projectStore.setProject(null);
   }
 }

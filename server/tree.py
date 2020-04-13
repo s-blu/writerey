@@ -68,11 +68,9 @@ class Tree(Resource):
             if request.args.get('root_only'):
                 break
         result = directoryStructure
-        print('directoryStructure[dirs]', directoryStructure['dirs'])
         if (treeBase): 
             result = next(x for x in directoryStructure['dirs'] if x['name'] == treeBase)
 
-        print('SEEORUGEOURG RESULT', result)
         return json.dumps(result)
 
     @staticmethod

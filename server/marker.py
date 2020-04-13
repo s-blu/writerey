@@ -7,14 +7,12 @@ from pathUtils import PathUtils
 import os
 from stat import ST_MTIME
 
-pathToMarkers = PathUtils.sanitizePathList([basePath, metaSubPath, markerPath])
-
-
 class Markers(Resource):
     def get(self, marker_id):
         value_id = request.args.get('value_id')
+        projectDir = request.args.get('project')
         try:
-            markerFile = self.getMarkerValPath(marker_id, value_id)
+            markerFile = self.getMarkerValPath(marker_id, value_id, projectDir)
             f = open(markerFile, encoding='utf-8')
             content = f.read()
 
@@ -24,17 +22,26 @@ class Markers(Resource):
             return ''  # TODO send an error back here
 
     def put(self, marker_id):
-        value_id = request.args.get('value_id')
+        if marker_id != 'definitions':
+            value_id = request.form['value_id']
+        else:
+            value_id = ''
+        projectDir = request.form['project']
+        pathToMarkers = self.getPathToMarkers(projectDir)
         Path(pathToMarkers).mkdir(parents=True, exist_ok=True)
-        markerFilePath = self.getMarkerValPath(marker_id, value_id)
+        markerFilePath = self.getMarkerValPath(marker_id, value_id, projectDir)
         # TODO check if this is available
         f = request.files['file']
         f.save(markerFilePath)
         fileRead = open(markerFilePath, encoding='utf-8')
         return fileRead.read()
 
-    def getMarkerValPath(self, marker_id, value_id):
+    def getPathToMarkers(self, projectDir = ''):
+        return PathUtils.sanitizePathList([basePath, projectDir, metaSubPath, markerPath])
+
+    def getMarkerValPath(self, marker_id, value_id, projectDir):
         if marker_id == 'definitions':
-            return PathUtils.sanitizePathList([pathToMarkers, '_writerey_marker_defs'])
+            filename = '_writerey_marker_defs'
         else:
-            return PathUtils.sanitizePathList([pathToMarkers, 'mv_' + value_id])
+            filename = 'mv_' + value_id
+        return PathUtils.sanitizePathList([self.getPathToMarkers(projectDir), filename])

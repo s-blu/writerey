@@ -2,10 +2,10 @@ import { FileInfo } from '../models/fileInfo.interface';
 import { DocumentDefinition } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map, tap, flatMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subscription } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 
@@ -14,13 +14,19 @@ const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 @Injectable({
   providedIn: 'root',
 })
-export class DocumentService {
+export class DocumentService implements OnDestroy {
+  private subscription = new Subscription();
+
   constructor(
     private api: ApiService,
     private httpClient: HttpClient,
     private paragraphService: ParagraphService,
     private documentStore: DocumentStore
   ) {}
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   getDocument(path: string, name: string, withContent = true): Observable<any> {
     const params: any = {
@@ -86,18 +92,19 @@ export class DocumentService {
     const lastSaved = this.getLastSavedFileInfo();
     if (lastSaved) this.documentStore.setFileInfo(lastSaved);
 
-    // FIXME unsubscribe me somehow
-    this.documentStore.fileInfo$
-      .pipe(
-        flatMap((fileInfo: FileInfo) => {
-          if (!fileInfo) return of(null);
-          return this.getDocument(fileInfo.path, fileInfo.name, false);
+    this.subscription.add(
+      this.documentStore.fileInfo$
+        .pipe(
+          flatMap((fileInfo: FileInfo) => {
+            if (!fileInfo) return of(null);
+            return this.getDocument(fileInfo.path, fileInfo.name, false);
+          })
+        )
+        .subscribe((document: DocumentDefinition) => {
+          if (!document) return;
+          this.documentStore.setDocument(document);
         })
-      )
-      .subscribe((document: DocumentDefinition) => {
-        if (!document) return;
-        this.documentStore.setDocument(document);
-      });
+    );
   }
 
   private transformLastEditedIntoDate(res) {

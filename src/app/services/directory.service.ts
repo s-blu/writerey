@@ -1,14 +1,21 @@
+import { ProjectStore, LAST_PROJECT_KEY } from './../stores/project.store';
 import { catchError, flatMap, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { sanitizeName } from '../utils/name.util';
+import { Subscription } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DirectoryService {
-  constructor(private api: ApiService, private httpClient: HttpClient) {}
+export class DirectoryService implements OnDestroy {
+  private subscription = new Subscription();
+
+  constructor(private api: ApiService, private httpClient: HttpClient, private projectStore: ProjectStore) {}
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   public createDirectory(path, name) {
     name = sanitizeName(name);
@@ -39,5 +46,10 @@ export class DirectoryService {
         }
       })
     );
+  }
+
+  init() {
+    const lastProject = localStorage.getItem(LAST_PROJECT_KEY);
+    if (lastProject) this.projectStore.setProject(lastProject);
   }
 }
