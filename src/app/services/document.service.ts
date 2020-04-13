@@ -66,7 +66,8 @@ export class DocumentService implements OnDestroy {
     httpHeaders.append('Content-Type', 'multipart/form-data');
     return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
-      map((res: any) => this.transformLastEditedIntoDate(res))
+      map((res: any) => this.transformLastEditedIntoDate(res)),
+      tap(res => this.documentStore.setLastSaved(res?.last_edited))
     );
   }
 

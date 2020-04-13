@@ -1,14 +1,9 @@
-import { DocumentService } from '../../services/document.service';
-import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { catchError, debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { throwError, from, Observable } from 'rxjs';
-import { CompileTemplateMetadata } from '@angular/compiler';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ViewChildren } from '@angular/core';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { QuillEditorComponent } from 'ngx-quill';
 
 import * as QuillNamespace from 'quill';
 const Quill: any = QuillNamespace;
-// FIXME if we wont use Quill anymore, remove the component
 
 @Component({
   selector: 'wy-quill',
@@ -38,19 +33,17 @@ export class QuillComponent implements OnInit {
     'font-size': '16px',
   };
 
-  @ViewChild('editor', {
-    static: true,
-  })
+  @ViewChild('editor')
   editor: QuillEditorComponent;
 
   ngOnInit() {}
 
   onEditorCreated(event) {
-    this.editor?.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
+    this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
       this.contentChanged.emit(data.html);
     });
 
-    this.editor?.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
+    this.editor.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {
       const el = (data?.editor?.getLine(data?.range?.index) || [])[0]?.domNode;
       if (el) this.updateParagraphMeta.emit(el.className);
     });
