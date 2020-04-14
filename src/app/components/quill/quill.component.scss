@@ -1,7 +1,13 @@
+@import '../../variables.scss';
+
 .wy-quill {
   border: none;
   font-family: 'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif;
   font-size: 16px;
+
+  background-color: $c_bg_boxes;
+  box-shadow: $shadow;
+  padding: 0 12px;
 }
 
 :host,
@@ -22,5 +28,5 @@
 }
 
 ::ng-deep .wy-quill.ql-container {
-  height: calc(100% - 40px);
+  height: calc(100% - 50px);
 }

@@ -5,7 +5,8 @@
 }
 
 :host {
-  border-right: 1px solid $c_border;
+  background-color: $c_bg_boxes;
+  box-shadow: $shadow;
 }
 
 .project-name:hover {

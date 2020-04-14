@@ -29,7 +29,5 @@
 
 .main > * {
   // FIXME uh. this is not so cool. is there a better solution?
-  height: calc(100vh - 80px);
+  height: calc(100vh - 100px);
 }
-
-
