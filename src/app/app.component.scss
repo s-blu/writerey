@@ -2,7 +2,6 @@
 
 .main,
 .left,
-.editor,
 .notes,
 .scroll,
 .document-area {
@@ -16,7 +15,6 @@
   display: flex;
   flex-direction: column;
   word-wrap: break-word;
-  overflow: hidden;
 }
 
 .main {
@@ -34,9 +32,4 @@
   height: calc(100vh - 80px);
 }
 
-.editor {
-  .document-area {
-    overflow: scroll;
-    padding: 0 2em;
-  }
-}
+

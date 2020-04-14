@@ -12,12 +12,12 @@
   }
 }
 
-wy-ckeditor {
-  width: 100%;
-  min-height: 50vh;
-}
-
 .load-indicator {
   position: sticky;
   top: 1px;
+}
+
+:host,
+.document-editor {
+  height: 100%;
 }

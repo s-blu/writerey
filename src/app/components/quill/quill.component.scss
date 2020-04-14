@@ -4,6 +4,12 @@
   font-size: 16px;
 }
 
+:host,
+.wy-quill {
+  display: block;
+  height: 100%;
+}
+
 ::ng-deep .ql-toolbar {
   position: sticky;
   top: -2px;
@@ -13,4 +19,8 @@
 
 ::ng-deep .readonly .ql-toolbar {
   visibility: hidden;
+}
+
+::ng-deep .wy-quill.ql-container {
+  height: calc(100% - 40px);
 }
