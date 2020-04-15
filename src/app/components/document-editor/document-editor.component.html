@@ -1,6 +1,7 @@
 <div class="document-editor" [class]="{ loading: isLoading }">
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
   <wy-quill
+    [document]="document"
     [content]="content"
     (updateParagraphMeta)="onClick($event)"
     (contentChanged)="onChange($event)"

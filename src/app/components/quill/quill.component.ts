@@ -3,6 +3,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { QuillEditorComponent } from 'ngx-quill';
 
 import * as QuillNamespace from 'quill';
+import { DocumentDefinition } from 'src/app/models/documentDefinition.interface';
 const Quill: any = QuillNamespace;
 
 @Component({
@@ -13,6 +14,7 @@ const Quill: any = QuillNamespace;
 export class QuillComponent implements OnInit {
   @Input() content: string;
   @Input() readOnly: boolean;
+  @Input() document: DocumentDefinition;
 
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
   @Output() updateParagraphMeta: EventEmitter<any> = new EventEmitter();
@@ -36,7 +38,9 @@ export class QuillComponent implements OnInit {
   @ViewChild('editor')
   editor: QuillEditorComponent;
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
 
   onEditorCreated(event) {
     this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {

@@ -31,3 +31,8 @@
 ::ng-deep .wy-quill.ql-container {
   height: calc(100% - 50px);
 }
+
+.empty-hint {
+  color: grey;
+  padding: 1em;
+}
