@@ -1,3 +1,4 @@
+import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
@@ -93,6 +94,7 @@ const matModules = [
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
     ProjectsComponent,
+    ModeSwitcherComponent
   ],
   imports: [
     BrowserModule,

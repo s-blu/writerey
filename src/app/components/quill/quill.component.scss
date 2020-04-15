@@ -16,11 +16,12 @@
   height: 100%;
 }
 
-::ng-deep .ql-toolbar {
-  position: sticky;
-  top: -2px;
+::ng-deep .wy-quill .ql-snow.ql-toolbar {
+  position: absolute;
+  top: 5px;
   z-index: 10;
-  background: white;
+  width: 636px;
+  border: none;
 }
 
 ::ng-deep .readonly .ql-toolbar {

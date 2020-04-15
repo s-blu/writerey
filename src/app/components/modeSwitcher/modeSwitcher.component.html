@@ -1,0 +1,5 @@
+<div class="mode-switcher" *transloco="let t; read: 'modeSwitcher'">
+  <button mat-button class="mode-switch" [class]="isActive('read')" (click)="read()">{{ t('read') }}</button>
+  <button mat-button class="mode-switch" [class]="isActive('write')" (click)="write()">{{ t('write') }}</button>
+  <button mat-button class="mode-switch" [class]="isActive('review')" (click)="review()">{{ t('review') }}</button>
+</div>

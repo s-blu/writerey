@@ -20,7 +20,7 @@ export class TopbarComponent implements OnInit {
   @Output() snapshotted = new EventEmitter<any>();
 
   private subscription = new Subscription();
-  private mode;
+
 
   constructor(
     private snapshotService: SnapshotService,
@@ -31,24 +31,10 @@ export class TopbarComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
+    
   }
 
-  review() {
-    this.switchMode(DOC_MODES.REVIEW);
-  }
 
-  read() {
-    this.switchMode(DOC_MODES.READ);
-  }
-
-  write() {
-    this.switchMode(DOC_MODES.WRITE);
-  }
-
-  isActive(mode) {
-    return { active: this.mode === mode };
-  }
 
   snapshot() {
     const date = new Date();
@@ -115,8 +101,5 @@ export class TopbarComponent implements OnInit {
     });
   }
 
-  private switchMode(newMode) {
-    if (!newMode || this.mode === newMode) return;
-    this.documentModeStore.setMode(newMode);
-  }
+
 }
