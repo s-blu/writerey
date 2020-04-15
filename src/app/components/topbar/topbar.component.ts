@@ -21,7 +21,6 @@ export class TopbarComponent implements OnInit {
 
   private subscription = new Subscription();
 
-
   constructor(
     private snapshotService: SnapshotService,
     private snackBar: MatSnackBar,
@@ -30,11 +29,7 @@ export class TopbarComponent implements OnInit {
     private documentModeStore: DocumentModeStore
   ) {}
 
-  ngOnInit() {
-    
-  }
-
-
+  ngOnInit() {}
 
   snapshot() {
     const date = new Date();
@@ -94,12 +89,14 @@ export class TopbarComponent implements OnInit {
     );
   }
 
+  save() {
+    this.showSnackBar('Not Implemented yet!', 'Duh!', 5000);
+  }
+
   private showSnackBar(msg, action = '', duration = 2000) {
     this.snackBar.open(msg, action, {
       duration,
       horizontalPosition: 'right',
     });
   }
-
-
 }

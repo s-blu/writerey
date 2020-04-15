@@ -1,9 +1,14 @@
 .saveInfo {
   justify-self: end;
-  .mat-icon {
-    font-size: 12pt;
+  .mat-icon,
+  i {
+    font-size: 16px;
     height: 1em;
     width: 1em;
     vertical-align: middle;
+  }
+
+  .last-saved {
+    padding-right: 1em;
   }
 }

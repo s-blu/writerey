@@ -2,12 +2,13 @@
   <div class="left">
     <wy-breadcrumb></wy-breadcrumb>
   </div>
-  <div class="center">
-
-  </div>
+  <div class="center"></div>
   <div class="right">
-    <button mat-icon-button (click)="snapshot()" [matTooltip]="t('snapshot')">
+    <button class="save-btn" mat-icon-button (click)="save()" [matTooltip]="t('save')">
       <mat-icon>save_alt</mat-icon>
+    </button>
+    <button class="snapshot-btn" mat-icon-button (click)="snapshot()" [matTooltip]="t('snapshot')">
+      <i class="material-icons-outlined">camera_alt</i>
     </button>
     <button mat-icon-button (click)="tag()" [matTooltip]="t('tag')">
       <mat-icon>bookmark_border</mat-icon>

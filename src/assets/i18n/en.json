@@ -77,9 +77,10 @@
   "topbar": {
     "newfile": "Create a new file",
     "newcategory": "Create a new category",
-    "snapshot": "Create Snapshot",
+    "snapshot": "Create snapshot",
     "tag": "Tag last snapshot",
-    "history": "Show snapshot history"
+    "history": "Show snapshot history",
+    "save": "Save document"
   },
   "saveInfo": {
     "lastSaved": "Last saved on",
