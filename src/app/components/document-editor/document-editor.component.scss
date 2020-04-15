@@ -13,8 +13,10 @@
 }
 
 .load-indicator {
-  position: sticky;
-  top: 1px;
+  position: absolute;
+  top: 40px;
+  height:5px;
+  width: 660px;
 }
 
 :host,

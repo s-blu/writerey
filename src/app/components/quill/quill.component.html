@@ -1,4 +1,9 @@
-<div class="wy-quill" (click)="onEditorClick($event)" [class]="{ readonly: readOnly }" *transloco="let t; read: 'quill'">
+<div
+  class="wy-quill"
+  (click)="onEditorClick($event)"
+  [class]="{ readonly: readOnly }"
+  *transloco="let t; read: 'quill'"
+>
   <quill-editor
     *ngIf="document; else emptyHint"
     #editor
@@ -8,14 +13,14 @@
     [styles]="styles"
     (onEditorCreated)="onEditorCreated($event)"
     [readOnly]="readOnly || !document"
-    [placeholder]="t('editor.placeholder')"
+    [placeholder]="t('placeholder')"
   >
   </quill-editor>
   <ng-template #emptyHint>
     <div class="empty-hint">
-      <h2>{{t('empty.title')}}</h2>
-      <p>{{t('empty.introduction')}}</p>
-      <p>{{t('empty.quickstart')}}</p>
+      <h2>{{ t('empty.title') }}</h2>
+      <p>{{ t('empty.introduction') }}</p>
+      <p>{{ t('empty.quickstart') }}</p>
     </div>
   </ng-template>
 </div>

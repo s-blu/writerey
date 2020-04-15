@@ -33,6 +33,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -67,6 +68,7 @@ const matModules = [
   MatTabsModule,
   MatSliderModule,
   MatListModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
@@ -94,7 +96,7 @@ const matModules = [
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
     ProjectsComponent,
-    ModeSwitcherComponent
+    ModeSwitcherComponent,
   ],
   imports: [
     BrowserModule,
