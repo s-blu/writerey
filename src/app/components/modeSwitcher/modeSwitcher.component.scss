@@ -1,10 +1,13 @@
-.mode-switcher {
-  font-size: 14pt;
-  background-color: white;
+@import '../../variables.scss';
+
+.mode-switch {
+  font-size: 12pt;
+  color: $c_hint;
 
   &.active {
     border-radius: 0;
-    background: aliceblue;
-    color: #232b74;
+    background: $c_bg_boxes;
+    box-shadow: $shadow;
+    color: black;
   }
 }
