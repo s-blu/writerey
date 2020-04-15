@@ -10,19 +10,22 @@
   }
 }
 
-::ng-deep div.mat-card-header-text {
-  margin-left: 0;
-  padding-left: 0;
-  margin: 0;
-  .mat-card-subtitle {
-    font-size: 8pt;
+::ng-deep .note .mat-card {
+  border-radius: 0;
+  div.mat-card-header-text {
+    margin-left: 0;
+    padding-left: 0;
+    margin: 0;
+    .mat-card-subtitle {
+      font-size: 8pt;
+    }
   }
 }
 
 ::ng-deep .note-text .ql-editor {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   font-size: 14px;
-  padding: 4px;
+  padding: 0px;
 }
 
 .done-button {
