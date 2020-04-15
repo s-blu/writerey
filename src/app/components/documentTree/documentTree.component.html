@@ -1,8 +1,14 @@
 <div class="document-tree" *transloco="let t; read: 'documentTree'">
-  <button mat-button class="new-root-dir-button" (click)="addNewDirOnRoot()">
-    <i class="material-icons-outlined">create_new_folder</i>
-    <span>{{ t('newdir') }}</span>
-  </button>
+  <div class="button-wrap">
+    <button mat-button class="new-root-dir-button" (click)="addNewItemOnRoot('dir')">
+      <i class="material-icons-outlined">create_new_folder</i>
+      <span>{{ t('newdir') }}</span>
+    </button>
+    <button mat-button class="new-root-dir-button" (click)="addNewItemOnRoot('file')">
+      <i class="material-icons-outlined">note_add</i>
+      <span>{{ t('newfile') }}</span>
+    </button>
+  </div>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
       <button
@@ -61,6 +67,6 @@
   </mat-tree>
 
   <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
-    {{ t('empty-tree')}}
+    {{ t('empty-tree') }}
   </div>
 </div>

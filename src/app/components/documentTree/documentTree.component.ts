@@ -92,8 +92,8 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.createNewChild('dir', node);
   }
 
-  addNewDirOnRoot() {
-    this.createNewChild('dir', { path: '/', name: '' });
+  addNewItemOnRoot(type) {
+    this.createNewChild(type, { path: '/', name: '' });
   }
 
   private createNewChild(type, node) {
