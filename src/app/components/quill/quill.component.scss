@@ -29,7 +29,8 @@
 }
 
 ::ng-deep .wy-quill.ql-container {
-  height: calc(100% - 50px);
+  height: 100%;
+  padding: 4px 0;
 }
 
 .empty-hint {

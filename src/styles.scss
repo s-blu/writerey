@@ -31,6 +31,10 @@ app-root,
   }
 }
 
+.mat-tab-label {
+  min-width: 140px !important;
+}
+
 body {
   background-color: $c_bg_app;
 }

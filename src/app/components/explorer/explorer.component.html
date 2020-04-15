@@ -1,6 +1,6 @@
 <div class="explorer" *transloco="let t; read: 'explorer'">
   <div *ngIf="!selectedProject">
-      <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
+    <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
   </div>
   <div *ngIf="selectedProject">
     <div class="project-name">
@@ -10,7 +10,7 @@
       </button>
       <span>{{ selectedProject }}</span>
     </div>
-    <mat-tab-group [dynamicHeight]="true">
+    <mat-tab-group>
       <mat-tab [label]="t('tabs.documenttree')">
         <wy-document-tree [project]="selectedProject"></wy-document-tree>
       </mat-tab>

@@ -1,3 +1,4 @@
+@import '../../variables.scss';
 
 .mat-list-base .mat-list-item,
 .mat-list-base .mat-list-option {
@@ -12,6 +13,10 @@
 .project-title {
   display: flex;
   align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: $c_bg_boxes;
+  z-index: 10;
 
   .title {
     flex-grow: 2;

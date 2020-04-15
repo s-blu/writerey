@@ -7,6 +7,8 @@
 :host {
   background-color: $c_bg_boxes;
   box-shadow: $shadow;
+  height: 100%;
+  overflow: auto;
 }
 
 .project-name:hover {
@@ -19,6 +21,11 @@
 }
 
 .project-name {
+  background-color: $c_bg_boxes;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+
   .back {
     display: none;
   }
