@@ -10,16 +10,20 @@ export class DocumentStore {
   private readonly _fileInfoSubject = new BehaviorSubject<FileInfo>(null);
   private readonly _paragraphIdSubject = new BehaviorSubject<string>('');
   private readonly _lastSavedSubject = new BehaviorSubject<Date>(null);
+  private readonly _wordCountSubject = new BehaviorSubject<number>(0);
 
   readonly document$ = this._documentSubject.asObservable().pipe(
     tap(res => {
       if (res?.last_edited) this.setLastSaved(res.last_edited);
+    }),
+    tap(() => {
+      this.setWordCount(0);
     })
   );
   readonly fileInfo$ = this._fileInfoSubject.asObservable();
   readonly paragraphId$ = this._paragraphIdSubject.asObservable();
-
   readonly lastSaved$ = this._lastSavedSubject.asObservable();
+  readonly wordCount$ = this._wordCountSubject.asObservable();
 
   private get documentSubject(): DocumentDefinition {
     return this._documentSubject.getValue();
@@ -57,5 +61,13 @@ export class DocumentStore {
 
   public setLastSaved(lastSaved: Date) {
     this.lastSavedSubject = lastSaved;
+  }
+
+  private set wordCountSubject(val: number) {
+    this._wordCountSubject.next(val);
+  }
+
+  public setWordCount(wordCount: number) {
+    this.wordCountSubject = wordCount;
   }
 }

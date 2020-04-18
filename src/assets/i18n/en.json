@@ -176,5 +176,9 @@
     "read": "Read",
     "write": "Write",
     "review": "Review"
+  },
+  "wordcount": {
+    "word": "Word",
+    "words": "Words"
   }
 }

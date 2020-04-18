@@ -23,7 +23,11 @@
   }
 
   .center {
-    justify-content: center;
+    justify-content: flex-end;
+    align-items: flex-end;
+    font-size: 10pt;
+    color: $c_hint;
+    margin-right: 4em;
   }
 
   wy-breadcrumb {

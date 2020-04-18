@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, ViewChildren } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { QuillEditorComponent } from 'ngx-quill';
 
@@ -38,13 +38,11 @@ export class QuillComponent implements OnInit {
   @ViewChild('editor')
   editor: QuillEditorComponent;
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   onEditorCreated(event) {
     this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
-      this.contentChanged.emit(data.html);
+      this.contentChanged.emit(data);
     });
 
     this.editor.onSelectionChanged.pipe(distinctUntilChanged(), debounceTime(500)).subscribe(data => {

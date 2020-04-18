@@ -7,6 +7,7 @@ import { DocumentService } from '../../services/document.service';
 import { DocumentDefinition } from '../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import QuillUtils from 'src/app/utils/quill.utils';
 
 @Component({
   selector: 'wy-document-editor',
@@ -75,13 +76,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
   onChange(event) {
     if (!this.document) return;
-    this.content = event;
+    this.content = event.html;
     this.subscription.add(
       this.documentService
-        .saveDocument(this.document.path, this.document.name, event)
+        .saveDocument(this.document.path, this.document.name, event.html)
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
           console.log('saved', new Date().toLocaleString());
+          const count = QuillUtils.calculateWordCount(event.text);
+          this.documentStore.setWordCount(count);
         })
     );
   }
@@ -105,6 +108,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     if (!newDoc) return;
     let loadObs;
     this.isLoading = true;
+    // reset content first to prevent app from crashing when switching between two heavy documents
+    this.content = '';
     // save old doc before switching
     if (this.document) {
       loadObs = this.documentService

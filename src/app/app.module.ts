@@ -1,3 +1,4 @@
+import { WordCountComponent } from './components/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
@@ -97,6 +98,7 @@ const matModules = [
     NameSnapshotDialogComponent,
     ProjectsComponent,
     ModeSwitcherComponent,
+    WordCountComponent,
   ],
   imports: [
     BrowserModule,

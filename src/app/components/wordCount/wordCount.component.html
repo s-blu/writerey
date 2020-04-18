@@ -1,0 +1,5 @@
+<div class="wordcount" *transloco="let t; read: 'wordcount'">
+  <span *ngIf="wordCount > 1">
+    {{wordCount | number }} {{ t('words') }}
+  </span>
+</div>
