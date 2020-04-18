@@ -1,3 +1,4 @@
+import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { ProjectsComponent } from './components/projects/projects.component';
@@ -14,7 +15,7 @@ import { LastModifiedComponent } from './components/lastModified/lastModified.co
 import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER } from '@angular/core';
+import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -110,7 +111,18 @@ const matModules = [
     TranslocoRootModule,
     QuillModule.forRoot(),
   ],
-  providers: [{ provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true }],
+  providers: [
+    { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
+    {
+      provide: LOCALE_ID,
+      deps: [TranslocoService],
+      useFactory: getLocaleId,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+function getLocaleId(transloco: TranslocoService) {
+  return transloco.getActiveLang();
+}

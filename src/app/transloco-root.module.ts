@@ -6,6 +6,7 @@ import {
   TRANSLOCO_CONFIG,
   translocoConfig,
   TranslocoModule,
+  getBrowserLang,
 } from '@ngneat/transloco';
 import { Injectable, NgModule } from '@angular/core';
 import { environment } from '../environments/environment';
@@ -19,16 +20,21 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   }
 }
 
+import { registerLocaleData } from '@angular/common';
+import localeDe from '@angular/common/locales/de';
+
+registerLocaleData(localeDe);
+
+const DEFAULT_LANG = 'en';
+const AVAILABLE_LANGS = [DEFAULT_LANG, 'de']
 @NgModule({
   exports: [TranslocoModule],
   providers: [
     {
       provide: TRANSLOCO_CONFIG,
       useValue: translocoConfig({
-        availableLangs: ['en', 'es', 'de'],
-        defaultLang: 'en',
-        // Remove this option if your application doesn't support changing language in runtime.
-        reRenderOnLangChange: true,
+        availableLangs: AVAILABLE_LANGS,
+        defaultLang: determineDefaultLang(),
         prodMode: environment.production,
       }),
     },
@@ -36,3 +42,13 @@ export class TranslocoHttpLoader implements TranslocoLoader {
   ],
 })
 export class TranslocoRootModule {}
+
+
+function determineDefaultLang() {
+  const browserLang = getBrowserLang();
+  if (AVAILABLE_LANGS.includes(browserLang)) {
+    return browserLang;
+  } else {
+    return DEFAULT_LANG;
+  }
+}

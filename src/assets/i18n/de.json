@@ -1,1 +1,183 @@
-{}
+{
+  "createMarker": {
+    "title": "Einen neuen Marker erstellen",
+    "type": {
+      "title": "Markertyp",
+      "text": "Text",
+      "numeric": "Numerisch"
+    },
+    "name": "Name des Markers",
+    "create": "Erstellen",
+    "cancel": "Abbrechen"
+  },
+  "markerDetails": {
+    "name": "Name des Markers",
+    "textvalue": "Wert",
+    "addNewValue": "Einen neuen Wert hinzufügen",
+    "removeValue": "Wert entfernen",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "index": "Index",
+    "title": "Marker '{{name}}' bearbeiten",
+    "titleValues": "Werte",
+    "titleMarkerProps": "Markereigenschaften",
+    "type": {
+      "text": "[Text]",
+      "numeric": "[Numerisch]"
+    },
+    "saved": "Gespeichert!",
+    "start": "Start",
+    "end": "Ende",
+    "interval": "Intervall"
+  },
+  "documentMarkers": {
+    "noneValue": "Nicht gesetzt",
+    "title": "Marker"
+  },
+  "snapshotDialog": {
+    "title": "Text für Sicherung",
+    "message": "Gib der Sicherung eine kurze Beschreibung",
+    "input": "Beschreibung",
+    "cancel": "Abbrechen",
+    "create": "Speichern"
+  },
+  "deleteDialog": {
+    "title": "{{name}} löschen",
+    "msg": "Möchtest du {{type}} '{{name}}' wirklich löschen?",
+    "cancel": "Abbrechen",
+    "confirm": "Lösche {{name}}"
+  },
+  "deletion": {
+    "type": {
+      "file": "Dokument",
+      "dir": "Ordner",
+      "marker": "Marker",
+      "markerValue": "Markerwert"
+    },
+    "snapshot": "Sicherung vor der Löschung von {{type}} '{{name}}'"
+  },
+  "dateFormat": "dd.MM.yy HH:mm:ss",
+  "explorer": {
+    "tabs": {
+      "documenttree": "Dokumente",
+      "markers": "Marker"
+    }
+  },
+  "markerTree": {
+    "newmarker": "Neuer Marker",
+    "remove": "Marker löschen",
+    "empty-tree": "Du hast noch keine Marker. Nutze 'Neuer Marker' um einen zu erstellen. Sie helfen dir, deine Arbeit zu organisieren und deinen Fortschritt zu protokollieren."
+  },
+  "documentTree": {
+    "rename": "Umbenennen",
+    "newfile": "Neues Dokument",
+    "newdir": "Neuer Ordner",
+    "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!"
+  },
+  "topbar": {
+    "newfile": "Neue Datei",
+    "newcategory": "Neuer Ordner",
+    "snapshot": "Sicherung erstellen",
+    "tag": "Letzte Sicherung taggen",
+    "history": "Alle Zwischenstände anzeigen",
+    "save": "Dokument speichern"
+  },
+  "saveInfo": {
+    "lastSaved": "Zuletzt gespeichert",
+    "lastSnapshotted": "Letzte Sicherung vom"
+  },
+  "createFileDialog": {
+    "title": "Neues Dokument erstellen",
+    "message": "Gib dem Dokument einen Namen",
+    "input": "Name des Dokuments",
+    "cancel": "Abbrechen",
+    "create": "Erstellen"
+  },
+  "createDirDialog": {
+    "title": "Neuen Ordner erstellen",
+    "message": "Gib dem Ordner einen Namen",
+    "input": "Name des Ordners",
+    "cancel": "Abbrechen",
+    "create": "Erstellen"
+  },
+  "createProjectDialog": {
+    "title": "Neues Projekt erstellen",
+    "message": "Erstelle ein neues Projekt als Ausgangspunkt für ein neues Buch, eine Ausarbeitung, eine Hausaufgabe oder ein anderes Schreibprojekt.",
+    "input": "Name des Projekts",
+    "cancel": "Abbrechen",
+    "create": "Erstellen"
+  },
+  "createUnkownDialog": {
+    "title": "Neues Element erstellen",
+    "message": "Erstelle ein neues Element",
+    "input": "Name",
+    "cancel": "Abbrechen",
+    "create": "Erstellen"
+  },
+  "notes": {
+    "createNew": "Erstelle eine Notiz"
+  },
+  "createNote": {
+    "context": "Kontext",
+    "comment": "Notiz",
+    "contexts": {
+      "paragraph": "Paragraph",
+      "document": "Dokument"
+    },
+    "type": {
+      "title": "Art der Notiz",
+      "info": "Info",
+      "todo": "To Do"
+    },
+    "color": {
+      "title": "Farbe",
+      "none": "Keine",
+      "orange": "Orange",
+      "blue": "Blau",
+      "green": "Grün"
+    }
+  },
+  "tagDialog": {
+    "title": "Einen Tag erstellen",
+    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden. (Beispielsweise: Erster Entwurf, Erste Korrektur, ...)",
+    "input": "Tagname",
+    "cancel": "Abbrechen",
+    "create": "Erstellen"
+  },
+  "git": {
+    "message": {
+      "manualCommit": "Manuelle Sicherung [{{date}}]",
+      "automateCommit": "Automatische Sicherung [{{date}}]"
+    },
+    "snackbar": {
+      "manualCommit": "Sicherung wurde erfolgreich erstellt [{{date}}]",
+      "workingDirClean": "Es gibt keine Änderungen seit der letzten Sicherung, also gibt es nichts zu sichern!",
+      "createTag": "Sicherung [{{date}}] ist nun mit Tag '{{name}}' markiert!",
+      "error": {
+        "createTag": "Das Erstellen von Tag '{{tag}}' schlug fehl. :(",
+        "commit": "Die Sicherung konnte nicht erstellt werden. :("
+      }
+    }
+  },
+  "quill": {
+    "placeholder": "Fülle dieses Blatt mit deinen Gedanken und Ideen ...",
+    "empty": {
+      "title": "Willkommen in der Writerey!",
+      "introduction": "Dies ist dein Ort, um dein nächstes Schreibprojekt zu schreiben und zu verbessern. Ein Buch, eine Ausarbeitung für die Ausbildung, eine Nachforschung, ein Gedichteband... es liegt an dir!",
+      "quickstart": "Um loszulegen, erstelle als erstes ein Projekt für dein Vorhaben und fülle es mit Ordnern, Markern, Notizen und - am allerwichtigsten - Dokumenten. Wenn du Hilfe brauchst, klicke auf das ? an den Elementen (noch nicht implementiert)"
+    }
+  },
+  "projects": {
+    "new": "Neues Projekt",
+    "title": "Projekte",
+    "empty-hint": "Du hast noch keine Projekte. Klicke die Schaltfläche, um ein Neues zu erstellen und mit deinem Vorhaben loszulegen!"
+  },
+  "modeSwitcher": {
+    "read": "Lesen",
+    "write": "Schreiben",
+    "review": "Überprüfen"
+  },
+  "wordcount": {
+    "words": "Wörter"
+  }
+}
