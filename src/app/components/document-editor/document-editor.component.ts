@@ -2,11 +2,11 @@ import { DocumentStore } from './../../stores/document.store';
 import { DocumentModeStore } from './../../stores/documentMode.store';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { ParagraphService } from '../../services/paragraph.service';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../services/document.service';
 import { DocumentDefinition } from '../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-document-editor',
@@ -54,6 +54,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event) && this.docMode !== DOC_MODES.READ) {
       let rule = '';
       if (this.docMode === DOC_MODES.REVIEW) {
+        // TODO is it possible to use the scss variable value here?
         rule = `p.${event} {
           background-color: aliceblue;
         }`;

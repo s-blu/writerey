@@ -1,4 +1,6 @@
-.document-tree {
+@import '../../variables.scss';
+
+.marker-tree {
   box-sizing: border-box;
   height: 100%;
 
@@ -51,14 +53,17 @@
       display: none;
       font-size: 10pt;
     }
+  }
 
-    &:hover {
-      background-color: aliceblue;
+  .mat-tree-node:hover {
+    background-color: $c_hover_highlight;
 
-      .menu {
-        display: inline;
-      }
+    .menu {
+      display: inline;
     }
+  }
+  .active {
+    background-color: $c_active_highlight;
   }
 }
 

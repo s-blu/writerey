@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .document-tree {
   box-sizing: border-box;
   height: 100%;
@@ -51,7 +53,7 @@
     }
 
     &:hover {
-      background-color: aliceblue;
+      background-color: $c_hover_highlight;
 
       .menu {
         display: inline;
@@ -72,4 +74,8 @@
 
 .button-wrap {
   display: flex;
+}
+
+.active {
+  background-color: $c_active_highlight;
 }

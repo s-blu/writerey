@@ -1,20 +1,12 @@
 import { DeletionService } from '../../services/deletion.service';
-import { DeleteConfirmationDialogComponent } from './../deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewMarkerComponent } from './../createNewMarker/createNewMarker.component';
 import { Subscription } from 'rxjs';
-import { DirectoryService } from './../../services/directory.service';
-import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
-import { DocumentService } from './../../services/document.service';
-import { FileInfo } from '../../models/fileInfo.interface';
-import { ApiService } from './../../services/api.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { MarkerService } from 'src/app/services/marker.service';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { ReturnStatement } from '@angular/compiler';
 import { MarkerStore } from 'src/app/stores/marker.store';
 
 /**
@@ -40,6 +32,8 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
   markerDefinitions: Array<MarkerDefinition>;
+  activeMarkerId: string;
+  // Tree Controls
   treeControl = new FlatTreeControl<MarkerNode>(
     node => node.level,
     node => node.expandable
@@ -48,7 +42,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
     this._transformer,
     node => node.level,
     node => node.expandable,
-    node => []
+    () => []
   );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
@@ -76,6 +70,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
   openMarkerCategory(node) {
     const markerDef = this.markerDefinitions.find(el => el.id === node.id);
+    this.activeMarkerId = markerDef?.id;
     this.markerChanged.emit(markerDef);
   }
 
@@ -83,7 +78,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.deletionService.showDeleteConfirmDialog(node.name, 'marker').subscribe(result => {
         if (!result) return;
-        this.markerService.deleteMarkerCategory(node.id).subscribe(res => {
+        this.markerService.deleteMarkerCategory(node.id).subscribe(() => {
           // TODO show snackbar
         });
       })
@@ -98,6 +93,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
         if (!data) return;
         this.subscription.add(
           this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
+            this.activeMarkerId = res[0]?.id;
             this.markerChanged.emit(res[0]);
           })
         );

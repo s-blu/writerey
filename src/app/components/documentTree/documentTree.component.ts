@@ -32,6 +32,7 @@ interface ExplorerNode {
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
 
+  activeNode;
   tree;
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
@@ -75,6 +76,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   }
 
   openDocument(node) {
+    this.activeNode = node;
     this.documentStore.setFileInfo({ name: node.name, path: node.path });
   }
 
@@ -131,13 +133,13 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   hasChild = (_: number, node: ExplorerNode) => node.expandable;
   isFile = (_: number, node: ExplorerNode) => node.isFile;
 
-  private _transformer(node, level: number) {
+  private _transformer(node, level: number): ExplorerNode {
     return {
       expandable: node.dirs || node.files ? node.dirs.length > 0 || node.files.length > 0 : false,
       path: node.path,
       name: node.name,
       isFile: node.isFile,
-      level,
+      level
     };
   }
 }

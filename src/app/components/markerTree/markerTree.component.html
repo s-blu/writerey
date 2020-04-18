@@ -1,4 +1,4 @@
-<div class="document-tree" *transloco="let t; read: 'markerTree'">
+<div class="marker-tree" *transloco="let t; read: 'markerTree'">
   <button mat-button class="new-marker-button" (click)="addNewMarkerCategory()">
     <i class="material-icons-outlined">add_location</i>
     <span>{{ t('newmarker') }}</span>
@@ -9,6 +9,7 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="10"
       class="marker-node"
+      [class]="{active: node.id === activeMarkerId}"
       (click)="openMarkerCategory(node)"
     >
       <button mat-icon-button disabled matTreeNodeToggle class="explorer-btn"></button>
