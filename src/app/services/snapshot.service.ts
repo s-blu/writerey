@@ -1,6 +1,6 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { SnapshotStore } from './../stores/snapshot.store';
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { catchError, tap, take } from 'rxjs/operators';
 
@@ -10,7 +10,9 @@ import { interval } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SnapshotService {
+export class SnapshotService implements OnDestroy {
+  automatedCommitSubscription;
+
   constructor(
     private httpClient: HttpClient,
     private api: ApiService,
@@ -55,13 +57,16 @@ export class SnapshotService {
   init() {
     this.getSnapshotInfo().pipe(take(1)).subscribe();
 
-    // fixme set interval to 15 - 30 minutes
-    interval(1000 * 60 * 2).subscribe(() => {
-      console.log('creating automated snapshot...');
-      const msg = this.transloco.translate('git.message.automateCommit', { date: new Date().toISOString() });
+    this.automatedCommitSubscription = interval(1000 * 60 * 15).subscribe(() => {
+      const date = new Date().toISOString();
+      const msg = this.transloco.translate('git.message.automateCommit', { date });
       this.createSnapshot(msg)
         .pipe(take(1))
-        .subscribe(() => console.log('successfully created automated snapshot'));
+        .subscribe(() => console.log('successfully created automated snapshot', date));
     });
+  }
+
+  ngOnDestroy() {
+    this.automatedCommitSubscription.unsubscribe();
   }
 }
