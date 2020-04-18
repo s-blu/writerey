@@ -146,7 +146,8 @@
   },
   "git": {
     "message": {
-      "manualCommit": "Manual Snapshot from {{date}}"
+      "manualCommit": "Manual Snapshot from {{date}}",
+      "automateCommit": "Automated Snapshot [{{date}}]"
     },
     "snackbar": {
       "manualCommit": "Snapshot successfully created [{{date}}]",
