@@ -23,6 +23,7 @@ export class ParagraphService {
   constructor(private api: ApiService, private httpClient: HttpClient) {}
 
   enhanceDocumentWithParagraphIds(document: string) {
+    if (!document) return;
     let enhancedDocument = '';
     let previousUuid = '';
     let currentUuidBeforeEnhance = '';

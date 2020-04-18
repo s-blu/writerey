@@ -32,7 +32,8 @@
   },
   "documentMarkers": {
     "noneValue": "Nicht gesetzt",
-    "title": "Marker"
+    "title": "Marker",
+    "placeholderEmpty": "Du hast noch keine Markerdefinitionen. Sobald du welche angelegt hast, kannst du sie hier konfigurieren."
   },
   "snapshotDialog": {
     "title": "Text für Sicherung",

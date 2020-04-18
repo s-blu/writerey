@@ -32,7 +32,8 @@
   },
   "documentMarkers": {
     "noneValue": "Unset",
-    "title": "Markers"
+    "title": "Markers",
+    "placeholderEmpty": "You have no marker definitions yet. As soon as you create some, they will be configurable here."
   },
   "snapshotDialog": {
     "title": "Snapshot message",

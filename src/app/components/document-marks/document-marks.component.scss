@@ -29,3 +29,7 @@ mat-form-field {
 .numeric-marker mat-label {
   display: block;
 }
+
+.empty-hint {
+  color: $c_hint;
+}

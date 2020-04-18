@@ -7,6 +7,9 @@
   </div>
   <div class="review-mode" *ngIf="mode === MODES.REVIEW && paragraphId">
     <h3>{{ t('title') }}</h3>
+    <div class="empty-hint" *ngIf="!markerDefinitions || markerDefinitions.length === 0">
+      {{ t('placeholderEmpty') }}
+    </div>
     <div *ngFor="let def of markerDefinitions">
       <mat-form-field *ngIf="def.type === TYPES.TEXT">
         <mat-label>{{ def.name }}</mat-label>
@@ -16,9 +19,10 @@
         </mat-select>
       </mat-form-field>
       <div class="numeric-marker" *ngIf="def.type === TYPES.NUMERIC">
-        <mat-label
-          >{{ def.name }} <span *ngIf="values[def.id] !== undefined"> [{{ values[def.id] }}]</span></mat-label
-        >
+        <mat-label>
+          {{ def.name }}
+          <span *ngIf="values[def.id] !== undefined"> [{{ values[def.id] }}] </span>
+        </mat-label>
         <mat-slider
           color="primary"
           (change)="setValOfNumMarker(def, $event)"
