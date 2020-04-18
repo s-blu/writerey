@@ -6,6 +6,7 @@ import { catchError, tap, take } from 'rxjs/operators';
 
 import { ApiService } from './api.service';
 import { interval } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -57,16 +58,27 @@ export class SnapshotService implements OnDestroy {
   init() {
     this.getSnapshotInfo().pipe(take(1)).subscribe();
 
-    this.automatedCommitSubscription = interval(1000 * 60 * 15).subscribe(() => {
+    if (!environment.production) {
+      // don't create the automated commit on development mode to not mess up VCS
+      console.warn('App is running in development mode, so no automated commit hook will be created.');
+      return;
+    }
+    this.automatedCommitSubscription = interval(1000 * 60 * 2).subscribe(() => {
       const date = new Date().toISOString();
       const msg = this.transloco.translate('git.message.automateCommit', { date });
       this.createSnapshot(msg)
         .pipe(take(1))
-        .subscribe(() => console.log('successfully created automated snapshot', date));
+        .subscribe((res: any) => {
+          if (res?.status === -1) {
+            console.log('Skipped automated commit since working dir is clean.', date);
+          } else {
+            console.log('successfully created automated snapshot', date);
+          }
+        });
     });
   }
 
   ngOnDestroy() {
-    this.automatedCommitSubscription.unsubscribe();
+    if (this.automatedCommitSubscription) this.automatedCommitSubscription.unsubscribe();
   }
 }

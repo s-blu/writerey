@@ -1,5 +1,4 @@
 import { DocumentModeStore } from './stores/documentMode.store';
-import { DocumentService } from './services/document.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DOC_MODES } from './models/docModes.enum';
@@ -30,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  // FIXME
+  // FIXME replace this special handling with proper routing to decide which page to show
   changeMarker(event: MarkerDefinition) {
     this.documentModeStore.setMode(DOC_MODES.WRITE);
     this.markerDef = event;
