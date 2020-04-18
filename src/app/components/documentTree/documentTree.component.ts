@@ -118,7 +118,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
           createObservable.subscribe((res: any) => {
-            this.fetchTree(); // FIXME implement way to only get the edited dir
+            this.fetchTree();
             if (type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
           })
         );
