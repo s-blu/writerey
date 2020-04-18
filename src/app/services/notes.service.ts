@@ -15,7 +15,6 @@ enum DEFAULT_CONTEXTS {
   providedIn: 'root',
 })
 export class NotesService {
-  private defaultContextForParagraphs = [DEFAULT_CONTEXTS.PARAGRAPH, DEFAULT_CONTEXTS.DOCUMENT];
 
   constructor(
     private paragraphService: ParagraphService,
@@ -24,7 +23,7 @@ export class NotesService {
     private contextStore: ContextStore
   ) {}
 
-  getContextes(docPath: string, docName: string, paragraphId?: string) {
+  getContexts(docPath: string, docName: string, paragraphId?: string) {
     const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
     if (paragraphId) contexts.push(DEFAULT_CONTEXTS.PARAGRAPH);
     return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(

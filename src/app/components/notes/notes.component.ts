@@ -129,7 +129,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private getContexts() {
     if (!this.fileInfo) return;
     this.subscription.add(
-      this.notesService.getContextes(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
+      this.notesService.getContexts(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
         this.updateContexts(res);
       })
     );

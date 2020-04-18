@@ -61,6 +61,11 @@ export class ParagraphService {
   }
 
   setParagraphMeta(docPath, docName, context, metaType, metaContent, project?) {
+    if (!docPath || !docName || !context || !metaContent) {
+      console.error('setParagraphMeta was called with invalid data. Aborting.');
+      return;
+    }
+
     const formdata = new FormData();
     formdata.append('doc_path', docPath);
     formdata.append('context', context);
@@ -88,6 +93,10 @@ export class ParagraphService {
   }
 
   getParagraphMeta(docPath, docName, context, metaType?): Observable<any> {
+    if (!docPath || !docName || !context) {
+      return of(null);
+    }
+
     const cachedMeta = this.getCacheItem(docPath, docName, context);
     if (cachedMeta && (!metaType || cachedMeta[metaType])) {
       return metaType ? of(cachedMeta[metaType]) : of(cachedMeta);
