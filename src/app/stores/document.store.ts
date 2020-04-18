@@ -13,9 +13,7 @@ export class DocumentStore {
 
   readonly document$ = this._documentSubject.asObservable().pipe(
     tap(res => {
-      if (res?.last_edited) {
-        this.setLastSaved(res.last_edited);
-      }
+      if (res?.last_edited) this.setLastSaved(res.last_edited);
     })
   );
   readonly fileInfo$ = this._fileInfoSubject.asObservable();
@@ -33,10 +31,6 @@ export class DocumentStore {
   }
 
   public setDocument(newDocument: DocumentDefinition) {
-    if (!newDocument) {
-      console.error('setDocument was called with invalid data, will ignore value', newDocument);
-      return;
-    }
     this.documentSubject = newDocument;
   }
 
@@ -46,10 +40,6 @@ export class DocumentStore {
   }
 
   public setFileInfo(newInfo: FileInfo) {
-    if (!newInfo) {
-      console.error('setFileInfo was called with invalid data, will ignore value', newInfo);
-      return;
-    }
     this.fileInfoSubject = newInfo;
   }
 

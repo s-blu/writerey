@@ -3,13 +3,11 @@ import { Subscription } from 'rxjs';
 import { DirectoryService } from './../../services/directory.service';
 import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
 import { DocumentService } from './../../services/document.service';
-import { FileInfo } from '../../models/fileInfo.interface';
-import { ApiService } from './../../services/api.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
+import { delay } from 'rxjs/operators';
 
 /**
  * Food data with nested structure.
@@ -32,7 +30,7 @@ interface ExplorerNode {
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
 
-  activeNode;
+  activeFileInfo;
   tree;
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
@@ -50,6 +48,12 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetchTree();
+    this.subscription.add(
+      this.documentStore.fileInfo$.pipe(delay(200)).subscribe(res => {
+        this.activeFileInfo = res;
+        this.expandToActiveDocument();
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -76,14 +80,15 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   }
 
   openDocument(node) {
-    this.activeNode = node;
     this.documentStore.setFileInfo({ name: node.name, path: node.path });
   }
 
   renameDir(node) {
+    // todo
     console.warn('rename dir not implemented yet', node);
   }
   renameFile(node) {
+    // todo
     console.warn('rename file not implemented yet', node);
   }
   addNewFile(node) {
@@ -125,6 +130,28 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     if (!path || path === '') return dirName;
     if (path === '/') path = this.project;
     return path + '/' + dirName;
+  }
+
+  private expandToActiveDocument() {
+    if (!this.activeFileInfo || !this.treeControl?.dataNodes) return;
+
+    const flattenedTreeNodes = this.treeControl.dataNodes;
+    const pathParts = this.activeFileInfo.path.split('/');
+    // first part is project itself and thus root of the tree
+    let pathUpUntilNow = pathParts[0];
+    pathParts.shift();
+
+    for (const step of pathParts) {
+      const nextDir = flattenedTreeNodes.find(dir => dir.name === step && dir.path === pathUpUntilNow);
+
+      if (!nextDir) {
+        console.error('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
+        return;
+      }
+
+      this.treeControl.expand(nextDir);
+      pathUpUntilNow = pathUpUntilNow === '' ? step : `${pathUpUntilNow}/${step}`;
+    }
   }
 
   /**

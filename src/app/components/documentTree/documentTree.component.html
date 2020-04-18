@@ -48,12 +48,12 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="15"
       class="file-node"
-      [class]="{ active: node === activeNode }"
+      [class]="{ active: node.path === activeFileInfo?.path && node.name === activeFileInfo?.name }"
     >
       <button mat-icon-button (click)="openDocument(node)" class="explorer-btn file-btn">
         <i class="material-icons-outlined">insert_drive_file</i>
       </button>
-      <div (click)="openDocument(node)" class="name">{{ node.name | stripFileEnding }} {{node.isActive}}</div>
+      <div (click)="openDocument(node)" class="name">{{ node.name | stripFileEnding }} {{ node.isActive }}</div>
       <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="fileMenu">
         <mat-icon class="menu">more_vert</mat-icon>
       </button>
