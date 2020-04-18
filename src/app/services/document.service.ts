@@ -55,7 +55,7 @@ export class DocumentService implements OnDestroy {
   }
 
   saveDocument(path: string, name: string, content) {
-    const blob = new Blob([content], { type: 'text/html' });
+    const blob = new Blob([content || ''], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
 
     const formdata = new FormData();
