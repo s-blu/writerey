@@ -9,7 +9,6 @@
     #editor
     [ngModel]="content"
     [modules]="modules"
-    classes="wy-quill"
     [styles]="styles"
     (onEditorCreated)="onEditorCreated($event)"
     [readOnly]="isReadOnly()"
@@ -17,10 +16,6 @@
   >
   </quill-editor>
   <ng-template #emptyHint>
-    <div class="empty-hint">
-      <h1>{{ t('empty.title') }}</h1>
-      <p>{{ t('empty.introduction') }}</p>
-      <p>{{ t('empty.quickstart') }}</p>
-    </div>
+    <quill-view class="introduction" [content]="introduction"></quill-view>
   </ng-template>
 </div>

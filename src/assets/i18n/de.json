@@ -162,12 +162,7 @@
   },
   "quill": {
     "placeholder": "Fülle dieses Blatt mit deinen Gedanken und Ideen ...",
-    "loading": "Lade Dokument. Bitte habe kurz Geduld ...",
-    "empty": {
-      "title": "Willkommen in der Writerey!",
-      "introduction": "Dies ist dein Ort, um dein nächstes Schreibprojekt zu schreiben und zu verbessern. Ein Buch, eine Ausarbeitung für die Ausbildung, eine Nachforschung, ein Gedichteband... es liegt an dir!",
-      "quickstart": "Um loszulegen, erstelle als erstes ein Projekt für dein Vorhaben und fülle es mit Ordnern, Markern, Notizen und - am allerwichtigsten - Dokumenten. Wenn du Hilfe brauchst, klicke auf das ? an den Elementen (noch nicht implementiert)"
-    }
+    "loading": "Lade Dokument. Bitte habe kurz Geduld ..."
   },
   "projects": {
     "new": "Neues Projekt",

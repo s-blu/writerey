@@ -1,10 +1,10 @@
+import { TranslocoService } from '@ngneat/transloco';
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, throwIfEmpty } from 'rxjs/operators';
 import { QuillEditorComponent } from 'ngx-quill';
 
-import * as QuillNamespace from 'quill';
 import { DocumentDefinition } from 'src/app/models/documentDefinition.interface';
-const Quill: any = QuillNamespace;
 
 @Component({
   selector: 'wy-quill',
@@ -19,6 +19,7 @@ export class QuillComponent implements OnInit {
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
   @Output() updateParagraphMeta: EventEmitter<any> = new EventEmitter();
 
+  introduction = '';
   modules = {
     toolbar: [
       [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -38,7 +39,14 @@ export class QuillComponent implements OnInit {
   @ViewChild('editor')
   editor: QuillEditorComponent;
 
-  ngOnInit() {}
+  constructor(private http: HttpClient, private transloco: TranslocoService) {}
+
+  ngOnInit() {
+    const lang = this.transloco.getActiveLang();
+    this.http.get(`assets/introduction_${lang}.html`, { responseType: 'text' }).subscribe((res: any) => {
+      this.introduction = res || '';
+    });
+  }
 
   onEditorCreated(event) {
     this.editor.onContentChanged.pipe(distinctUntilChanged(), debounceTime(800)).subscribe(data => {
