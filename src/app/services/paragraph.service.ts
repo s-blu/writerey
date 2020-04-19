@@ -12,11 +12,8 @@ import { Observable, of } from 'rxjs';
 export class ParagraphService {
   public UUID_V4_REGEX_STR = 'p[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}';
   private P_ID_REGEX = RegExp(`<p class="${this.UUID_V4_REGEX_STR}">`);
-  private PARAGRAPH_DELIMITER_WO_OPENING = `<br></p>`;
-  private PARAGRAPH_DELIMITER = `<p>${this.PARAGRAPH_DELIMITER_WO_OPENING}`;
-  private PARAGRAPH_DELIMITER_REGEX = RegExp(
-    `<p(?: class="${this.UUID_V4_REGEX_STR}")?>` + this.PARAGRAPH_DELIMITER_WO_OPENING
-  );
+  private PARAGRAPH_DELIMITER = `<p><br></p>`;
+  private PARAGRAPH_DELIMITER_REGEX = RegExp(this.getParagraphBreakRegExString());
 
   private paragraphMetaCache = {};
 
@@ -46,10 +43,8 @@ export class ParagraphService {
 
     if (_uuidsAreEqual(previousUuid, currentUuid) || !this.P_ID_REGEX.test(p)) {
       const pTagWithId = this._getParagraphTagWithIdentifier(uuid.v4());
-      const enhancedP = p.replace(
-        RegExp(`<p( class="${this.UUID_V4_REGEX_STR}")?>(?!${this.PARAGRAPH_DELIMITER_WO_OPENING})`, 'g'),
-        pTagWithId
-      );
+      const regex = RegExp(this.getParagraphBreakRegExString(true, false), 'g');
+      const enhancedP = p.replace(regex, pTagWithId);
       return enhancedP;
     }
 
@@ -155,5 +150,11 @@ export class ParagraphService {
   private _getCacheItemKey(path, name, paragraphId) {
     const sanitizedPath = path.replace(/[\/\\]/g, '_');
     return `${sanitizedPath}__${name}__${paragraphId}`;
+  }
+
+  private getParagraphBreakRegExString(negativeLookahead = false, closingTag = true) {
+    const quantifier = negativeLookahead ? '?!' : '?:';
+    const endTag = closingTag ? '</p>' : '';
+    return `<p(?: class="[^>]*")?>(${quantifier}&nbsp;|<br>)${endTag}`;
   }
 }
