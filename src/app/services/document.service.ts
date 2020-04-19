@@ -67,7 +67,8 @@ export class DocumentService implements OnDestroy {
     return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.transformLastEditedIntoDate(res)),
-      tap(res => this.documentStore.setLastSaved(res?.last_edited))
+      tap(res => this.documentStore.setLastSaved(res?.last_edited)),
+      tap(_ => console.log(`saved document ${path}/${name}`))
     );
   }
 

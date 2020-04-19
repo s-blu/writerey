@@ -15,8 +15,9 @@ class Documents(Resource):
                 [basePath, request.args.get('doc_path'), doc_name])
             f = open(path, encoding='utf-8')
             response = self.getResponseObject(f)
-            content = f.read()
-            response['content'] = content
+            if request.args.get('with_content'):
+                content = f.read()
+                response['content'] = content
             return response
         except OSError as err:
             print('get document failed', err)
