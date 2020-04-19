@@ -25,8 +25,7 @@ function createWindow() {
 
   // Create the browser window.
   win = new BrowserWindow({
-    width: 1680,
-    height: 1050,
+    show: false,
     icon: `file://${__dirname}/dist/assets/logo.png`,
     webPreferences: {
       nodeIntegration: true,
@@ -34,12 +33,16 @@ function createWindow() {
   });
 
   win.loadURL(`${__dirname}/dist/writerey/index.html`);
+  
+  win.maximize();
+  win.show();
 
   // uncomment below to open the DevTools.
   // win.webContents.openDevTools();
 
   // Event when the window is closed.
   win.on("closed", function () {
+    shell.end();
     win = null;
   });
 }
