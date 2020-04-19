@@ -2,6 +2,7 @@ import { DocumentModeStore } from './../../stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DOC_MODES } from 'src/app/models/docModes.enum';
 import { Subscription } from 'rxjs';
+import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
   selector: 'wy-mode-switcher',
@@ -9,36 +10,26 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./modeSwitcher.component.scss'],
 })
 export class ModeSwitcherComponent implements OnInit, OnDestroy {
+  docLoaded: boolean;
+  modes = Object.values(DOC_MODES);
   private mode;
-
   private subscription = new Subscription();
-  
-  constructor(private documentModeStore: DocumentModeStore) {}
+
+  constructor(private documentModeStore: DocumentModeStore, private documentStore: DocumentStore) {}
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
   ngOnInit() {
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
-  }
-
-  review() {
-    this.switchMode(DOC_MODES.REVIEW);
-  }
-
-  read() {
-    this.switchMode(DOC_MODES.READ);
-  }
-
-  write() {
-    this.switchMode(DOC_MODES.WRITE);
+    this.subscription.add(this.documentStore.document$.subscribe(doc => (this.docLoaded = !!doc)));
   }
 
   isActive(mode) {
-    return { active: this.mode === mode };
+    return { active: this.mode === mode && this.docLoaded };
   }
 
-  private switchMode(newMode) {
+  switchMode(newMode) {
     if (!newMode || this.mode === newMode) return;
     this.documentModeStore.setMode(newMode);
   }

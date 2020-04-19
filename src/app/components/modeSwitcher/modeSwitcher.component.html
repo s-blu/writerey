@@ -1,5 +1,12 @@
 <div class="mode-switcher" *transloco="let t; read: 'modeSwitcher'">
-  <button mat-button class="mode-switch" [class]="isActive('read')" (click)="read()">{{ t('read') }}</button>
-  <button mat-button class="mode-switch" [class]="isActive('write')" (click)="write()">{{ t('write') }}</button>
-  <button mat-button class="mode-switch" [class]="isActive('review')" (click)="review()">{{ t('review') }}</button>
+  <button
+    *ngFor="let mode of modes"
+    mat-button
+    [disabled]="!docLoaded"
+    class="mode-switch"
+    [class]="isActive(mode)"
+    (click)="switchMode(mode)"
+  >
+    {{ t(mode) }}
+  </button>
 </div>
