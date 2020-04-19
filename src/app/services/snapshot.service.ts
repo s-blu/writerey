@@ -63,7 +63,7 @@ export class SnapshotService implements OnDestroy {
       console.warn('App is running in development mode, so no automated commit hook will be created.');
       return;
     }
-    this.automatedCommitSubscription = interval(1000 * 60 * 2).subscribe(() => {
+    this.automatedCommitSubscription = interval(1000 * 60 * 30).subscribe(() => {
       const date = new Date().toISOString();
       const msg = this.transloco.translate('git.message.automateCommit', { date });
       this.createSnapshot(msg)
