@@ -162,6 +162,7 @@
   },
   "quill": {
     "placeholder": "Fill this space with your thoughts and ideas ...",
+    "loading": "Loading file, please wait . . .",
     "empty": {
       "title": "Welcome to writerey!",
       "introduction": "This is your place to compose and refine your next writing project. A novel, an essay for school, a research, a poem booklet, ... you name it!",

@@ -13,7 +13,7 @@ const Quill: any = QuillNamespace;
 })
 export class QuillComponent implements OnInit {
   @Input() content: string;
-  @Input() readOnly: boolean;
+  @Input() isLoading: boolean;
   @Input() document: DocumentDefinition;
 
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
@@ -53,5 +53,9 @@ export class QuillComponent implements OnInit {
 
   onEditorClick(event) {
     this.updateParagraphMeta.emit(event?.srcElement?.className);
+  }
+
+  isReadOnly() {
+    return this.isLoading || !this.document;
   }
 }

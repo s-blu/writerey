@@ -162,6 +162,7 @@
   },
   "quill": {
     "placeholder": "Fülle dieses Blatt mit deinen Gedanken und Ideen ...",
+    "loading": "Lade Dokument. Bitte habe kurz Geduld ...",
     "empty": {
       "title": "Willkommen in der Writerey!",
       "introduction": "Dies ist dein Ort, um dein nächstes Schreibprojekt zu schreiben und zu verbessern. Ein Buch, eine Ausarbeitung für die Ausbildung, eine Nachforschung, ein Gedichteband... es liegt an dir!",
@@ -176,7 +177,7 @@
   "modeSwitcher": {
     "read": "Lesen",
     "write": "Schreiben",
-    "review": "Überprüfen"
+    "review": "Prüfen"
   },
   "wordcount": {
     "words": "Wörter"

@@ -82,7 +82,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         .saveDocument(this.document.path, this.document.name, event.html)
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
-          console.log('saved', new Date().toLocaleString());
           const count = QuillUtils.calculateWordCount(event.text);
           this.documentStore.setWordCount(count);
         })
@@ -106,14 +105,22 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
   private switchDocument(newDoc: DocumentDefinition) {
     if (!newDoc) return;
+    if (newDoc.path === this.document?.path && newDoc.name === this.document?.name) {
+      console.warn(
+        'Tried to switch to the same document again. Prevent saving and reload, do nothing instead.',
+        newDoc?.name
+      );
+      return;
+    }
     let loadObs;
     this.isLoading = true;
-    // reset content first to prevent app from crashing when switching between two heavy documents
-    this.content = '';
+    // empty content for editor to prevent app from crashing when switching between two heavy documents
+    const oldContent = this.content;
+    this.content = ' ';
     // save old doc before switching
     if (this.document) {
       loadObs = this.documentService
-        .saveDocument(this.document.path, this.document.name, this.content)
+        .saveDocument(this.document.path, this.document.name, oldContent)
         .pipe(() => this.documentService.getDocument(newDoc.path, newDoc.name));
     } else {
       loadObs = this.documentService.getDocument(newDoc.path, newDoc.name);

@@ -1,7 +1,7 @@
 <div
   class="wy-quill"
   (click)="onEditorClick($event)"
-  [class]="{ readonly: readOnly }"
+  [class]="{ readonly: isReadOnly() }"
   *transloco="let t; read: 'quill'"
 >
   <quill-editor
@@ -12,8 +12,8 @@
     classes="wy-quill"
     [styles]="styles"
     (onEditorCreated)="onEditorCreated($event)"
-    [readOnly]="readOnly || !document"
-    [placeholder]="t('placeholder')"
+    [readOnly]="isReadOnly()"
+    [placeholder]="isLoading ? t('loading') : t('placeholder')"
   >
   </quill-editor>
   <ng-template #emptyHint>
