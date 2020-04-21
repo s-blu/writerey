@@ -1,0 +1,5 @@
+<div class="distraction-free" [class]="{ 'is-distraction-free': isDistractionFree }">
+  <button mat-icon-button (click)="toggleDistractionFree()">
+    <mat-icon>{{ isDistractionFree ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
+</div>

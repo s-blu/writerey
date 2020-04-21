@@ -52,6 +52,7 @@ import { QuillModule } from 'ngx-quill';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { MarkerDetailsComponent } from './components/markerDetails/markerDetails.component';
+import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 
 const matModules = [
   MatIconModule,
@@ -100,6 +101,7 @@ const matModules = [
     ProjectsComponent,
     ModeSwitcherComponent,
     WordCountComponent,
+    DistractionFreeModeComponent,
   ],
   imports: [
     BrowserModule,
