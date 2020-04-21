@@ -23,8 +23,15 @@
   position: absolute;
   top: 5px;
   z-index: 10;
-  width: 636px;
+  width: 660px;
   border: none;
+  padding: 8px 0;
+  margin-left: -12px;
+}
+
+::ng-deep .ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar button {
+  width: 26px;
 }
 
 ::ng-deep .readonly .ql-toolbar {
@@ -38,5 +45,5 @@
 }
 
 .introduction {
-  color: #333333
+  color: #333333;
 }

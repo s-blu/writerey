@@ -17,14 +17,15 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   quillModules = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
-      [{ list: 'ordered' }, { list: 'bullet' }],
-      [{ indent: '-1' }, { indent: '+1' }],
+      [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+      ['blockquote', 'code-block', 'link', 'image'], // add's image support
+      ['clean'],
     ],
   };
-  
+
   quillStyle = {
     'font-family': 'Roboto, "Helvetica Neue", sans-serif',
-    'font-size': '14px'
+    'font-size': '14px',
   };
 
   private translatedContextNames = {
@@ -32,10 +33,7 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
     document: 'document',
   };
 
-  constructor(
-    private translocoService: TranslocoService,
-    private formBuilder: FormBuilder
-  ) {
+  constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({
       type: 'todo',
       color: '',
