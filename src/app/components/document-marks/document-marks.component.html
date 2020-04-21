@@ -1,5 +1,5 @@
 <div class="document-markers" *transloco="let t; read: 'documentMarkers'">
-  <div class="write-mode" *ngIf="mode === MODES.WRITE">
+  <div class="write-mode" *ngIf="mode === MODES.WRITE && !isDistractionFree">
     <div *ngFor="let marker of markers">
       <span class="marker-name">[{{ marker.name }}]</span>
       <span class="value-name"> {{ marker.valueName }}</span>

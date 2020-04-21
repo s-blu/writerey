@@ -19,7 +19,6 @@ export class DistractionFreeModeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
-        console.log('this.distractionFreeStore.distractionFree$', !!status);
         this.isDistractionFree = !!status;
       })
     );

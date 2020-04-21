@@ -1,25 +1,31 @@
+import { DistractionFreeStore } from './../../stores/distractionFree.store';
 import { DocumentModeStore } from './../../stores/documentMode.store';
 import { ContextStore } from './../../stores/context.store';
 import { MarkerService } from 'src/app/services/marker.service';
 import { DOC_MODES } from '../../models/docModes.enum';
 import { NotesService } from './../../services/notes.service';
 import { ParagraphService } from './../../services/paragraph.service';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Note } from '../../models/note.interface';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
-import { map, flatMap, mergeMap } from 'rxjs/operators';
 import { MarkerStore } from 'src/app/stores/marker.store';
 import { DocumentStore } from 'src/app/stores/document.store';
+import { trigger, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'wy-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition('void => *', [style({ opacity: 0 }), animate(300)]),
+      transition('* => void', [animate(300, style({ opacity: 0 }))]),
+    ])
+  ],
 })
 export class NotesComponent implements OnInit, OnDestroy {
-
   MODES = DOC_MODES;
   mode: DOC_MODES;
   noteContexts;
@@ -29,6 +35,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   notes: any = {
     paragraph: [],
   };
+  isDistractionFree: boolean;
 
   private subscription = new Subscription();
 
@@ -39,7 +46,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     private contextStore: ContextStore,
     private markerStore: MarkerStore,
     private documentModeStore: DocumentModeStore,
-    private documentStore: DocumentStore
+    private documentStore: DocumentStore,
+    private distractionFreeStore: DistractionFreeStore
   ) {}
 
   ngOnInit() {
@@ -51,6 +59,11 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.markerStore.markerDefinitions$.subscribe(markerDefs => {
         this.markerDefinitions = markerDefs;
+      })
+    );
+    this.subscription.add(
+      this.distractionFreeStore.distractionFree$.subscribe(status => {
+        this.isDistractionFree = status;
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
@@ -113,6 +126,13 @@ export class NotesComponent implements OnInit, OnDestroy {
     obs.subscribe(res => {
       this.notes[context] = res;
     });
+  }
+
+  shouldShowNotes(): boolean {
+    if (this.isDistractionFree) {
+      return this.mode === DOC_MODES.REVIEW;
+    }
+    return this.mode !== DOC_MODES.READ;
   }
 
   private fetchNotesForParagraph() {
