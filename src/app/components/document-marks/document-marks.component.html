@@ -11,7 +11,7 @@
       <span class="value-name"> {{ marker.valueName }}</span>
     </div>
   </div>
-  <div class="review-mode" *ngIf="mode === MODES.REVIEW && paragraphId">
+  <div class="review-mode" *ngIf="mode === MODES.REVIEW && paragraphId" [@fadeInOnEnter]>
     <h3>{{ t('title') }}</h3>
     <div class="empty-hint" *ngIf="!markerDefinitions || markerDefinitions.length === 0">
       {{ t('placeholderEmpty') }}

@@ -1,3 +1,5 @@
+import { FADE_ANIMATIONS } from './../../utils/animation.utils';
+import { animate } from '@angular/animations';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Note } from '../../models/note.interface';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
@@ -6,6 +8,7 @@ import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
   selector: 'wy-note',
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.scss'],
+  animations: FADE_ANIMATIONS
 })
 export class NoteComponent implements OnInit {
   @Input() note: Note;

@@ -1,6 +1,7 @@
-$opacity_half: 0.35;
+$opacity_half: 0.3;
 
-.distraction-free-half {
+.distraction-free-half,
+.distraction-free-full {
   opacity: $opacity_half;
   animation: fadeIntoHalf 300ms;
 

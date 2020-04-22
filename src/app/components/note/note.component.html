@@ -1,4 +1,4 @@
-<mat-card [style]="noteStyles" class="{{ classes }}">
+<mat-card [style]="noteStyles" class="{{ classes }}" [@fadeInOnEnter]>
   <mat-card-header>
     <i *ngIf="note.type === 'info'" class="material-icons-outlined">info</i>
     <i *ngIf="note.type === 'todo'" class="material-icons-outlined">assignment</i>

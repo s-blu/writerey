@@ -16,7 +16,7 @@ export class AddClassesForDistractionStatesDirective implements OnDestroy {
         const oldClassIndex = status === 0 ? this.classesForStates.length - 1 : status - 1;
         const oldClass = this.classesForStates[oldClassIndex];
         const newClass = this.classesForStates[status];
-        
+
         if (oldClass !== '') {
           renderer.removeClass(hostElement.nativeElement, oldClass);
         }

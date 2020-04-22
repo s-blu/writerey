@@ -3,6 +3,7 @@
 
 :host {
   margin-top: 1em;
+  position: relative;
 }
 .marker-name {
   color: $c_marker;
@@ -21,6 +22,9 @@
 
 .review-mode {
   padding: 0 1em;
+  position: absolute;
+  top: 0;
+  width: calc(100% - 1em);
 }
 
 mat-slider,

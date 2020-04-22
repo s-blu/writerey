@@ -1,5 +1,5 @@
 <div class="notes" *transloco="let t; read: 'notes'">
-  <mat-expansion-panel class="create-note" [expanded]="true" *ngIf="mode === MODES.REVIEW">
+  <mat-expansion-panel class="create-note" [expanded]="true" *ngIf="mode === MODES.REVIEW" [@fadeInOnEnter]>
     <mat-expansion-panel-header>
       <mat-panel-title>
         {{ t('createNew') }}
