@@ -8,5 +8,7 @@ export const FADE_ANIMATIONS = [
   fadeInOnEnterAnimation(fadeInOptions),
   fadeOutOnLeaveAnimation(fadeInOptions),
   fadeInAnimation(fadeInOptions),
-  trigger('fadeOutFromHalf', [transition('* => void', [animate(fadingDuration, style({ opacity: 0 }))])]),
+  trigger('fadeOutFromHalf', [
+    transition('* => void', [style({ opacity: 0.5 }), animate(fadingDuration, style({ opacity: 0 }))]),
+  ]),
 ];

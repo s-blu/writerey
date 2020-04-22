@@ -1,4 +1,5 @@
-@import '../../variables.scss';
+@import '../../styles/variables.scss';
+@import '../../styles/distractionFree.scss';
 
 :host {
   margin-top: 1em;
@@ -32,22 +33,4 @@ mat-form-field {
 
 .empty-hint {
   color: $c_hint;
-}
-
-.distraction-free-half {
-  opacity: 0.5;
-  animation: fadeIntoHalf 300ms;
-
-  &:hover {
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIntoHalf {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0.5;
-  }
 }

@@ -1,4 +1,10 @@
-<div class="explorer" *ngIf="distractionFreeStatus !== DISTRACTION_FREE_STATES.FULL" [@fadeInOnEnter] [@fadeOutOnLeave]>
+<div
+  class="explorer"
+  *ngIf="distractionFreeStatus !== DISTRACTION_FREE_STATES.FULL"
+  wyAddClassesForDistractionStates
+  [@fadeInOnEnter]
+  [@fadeOutOnLeave]
+>
   <div *ngIf="!selectedProject">
     <wy-projects (projectSelected)="selectProject($event)"></wy-projects>
   </div>

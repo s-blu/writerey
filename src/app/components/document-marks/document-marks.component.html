@@ -1,7 +1,7 @@
 <div class="document-markers" *transloco="let t; read: 'documentMarkers'">
   <div
     class="write-mode"
-    wyAdd
+    wyAddClassesForDistractionStates
     *ngIf="mode === MODES.WRITE && distractionFreeState !== DF_STATE.FULL"
     [@fadeInOnEnter]
     [@fadeOutFromHalf]
