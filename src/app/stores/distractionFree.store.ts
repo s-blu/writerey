@@ -1,10 +1,11 @@
+import { DISTRACTION_FREE_STATES } from './../models/distractionFreeStates.enum';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class DistractionFreeStore {
-  private readonly _distractionFreeSubject = new BehaviorSubject<boolean>(false);
+  private readonly _distractionFreeSubject = new BehaviorSubject<DISTRACTION_FREE_STATES>(DISTRACTION_FREE_STATES.NONE);
 
   readonly distractionFree$ = this._distractionFreeSubject.asObservable().pipe(distinctUntilChanged());
 
@@ -16,7 +17,7 @@ export class DistractionFreeStore {
     this._distractionFreeSubject.next(val);
   }
 
-  public setDistractionFree(status: boolean) {
+  public setDistractionFree(status: DISTRACTION_FREE_STATES) {
     this.distractionFreeSubject = status;
   }
 }

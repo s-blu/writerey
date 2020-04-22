@@ -1,3 +1,5 @@
+import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from './../../utils/animation.utils';
 import { DistractionFreeStore } from './../../stores/distractionFree.store';
 import { DocumentModeStore } from './../../stores/documentMode.store';
 import { ContextStore } from './../../stores/context.store';
@@ -12,18 +14,12 @@ import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
 import { MarkerStore } from 'src/app/stores/marker.store';
 import { DocumentStore } from 'src/app/stores/document.store';
-import { trigger, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'wy-notes',
   templateUrl: './notes.component.html',
   styleUrls: ['./notes.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition('void => *', [style({ opacity: 0 }), animate(300)]),
-      transition('* => void', [animate(300, style({ opacity: 0 }))]),
-    ])
-  ],
+  animations: FADE_ANIMATIONS,
 })
 export class NotesComponent implements OnInit, OnDestroy {
   MODES = DOC_MODES;
@@ -35,7 +31,8 @@ export class NotesComponent implements OnInit, OnDestroy {
   notes: any = {
     paragraph: [],
   };
-  isDistractionFree: boolean;
+  distractionFreeState: DISTRACTION_FREE_STATES;
+  DF_STATES = DISTRACTION_FREE_STATES;
 
   private subscription = new Subscription();
 
@@ -63,7 +60,7 @@ export class NotesComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
-        this.isDistractionFree = status;
+        this.distractionFreeState = status;
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
@@ -129,7 +126,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   }
 
   shouldShowNotes(): boolean {
-    if (this.isDistractionFree) {
+    if (this.distractionFreeState === DISTRACTION_FREE_STATES.FULL) {
       return this.mode === DOC_MODES.REVIEW;
     }
     return this.mode !== DOC_MODES.READ;

@@ -11,7 +11,7 @@
       (noteCreated)="createNewNote($event)"
     ></wy-create-new-note>
   </mat-expansion-panel>
-  <div *ngIf="shouldShowNotes()" class="existing-notes" [@fadeInOut]>
+  <div *ngIf="shouldShowNotes()" wyAddClassesForDistractionStates class="existing-notes" [@fadeInOnEnter] [@fadeOutFromHalf]>
     <div *ngFor="let key of noteContexts" class="note">
       <wy-note
         *ngFor="let n of notes[key]"

@@ -1,27 +1,23 @@
+import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from './../../utils/animation.utils';
 import { DistractionFreeStore } from './../../stores/distractionFree.store';
 import { DocumentModeStore } from './../../stores/documentMode.store';
 import { MarkerStore } from './../../stores/marker.store';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from './../../services/paragraph.service';
 import { DOC_MODES } from '../../models/docModes.enum';
-import { Component, OnInit, Input, SimpleChanges, OnChanges, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
 import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
 import { Marker } from 'src/app/models/marker.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
-import { trigger, transition, style, animate } from '@angular/animations';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './document-marks.component.html',
   styleUrls: ['./document-marks.component.scss'],
-  animations: [
-    trigger('fadeInOut', [
-      transition('void => *', [style({ opacity: 0 }), animate(300)]),
-      transition('* => void', [animate(300, style({ opacity: 0 }))]),
-    ])
-  ],
+  animations: FADE_ANIMATIONS,
 })
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   paragraphId: string;
@@ -33,7 +29,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   MODES = DOC_MODES;
   mode: DOC_MODES;
   TYPES = MarkerTypes;
-  isDistractionFree: boolean;
+  distractionFreeState: DISTRACTION_FREE_STATES;
+  DF_STATE = DISTRACTION_FREE_STATES;
 
   private subscription = new Subscription();
 
@@ -66,7 +63,7 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       })
     );
     this.subscription.add(
-      this.distractionFreeStore.distractionFree$.subscribe(status => (this.isDistractionFree = status))
+      this.distractionFreeStore.distractionFree$.subscribe(status => (this.distractionFreeState = status))
     );
   }
 

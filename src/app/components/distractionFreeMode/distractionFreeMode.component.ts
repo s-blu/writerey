@@ -1,3 +1,4 @@
+import { DISTRACTION_FREE_STATES } from './../../models/distractionFreeStates.enum';
 import { DistractionFreeStore } from './../../stores/distractionFree.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -8,7 +9,9 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./distractionFreeMode.component.scss'],
 })
 export class DistractionFreeModeComponent implements OnInit, OnDestroy {
-  isDistractionFree: boolean;
+  distractionFreeState: DISTRACTION_FREE_STATES;
+
+  states = DISTRACTION_FREE_STATES;
 
   private subscription = new Subscription();
   ngOnDestroy() {
@@ -19,12 +22,16 @@ export class DistractionFreeModeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
-        this.isDistractionFree = !!status;
+        this.distractionFreeState = status;
       })
     );
   }
 
   toggleDistractionFree() {
-    this.distractionFreeStore.setDistractionFree(!this.isDistractionFree);
+    let nextState = this.distractionFreeState + 1;
+    if (nextState > DISTRACTION_FREE_STATES.FULL) {
+      nextState = DISTRACTION_FREE_STATES.NONE;
+    }
+    this.distractionFreeStore.setDistractionFree(nextState);
   }
 }
