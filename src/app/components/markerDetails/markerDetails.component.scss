@@ -6,13 +6,27 @@
   box-sizing: border-box;
 }
 
-mat-card {
+.marker-details {
   height: 100%;
 
-  overflow: auto;
   //width: 100%;
+  display: flex;
+  flex-direction: column;
   border-radius: 0;
   box-sizing: border-box;
+
+  form {
+    overflow: auto;
+    overflow-x: hidden;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    mat-card-content {
+      display: block;
+      flex-grow: 2;
+    }
+  }
 
   .mat-form-field {
     display: block;
