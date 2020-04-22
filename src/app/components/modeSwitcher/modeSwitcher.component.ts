@@ -26,7 +26,8 @@ export class ModeSwitcherComponent implements OnInit, OnDestroy {
   }
 
   isActive(mode) {
-    return { active: this.mode === mode && this.docLoaded };
+    const isActive = this.mode === mode && this.docLoaded;
+    return { active: isActive, 'mat-elevation-z2': isActive };
   }
 
   switchMode(newMode) {

@@ -1,17 +1,29 @@
-.marker-details {
-  margin: 1em;
-  max-width: 480px;
+@import '../../styles/variables.scss';
 
-  .actions {
-    margin: 1em;
+:host {
+  //display: block;
+  height: 100%;
+  box-sizing: border-box;
+}
 
-    button {
-      margin: 1em;
-    }
-  }
+mat-card {
+  height: 100%;
+
+  overflow: auto;
+  //width: 100%;
+  border-radius: 0;
+  box-sizing: border-box;
 
   .mat-form-field {
     display: block;
+  }
+
+  .tab-content {
+    margin: 1em;
+    overflow: auto;
+  }
+  .mat-card-actions {
+    padding-bottom: 0;
   }
 
   .text-value-container {
@@ -26,7 +38,6 @@
   .numeric-values {
     mat-input-field {
       display: block;
-      width: 100%;
     }
   }
 }

@@ -22,8 +22,8 @@
     "titleValues": "Werte",
     "titleMarkerProps": "Markereigenschaften",
     "type": {
-      "text": "[Text]",
-      "numeric": "[Numerisch]"
+      "text": "Text-Marker",
+      "numeric": "Numerischer Marker"
     },
     "saved": "Gespeichert!",
     "start": "Start",

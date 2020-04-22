@@ -57,8 +57,7 @@ export class MarkerDetailsComponent implements OnInit {
   onSubmit(newValues) {
     // TODO take over new values to obj
     this.markerService.updateMarkerDefinition(newValues).subscribe(res => {
-      // TODO refresh tree
-      const msg = this.translocoService.translate('markerDetails.saved'); // TODO show snackbar
+      const msg = this.translocoService.translate('markerDetails.saved');
       this.snackBar.open(msg, '', {
         duration: 2000,
         horizontalPosition: 'right',
