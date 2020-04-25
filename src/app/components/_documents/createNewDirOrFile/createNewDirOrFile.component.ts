@@ -44,8 +44,9 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
 
         this.subscription.add(
           createObservable.subscribe((res: any) => {
-            this.itemCreated.emit(res);
-            if (this.type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
+            this.directoryService.getTree().subscribe(_ => {
+              if (this.type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
+            });
           })
         );
       })

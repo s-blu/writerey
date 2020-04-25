@@ -26,12 +26,10 @@
         <wy-create-new-dir-or-file
           type="dir"
           [path]="prettifyPath(node)"
-          (itemCreated)="fetchTree()"
         ></wy-create-new-dir-or-file>
         <wy-create-new-dir-or-file
           type="file"
           [path]="prettifyPath(node)"
-          (itemCreated)="fetchTree()"
         ></wy-create-new-dir-or-file>
       </mat-menu>
     </mat-tree-node>

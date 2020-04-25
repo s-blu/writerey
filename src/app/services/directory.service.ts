@@ -1,5 +1,6 @@
+import { DirectoryStore } from './../stores/directory.store';
 import { ProjectStore, LAST_PROJECT_KEY } from './../stores/project.store';
-import { catchError, flatMap, map } from 'rxjs/operators';
+import { catchError, flatMap, map, tap, take } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -10,9 +11,15 @@ import { Subscription } from 'rxjs';
   providedIn: 'root',
 })
 export class DirectoryService implements OnDestroy {
+  private project;
   private subscription = new Subscription();
 
-  constructor(private api: ApiService, private httpClient: HttpClient, private projectStore: ProjectStore) {}
+  constructor(
+    private api: ApiService,
+    private httpClient: HttpClient,
+    private projectStore: ProjectStore,
+    private directoryStore: DirectoryStore
+  ) {}
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
@@ -31,25 +38,43 @@ export class DirectoryService implements OnDestroy {
   }
 
   public getTree(params?) {
-    const parameter: any = {};
+    const parameter: any = {
+      params: {
+        base: this.project || '',
+      },
+    };
     if (params) parameter.params = params;
 
     return this.httpClient.get(this.api.getTreeRoute(), parameter).pipe(
-      catchError(err => this.api.handleHttpError(err)),
-      map((res: any) => {
-        try {
-          res = JSON.parse(res);
-          return res;
-        } catch (err) {
-          console.error('Could not parse response of tree route. Will return empty object.');
-          return {};
-        }
-      })
+      map(
+        (res: any) => {
+          try {
+            res = JSON.parse(res);
+            this.directoryStore.setTree(res);
+            return res;
+          } catch (err) {
+            console.error('Could not parse response of tree route. Will return empty object.');
+            return {};
+          }
+        },
+        catchError(err => this.api.handleHttpError(err))
+      )
     );
   }
 
   init() {
+    this.subscription.add(
+      this.projectStore.project$
+        .pipe(
+          tap(res => (this.project = res)),
+          flatMap(_ => {
+            return this.getTree();
+          })
+        ).subscribe()
+    );
+
     const lastProject = localStorage.getItem(LAST_PROJECT_KEY);
     if (lastProject) this.projectStore.setProject(lastProject);
+    this.subscription.add(this.getTree().pipe(take(1)).subscribe());
   }
 }

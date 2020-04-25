@@ -1,19 +1,11 @@
+import { DirectoryStore } from './../../../stores/directory.store';
 import { DocumentStore } from '../../../stores/document.store';
 import { Subscription } from 'rxjs';
-import { DirectoryService } from '../../../services/directory.service';
-import { CreateNewItemDialogComponent } from '../../createNewItemDialog/createNewItemDialog.component';
-import { DocumentService } from '../../../services/document.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
-import { delay } from 'rxjs/operators';
 
-/**
- * Food data with nested structure.
- * Each node has a name and an optional list of children.
- */
-/** Flat node with expandable and level information */
 interface ExplorerNode {
   expandable: boolean;
   name: string;
@@ -47,9 +39,10 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit() {
-    this.fetchTree();
+    this.subscription.add(this.directoryStore.tree$.subscribe(res => this.setTree(res)));
+
     this.subscription.add(
-      this.documentStore.fileInfo$.pipe(delay(200)).subscribe(res => {
+      this.documentStore.fileInfo$.subscribe(res => {
         this.activeFileInfo = res;
         this.expandToActiveDocument();
       })
@@ -62,22 +55,14 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private documentService: DocumentService,
-    private directoryService: DirectoryService,
+    private directoryStore: DirectoryStore,
     private documentStore: DocumentStore
   ) {}
 
-  fetchTree() {
-    console.log('fetching treee......');
-    const params = {
-      base: this.project || '',
-    };
-    this.subscription.add(
-      this.directoryService.getTree(params).subscribe(res => {
-        this.tree = res;
-        this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
-      })
-    );
+  setTree(tree) {
+    if (!tree) return;
+    this.tree = tree;
+    this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
   }
 
   openDocument(node) {
