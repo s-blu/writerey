@@ -1,3 +1,4 @@
+import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
@@ -103,7 +104,8 @@ const matModules = [
     ModeSwitcherComponent,
     WordCountComponent,
     DistractionFreeModeComponent,
-    AddClassesForDistractionStatesDirective
+    AddClassesForDistractionStatesDirective,
+    CreateNewDirOrFileComponent,
   ],
   imports: [
     BrowserModule,

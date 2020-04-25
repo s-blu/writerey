@@ -62,7 +62,8 @@
     "tabs": {
       "documenttree": "Dokumente",
       "markers": "Marker"
-    }
+    },
+    "backToProjects": "Zurück zur Projektwahl"
   },
   "markerTree": {
     "newmarker": "Neuer Marker",

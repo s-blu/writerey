@@ -67,7 +67,8 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     private documentStore: DocumentStore
   ) {}
 
-  private fetchTree() {
+  fetchTree() {
+    console.log('fetching treee......');
     const params = {
       base: this.project || '',
     };
@@ -91,45 +92,12 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     // todo
     console.warn('rename file not implemented yet', node);
   }
-  addNewFile(node) {
-    this.createNewChild('file', node);
-  }
 
-  addNewDir(node) {
-    this.createNewChild('dir', node);
-  }
-
-  addNewItemOnRoot(type) {
-    this.createNewChild(type, { path: '/', name: '' });
-  }
-
-  private createNewChild(type, node) {
-    const path = this.prettifyPath(node.path, node.name);
-    const dialogRef = this.dialog.open(CreateNewItemDialogComponent, {
-      data: { dirPath: path, typeOfDialog: type },
-    });
-
-    this.subscription.add(
-      dialogRef.afterClosed().subscribe(name => {
-        if (!name) return;
-        let createObservable;
-        if (type === 'file') createObservable = this.documentService.createDocument(path, name);
-        if (type === 'dir') createObservable = this.directoryService.createDirectory(path, name);
-
-        this.subscription.add(
-          createObservable.subscribe((res: any) => {
-            this.fetchTree();
-            if (type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
-          })
-        );
-      })
-    );
-  }
-
-  private prettifyPath(path, dirName) {
-    if (!path || path === '') return dirName;
-    if (path === '/') path = this.project;
-    return path + '/' + dirName;
+  prettifyPath(node) {
+    if (!node || node.path === '') return node.name;
+    let path = node.path;
+    if (node.path === '/') path = this.project;
+    return path + '/' + node.name;
   }
 
   private expandToActiveDocument() {
@@ -166,7 +134,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       path: node.path,
       name: node.name,
       isFile: node.isFile,
-      level
+      level,
     };
   }
 }

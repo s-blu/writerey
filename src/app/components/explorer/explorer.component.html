@@ -11,11 +11,19 @@
   <div *ngIf="selectedProject">
     <div *transloco="let t; read: 'explorer'">
       <div class="project-name">
-        <button class="project-button" (click)="resetProject()" mat-icon-button>
-          <mat-icon class="back">arrow_back</mat-icon>
-          <i class="project-icon material-icons-outlined">library_books</i>
+        <button disabled mat-icon-button class="project-icon">
+          <mat-icon svgIcon="writerey"></mat-icon>
         </button>
-        <span>{{ selectedProject }}</span>
+        <span class="name">{{ selectedProject }}</span>
+        <button mat-icon-button class="menu-button"[matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+        <mat-menu #menu="matMenu">
+          <wy-create-new-dir-or-file type="dir" [path]="selectedProject"></wy-create-new-dir-or-file>
+          <wy-create-new-dir-or-file type="file" [path]="selectedProject"></wy-create-new-dir-or-file>
+          <button mat-menu-item (click)="resetProject()">
+            <mat-icon>arrow_back</mat-icon>
+            {{ t('backToProjects') }}
+          </button>
+        </mat-menu>
       </div>
       <mat-tab-group>
         <mat-tab [label]="t('tabs.documenttree')">

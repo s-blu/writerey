@@ -1,7 +1,7 @@
 <div class="projects" *transloco="let t; read: 'projects'">
   <div class="project-title">
     <button disabled mat-icon-button>
-      <i class="project-icon material-icons-outlined">library_books</i>
+      <mat-icon class="writerey-icon" svgIcon="writerey"></mat-icon>
     </button>
     <span class="title">{{ t('title') }}</span>
     <button mat-icon-button color="primary" class="new-button" (click)="addNewProject()" [matTooltip]="t('new')">

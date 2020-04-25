@@ -62,7 +62,8 @@
     "tabs": {
       "documenttree": "Documents",
       "markers": "Markers"
-    }
+    },
+    "backToProjects": "Back to projects"
   },
   "markerTree": {
     "newmarker": "New Marker",

@@ -1,20 +1,14 @@
 @import '../../styles/variables';
 @import '../../styles/distractionFree';
 
-
 .explorer {
   background-color: $c_bg_boxes;
   height: 100%;
   overflow: auto;
 }
 
-.project-name:hover {
-  .back {
-    display: inline-block;
-  }
-  .project-icon {
-    display: none;
-  }
+.project-icon mat-icon {
+  width: 18px;
 }
 
 .project-name {
@@ -23,10 +17,14 @@
   top: 0;
   z-index: 10;
 
-  .back {
-    display: none;
+  display: flex;
+  align-items: center;
+
+  .name {
+    flex-grow: 2;
   }
-  .project-icon {
-    display: inline;
-  }
+}
+
+.menu-button mat-icon {
+  font-size: 18px;
 }

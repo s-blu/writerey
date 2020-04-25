@@ -1,14 +1,5 @@
 <div class="document-tree" *transloco="let t; read: 'documentTree'">
-  <div class="button-wrap">
-    <button mat-button class="new-root-dir-button" (click)="addNewItemOnRoot('dir')">
-      <i class="material-icons-outlined">create_new_folder</i>
-      <span>{{ t('newdir') }}</span>
-    </button>
-    <button mat-button class="new-root-dir-button" (click)="addNewItemOnRoot('file')">
-      <i class="material-icons-outlined">note_add</i>
-      <span>{{ t('newfile') }}</span>
-    </button>
-  </div>
+
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
       <button
@@ -32,14 +23,16 @@
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
         </button>
-        <button mat-menu-item (click)="addNewDir(node)">
-          <mat-icon>create_new_folder</mat-icon>
-          <span>{{ t('newdir') }}</span>
-        </button>
-        <button mat-menu-item (click)="addNewFile(node)">
-          <mat-icon>note_add</mat-icon>
-          <span>{{ t('newfile') }}</span>
-        </button>
+        <wy-create-new-dir-or-file
+          type="dir"
+          [path]="prettifyPath(node)"
+          (itemCreated)="fetchTree()"
+        ></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file
+          type="file"
+          [path]="prettifyPath(node)"
+          (itemCreated)="fetchTree()"
+        ></wy-create-new-dir-or-file>
       </mat-menu>
     </mat-tree-node>
 
