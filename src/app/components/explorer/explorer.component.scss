@@ -1,9 +1,6 @@
 @import '../../styles/variables';
 @import '../../styles/distractionFree';
 
-::ng-deep .explorer .mat-tab-label {
-  height: 40px;
-}
 
 .explorer {
   background-color: $c_bg_boxes;

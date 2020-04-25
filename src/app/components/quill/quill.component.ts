@@ -1,6 +1,6 @@
 import { TranslocoService } from '@ngneat/transloco';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, Input, ViewChild, ViewEncapsulation} from '@angular/core';
 import { debounceTime, distinctUntilChanged, throwIfEmpty } from 'rxjs/operators';
 import { QuillEditorComponent } from 'ngx-quill';
 
@@ -10,6 +10,7 @@ import { DocumentDefinition } from 'src/app/models/documentDefinition.interface'
   selector: 'wy-quill',
   templateUrl: './quill.component.html',
   styleUrls: ['./quill.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class QuillComponent implements OnInit {
   @Input() content: string;
