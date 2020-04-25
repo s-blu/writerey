@@ -1,8 +1,8 @@
-import { DocumentStore } from './../../stores/document.store';
+import { DocumentStore } from '../../../stores/document.store';
 import { Subscription } from 'rxjs';
-import { DirectoryService } from './../../services/directory.service';
-import { CreateNewFileDialogComponent } from './../createNewFileDialog/createNewFileDialog.component';
-import { DocumentService } from './../../services/document.service';
+import { DirectoryService } from '../../../services/directory.service';
+import { CreateNewItemDialogComponent } from '../../createNewItemDialog/createNewItemDialog.component';
+import { DocumentService } from '../../../services/document.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
@@ -105,7 +105,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   private createNewChild(type, node) {
     const path = this.prettifyPath(node.path, node.name);
-    const dialogRef = this.dialog.open(CreateNewFileDialogComponent, {
+    const dialogRef = this.dialog.open(CreateNewItemDialogComponent, {
       data: { dirPath: path, typeOfDialog: type },
     });
 

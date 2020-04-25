@@ -3,20 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CreateNewFileDialogComponent } from './createNewFileDialog.component';
+import { CreateNewItemDialogComponent } from './createNewItemDialog.component';
 
 describe('CreateNewFileDialogComponent', () => {
-  let component: CreateNewFileDialogComponent;
-  let fixture: ComponentFixture<CreateNewFileDialogComponent>;
+  let component: CreateNewItemDialogComponent;
+  let fixture: ComponentFixture<CreateNewItemDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CreateNewFileDialogComponent],
+      declarations: [CreateNewItemDialogComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CreateNewFileDialogComponent);
+    fixture = TestBed.createComponent(CreateNewItemDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

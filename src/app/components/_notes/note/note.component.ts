@@ -1,7 +1,7 @@
-import { FADE_ANIMATIONS } from './../../utils/animation.utils';
+import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { animate } from '@angular/animations';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Note } from '../../models/note.interface';
+import { Note } from '../../../models/note.interface';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 
 @Component({

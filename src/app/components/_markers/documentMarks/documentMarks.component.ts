@@ -1,11 +1,11 @@
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
-import { FADE_ANIMATIONS } from './../../utils/animation.utils';
-import { DistractionFreeStore } from './../../stores/distractionFree.store';
-import { DocumentModeStore } from './../../stores/documentMode.store';
-import { MarkerStore } from './../../stores/marker.store';
+import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
+import { DistractionFreeStore } from '../../../stores/distractionFree.store';
+import { DocumentModeStore } from '../../../stores/documentMode.store';
+import { MarkerStore } from '../../../stores/marker.store';
 import { Subscription } from 'rxjs';
-import { ParagraphService } from './../../services/paragraph.service';
-import { DOC_MODES } from '../../models/docModes.enum';
+import { ParagraphService } from '../../../services/paragraph.service';
+import { DOC_MODES } from '../../../models/docModes.enum';
 import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';

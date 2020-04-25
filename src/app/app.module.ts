@@ -1,18 +1,18 @@
 import { TranslocoService } from '@ngneat/transloco';
-import { WordCountComponent } from './components/wordCount/wordCount.component';
+import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { ProjectsComponent } from './components/projects/projects.component';
-import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
+import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { CreateNewMarkerComponent } from './components/createNewMarker/createNewMarker.component';
-import { MarkerTreeComponent } from './components/markerTree/markerTree.component';
-import { DocumentTreeComponent } from './components/documentTree/documentTree.component';
-import { QuillComponent } from './components/quill/quill.component';
-import { CreateNewNoteComponent } from './components/createNewNote/createNewNote.component';
+import { CreateNewMarkerComponent } from './components/_markers/createNewMarker/createNewMarker.component';
+import { MarkerTreeComponent } from './components/_markers/markerTree/markerTree.component';
+import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
+import { QuillComponent } from './components/_documents/quill/quill.component';
+import { CreateNewNoteComponent } from './components/_notes/createNewNote/createNewNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
-import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
+import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
-import { CreateNewFileDialogComponent } from './components/createNewFileDialog/createNewFileDialog.component';
+import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
@@ -39,19 +39,19 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
-import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
+import { DocumentEditorComponent } from './components/_documents/documentEditor/documentEditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplorerComponent } from './components/explorer/explorer.component';
-import { NotesComponent } from './components/notes/notes.component';
-import { NoteComponent } from './components/note/note.component';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { DocumentMarksComponent } from './components/documentMarks/documentMarks.component';
+import { NotesComponent } from './components/_notes/notes/notes.component';
+import { NoteComponent } from './components/_notes/note/note.component';
+import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
+import { DocumentMarksComponent } from './components/_markers/documentMarks/documentMarks.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
-import { MarkerDetailsComponent } from './components/markerDetails/markerDetails.component';
+import { MarkerDetailsComponent } from './components/_markers/markerDetails/markerDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 
@@ -87,7 +87,7 @@ const matModules = [
     DocumentMarksComponent,
     FooterComponent,
     StripFileEndingPipe,
-    CreateNewFileDialogComponent,
+    CreateNewItemDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
     CreateNewNoteComponent,

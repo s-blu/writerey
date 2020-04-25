@@ -1,10 +1,10 @@
-import { DocumentStore } from './../../stores/document.store';
-import { DocumentModeStore } from './../../stores/documentMode.store';
-import { DOC_MODES } from '../../models/docModes.enum';
-import { ParagraphService } from '../../services/paragraph.service';
+import { DocumentStore } from '../../../stores/document.store';
+import { DocumentModeStore } from '../../../stores/documentMode.store';
+import { DOC_MODES } from '../../../models/docModes.enum';
+import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DocumentService } from '../../services/document.service';
-import { DocumentDefinition } from '../../models/documentDefinition.interface';
+import { DocumentService } from '../../../services/document.service';
+import { DocumentDefinition } from '../../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import QuillUtils from 'src/app/utils/quill.utils';

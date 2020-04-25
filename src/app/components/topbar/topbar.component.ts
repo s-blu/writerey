@@ -1,9 +1,9 @@
-import { DocumentModeStore } from './../../stores/documentMode.store';
-import { NameSnapshotDialogComponent } from './../nameSnapshotDialog/nameSnapshotDialog.component';
+import { DocumentModeStore } from '../../stores/documentMode.store';
+import { NameSnapshotDialogComponent } from '../_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DOC_MODES } from '../../models/docModes.enum';
-import { TagDialogComponent } from './../tagDialog/tagDialog.component';
+import { TagDialogComponent } from '../_snapshots/tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
-import { SnapshotService } from './../../services/snapshot.service';
+import { SnapshotService } from '../../services/snapshot.service';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';

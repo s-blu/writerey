@@ -1,4 +1,4 @@
-import { DeletionService } from './../../services/deletion.service';
+import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MarkerService } from 'src/app/services/marker.service';

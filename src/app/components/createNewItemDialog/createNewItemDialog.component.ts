@@ -3,10 +3,10 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'wy-createNewFileDialog',
-  templateUrl: './createNewFileDialog.component.html',
-  styleUrls: ['./createNewFileDialog.component.scss'],
+  templateUrl: './createNewItemDialog.component.html',
+  styleUrls: ['./createNewItemDialog.component.scss'],
 })
-export class CreateNewFileDialogComponent implements OnInit {
+export class CreateNewItemDialogComponent implements OnInit {
   typeOfDialog = '';
 
   ngOnInit() {
@@ -26,7 +26,7 @@ export class CreateNewFileDialogComponent implements OnInit {
     }
   }
 
-  constructor(public dialogRef: MatDialogRef<CreateNewFileDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {}
+  constructor(public dialogRef: MatDialogRef<CreateNewItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {}
 
   cancel(): void {
     this.dialogRef.close();

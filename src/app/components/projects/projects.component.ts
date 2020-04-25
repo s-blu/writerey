@@ -2,7 +2,7 @@ import { DirectoryService } from './../../services/directory.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CreateNewFileDialogComponent } from '../createNewFileDialog/createNewFileDialog.component';
+import { CreateNewItemDialogComponent } from '../createNewItemDialog/createNewItemDialog.component';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from 'src/app/services/api.service';
 
@@ -29,7 +29,7 @@ export class ProjectsComponent implements OnInit {
   }
 
   addNewProject() {
-    const dialogRef = this.dialog.open(CreateNewFileDialogComponent, {
+    const dialogRef = this.dialog.open(CreateNewItemDialogComponent, {
       data: { typeOfDialog: 'project' },
       width: '400px',
     });

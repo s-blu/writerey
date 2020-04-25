@@ -1,5 +1,5 @@
 import { Subscription } from 'rxjs';
-import { SnapshotStore } from './../../stores/snapshot.store';
+import { SnapshotStore } from '../../stores/snapshot.store';
 import { Component, OnInit, Input } from '@angular/core';
 import { DocumentDefinition } from '../../models/documentDefinition.interface';
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DocumentDefinition } from '../../models/documentDefinition.interface';
+import { DocumentDefinition } from '../../../models/documentDefinition.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({

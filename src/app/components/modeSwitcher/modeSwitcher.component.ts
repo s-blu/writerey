@@ -1,4 +1,4 @@
-import { DocumentModeStore } from './../../stores/documentMode.store';
+import { DocumentModeStore } from '../../stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DOC_MODES } from 'src/app/models/docModes.enum';
 import { Subscription } from 'rxjs';

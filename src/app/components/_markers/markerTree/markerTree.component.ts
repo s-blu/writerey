@@ -1,5 +1,5 @@
-import { DeletionService } from '../../services/deletion.service';
-import { CreateNewMarkerComponent } from './../createNewMarker/createNewMarker.component';
+import { DeletionService } from '../../../services/deletion.service';
+import { CreateNewMarkerComponent } from '../createNewMarker/createNewMarker.component';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
