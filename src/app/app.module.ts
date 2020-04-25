@@ -46,7 +46,7 @@ import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { NoteComponent } from './components/note/note.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { DocumentMarksComponent } from './components/document-marks/documentMarks.component';
+import { DocumentMarksComponent } from './components/documentMarks/documentMarks.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
