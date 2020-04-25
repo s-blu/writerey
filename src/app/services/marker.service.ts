@@ -9,6 +9,7 @@ import { catchError, flatMap, map, take } from 'rxjs/operators';
 import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
 import { ContextStore } from '../stores/context.store';
 import { MarkerStore } from '../stores/marker.store';
+import { ContextService } from './context.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,7 +24,8 @@ export class MarkerService implements OnDestroy {
     private paragraphService: ParagraphService,
     private contextStore: ContextStore,
     private markerStore: MarkerStore,
-    private projectStore: ProjectStore
+    private projectStore: ProjectStore,
+    private contextService: ContextService
   ) {}
 
   ngOnDestroy() {
@@ -139,10 +141,9 @@ export class MarkerService implements OnDestroy {
       })
     );
   }
-
-  // FIXME REFACTOR THIS INTO NOTES SERVICE
-
-  saveNotesForMarkerValue(contextId, content) {
+  
+  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
+  saveMetaForMarkerValue(contextId, content, metaType?) {
     const [markerId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
@@ -160,14 +161,15 @@ export class MarkerService implements OnDestroy {
     );
   }
 
-  getNotesForMarkerValue(contextId): Observable<any> {
+  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
+  getMetaForMarkerValue(contextId, metaType?): Observable<any> {
     if (!contextId) return of([]);
-    const [markerId, valueId] = contextId.split(':');
+    const marker = this.contextService.getMarkerFromContextString(contextId);
     const params = {
-      value_id: valueId,
+      value_id: marker.valueId,
       project: this.project,
     };
-    return this.httpClient.get(this.api.getMarkerRoute(markerId), { params }).pipe(
+    return this.httpClient.get(this.api.getMarkerRoute(marker.id), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseMarkerValueResponse(res);
@@ -183,16 +185,16 @@ export class MarkerService implements OnDestroy {
     const newMarkers = [...markers];
     const existingMarker = newMarkers.find(m => m.id === markerId);
     if (existingMarker) {
-      const oldContext = this.getContextStringForMarker(existingMarker);
+      const oldContext = this.contextService.getContextStringForMarker(existingMarker);
       existingMarker.valueId = valueId;
-      this.contextStore.replaceContext(oldContext, this.getContextStringForMarker(existingMarker));
+      this.contextStore.replaceContext(oldContext, this.contextService.getContextStringForMarker(existingMarker));
     } else {
       const newMarker: Marker = {
         id: markerId,
         valueId,
       };
       newMarkers.push(newMarker);
-      this.contextStore.addContext(this.getContextStringForMarker(newMarker));
+      this.contextStore.addContext(this.contextService.getContextStringForMarker(newMarker));
     }
 
     return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', newMarkers);
@@ -210,24 +212,9 @@ export class MarkerService implements OnDestroy {
     }
     const updatedMarkers = [...markers];
     const [removedMarker] = updatedMarkers.splice(indexToRemove, 1);
-    this.contextStore.removeContext(this.getContextStringForMarker(removedMarker));
+    this.contextStore.removeContext(this.contextService.getContextStringForMarker(removedMarker));
 
     return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
-  }
-
-  public getContextStringForMarker(marker: Marker) {
-    if (!marker) return '';
-    return `${marker.id}:${marker.valueId}`;
-  }
-
-  public getMarkerFromContextString(context: string) {
-    if (!context) return null;
-    const [id, valueId] = context.split(':');
-    const newMarker: Marker = {
-      id,
-      valueId,
-    };
-    return newMarker;
   }
 
   private parseMarkerValueResponse(res) {

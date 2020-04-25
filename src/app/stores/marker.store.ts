@@ -3,7 +3,8 @@ import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { List } from 'immutable';
-import { map } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
+import { sortMarkerDefinitions } from '../utils/marker.utils';
 
 // For each entity, create:
 // private readonly _nameOfEntity = new BehaviorSubject<Type>(Initial state);
@@ -27,7 +28,9 @@ export class MarkerStore {
 
   readonly markerDefinitions$ = this._markerDefinitionSubject.asObservable().pipe(
     map((res: List<MarkerDefinition>) => {
-      return res.toArray();
+      const array = res.toArray();
+      array.sort(sortMarkerDefinitions);
+      return array;
     })
   );
 

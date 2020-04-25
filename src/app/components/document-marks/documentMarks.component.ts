@@ -13,6 +13,7 @@ import { MarkerService } from 'src/app/services/marker.service';
 import * as uuid from 'uuid';
 import { Marker } from 'src/app/models/marker.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
+import { sortMarkerArray } from 'src/app/utils/marker.utils';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './documentMarks.component.html',
@@ -168,6 +169,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     this.values = {};
     if (!responseFromServer) return;
     responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
+    sortMarkerArray(responseFromServer, this.markerDefinitions);
+
     for (const m of responseFromServer) {
       try {
         this.enhanceMarkerWithDisplayInfo(m);
@@ -181,13 +184,6 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
         console.warn('Was not able to find a marker definition for a marker. Will remove it since it is invalid.', m);
       }
     }
-
-    this.markers = this.markers.sort((markerA, markerB) => {
-      if (markerA.index === undefined) return 1;
-      if (markerA.index < markerB.index) return -1;
-      if (markerA.index > markerB.index) return 1;
-      return 0;
-    });
   }
 
   private enhanceMarkerWithDisplayInfo(marker) {

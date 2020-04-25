@@ -1,3 +1,4 @@
+import { DEFAULT_CONTEXTS } from './../../services/context.service';
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from './../../utils/animation.utils';
 import { DistractionFreeStore } from './../../stores/distractionFree.store';
@@ -14,6 +15,7 @@ import { FileInfo } from 'src/app/models/fileInfo.interface';
 import * as uuid from 'uuid';
 import { MarkerStore } from 'src/app/stores/marker.store';
 import { DocumentStore } from 'src/app/stores/document.store';
+import { ContextService } from 'src/app/services/context.service';
 
 @Component({
   selector: 'wy-notes',
@@ -41,6 +43,7 @@ export class NotesComponent implements OnInit, OnDestroy {
     private notesService: NotesService,
     private markerService: MarkerService,
     private contextStore: ContextStore,
+    private contextService: ContextService,
     private markerStore: MarkerStore,
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
@@ -114,7 +117,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private updateParagraphMeta(context, data) {
     let obs;
     if (context.includes(':')) {
-      obs = this.markerService.saveNotesForMarkerValue(context, data);
+      obs = this.markerService.saveMetaForMarkerValue(context, data, 'notes');
     } else {
       const con = context === 'paragraph' ? this.parId : context;
       obs = this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data);
@@ -146,7 +149,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private getContexts() {
     if (!this.fileInfo) return;
     this.subscription.add(
-      this.notesService.getContexts(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
+      this.contextService.getContexts(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
         this.updateContexts(res);
       })
     );
@@ -154,8 +157,6 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   private updateContexts(contexts) {
     this.noteContexts = contexts;
-    // sort reversed alphabetically to have paragraph > document > markers
-    if (contexts && contexts instanceof Array) this.noteContexts.sort((a, b) => (a < b ? 1 : a > b ? -1 : 0));
     this.fetchNotesForParagraph();
   }
 }

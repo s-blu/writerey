@@ -1,15 +1,11 @@
-import { ContextStore } from './../stores/context.store';
 import { MarkerService } from 'src/app/services/marker.service';
 import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
 import { Injectable } from '@angular/core';
-import { catchError, map, flatMap } from 'rxjs/operators';
-import { of, forkJoin, merge } from 'rxjs';
+import { catchError, flatMap } from 'rxjs/operators';
+import { of, forkJoin } from 'rxjs';
+import { DEFAULT_CONTEXTS } from './context.service';
 
-enum DEFAULT_CONTEXTS {
-  PARAGRAPH = 'paragraph',
-  DOCUMENT = 'document',
-}
 
 @Injectable({
   providedIn: 'root',
@@ -19,25 +15,7 @@ export class NotesService {
   constructor(
     private paragraphService: ParagraphService,
     private api: ApiService,
-    private markerService: MarkerService,
-    private contextStore: ContextStore
-  ) {}
-
-  getContexts(docPath: string, docName: string, paragraphId?: string) {
-    const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
-    if (paragraphId) contexts.push(DEFAULT_CONTEXTS.PARAGRAPH);
-    return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(
-      map(markers => {
-        if (markers) {
-          for (const m of markers) {
-            contexts.push(this.markerService.getContextStringForMarker(m));
-          }
-        }
-        this.contextStore.setContexts(contexts);
-        return contexts;
-      })
-    );
-  }
+    private markerService: MarkerService  ) {}
 
   getNotesForParagraph(docPath, docName, paragraphId, contexts) {
     const notesWrap = {};
@@ -56,7 +34,7 @@ export class NotesService {
         const markerContexts = [];
         for (const c of contexts) {
           if (c.includes(':')) {
-            markerContexts.push(this.markerService.getNotesForMarkerValue(c));
+            markerContexts.push(this.markerService.getMetaForMarkerValue(c, 'notes'));
           }
         }
 
