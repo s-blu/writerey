@@ -15,8 +15,8 @@ import { Marker } from 'src/app/models/marker.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
 @Component({
   selector: 'wy-document-marks',
-  templateUrl: './document-marks.component.html',
-  styleUrls: ['./document-marks.component.scss'],
+  templateUrl: './documentMarks.component.html',
+  styleUrls: ['./documentMarks.component.scss'],
   animations: FADE_ANIMATIONS,
 })
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {

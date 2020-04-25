@@ -3,20 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { DocumentEditorComponent } from './document-editor.component';
+import { DocumentMarksComponent } from './documentMarks.component';
 
-describe('DocumentEditorComponent', () => {
-  let component: DocumentEditorComponent;
-  let fixture: ComponentFixture<DocumentEditorComponent>;
+describe('DocumentMarksComponent', () => {
+  let component: DocumentMarksComponent;
+  let fixture: ComponentFixture<DocumentMarksComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DocumentEditorComponent],
+      declarations: [DocumentMarksComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DocumentEditorComponent);
+    fixture = TestBed.createComponent(DocumentMarksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

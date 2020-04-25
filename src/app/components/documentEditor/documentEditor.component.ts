@@ -11,8 +11,8 @@ import QuillUtils from 'src/app/utils/quill.utils';
 
 @Component({
   selector: 'wy-document-editor',
-  templateUrl: './document-editor.component.html',
-  styleUrls: ['./document-editor.component.scss'],
+  templateUrl: './documentEditor.component.html',
+  styleUrls: ['./documentEditor.component.scss'],
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
   content: string;

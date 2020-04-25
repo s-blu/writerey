@@ -39,14 +39,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
-import { DocumentEditorComponent } from './components/document-editor/document-editor.component';
+import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { NoteComponent } from './components/note/note.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
-import { DocumentMarksComponent } from './components/document-marks/document-marks.component';
+import { DocumentMarksComponent } from './components/document-marks/documentMarks.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
