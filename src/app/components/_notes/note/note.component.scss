@@ -26,21 +26,13 @@
   }
 }
 
+.note .mat-card-actions {
+  margin-bottom: 0;
+  padding: 8px;
+}
+
 .type-todo {
-  //border: 1px solid #808080;
-}
-
-.mat-card-actions {
-  opacity: 0;
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
+  border-left: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .exandable-wrap {

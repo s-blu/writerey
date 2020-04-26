@@ -11,6 +11,8 @@
     <mat-card-content>
       <quill-view class="note-text" [content]="note.text"></quill-view>
     </mat-card-content>
-    <mat-card-actions> </mat-card-actions>
+    <mat-card-actions>
+      <button mat-icon-button (click)="delete()"><mat-icon>done</mat-icon></button>
+    </mat-card-actions>
   </div>
 </mat-card>
