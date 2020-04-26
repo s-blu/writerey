@@ -121,6 +121,11 @@
   "notes": {
     "createNew": "Erstelle eine Notiz"
   },
+  "note": {
+    "delete": "Erledigt!",
+    "keepOpen": "Notiz initial öffnen",
+    "keepClosed": "Notiz initial schließen"
+  },
   "createNote": {
     "context": "Kontext",
     "comment": "Notiz",

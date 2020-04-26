@@ -88,6 +88,23 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
+  editNote(editedNote, oldContext?) {
+    const context = oldContext || editedNote.context;
+    let notes = this.notes[context];
+    if (!notes) {
+      console.warn('Could not find context collection for note. Do nothing.', editedNote);
+      return;
+    }
+    const index = notes.findIndex(n => n.id === editedNote.id);
+    if (index > -1) {
+      notes.splice(index, 1, editedNote);
+    } else {
+      console.warn('Could not find note to edit in context. Do nothing.', editedNote);
+      return;
+    }
+    this.updateParagraphMeta(context, notes);
+  }
+
   deleteNote(note) {
     let notes = this.notes[note.context];
     if (!notes) {

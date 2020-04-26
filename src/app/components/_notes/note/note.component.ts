@@ -15,6 +15,7 @@ export class NoteComponent implements OnInit {
   @Input() markerDefs: Array<MarkerDefinition>;
 
   @Output() deleteNote = new EventEmitter<any>();
+  @Output() editNote = new EventEmitter<any>();
 
   noteStyles = '';
   classes = 'note';
@@ -25,6 +26,7 @@ export class NoteComponent implements OnInit {
 
   ngOnInit() {
     this.classes += ` type-${this.note.type}`;
+    this.isExpanded = !!this.note.keepOpen;
     if (this.note.color) {
       this.noteStyles = 'background-color:' + this.note.color;
     }
@@ -41,6 +43,11 @@ export class NoteComponent implements OnInit {
 
   delete() {
     this.deleteNote.emit(this.note);
+  }
+
+  changeKeepOpen() {
+    this.note.keepOpen = !this.note.keepOpen;
+    this.editNote.emit(this.note);
   }
 
   changeExpand() {

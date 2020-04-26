@@ -121,6 +121,11 @@
   "notes": {
     "createNew": "Create a note"
   },
+  "note": {
+    "delete": "Done!",
+    "keepOpen": "Expand note on load",
+    "keepClosed": "Collapse note on load"
+  },
   "createNote": {
     "context": "Context",
     "comment": "Note",

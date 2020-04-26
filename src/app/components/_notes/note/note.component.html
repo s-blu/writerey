@@ -1,4 +1,4 @@
-<mat-card [style]="noteStyles" class="{{ classes }}" [@fadeInOnEnter]>
+<mat-card [style]="noteStyles" class="{{ classes }}" [@fadeInOnEnter] *transloco="let t; read: 'note'">
   <mat-card-header>
     <i *ngIf="note.type === 'info'" class="material-icons-outlined type-icon">info</i>
     <i *ngIf="note.type === 'todo'" class="material-icons-outlined type-icon">assignment</i>
@@ -11,8 +11,13 @@
     <mat-card-content>
       <quill-view class="note-text" [content]="note.text"></quill-view>
     </mat-card-content>
-    <mat-card-actions>
-      <button mat-icon-button (click)="delete()"><mat-icon>done</mat-icon></button>
+    <mat-card-actions class="actions">
+      <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-icon-button (click)="changeKeepOpen()" [matTooltip]="t(note.keepOpen ? 'keepClosed' : 'keepOpen')">
+        <mat-icon>{{ note.keepOpen ? 'unfold_less' : 'unfold_more' }}</mat-icon>
+      </button>
     </mat-card-actions>
   </div>
 </mat-card>
