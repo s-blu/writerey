@@ -27,9 +27,14 @@ export class SnapshotService implements OnDestroy {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.httpClient
-      .put(this.api.getGitRoute(), formdata, { headers: httpHeaders })
-      .pipe(catchError(err => this.api.handleHttpError(err)));
+    return this.httpClient.put(this.api.getGitRoute(), formdata, { headers: httpHeaders }).pipe(
+      tap((res: any) => {
+        if (res?.commitDate) {
+          this.snapshotStore.setLastSnapshotDate(res.commitDate);
+        }
+      }),
+      catchError(err => this.api.handleHttpError(err))
+    );
   }
 
   createTag(tagname) {

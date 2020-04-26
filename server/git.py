@@ -56,7 +56,7 @@ class GitAutomation(Resource):
             return {'status': -1, 'text': 'Working dir is clean'}
         self.git.run(["git", "add", '.'])
         commitReturn = self.git.run(["git", "commit", '-m', msg])
-        return {'status': 0, 'text': commitReturn}
+        return {'status': 0, 'text': commitReturn, 'commitDate': self.getCommitDate()}
 
     def getCommitDate(self, tag: str = None):
         if tag:
