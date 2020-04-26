@@ -26,7 +26,6 @@ import { ContextService } from 'src/app/services/context.service';
 })
 export class NotesComponent implements OnInit, OnDestroy {
   @Input() set markerDefinition(md: MarkerDefinition) {
-    console.log('setting markerdef!', md);
     this.markerDef = md;
     this.getContexts();
   }
@@ -192,7 +191,6 @@ export class NotesComponent implements OnInit, OnDestroy {
     }
     this.subscription.add(
       fetchObservable.subscribe(res => {
-        console.log('got context', res)
         this.updateContexts(res);
       })
     );
@@ -201,7 +199,6 @@ export class NotesComponent implements OnInit, OnDestroy {
   private updateContexts(contexts) {
     this.noteContexts = contexts;
     if (this.markerDef) {
-      console.log('having markerres, fetch notes for marker def')
       this.fetchNotesForMarkerDefinition();
     } else {
       this.fetchNotesForParagraph();

@@ -44,7 +44,6 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log(this.createNewForm, this.contexts);
     for (const context of this.contexts) {
       if (context.includes(':')) {
         const [markerId, valueId] = context.split(':');

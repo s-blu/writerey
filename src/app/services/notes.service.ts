@@ -52,7 +52,6 @@ export class NotesService {
   }
 
   getNotesForMarkerDefinition(markerDef, contexts) {
-    console.log('getting notes for marker', markerDef, contexts);
     const notesWrap = {};
     contexts.forEach(c => {
       notesWrap[c] = [];
@@ -65,10 +64,8 @@ export class NotesService {
       }
     }
 
-    console.log('markereure', markerContexts);
     return forkJoin(markerContexts).pipe(
       flatMap((markerRes: Array<any>) => {
-        console.log('flatmap bby', markerRes);
         if (markerRes && markerRes instanceof Array) {
           for (const markerNotes of markerRes) {
             const contextOnNote = markerNotes[0]?.context;
