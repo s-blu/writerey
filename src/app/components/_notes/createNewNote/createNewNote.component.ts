@@ -13,6 +13,7 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() markerDefs: Array<MarkerDefinition> = [];
   @Output() noteCreated = new EventEmitter<any>();
 
+  noteColor;
   createNewForm;
   quillModules = {
     toolbar: [
@@ -37,12 +38,13 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
     this.createNewForm = this.formBuilder.group({
       type: 'todo',
       color: '',
-      context: this.contexts[0] || 'paragraph',
-      text: '',
+      context: this.contexts[0] || null,
+      text: ' \n',
     });
   }
 
   ngOnChanges() {
+    console.log(this.createNewForm, this.contexts);
     for (const context of this.contexts) {
       if (context.includes(':')) {
         const [markerId, valueId] = context.split(':');
@@ -51,6 +53,7 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
         this.translatedContextNames[context] = `[${markerDef?.name}] ${valueName}`;
       }
     }
+    this.createNewForm.patchValue({ context: this.contexts[0] });
   }
 
   ngOnInit() {
@@ -61,6 +64,15 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   onSubmit(data) {
     this.noteCreated.emit(data);
     this.createNewForm.patchValue({ text: '' });
+  }
+
+  changeColor() {
+    const color = this.createNewForm.get('color')?.value;
+    if (color) {
+      this.noteColor = color;
+    } else {
+      this.noteColor = null;
+    }
   }
 
   getContextName(context: string) {
