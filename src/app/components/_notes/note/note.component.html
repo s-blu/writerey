@@ -1,13 +1,16 @@
 <mat-card [style]="noteStyles" class="{{ classes }}" [@fadeInOnEnter]>
   <mat-card-header>
-    <i *ngIf="note.type === 'info'" class="material-icons-outlined">info</i>
-    <i *ngIf="note.type === 'todo'" class="material-icons-outlined">assignment</i>
-    <mat-card-subtitle>{{ contextName }}</mat-card-subtitle>
+    <i *ngIf="note.type === 'info'" class="material-icons-outlined type-icon">info</i>
+    <i *ngIf="note.type === 'todo'" class="material-icons-outlined type-icon">assignment</i>
+    <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
+    <mat-icon class="expand" [@rotate]="isExpanded" (click)="changeExpand()">
+      expand_more
+    </mat-icon>
   </mat-card-header>
-  <mat-card-content>
-    <quill-view class="note-text" [content]="note.text"></quill-view>
-  </mat-card-content>
-  <button mat-icon-button class="done-button" (click)="delete()">
-    <mat-icon>done</mat-icon>
-  </button>
+  <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
+    <mat-card-content>
+      <quill-view class="note-text" [content]="note.text"></quill-view>
+    </mat-card-content>
+    <mat-card-actions> </mat-card-actions>
+  </div>
 </mat-card>

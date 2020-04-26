@@ -1,22 +1,17 @@
 .mat-card-header {
   max-height: 1.5em;
-  justify-content: space-between;
-  flex-direction: row-reverse;
+  display: flex;
 
-  i {
+  .type-icon {
+    order: 1;
     height: 1em;
     width: 1em;
     font-size: 14pt;
   }
-}
-
-.done-button {
-  position: absolute;
-  z-index: 5;
-  bottom: 24px;
-  right: 12px;
-  background-color: white;
-  display: none;
+  .expand {
+    order: 3;
+    cursor: pointer;
+  }
 }
 
 .done-button:hover {
@@ -28,13 +23,6 @@
   padding: 1em;
   .mat-card-content {
     margin-bottom: 0;
-  }
-
-  &:hover {
-    .done-button {
-      display: inline;
-      animation: fadeIn 300ms;
-    }
   }
 }
 
@@ -53,4 +41,20 @@
   100% {
     opacity: 1;
   }
+}
+
+.exandable-wrap {
+  overflow-x: hidden;
+}
+
+.exandable-wrap.collapsed {
+  max-height: 3em;
+  overflow-y: hidden;
+  transition: ease-in-out max-height 400ms;
+}
+
+.exandable-wrap.opened {
+  max-height: 460px;
+  overflow-y: auto;
+  transition: ease-in-out max-height 400ms;
 }

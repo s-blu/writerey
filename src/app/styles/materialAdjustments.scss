@@ -6,11 +6,16 @@
 
 .note .mat-card {
   border-radius: 0;
+  box-sizing: border-box;
+
   div.mat-card-header-text {
-    padding-left: 0;
+    padding-left: 0.5em;
     margin: 0;
+    order: 2;
+    flex-grow: 2;
+
     .mat-card-subtitle {
-      font-size: 8pt;
+      font-size: 10pt;
     }
   }
 

@@ -40,7 +40,7 @@ export class WyInitService {
   private addWritereyIconToMatIcon() {
     this.matIconRegistry.addSvgIcon(
       'writerey',
-      this.domSanitizer.bypassSecurityTrustResourceUrl('../../assets/writerey.svg')
+      this.domSanitizer.bypassSecurityTrustResourceUrl('./assets/writerey.svg')
     );
   }
 }
