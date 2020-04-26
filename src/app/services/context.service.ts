@@ -5,7 +5,7 @@ import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Marker } from '../models/marker.interface';
 import { map } from 'rxjs/operators';
 import { MarkerDefinition } from '../models/markerDefinition.class';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { sortMarkerDefinitions, sortMarkerArray } from '../utils/marker.utils';
 
 export enum DEFAULT_CONTEXTS {
@@ -31,7 +31,7 @@ export class ContextService implements OnDestroy {
     this.subscription.add(this.markerStore.markerDefinitions$.subscribe(res => (this.markerDefinitions = res)));
   }
 
-  getContexts(docPath: string, docName: string, paragraphId?: string) {
+  getContextsForDocument(docPath: string, docName: string, paragraphId?: string) {
     const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
     if (paragraphId) contexts.unshift(DEFAULT_CONTEXTS.PARAGRAPH);
     return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(
@@ -49,9 +49,24 @@ export class ContextService implements OnDestroy {
     );
   }
 
+  getContextsForMarkerDefinition(markerDef: MarkerDefinition) {
+    const contexts: Array<string> = [];
+    if (!markerDef?.values) return contexts;
+    for (const val of markerDef.values) {
+      contexts.push(this.getContextStringForIdAndValue(markerDef.id, val.id));
+    }
+    this.contextStore.setContexts(contexts);
+    return of(contexts);
+  }
+
   public getContextStringForMarker(marker: Marker) {
     if (!marker) return '';
     return `${marker.id}:${marker.valueId}`;
+  }
+
+  private getContextStringForIdAndValue(markerId: string, valueId: string) {
+    if (!markerId || !valueId) return '';
+    return `${markerId}:${valueId}`;
   }
 
   public getMarkerFromContextString(context: string) {

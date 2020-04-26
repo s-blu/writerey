@@ -1,3 +1,4 @@
+import { MarkerDefinition } from './../../../models/markerDefinition.class';
 import { DEFAULT_CONTEXTS } from '../../../services/context.service';
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
@@ -8,7 +9,7 @@ import { MarkerService } from 'src/app/services/marker.service';
 import { DOC_MODES } from '../../../models/docModes.enum';
 import { NotesService } from '../../../services/notes.service';
 import { ParagraphService } from '../../../services/paragraph.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Note } from '../../../models/note.interface';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
@@ -24,6 +25,13 @@ import { ContextService } from 'src/app/services/context.service';
   animations: FADE_ANIMATIONS,
 })
 export class NotesComponent implements OnInit, OnDestroy {
+  @Input() set markerDefinition(md: MarkerDefinition) {
+    console.log('setting markerdef!', md);
+    this.markerDef = md;
+    this.getContexts();
+  }
+
+  markerDef: MarkerDefinition;
   MODES = DOC_MODES;
   mode: DOC_MODES;
   noteContexts;
@@ -163,10 +171,28 @@ export class NotesComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getContexts() {
-    if (!this.fileInfo) return;
+  private fetchNotesForMarkerDefinition() {
+    this.notes = {};
+
     this.subscription.add(
-      this.contextService.getContexts(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
+      this.notesService
+        .getNotesForMarkerDefinition(this.markerDef, this.noteContexts)
+        .subscribe(res => (this.notes = res))
+    );
+  }
+
+  private getContexts() {
+    if (!this.fileInfo && !this.markerDef) return;
+    let fetchObservable;
+
+    if (this.markerDef) {
+      fetchObservable = this.contextService.getContextsForMarkerDefinition(this.markerDef);
+    } else {
+      fetchObservable = this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.parId);
+    }
+    this.subscription.add(
+      fetchObservable.subscribe(res => {
+        console.log('got context', res)
         this.updateContexts(res);
       })
     );
@@ -174,6 +200,11 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   private updateContexts(contexts) {
     this.noteContexts = contexts;
-    this.fetchNotesForParagraph();
+    if (this.markerDef) {
+      console.log('having markerres, fetch notes for marker def')
+      this.fetchNotesForMarkerDefinition();
+    } else {
+      this.fetchNotesForParagraph();
+    }
   }
 }
