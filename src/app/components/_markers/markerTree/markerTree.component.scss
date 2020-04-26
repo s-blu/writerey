@@ -3,16 +3,6 @@
 .marker-tree {
   box-sizing: border-box;
   height: 100%;
-
-  .new-marker-button {
-    font-size: 14px;
-    width: 100%;
-    text-align: start;
-
-    i {
-      font-size: 13pt;
-      margin-right: 5px;
-    }
   }
 
   .explorer-btn {
@@ -23,14 +13,6 @@
     mat-icon,
     i {
       font-size: 12pt;
-    }
-  }
-
-  .file-btn {
-    width: 18px;
-
-    i {
-      font-size: 10pt;
     }
   }
 
@@ -65,7 +47,7 @@
   .active {
     background-color: $c_active_highlight;
   }
-}
+
 
 .empty-hint {
   display: flex;

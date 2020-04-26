@@ -1,8 +1,4 @@
 <div class="marker-tree" *transloco="let t; read: 'markerTree'">
-  <button mat-button class="new-marker-button" (click)="addNewMarkerCategory()">
-    <i class="material-icons-outlined">add_location</i>
-    <span>{{ t('newmarker') }}</span>
-  </button>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node
       *matTreeNodeDef="let node"

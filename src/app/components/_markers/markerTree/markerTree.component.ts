@@ -28,11 +28,11 @@ interface MarkerNode {
 })
 export class MarkerTreeComponent implements OnInit, OnDestroy {
   @Input() project;
+  @Input() activeMarkerId;
 
   @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
 
   markerDefinitions: Array<MarkerDefinition>;
-  activeMarkerId: string;
   // Tree Controls
   treeControl = new FlatTreeControl<MarkerNode>(
     node => node.level,
@@ -70,7 +70,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
 
   openMarkerCategory(node) {
     const markerDef = this.markerDefinitions.find(el => el.id === node.id);
-    this.activeMarkerId = markerDef?.id;
     this.markerChanged.emit(markerDef);
   }
 
@@ -81,22 +80,6 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
         this.markerService.deleteMarkerCategory(node.id).subscribe(() => {
           // TODO show snackbar
         });
-      })
-    );
-  }
-
-  addNewMarkerCategory() {
-    const dialogRef = this.dialog.open(CreateNewMarkerComponent);
-
-    this.subscription.add(
-      dialogRef.afterClosed().subscribe(data => {
-        if (!data) return;
-        this.subscription.add(
-          this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
-            this.activeMarkerId = res[0]?.id;
-            this.markerChanged.emit(res[0]);
-          })
-        );
       })
     );
   }

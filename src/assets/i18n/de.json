@@ -63,10 +63,12 @@
       "documenttree": "Dokumente",
       "markers": "Marker"
     },
-    "backToProjects": "Zurück zur Projektwahl"
+    "menu": {
+      "backToProjects": "Zurück zur Projektwahl",
+      "newmarker": "Neuer Marker"
+    }
   },
   "markerTree": {
-    "newmarker": "Neuer Marker",
     "remove": "Marker löschen",
     "empty-tree": "Du hast noch keine Marker. Nutze 'Neuer Marker' um einen zu erstellen. Sie helfen dir, deine Arbeit zu organisieren und deinen Fortschritt zu protokollieren."
   },

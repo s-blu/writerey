@@ -15,22 +15,40 @@
           <mat-icon svgIcon="writerey"></mat-icon>
         </button>
         <span class="name">{{ selectedProject }}</span>
-        <button mat-icon-button class="menu-button"[matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
+        <button mat-icon-button class="menu-button" [matMenuTriggerFor]="menu"><mat-icon>more_vert</mat-icon></button>
         <mat-menu #menu="matMenu">
-          <wy-create-new-dir-or-file type="dir" [path]="selectedProject"></wy-create-new-dir-or-file>
-          <wy-create-new-dir-or-file type="file" [path]="selectedProject"></wy-create-new-dir-or-file>
+          <wy-create-new-dir-or-file
+            type="file"
+            [path]="selectedProject"
+            (itemCreated)="changeTabIndex(0)"
+          ></wy-create-new-dir-or-file>
+          <wy-create-new-dir-or-file
+            type="dir"
+            [path]="selectedProject"
+            (itemCreated)="changeTabIndex(0)"
+          ></wy-create-new-dir-or-file>
+          <button mat-menu-item (click)="addNewMarkerCategory()">
+            <mat-icon class="material-icons-outlined">add_location</mat-icon>
+            <span>{{ t('menu.newmarker') }}</span>
+          </button>
+          <mat-divider></mat-divider>
           <button mat-menu-item (click)="resetProject()">
             <mat-icon>arrow_back</mat-icon>
-            {{ t('backToProjects') }}
+            {{ t('menu.backToProjects') }}
           </button>
         </mat-menu>
       </div>
-      <mat-tab-group>
+      <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex">
         <mat-tab [label]="t('tabs.documenttree')">
           <wy-document-tree [project]="selectedProject"></wy-document-tree>
         </mat-tab>
         <mat-tab [label]="t('tabs.markers')">
-          <wy-marker-tree (markerChanged)="openMarker($event)" [project]="selectedProject"></wy-marker-tree>
+          <wy-marker-tree
+            (markerChanged)="openMarker($event)"
+            [activeMarkerId]="activeMarkerId"
+            [project]="selectedProject"
+            selectedIndex
+          ></wy-marker-tree>
         </mat-tab>
       </mat-tab-group>
     </div>

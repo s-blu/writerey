@@ -63,10 +63,12 @@
       "documenttree": "Documents",
       "markers": "Markers"
     },
-    "backToProjects": "Back to projects"
+    "menu": {
+      "backToProjects": "Back to projects",
+      "newmarker": "New Marker"
+    }
   },
   "markerTree": {
-    "newmarker": "New Marker",
     "remove": "Remove Marker",
     "empty-tree": "You have no markers. Hit the 'New Marker' button above and let them help you organize and track your work!"
   },

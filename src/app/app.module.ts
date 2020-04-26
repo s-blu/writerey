@@ -55,6 +55,7 @@ import { initializeApp, WyInitService } from './services/wy-init.service';
 import { MarkerDetailsComponent } from './components/_markers/markerDetails/markerDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
+import { MatDividerModule } from '@angular/material/divider';
 
 const matModules = [
   MatIconModule,
@@ -74,6 +75,7 @@ const matModules = [
   MatSliderModule,
   MatListModule,
   MatProgressSpinnerModule,
+  MatDividerModule,
 ];
 
 @NgModule({
