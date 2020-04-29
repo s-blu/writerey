@@ -26,8 +26,12 @@ export class ApiService {
     return `${this.serverAdress}/tree`;
   }
 
-  getGitRoute() {
+  getGitCommitRoute() {
     return `${this.serverAdress}/git/commit`;
+  }
+
+  getGitMoveRoute() {
+    return `${this.serverAdress}/git/mv`;
   }
 
   getTagRoute() {

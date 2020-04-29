@@ -18,17 +18,6 @@ class Tree(Resource):
             'files': []
         }
         treeBase = request.args.get('base')
-        # baseForWalking = basePath
-        # if treeBase:
-        #     baseForWalking = PathUtils.sanitizePathList([basePath, treeBase])
-        #     directoryStructure['dirs'].append({
-        #         {
-        #             'name': treeBase,
-        #             'path': filePath,
-        #             'dirs': [],
-        #             'files': []
-        #         }
-        #     })
         log.logDebug('========== GET TREE =========')       
         log.logDebug('os.getcwd:', os.getcwd())
         log.logDebug('base:', treeBase)
@@ -36,9 +25,6 @@ class Tree(Resource):
         for (dirpath, dirnames, filenames) in os.walk(basePath):
             filePath = PathUtils.sanitizePathString(dirpath, True)
             path = filePath.split('/')
-            # if base and len(path) > 1:
-            #     log.logDebug('popping first item', path)
-            #     path.pop(0)
             log.logDebug('starting with', path, dirpath)
 
             if (metaSubPath in dirnames):

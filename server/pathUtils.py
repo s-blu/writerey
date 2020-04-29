@@ -18,10 +18,10 @@ class PathUtils:
         for p in parts:
             if p == '':
                 continue
-            if not p.startswith('/'):
-                p = '/' + p
             if p.endswith('/'):
                 p = p[:-1]
+            if not p.startswith('/'):
+                p = '/' + p
             path = path + p
         return path
 

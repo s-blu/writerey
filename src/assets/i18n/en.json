@@ -95,28 +95,35 @@
     "message": "Name your new document.",
     "input": "document name",
     "cancel": "Cancel",
-    "create": "Create"
+    "submit": "Create"
   },
   "createDirDialog": {
     "title": "Create new directory",
     "message": "Name your new directory",
     "input": "directory name",
     "cancel": "Cancel",
-    "create": "Create"
+    "submit": "Create"
   },
   "createProjectDialog": {
     "title": "Create new project",
     "message": "Create a new project as starting point for a new novel, writing project, topic, ...",
     "input": "Name of project",
     "cancel": "Cancel",
-    "create": "Create"
+    "submit": "Create"
   },
   "createUnkownDialog": {
     "title": "Create new item",
     "message": "Create a new item",
     "input": "Name",
     "cancel": "Cancel",
-    "create": "Create"
+    "submit": "Create"
+  },
+  "renameDialog": {
+    "title": "Rename {{name}}",
+    "message": "Input the new name for '{{name}}'",
+    "input": "Name",
+    "cancel": "Cancel",
+    "submit": "Rename"
   },
   "notes": {
     "createNew": "Create a note"
@@ -157,7 +164,9 @@
   "git": {
     "message": {
       "manualCommit": "Manual Snapshot from {{date}}",
-      "automateCommit": "Automated Snapshot [{{date}}]"
+      "automateCommit": "Automated Snapshot [{{date}}]",
+      "rename": "Renamed {{oldName}} to {{newName}} [{{path}}]",
+      "move": "Moved file {{name}} from '{{oldPath}}' to '{{newPath}}'"
     },
     "snackbar": {
       "manualCommit": "Snapshot successfully created [{{date}}]",

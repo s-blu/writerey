@@ -9,10 +9,9 @@ class ParagraphMeta(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
         context = request.args.get('context')
-        filename = doc_name + '_' + context
         try:
             path = PathUtils.sanitizePathList(
-                [basePath, path, metaSubPath, filename])
+                [basePath, path, metaSubPath, doc_name, context])
             f = open(path, encoding='utf-8')
             content = f.read()
             return content
@@ -22,22 +21,16 @@ class ParagraphMeta(Resource):
 
     def put(self, doc_name):
         context = request.form['context']
-        filename = doc_name + '_' + context
         if request.form['doc_path']:
-            dirPath = PathUtils.sanitizePathList(
-                [basePath, request.form['doc_path'], metaSubPath])
-            Path(dirPath).mkdir(parents=True, exist_ok=True)
-            pathToSaveTo = PathUtils.sanitizePathList([dirPath, filename])
+            pathParts = [basePath, request.form['doc_path'], metaSubPath, doc_name]
         else:
-            pathToSaveTo = PathUtils.sanitizePathList(
-                [basePath, metaSubPath, filename])
-        # TODO do this here and sent content as file obj
+            pathParts = [basePath, metaSubPath, doc_name]
+        dirPath = PathUtils.sanitizePathList(pathParts)
+        Path(dirPath).mkdir(parents=True, exist_ok=True)
+        
+        pathToSaveTo = PathUtils.sanitizePathList([dirPath, context])
         f = request.files['file']
         f.save(pathToSaveTo)
-        #content = request.form['content']
-        #f = open(pathToSaveTo, 'w')
-        # f.write(content)
-        # f.close()
         savedF = open(pathToSaveTo, 'r', encoding='utf-8')
         newContent = savedF.read()
 
