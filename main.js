@@ -20,7 +20,7 @@ function createWindow() {
     console.log("[Python] stdout", message);
   });
   shell.on("stderr", function (stderr) {
-    console.error("[Python] [[ERR]]", stderr);
+    console.error("[Python] [[ERR]]", JSON.stringify(stderr).substring(0, 300));
   });
 
   // Create the browser window.
@@ -33,7 +33,7 @@ function createWindow() {
   });
 
   win.loadURL(`${__dirname}/dist/writerey/index.html`);
-  
+
   win.maximize();
   win.show();
 

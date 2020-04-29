@@ -4,7 +4,7 @@
     <p class="message">{{ t('message', { name: data.oldName }) }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
-      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.newName" />
+      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.newName" required />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
