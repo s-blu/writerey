@@ -157,7 +157,9 @@
   "git": {
     "message": {
       "manualCommit": "Manual Snapshot from {{date}}",
-      "automateCommit": "Automated Snapshot [{{date}}]"
+      "automateCommit": "Automated Snapshot [{{date}}]",
+      "rename": "Renamed {{oldName}} to {{newName}} [{{path}}]",
+      "move": "Moved file {{name}} from '{{oldPath}}' to '{{newPath}}'"
     },
     "snackbar": {
       "manualCommit": "Snapshot successfully created [{{date}}]",

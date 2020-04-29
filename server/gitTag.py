@@ -1,6 +1,8 @@
 from flask import request
 from flask_restful import Resource
 from logger import Logger
+from flask import abort
+
 
 from gitUtils import GitUtils
 
@@ -9,11 +11,11 @@ class Tag(Resource):
     git = GitUtils()
 
     def get(self):
-        return 'not implemented yet'
+        abort(501, 'not implemented yet')
 
     def put(self):
         tagname = request.form['tagname']
         if not tagname:
-            return 'Got no tagname, nothing to tag'  # FIXME send back an 400
+            abort(400, 'Got no tagname, nothing to tag')
         self.git.run(["git", "tag", tagname])
         return {'tagname': tagname}

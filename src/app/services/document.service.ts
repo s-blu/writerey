@@ -8,6 +8,7 @@ import { catchError, map, tap, flatMap } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
 import { sanitizeName } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
+import { translate } from '@ngneat/transloco';
 
 const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 
@@ -70,6 +71,30 @@ export class DocumentService implements OnDestroy {
       tap(res => this.documentStore.setLastSaved(res?.last_edited)),
       tap(_ => console.log(`saved document [${new Date().toISOString()}] ${path}/${name} `))
     );
+  }
+
+  moveDocument(path: string, name: string, newName: string, newPath?: string) {
+    if (!newName) {
+      console.error('moveDocument got called without a new name. do nothing.');
+      return;
+    }
+    let msg;
+    if (newPath) {
+      msg = translate('git.message.move', { name, oldPath: path, newPath });
+    } else {
+      msg = translate('git.message.rename', { oldName: name, newName, path });
+    }
+
+    const formdata = new FormData();
+    formdata.append('doc_path', path);
+    formdata.append('new_doc_name', newName);
+    formdata.append('new_doc_path', newPath || path);
+    formdata.append('msg', msg);
+
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'multipart/form-data');
+    return this.httpClient.put(this.api.getGitMoveRoute(name), formdata, { headers: httpHeaders }).pipe(
+      catchError(err => this.api.handleHttpError(err)));
   }
 
   createDocument(path: string, name: string) {

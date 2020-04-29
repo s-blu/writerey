@@ -9,6 +9,7 @@ from paragraph_meta import ParagraphMeta
 from directories import Directories
 from git import GitAutomation
 from gitTag import Tag
+from gitMv import GitMove
 from tree import Tree
 from writerey_config import basePath, metaSubPath
 from waitress import serve
@@ -24,9 +25,10 @@ api.add_resource(Markers, '/marker/<string:marker_id>')
 api.add_resource(Tree, '/tree')
 api.add_resource(GitAutomation, '/git/commit')
 api.add_resource(Tag, '/git/tag')
+api.add_resource(GitMove, '/git/mv/<string:doc_name>')
 
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-
+    # app.run(port=5002, debug=True)  # FIXME 
     serve(app, listen='localhost:5002')

@@ -21,6 +21,9 @@ class Logger:
             print(f'{bcolors.DEBUG}[debug]{bcolors.END}',
                   '[' + self.prefix + ']', self.parseToString(*msg))
 
+    def logInfo(self, *msg):
+        print(f'[Info]', '[' + self.prefix + ']', self.parseToString(*msg))
+
     def logWarn(self, *msg):
         print(f'{bcolors.WARNING}-[WARN]{bcolors.END}',
               '[' + self.prefix + ']', self.parseToString(*msg))
