@@ -30,8 +30,8 @@ export class ApiService {
     return `${this.serverAdress}/git/commit`;
   }
 
-  getGitMoveRoute(docName) {
-    return `${this.serverAdress}/git/mv/${docName ? docName : ''}`;
+  getGitMoveRoute() {
+    return `${this.serverAdress}/git/mv`;
   }
 
   getTagRoute() {

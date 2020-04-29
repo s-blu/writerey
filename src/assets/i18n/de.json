@@ -95,28 +95,35 @@
     "message": "Gib dem Dokument einen Namen",
     "input": "Name des Dokuments",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "submit": "Erstellen"
   },
   "createDirDialog": {
     "title": "Neuen Ordner erstellen",
     "message": "Gib dem Ordner einen Namen",
     "input": "Name des Ordners",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "submit": "Erstellen"
   },
   "createProjectDialog": {
     "title": "Neues Projekt erstellen",
     "message": "Erstelle ein neues Projekt als Ausgangspunkt für ein neues Buch, eine Ausarbeitung, eine Hausaufgabe oder ein anderes Schreibprojekt.",
     "input": "Name des Projekts",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "submit": "Erstellen"
   },
   "createUnkownDialog": {
     "title": "Neues Element erstellen",
     "message": "Erstelle ein neues Element",
     "input": "Name",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "submit": "Erstellen"
+  },
+  "renameDialog": {
+    "title": "{{name}} umbenennen",
+    "message": "Gib den neuen Namen für '{{name}}' ein.",
+    "input": "Name",
+    "cancel": "Abbrechen",
+    "submit": "Umbenennen"
   },
   "notes": {
     "createNew": "Erstelle eine Notiz"

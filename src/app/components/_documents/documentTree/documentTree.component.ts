@@ -1,3 +1,7 @@
+import { StripFileEndingPipe } from './../../../pipes/stripFileEnding.pipe';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { RenameItemDialogComponent } from './../../renameItemDialog/renameItemDialog.component';
+import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryStore } from './../../../stores/directory.store';
 import { DocumentStore } from '../../../stores/document.store';
 import { Subscription } from 'rxjs';
@@ -5,6 +9,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
+import { tap } from 'rxjs/operators';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -56,7 +61,10 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   constructor(
     public dialog: MatDialog,
     private directoryStore: DirectoryStore,
-    private documentStore: DocumentStore
+    private documentStore: DocumentStore,
+    private documentService: DocumentService,
+    private directoryService: DirectoryService,
+    private stripFileEndingPipe: StripFileEndingPipe
   ) {}
 
   setTree(tree) {
@@ -73,9 +81,21 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     // todo
     console.warn('rename dir not implemented yet', node);
   }
-  renameFile(node) {
-    // todo
-    console.warn('rename file not implemented yet', node);
+  renameFile(node: ExplorerNode) {
+    const dialogRef = this.dialog.open(RenameItemDialogComponent, {
+      data: { oldName: this.stripFileEndingPipe.transform(node.name) },
+    });
+
+    this.subscription.add(
+      dialogRef.afterClosed().subscribe(newName => {
+        if (!newName) return;
+        console.log('newname', newName);
+        this.documentService.moveDocument(node.path, node.name, newName).subscribe(res => {
+          console.log('rename res', res);
+          this.directoryService.getTree().subscribe();
+        });
+      })
+    );
   }
 
   prettifyPath(node) {

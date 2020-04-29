@@ -1,10 +1,10 @@
-<span *transloco="let t; read: typeOfDialog">
-  <h1 mat-dialog-title>{{ t('title') }}</h1>
+<span *transloco="let t; read: 'renameDialog'">
+  <h1 mat-dialog-title>{{ t('title', { name: data.oldName }) }}</h1>
   <div mat-dialog-content>
-    <p class="message">{{ t('message') }}</p>
+    <p class="message">{{ t('message', { name: data.oldName }) }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
-      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.filename" />
+      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.newName" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>

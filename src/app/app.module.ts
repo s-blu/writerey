@@ -14,6 +14,7 @@ import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.dir
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
+import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
@@ -108,6 +109,7 @@ const matModules = [
     DistractionFreeModeComponent,
     AddClassesForDistractionStatesDirective,
     CreateNewDirOrFileComponent,
+    RenameItemDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -120,6 +122,7 @@ const matModules = [
     QuillModule.forRoot(),
   ],
   providers: [
+    StripFileEndingPipe,
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
     {
       provide: LOCALE_ID,

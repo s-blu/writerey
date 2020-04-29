@@ -25,7 +25,7 @@ api.add_resource(Markers, '/marker/<string:marker_id>')
 api.add_resource(Tree, '/tree')
 api.add_resource(GitAutomation, '/git/commit')
 api.add_resource(Tag, '/git/tag')
-api.add_resource(GitMove, '/git/mv/<string:doc_name>')
+api.add_resource(GitMove, '/git/mv')
 
 if __name__ == '__main__':
     gitA = GitAutomation()

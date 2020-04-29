@@ -6,7 +6,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map, tap, flatMap } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
-import { sanitizeName } from '../utils/name.util';
+import { sanitizeName, ensureFileEnding } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 import { translate } from '@ngneat/transloco';
 
@@ -78,6 +78,9 @@ export class DocumentService implements OnDestroy {
       console.error('moveDocument got called without a new name. do nothing.');
       return;
     }
+    newName = sanitizeName(newName);
+    newName = ensureFileEnding(newName);
+
     let msg;
     if (newPath) {
       msg = translate('git.message.move', { name, oldPath: path, newPath });
@@ -86,6 +89,7 @@ export class DocumentService implements OnDestroy {
     }
 
     const formdata = new FormData();
+    formdata.append('doc_name', name);
     formdata.append('doc_path', path);
     formdata.append('new_doc_name', newName);
     formdata.append('new_doc_path', newPath || path);
@@ -93,13 +97,14 @@ export class DocumentService implements OnDestroy {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient.put(this.api.getGitMoveRoute(name), formdata, { headers: httpHeaders }).pipe(
-      catchError(err => this.api.handleHttpError(err)));
+    return this.httpClient
+      .put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })
+      .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 
   createDocument(path: string, name: string) {
     name = sanitizeName(name);
-    if (!/\.html$/.test(name)) name += '.html';
+    name = ensureFileEnding(name);
 
     return this.saveDocument(path, name, '');
   }
