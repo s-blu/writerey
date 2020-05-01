@@ -40,7 +40,7 @@
       </div>
       <mat-tab-group mat-stretch-tabs [(selectedIndex)]="tabIndex">
         <mat-tab [label]="t('tabs.documenttree')">
-          <wy-document-tree [project]="selectedProject"></wy-document-tree>
+          <wy-document-explorer [project]="selectedProject"></wy-document-explorer>
         </mat-tab>
         <mat-tab [label]="t('tabs.markers')">
           <wy-marker-tree

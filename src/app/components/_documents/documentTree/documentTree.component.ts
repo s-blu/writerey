@@ -5,11 +5,10 @@ import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryStore } from './../../../stores/directory.store';
 import { DocumentStore } from '../../../stores/document.store';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
-import { tap } from 'rxjs/operators';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -26,6 +25,8 @@ interface ExplorerNode {
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
+  @Input() showMenus: boolean;
+  @Output() documentSelected = new EventEmitter<any>();
 
   activeFileInfo;
   tree;
@@ -73,8 +74,8 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
   }
 
-  openDocument(node) {
-    this.documentStore.setFileInfo({ name: node.name, path: node.path });
+  clickedDocument(node) {
+    this.documentSelected.emit(node);
   }
 
   renameDir(node) {
@@ -89,9 +90,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       dialogRef.afterClosed().subscribe(newName => {
         if (!newName) return;
-        console.log('newname', newName);
-        this.documentService.moveDocument(node.path, node.name, newName).subscribe(res => {
-          console.log('rename res', res);
+        this.documentService.moveDocument(node.path, node.name, newName).subscribe(() => {
           this.directoryService.getTree().subscribe();
         });
       })

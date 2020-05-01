@@ -1,3 +1,4 @@
+import { DocumentExplorerComponent } from './components/_documents/documentExplorer/documentExplorer.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
@@ -113,7 +114,8 @@ const matModules = [
     CreateNewDirOrFileComponent,
     RenameItemDialogComponent,
     CreateNewNotesItemComponent,
-    CreateNewLinkComponent
+    CreateNewLinkComponent,
+    DocumentExplorerComponent
   ],
   imports: [
     BrowserModule,
