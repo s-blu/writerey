@@ -22,20 +22,6 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
 
   typesOfItems = typesOfItems;
   type = typesOfItems.note;
-  quillConfig = {
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-        ['blockquote', 'code-block', 'link', 'image'], // add's image support
-        ['clean'],
-      ],
-    },
-    styles: {
-      'font-family': 'Roboto, "Helvetica Neue", sans-serif',
-      'font-size': '14px',
-    },
-  };
 
   translatedContextNames = {
     paragraph: 'paragraph',

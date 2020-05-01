@@ -1,5 +1,3 @@
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { TranslocoService } from '@ngneat/transloco';
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
@@ -11,13 +9,26 @@ import { FormBuilder } from '@angular/forms';
 export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() contextNames: any = {};
-  @Input() quillConfig: { modules, styles};
   @Output() noteCreated = new EventEmitter<any>();
 
   noteColor;
   createNewForm;
+  quillConfig = {
+    modules: {
+      toolbar: [
+        ['bold', 'italic', 'underline', 'strike'],
+        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+        ['blockquote', 'code-block', 'link', 'image'], // add's image support
+        ['clean'],
+      ],
+    },
+    styles: {
+      'font-family': 'Roboto, "Helvetica Neue", sans-serif',
+      'font-size': '14px',
+    },
+  };
 
-  constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({
       type: 'todo',
       color: '',

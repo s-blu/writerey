@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -10,14 +9,22 @@ import { FormBuilder } from '@angular/forms';
 export class CreateNewLinkComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() contextNames: any = {};
-  @Input() quillConfig: { modules; styles };
   @Output() linkCreated = new EventEmitter<any>();
 
   createNewForm;
   maxLength = 100;
   currentLength = 0;
+  quillConfig = {
+    modules: {
+      toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
+    },
+    styles: {
+      'font-family': 'Roboto, "Helvetica Neue", sans-serif',
+      'font-size': '14px',
+    },
+  };
 
-  constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({
       context: this.contexts[0] || null,
       text: ' \n',
