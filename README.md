@@ -1,27 +1,37 @@
 # Writerey
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.6.
+Writerey is a small tool that wants to help you with your next writing project:  A novel, an essay for school, a research, a poem booklet, ... you name it!
 
-## Development server
+It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. Read more about the functionality you get from writerey below.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## System requirements
 
-## Code scaffolding
+This app is only tested for Windows 10. If you use it for any other operating system, I'd appreciate feedback!
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+To use writerey, you need the following tools installed on your machine:
 
-## Build
+- [Python 3](https://www.python.org/downloads/)
+- [Git](https://git-scm.com/downloads)
+- Probably also [node.js](https://nodejs.org/)
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
 
-## Running unit tests
+## Used technologies 
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Writerey is build with
 
-## Running end-to-end tests
+- Angular 9
+- node.js
+- [Electron](https://www.electronjs.org/)
+- [ngx-quill](https://github.com/KillerCodeMonkey/ngx-quill)
+- [python-shell](https://github.com/extrabacon/python-shell)
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 
-## Further help
+For a complete list of used packages, please refer to package.json.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Installation
+
+TODO
+
+## Guide
+
+For a guide on the app, please visit <fancy website I'll build later>
