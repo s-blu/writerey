@@ -57,6 +57,7 @@ import { MarkerDetailsComponent } from './components/_markers/markerDetails/mark
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { MatDividerModule } from '@angular/material/divider';
+import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 
 const matModules = [
   MatIconModule,
@@ -110,6 +111,7 @@ const matModules = [
     AddClassesForDistractionStatesDirective,
     CreateNewDirOrFileComponent,
     RenameItemDialogComponent,
+    CreateNewNotesItemComponent
   ],
   imports: [
     BrowserModule,

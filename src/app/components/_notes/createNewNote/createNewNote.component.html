@@ -20,14 +20,14 @@
     <mat-form-field>
       <mat-label>{{ t('context') }}</mat-label>
       <mat-select formControlName="context" required>
-        <mat-option *ngFor="let con of contexts" [value]="con">{{ getContextName(con) }}</mat-option>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
       </mat-select>
     </mat-form-field>
     <quill-editor
       class="editor"
       [formControl]="createNewForm.controls['text']"
-      [modules]="quillModules"
-      [styles]="quillStyle"
+      [modules]="quillConfig.modules"
+      [styles]="quillConfig.styles"
       [placeholder]="t('comment')"
       [style.background-color]="noteColor"
     ></quill-editor>

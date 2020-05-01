@@ -1,0 +1,9 @@
+<div>
+  <wy-create-new-note
+    *ngIf="type === 'Note'"
+    [contexts]="contexts"
+    [contextNames]="translatedContextNames"
+    [quillConfig]="quillConfig"
+    (noteCreated)="onSubmit($event)"
+  ></wy-create-new-note>
+</div>
