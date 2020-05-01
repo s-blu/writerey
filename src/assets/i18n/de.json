@@ -125,6 +125,13 @@
     "cancel": "Abbrechen",
     "submit": "Umbenennen"
   },
+  "linkDialog": {
+    "title": "Zu verlinkendes Dokument",
+    "message": "Wähle ein Dokument, um es zu verlinken.",
+    "selected": "Aktuell gewählt:",
+    "submit": "Dokument wählen",
+    "cancel": "Abbrechen"
+  },
   "notes": {
     "createNew": "Erstelle eine Notiz"
   },

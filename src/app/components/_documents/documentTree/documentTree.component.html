@@ -39,7 +39,7 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="15"
       class="file-node"
-      [class]="{ active: node.path === activeFileInfo?.path && node.name === activeFileInfo?.name }"
+      [class]="{ active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name }"
     >
       <button mat-icon-button (click)="clickedDocument(node)" class="explorer-btn file-btn">
         <i class="material-icons-outlined">insert_drive_file</i>

@@ -125,6 +125,13 @@
     "cancel": "Cancel",
     "submit": "Rename"
   },
+  "linkDialog": {
+    "title": "Document to link",
+    "message": "Choose a document to link to.", 
+    "selected": "Currently selected:",
+    "submit": "Choose Document",
+    "cancel": "Cancel"
+  },
   "notes": {
     "createNew": "Create a note"
   },

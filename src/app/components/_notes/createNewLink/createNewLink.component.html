@@ -15,9 +15,12 @@
       [maxLength]="maxLength"
       (onContentChanged)="getCurrentLength($event)"
     ></quill-editor>
-    <span class="quill-max-length" [class]="{invalid: currentLength > maxLength }"> {{ currentLength }} / {{ maxLength }} </span>
+    <span class="quill-max-length" [class]="{ invalid: currentLength > maxLength }">
+      {{ currentLength }} / {{ maxLength }}
+    </span>
+    <button mat-button (click)="chooseDocument()">{{ t('chooseDocument') }}</button>
     <div class="actions">
-      <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+      <button mat-icon-button [disabled]="createNewForm.invalid || !link" type="submit">
         <mat-icon>add</mat-icon>
       </button>
     </div>

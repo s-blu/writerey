@@ -26,6 +26,7 @@ interface ExplorerNode {
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
   @Input() showMenus: boolean;
+  @Input() highlightOpenDocument: boolean;
   @Output() documentSelected = new EventEmitter<any>();
 
   activeFileInfo;
@@ -105,6 +106,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   }
 
   private expandToActiveDocument() {
+    if (!this.highlightOpenDocument) return;
     if (!this.activeFileInfo || !this.treeControl?.dataNodes) return;
 
     const flattenedTreeNodes = this.treeControl.dataNodes;
