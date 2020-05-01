@@ -1,0 +1,7 @@
+.create-note-items {
+  position: relative;
+
+  & > * {
+    //position: absolute;
+  }
+}

@@ -133,13 +133,24 @@
     "keepOpen": "Expand note on load",
     "keepClosed": "Collapse note on load"
   },
-  "createNote": {
-    "context": "Context",
-    "comment": "Note",
+  "createNotesItem": {
     "contexts": {
       "paragraph": "Paragraph",
       "document": "Document"
     },
+    "typeOfItem": {
+      "title": "Type of note",
+      "note": "Text note",
+      "link": "Document link"
+    }
+  },
+  "createLink": {
+    "context": "Context",
+    "comment": "Preview/Summary"
+  },
+  "createNote": {
+    "context": "Context",
+    "comment": "Note",
     "type": {
       "title": "Note Type",
       "info": "Info",

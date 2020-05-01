@@ -1,3 +1,4 @@
+import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
@@ -111,7 +112,8 @@ const matModules = [
     AddClassesForDistractionStatesDirective,
     CreateNewDirOrFileComponent,
     RenameItemDialogComponent,
-    CreateNewNotesItemComponent
+    CreateNewNotesItemComponent,
+    CreateNewLinkComponent
   ],
   imports: [
     BrowserModule,

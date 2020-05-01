@@ -1,0 +1,25 @@
+<div class="create-link" *transloco="let t; read: 'createLink'">
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field>
+      <mat-label>{{ t('context') }}</mat-label>
+      <mat-select formControlName="context" required>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <quill-editor
+      class="editor"
+      [formControl]="createNewForm.controls['text']"
+      [modules]="quillConfig.modules"
+      [styles]="quillConfig.styles"
+      [placeholder]="t('comment')"
+      [maxLength]="maxLength"
+      (onContentChanged)="getCurrentLength($event)"
+    ></quill-editor>
+    <span class="quill-max-length" [class]="{invalid: currentLength > maxLength }"> {{ currentLength }} / {{ maxLength }} </span>
+    <div class="actions">
+      <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

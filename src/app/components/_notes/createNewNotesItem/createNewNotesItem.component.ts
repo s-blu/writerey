@@ -1,19 +1,27 @@
+import { FADE_ANIMATIONS } from './../../../utils/animation.utils';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
 
+enum typesOfItems {
+  'note' = 'note',
+  'link' = 'link',
+}
+
 @Component({
   selector: 'wy-create-new-notes-item',
   templateUrl: './createNewNotesItem.component.html',
   styleUrls: ['./createNewNotesItem.component.scss'],
+  animations: FADE_ANIMATIONS,
 })
 export class CreateNewNotesItemComponent implements OnInit, OnChanges {
-  @Input() type: 'Note' | 'Link';
   @Input() contexts: Array<string> = [];
   @Input() markerDefs: Array<MarkerDefinition> = [];
   @Output() itemCreated = new EventEmitter<any>();
 
+  typesOfItems = typesOfItems;
+  type = typesOfItems.note;
   quillConfig = {
     modules: {
       toolbar: [
@@ -26,8 +34,8 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     styles: {
       'font-family': 'Roboto, "Helvetica Neue", sans-serif',
       'font-size': '14px',
-    }
-  }
+    },
+  };
 
   translatedContextNames = {
     paragraph: 'paragraph',
@@ -50,8 +58,8 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.translatedContextNames.paragraph = this.translocoService.translate('createNote.contexts.paragraph');
-    this.translatedContextNames.document = this.translocoService.translate('createNote.contexts.document');
+    this.translatedContextNames.paragraph = this.translocoService.translate('createNotesItem.contexts.paragraph');
+    this.translatedContextNames.document = this.translocoService.translate('createNotesItem.contexts.document');
   }
 
   onSubmit(data) {

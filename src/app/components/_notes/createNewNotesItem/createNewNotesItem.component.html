@@ -1,9 +1,25 @@
-<div>
+<div class="create-note-items" *transloco="let t; read: 'createNotesItem'">
+  <mat-form-field>
+    <mat-label>{{ t('typeOfItem.title') }}</mat-label>
+    <mat-select [(value)]="type">
+      <mat-option [value]="typesOfItems.note">{{ t('typeOfItem.note') }}</mat-option>
+      <mat-option [value]="typesOfItems.link">{{ t('typeOfItem.link') }}</mat-option>
+    </mat-select>
+  </mat-form-field>
   <wy-create-new-note
-    *ngIf="type === 'Note'"
+    *ngIf="type === typesOfItems.note"
+    [@fadeInOnEnter]
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
     [quillConfig]="quillConfig"
     (noteCreated)="onSubmit($event)"
   ></wy-create-new-note>
+  <wy-create-new-link
+    *ngIf="type === typesOfItems.link"
+    [@fadeInOnEnter]
+    [contexts]="contexts"
+    [contextNames]="translatedContextNames"
+    [quillConfig]="quillConfig"
+    (noteCreated)="onSubmit($event)"
+  ></wy-create-new-link>
 </div>

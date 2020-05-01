@@ -1,0 +1,22 @@
+@import '../../../styles/variables.scss';
+
+mat-form-field {
+  width: 100%;
+}
+
+.editor {
+  max-height: 350px;
+  overflow-y: auto;
+  display: inline-block;
+  width: 100%;
+}
+
+.quill-max-length {
+  float: right;
+  font-size: 8pt;
+  color: $c_hint;
+
+  &.invalid {
+    color: #d50000;
+  }
+}
