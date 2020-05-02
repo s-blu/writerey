@@ -1,0 +1,23 @@
+<mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'">
+  <mat-card-header>
+    <mat-icon>link</mat-icon>
+    <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
+    <mat-icon class="expand" [@rotate]="isExpanded" (click)="changeExpand()">
+      expand_more
+    </mat-icon>
+  </mat-card-header>
+  <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
+    <mat-card-content>
+      <div>ID {{ link.linkId }}</div>
+      <quill-view class="note-text" [content]="link.text"></quill-view>
+    </mat-card-content>
+    <mat-card-actions class="actions">
+      <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-icon-button (click)="changeKeepOpen()" [matTooltip]="t(link.keepOpen ? 'keepClosed' : 'keepOpen')">
+        <mat-icon>{{ link.keepOpen ? 'unfold_less' : 'unfold_more' }}</mat-icon>
+      </button>
+    </mat-card-actions>
+  </div>
+</mat-card>

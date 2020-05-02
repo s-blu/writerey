@@ -92,31 +92,31 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  editNote(editedNote, oldContext?) {
-    const context = oldContext || editedNote.context;
+  editNotesItem(editedItem, oldContext?) {
+    const context = oldContext || editedItem.context;
     let notes = this.notes[context];
     if (!notes) {
-      console.warn('Could not find context collection for note. Do nothing.', editedNote);
+      console.warn('Could not find context collection for note. Do nothing.', editedItem);
       return;
     }
-    const index = notes.findIndex(n => n.id === editedNote.id);
+    const index = notes.findIndex(n => n.id === editedItem.id);
     if (index > -1) {
-      notes.splice(index, 1, editedNote);
+      notes.splice(index, 1, editedItem);
     } else {
-      console.warn('Could not find note to edit in context. Do nothing.', editedNote);
+      console.warn('Could not find note to edit in context. Do nothing.', editedItem);
       return;
     }
     this.updateParagraphMeta(context, notes);
   }
 
-  deleteNote(note) {
-    let notes = this.notes[note.context];
+  deleteNotesItem(item) {
+    let notes = this.notes[item.context];
     if (!notes) {
-      console.warn('Could not find context collection for note. Do nothing.', note);
+      console.warn('Could not find context collection for note. Do nothing.', item);
       return;
     }
-    notes = notes.filter(n => n.id !== note.id);
-    this.updateParagraphMeta(note.context, notes);
+    notes = notes.filter(n => n.id !== item.id);
+    this.updateParagraphMeta(item.context, notes);
   }
 
   createNewNote(event) {

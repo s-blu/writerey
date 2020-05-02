@@ -20,13 +20,13 @@
     [@fadeOutFromHalf]
   >
     <div *ngFor="let key of noteContexts" class="note">
-      <wy-note
-        *ngFor="let n of notes[key]"
-        [note]="n"
+      <wy-notes-item
+        *ngFor="let item of notes[key]"
+        [item]="item"
         [markerDefs]="markerDefinitions"
-        (deleteNote)="deleteNote($event)"
-        (editNote)="editNote($event)"
-      ></wy-note>
+        (deleteItem)="deleteNotesItem($event)"
+        (editItem)="editNotesItem($event)"
+      ></wy-notes-item>
     </div>
   </div>
 </div>

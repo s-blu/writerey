@@ -4,8 +4,7 @@ import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
 import * as uuid from 'uuid';
-import { Note } from 'src/app/models/note.interface';
-import { Link } from 'src/app/models/link.interface';
+import { Note, NoteItemStereotypes, Link } from 'src/app/models/notesItems.interface';
 
 enum typesOfItems {
   'note' = 'note',
@@ -54,7 +53,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   createNote(event) {
     if (!event) return;
     const newNote: Note = {
-      stereotype: 'Note',
+      stereotype: NoteItemStereotypes.NOTE,
       id: uuid.v4(),
       type: event.type,
       color: event.color,
@@ -67,7 +66,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
 
   createLink(event) {
     const newLink: Link = {
-      stereotype: 'Link',
+      stereotype: NoteItemStereotypes.LINK,
       id: uuid.v4(),
       linkId: event.linkId,
       context: event.context,

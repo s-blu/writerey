@@ -14,6 +14,7 @@
   }
 }
 
+
 .mat-card {
   margin-bottom: 5px;
   padding: 1em;
@@ -24,14 +25,10 @@
   }
 }
 
-.note .mat-card-actions {
+.link .mat-card-actions {
   padding: 8px;
   margin-bottom: 0;
   padding-bottom: 0;
-}
-
-.type-todo {
-  border-left: 1px solid rgba(0, 0, 0, 0.5);
 }
 
 .exandable-wrap {

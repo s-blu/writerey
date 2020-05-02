@@ -1,3 +1,5 @@
+import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
+import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { DocumentExplorerComponent } from './components/_documents/documentExplorer/documentExplorer.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
@@ -117,7 +119,9 @@ const matModules = [
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
     DocumentExplorerComponent,
-    ChooseFileForLinkDialogComponent
+    ChooseFileForLinkDialogComponent,
+    NotesItemComponent,
+    DocumentLinkComponent,
   ],
   imports: [
     BrowserModule,

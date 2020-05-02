@@ -56,3 +56,14 @@ export function sortMarkerDefinitions(
     return index || index === 0;
   }
 }
+
+export function getReadableNameForMarkerContext(context, markerDefs) {
+  if (context?.includes(':')) {
+    const [markerId, valueId] = context.split(':');
+    const markerDef = markerDefs.find(m => m.id === markerId);
+    const valueName = markerDef?.values?.find(v => v.id === valueId)?.name;
+    return `[${markerDef?.name}] ${valueName}`;
+  } else {
+    return context;
+  }
+}
