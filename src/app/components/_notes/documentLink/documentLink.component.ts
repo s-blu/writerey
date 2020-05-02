@@ -25,8 +25,8 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
   @Output() editLink = new EventEmitter<any>();
 
   contextName;
-  documentLink;
-  document: DocumentDefinition;
+  fileInfo;
+  content: string;
   isExpanded = false;
   private subscription = new Subscription();
   constructor(
@@ -47,18 +47,18 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         flatMap((project: string) => {
-          console.log('getting document for link', project, this.link);
           return this.linkService.getDocumentInfoForLink(project, this.link.linkId);
         }),
         flatMap((documentLink: DocumentLink) => {
-          console.log('got documentLink, will get document itself', documentLink);
-          this.documentLink = documentLink;
+          if (!documentLink) return;
+          this.fileInfo = { name: documentLink.name, path: documentLink.path };
           return this.documentService.getDocument(documentLink.path, documentLink.name, true);
         })
       )
       .subscribe((document: DocumentDefinition) => {
-        console.log('got document');
-        this.document = document;
+        if (!document) return;
+
+        this.content = document?.content || '';
       });
   }
 

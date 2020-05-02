@@ -159,8 +159,7 @@
   "createLink": {
     "context": "Context",
     "comment": "Summary",
-    "chooseDocument": "Choose a document to link",
-    "chosen": "Chosen:"
+    "chooseDocument": "Choose a document to link"
   },
   "createNote": {
     "context": "Context",

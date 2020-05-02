@@ -2,7 +2,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { catchError, map, flatMap } from 'rxjs/operators';
+import { map, flatMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 interface DocumentLink {
@@ -20,6 +20,7 @@ export class LinkService {
 
   getLinkForDocument(name, path, project) {
     const findLinkOrCreateNewOne = links => {
+      console.log('findLinkOrCreateNewOne', links);
       let link = links.find(l => l.path === path && l.name === name);
       if (!link) {
         const newLink = {
@@ -27,7 +28,7 @@ export class LinkService {
           name,
           path,
         } as DocumentLink;
-        link = newLink.linkId;
+        link = newLink;
         return this.saveNewLink(project, newLink);
       } else {
         return of(link);
@@ -48,10 +49,12 @@ export class LinkService {
   }
 
   private getLinksForProject(project, callbackFn) {
+    console.log('getLinksForProject', project, this.linkMap);
     if (!project || !callbackFn) return of(null);
     let linksForProjectObservable;
 
     if (!this.linkMap[project]) {
+      console.log('got no linkmap, getting from server');
       linksForProjectObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
         map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);

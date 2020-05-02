@@ -1,3 +1,4 @@
+import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DocumentStore } from 'src/app/stores/document.store';
 
@@ -7,32 +8,32 @@ import { DocumentStore } from 'src/app/stores/document.store';
   styleUrls: ['./breadcrumb.component.scss'],
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
-  @Input() document?;
+  @Input() fileInfo?: FileInfo;
   path: Array<string> = [];
   name = '';
 
   constructor(private documentStore: DocumentStore) {}
 
   ngOnInit() {
-    if (!this.document) {
-      this.documentStore.document$.subscribe(docDef => {
-        this.setPathAndName(docDef);
+    if (!this.fileInfo) {
+      this.documentStore.document$.subscribe(fileInfo => {
+        this.setPathAndName(fileInfo);
       });
     } else {
-      this.setPathAndName(this.document);
+      this.setPathAndName(this.fileInfo);
     }
   }
 
   ngOnChanges() {
-    if (this.document) {
-      this.setPathAndName(this.document);
+    if (this.fileInfo) {
+      this.setPathAndName(this.fileInfo);
     }
   }
 
-  private setPathAndName(docDef) {
-    if (!docDef) return;
-    const pathParts = (docDef.path || '').split('/').filter(el => el && el !== '');
+  private setPathAndName(fileInfo) {
+    if (!fileInfo) return;
+    const pathParts = (fileInfo.path || '').split('/').filter(el => el && el !== '');
     this.path = pathParts;
-    this.name = docDef?.name || '';
+    this.name = fileInfo?.name || '';
   }
 }

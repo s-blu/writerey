@@ -19,8 +19,8 @@
       {{ currentLength }} / {{ maxLength }}
     </span>
     <button class="choose-document-button" mat-stroked-button type="button" (click)="chooseDocument()">
-      <span>{{ selectedDocument ? t('chosen') : t('chooseDocument') }}</span>
-      <wy-breadcrumb *ngIf="selectedDocument" [document]="selectedDocument" skipRoot="true"></wy-breadcrumb>
+      <span *ngIf="!selectedDocument">{{ t('chooseDocument') }}</span>
+      <wy-breadcrumb *ngIf="selectedDocument" [fileInfo]="selectedDocument"></wy-breadcrumb>
     </button>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">

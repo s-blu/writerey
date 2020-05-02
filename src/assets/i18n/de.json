@@ -159,8 +159,7 @@
   "createLink": {
     "context": "Kontext",
     "comment": "Vorschau",
-    "chooseDocument": "Wähle ein Dokument",
-    "chosen": "Ausgewählt:"
+    "chooseDocument": "Wähle ein Dokument"
   },
   "createNote": {
     "context": "Kontext",

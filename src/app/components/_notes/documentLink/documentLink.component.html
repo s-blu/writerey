@@ -1,6 +1,6 @@
 <mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
   <mat-card-header>
-    <mat-icon>link</mat-icon>
+    <mat-icon class="icon">link</mat-icon>
     <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
     <mat-icon class="expand" [@rotate]="isExpanded" (click)="changeExpand()">
       expand_more
@@ -9,12 +9,12 @@
   <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
     <mat-card-content>
       <div class="link-destination">
-        <wy-breadcrumb [document]="document"></wy-breadcrumb>
+        <wy-breadcrumb [fileInfo]="fileInfo"></wy-breadcrumb>
       </div>
       <quill-view class="note-text preview" [content]="link.text"></quill-view>
-      <quill-view class="note-text" *ngIf="document" [content]="document.content"></quill-view>
+      <quill-view class="note-text" *ngIf="content && isExpanded" [@fadeOutOnLeave] [content]="content"></quill-view>
     </mat-card-content>
-    <mat-card-actions class="actions">
+    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
         <mat-icon>done</mat-icon>
       </button>
