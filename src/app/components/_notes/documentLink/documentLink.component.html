@@ -1,4 +1,4 @@
-<mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'">
+<mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
   <mat-card-header>
     <mat-icon>link</mat-icon>
     <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
@@ -8,8 +8,8 @@
   </mat-card-header>
   <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
     <mat-card-content>
-      <div>ID {{ link.linkId }}</div>
       <quill-view class="note-text" [content]="link.text"></quill-view>
+      <div>ID {{ link.linkId }}</div>
     </mat-card-content>
     <mat-card-actions class="actions">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">

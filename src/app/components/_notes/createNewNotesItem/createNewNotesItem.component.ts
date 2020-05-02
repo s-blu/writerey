@@ -65,6 +65,10 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   }
 
   createLink(event) {
+    if (!event?.linkId) {
+      console.warn('tried to create link without linkId. Aborting.', event);
+      return;
+    }
     const newLink: Link = {
       stereotype: NoteItemStereotypes.LINK,
       id: uuid.v4(),
@@ -72,7 +76,6 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
       context: event.context,
       text: event.text,
     };
-    console.log('newLink', newLink);
     this.itemCreated.emit(newLink);
   }
 }

@@ -18,7 +18,10 @@
     <span class="quill-max-length" [class]="{ invalid: currentLength > maxLength }">
       {{ currentLength }} / {{ maxLength }}
     </span>
-    <button mat-button (click)="chooseDocument()">{{ t('chooseDocument') }}</button>
+    <button class="choose-document-button" mat-stroked-button type="button" (click)="chooseDocument()">
+      <wy-breadcrumb *ngIf="selectedDocument" [document]="selectedDocument"></wy-breadcrumb>
+      <span *ngIf="!selectedDocument">{{ t('chooseDocument') }}</span>
+    </button>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
         <mat-icon>add</mat-icon>

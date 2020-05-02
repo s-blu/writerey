@@ -18,34 +18,28 @@ export class LinkService {
   private linkMap = {};
   constructor(private httpClient: HttpClient, private api: ApiService) {}
 
-  getLinkForDocument(project, node) {
+  getLinkForDocument(name, path, project) {
     const _findLinkOrCreateNewOne = links => {
-      console.log('try to find link', links, node);
-      let linkId = links.find(l => l.path === node.path && l.name === node.name)?.linkId;
-      if (!linkId) {
-        console.log('have no link, generate a new one');
+      let link = links.find(l => l.path === path && l.name === name);
+      if (!link) {
         const newLink = {
           linkId: uuid.v4(),
-          name: node.name,
-          path: node.path,
+          name,
+          path,
         } as DocumentLink;
-        linkId = newLink.linkId;
+        link = newLink.linkId;
         return this.saveNewLink(project, newLink);
       } else {
-        return of(linkId);
+        return of(link);
       }
     };
-    // TODO dont get node but name and path
-    console.log('getLinkForDocument ', project, node);
-    if (!project || !node) return of(null);
+    if (!project || !name || !path) return of(null);
     let linkMapObservable;
 
     if (!this.linkMap[project]) {
-      console.log('found nothing in map, getting val from server');
       linkMapObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
         map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);
-          console.log('got response from server to save to linkMap', this.linkMap[project]);
           return this.linkMap[project];
         }),
         flatMap((links: Array<DocumentLink>) => {
@@ -53,7 +47,6 @@ export class LinkService {
         })
       );
     } else {
-      console.log('have project in map, can use val directly');
       linkMapObservable = _findLinkOrCreateNewOne(this.linkMap[project]);
     }
 
@@ -61,7 +54,6 @@ export class LinkService {
   }
 
   private saveNewLink(project, newLink) {
-    console.log('saving new link', project, newLink);
     let links = this.linkMap[project];
 
     if (!links) {

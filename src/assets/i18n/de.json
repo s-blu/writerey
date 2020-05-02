@@ -140,6 +140,11 @@
     "keepOpen": "Notiz initial öffnen",
     "keepClosed": "Notiz initial schließen"
   },
+  "link": {
+    "delete": "Erledigt!",
+    "keepOpen": "Link initial öffnen",
+    "keepClosed": "Link initial schließen"
+  },
   "createNotesItem": {
     "contexts": {
       "paragraph": "Paragraph",
@@ -148,12 +153,13 @@
     "typeOfItem": {
       "title": "Typ der Notiz",
       "note": "Textnotiz",
-      "link": "Documentenlink"
+      "link": "Dokumentenlink"
     }
   },
   "createLink": {
     "context": "Kontext",
-    "comment": "Vorschau"
+    "comment": "Vorschau",
+    "chooseDocument": "Wähle ein Dokument"
   },
   "createNote": {
     "context": "Kontext",

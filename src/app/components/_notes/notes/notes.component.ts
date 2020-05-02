@@ -94,7 +94,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   editNotesItem(editedItem, oldContext?) {
     const context = oldContext || editedItem.context;
-    let notes = this.notes[context];
+    const notes = this.notes[context];
     if (!notes) {
       console.warn('Could not find context collection for note. Do nothing.', editedItem);
       return;

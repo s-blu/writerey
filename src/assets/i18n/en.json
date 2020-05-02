@@ -140,6 +140,11 @@
     "keepOpen": "Expand note on load",
     "keepClosed": "Collapse note on load"
   },
+  "link": {
+    "delete": "Done!",
+    "keepOpen": "Expand link on load",
+    "keepClosed": "Collapse link on load"
+  },
   "createNotesItem": {
     "contexts": {
       "paragraph": "Paragraph",
@@ -153,7 +158,8 @@
   },
   "createLink": {
     "context": "Context",
-    "comment": "Preview/Summary"
+    "comment": "Summary",
+    "chooseDocument": "Choose a document to link"
   },
   "createNote": {
     "context": "Context",

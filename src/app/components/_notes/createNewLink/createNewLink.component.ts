@@ -3,9 +3,10 @@ import { LinkService } from './../../../services/link.service';
 import { ChooseFileForLinkDialogComponent } from './../chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { map, take, flatMap } from 'rxjs/operators';
+import { Link } from 'src/app/models/notesItems.interface';
 
 @Component({
   selector: 'wy-create-new-link',
@@ -18,6 +19,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   @Output() linkCreated = new EventEmitter<any>();
 
   createNewForm;
+  selectedDocument;
   project;
   maxLength = 100;
   currentLength = 0;
@@ -39,7 +41,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     this.createNewForm = this.formBuilder.group({
       context: this.contexts[0] || null,
-      linkId: null,
+      linkId: [null, [Validators.required]],
       text: ' \n',
     });
   }
@@ -57,9 +59,8 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit(data) {
-    console.log('createNewLink onSubmit', data);
     this.linkCreated.emit(data);
-    this.createNewForm.patchValue({ text: '' });
+    this.createNewForm.patchValue({ text: '', linkId: null });
   }
 
   getCurrentLength(event) {
@@ -74,11 +75,14 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
         .afterClosed()
         .pipe(
           flatMap(node => {
-            return this.linkService.getLinkForDocument(this.project, node);
+            return this.linkService.getLinkForDocument(node.name, node.path, this.project);
           })
         )
-        .subscribe(link => {
-          this.createNewForm.patchValue({ linkId: link });
+        .subscribe((link: Link) => {
+          if (!link) return;
+          console.log('got link obj in createNewLink', link);
+          this.selectedDocument = link;
+          this.createNewForm.patchValue({ linkId: link.linkId });
         })
     );
   }
