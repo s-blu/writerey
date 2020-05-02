@@ -1,5 +1,5 @@
 import { FileInfo } from './../models/fileInfo.interface';
-import { DocumentDefinition } from './../models/documentDefinition.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY } from './../models/documentDefinition.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
@@ -20,7 +20,13 @@ export class DocumentStore {
       this.setWordCount(0);
     })
   );
-  readonly fileInfo$ = this._fileInfoSubject.asObservable();
+  readonly fileInfo$ = this._fileInfoSubject.asObservable().pipe(
+    tap(res => {
+      if (res) {
+        localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }));
+      }
+    })
+  );
   readonly paragraphId$ = this._paragraphIdSubject.asObservable();
   readonly lastSaved$ = this._lastSavedSubject.asObservable();
   readonly wordCount$ = this._wordCountSubject.asObservable();

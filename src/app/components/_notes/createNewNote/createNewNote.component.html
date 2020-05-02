@@ -1,6 +1,12 @@
 <div class="create-note" *transloco="let t; read: 'createNote'">
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
     <mat-form-field>
+      <mat-label>{{ t('context') }}</mat-label>
+      <mat-select formControlName="context" required>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
       <mat-label>{{ t('type.title') }}</mat-label>
       <mat-select formControlName="type" required>
         <mat-option value="info">{{ t('type.info') }}</mat-option>
@@ -15,12 +21,6 @@
         <mat-option value="#bdf9a7">{{ t('color.green') }}</mat-option>
         <mat-option value="#c5e2ff">{{ t('color.blue') }}</mat-option>
         <mat-option value="#fffeae">{{ t('color.yellow') }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{ t('context') }}</mat-label>
-      <mat-select formControlName="context" required>
-        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
       </mat-select>
     </mat-form-field>
     <quill-editor

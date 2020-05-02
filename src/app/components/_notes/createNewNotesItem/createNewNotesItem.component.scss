@@ -1,7 +1,5 @@
 .create-note-items {
-  position: relative;
-
-  & > * {
-    //position: absolute;
+  mat-form-field {
+    width: 100%;
   }
 }

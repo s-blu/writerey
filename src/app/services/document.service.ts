@@ -1,5 +1,5 @@
 import { FileInfo } from '../models/fileInfo.interface';
-import { DocumentDefinition } from '../models/documentDefinition.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -9,8 +9,6 @@ import { Observable, of, Subscription } from 'rxjs';
 import { sanitizeName, ensureFileEnding } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 import { translate } from '@ngneat/transloco';
-
-const LAST_DOCUMENT_KEY = 'writerey_last_opened_document';
 
 @Injectable({
   providedIn: 'root',
@@ -37,10 +35,7 @@ export class DocumentService implements OnDestroy {
 
     return this.httpClient.get(this.api.getDocumentRoute(name), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
-      map((res: any) => this.transformLastEditedIntoDate(res)),
-      tap(res => {
-        if (res) localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }));
-      })
+      map((res: any) => this.transformLastEditedIntoDate(res))
     );
   }
 

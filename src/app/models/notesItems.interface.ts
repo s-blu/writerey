@@ -21,3 +21,9 @@ export interface Link {
   text: string;
   keepOpen?: boolean;
 }
+
+export interface DocumentLink {
+  linkId: string;
+  path: string;
+  name: string;
+}

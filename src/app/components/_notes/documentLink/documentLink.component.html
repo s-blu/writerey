@@ -8,8 +8,11 @@
   </mat-card-header>
   <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
     <mat-card-content>
-      <quill-view class="note-text" [content]="link.text"></quill-view>
-      <div>ID {{ link.linkId }}</div>
+      <div class="link-destination">
+        <wy-breadcrumb [document]="document"></wy-breadcrumb>
+      </div>
+      <quill-view class="note-text preview" [content]="link.text"></quill-view>
+      <quill-view class="note-text" *ngIf="document" [content]="document.content"></quill-view>
     </mat-card-content>
     <mat-card-actions class="actions">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">

@@ -24,4 +24,6 @@ mat-form-field {
 .choose-document-button {
   display: block;
   width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

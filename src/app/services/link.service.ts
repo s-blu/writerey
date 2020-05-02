@@ -19,7 +19,7 @@ export class LinkService {
   constructor(private httpClient: HttpClient, private api: ApiService) {}
 
   getLinkForDocument(name, path, project) {
-    const _findLinkOrCreateNewOne = links => {
+    const findLinkOrCreateNewOne = links => {
       let link = links.find(l => l.path === path && l.name === name);
       if (!link) {
         const newLink = {
@@ -34,23 +34,38 @@ export class LinkService {
       }
     };
     if (!project || !name || !path) return of(null);
-    let linkMapObservable;
+    return this.getLinksForProject(project, findLinkOrCreateNewOne);
+  }
+
+  getDocumentInfoForLink(project: string, linkId: string) {
+    if (!linkId || !project) return of(null);
+    const findLinkWithId = links => {
+      let link = links.find(l => l.linkId === linkId);
+      return of(link);
+    };
+
+    return this.getLinksForProject(project, findLinkWithId);
+  }
+
+  private getLinksForProject(project, callbackFn) {
+    if (!project || !callbackFn) return of(null);
+    let linksForProjectObservable;
 
     if (!this.linkMap[project]) {
-      linkMapObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
+      linksForProjectObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
         map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);
           return this.linkMap[project];
         }),
         flatMap((links: Array<DocumentLink>) => {
-          return _findLinkOrCreateNewOne(links);
+          return callbackFn(links);
         })
       );
     } else {
-      linkMapObservable = _findLinkOrCreateNewOne(this.linkMap[project]);
+      linksForProjectObservable = callbackFn(this.linkMap[project]);
     }
 
-    return linkMapObservable;
+    return linksForProjectObservable;
   }
 
   private saveNewLink(project, newLink) {

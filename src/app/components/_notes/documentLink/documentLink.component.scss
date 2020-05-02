@@ -1,3 +1,14 @@
+@import '../../../styles/variables.scss';
+
+.link-destination {
+  color: $c_hint;
+  font-size: 9pt;
+}
+
+.preview {
+  margin-bottom: 0.5em;
+}
+
 .mat-card-header {
   max-height: 1.5em;
   display: flex;
@@ -6,14 +17,13 @@
     order: 1;
     height: 1em;
     width: 1em;
-    font-size: 14pt;
+    font-size: 16pt;
   }
   .expand {
     order: 3;
     cursor: pointer;
   }
 }
-
 
 .mat-card {
   margin-bottom: 5px;
@@ -36,7 +46,7 @@
 }
 
 .exandable-wrap.collapsed {
-  max-height: 2.5em;
+  max-height: 4.5em;
   overflow-y: hidden;
   transition: ease-in-out max-height 400ms;
 }
