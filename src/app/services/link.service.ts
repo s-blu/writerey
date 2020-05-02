@@ -19,40 +19,45 @@ export class LinkService {
   constructor(private httpClient: HttpClient, private api: ApiService) {}
 
   getLinkForDocument(project, node) {
+    const _findLinkOrCreateNewOne = links => {
+      console.log('try to find link', links, node);
+      let linkId = links.find(l => l.path === node.path && l.name === node.name)?.linkId;
+      if (!linkId) {
+        console.log('have no link, generate a new one');
+        const newLink = {
+          linkId: uuid.v4(),
+          name: node.name,
+          path: node.path,
+        } as DocumentLink;
+        linkId = newLink.linkId;
+        return this.saveNewLink(project, newLink);
+      } else {
+        return of(linkId);
+      }
+    };
     // TODO dont get node but name and path
     console.log('getLinkForDocument ', project, node);
     if (!project || !node) return of(null);
     let linkMapObservable;
+
     if (!this.linkMap[project]) {
+      console.log('found nothing in map, getting val from server');
       linkMapObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
-        flatMap((res: any) => {
+        map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);
           console.log('got response from server to save to linkMap', this.linkMap[project]);
           return this.linkMap[project];
+        }),
+        flatMap((links: Array<DocumentLink>) => {
+          return _findLinkOrCreateNewOne(links);
         })
       );
     } else {
-      linkMapObservable = of(this.linkMap[project]);
+      console.log('have project in map, can use val directly');
+      linkMapObservable = _findLinkOrCreateNewOne(this.linkMap[project]);
     }
 
-    return linkMapObservable.pipe(
-      map((links: Array<DocumentLink>) => {
-        console.log('try to find link', links, node);
-        let linkId = links.find(l => l.path === node.path && l.name === node.name)?.linkId;
-        if (!linkId) {
-          console.log('have no link, generate a new one');
-          const newLink = {
-            linkId: uuid.v4(),
-            name: node.name,
-            path: node.path,
-          } as DocumentLink;
-          linkId = newLink.linkId;
-          return this.saveNewLink(project, newLink);
-        } else {
-          return linkId;
-        }
-      })
-    );
+    return linkMapObservable;
   }
 
   private saveNewLink(project, newLink) {
@@ -70,7 +75,7 @@ export class LinkService {
     }
     links.push(newLink);
 
-    const blob = new Blob([links], { type: 'text/html' });
+    const blob = new Blob([JSON.stringify(links)], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
     const formdata = new FormData();
     formdata.append('file', file);
@@ -80,7 +85,7 @@ export class LinkService {
 
     return this.httpClient
       .put(this.api.getLinkRoute(project), formdata, { headers: httpHeaders })
-      .pipe(flatMap(_ => newLink.linkId));
+      .pipe(map(_ => newLink.linkId));
   }
 
   private saveServerResponseToLinkMap(project, res) {

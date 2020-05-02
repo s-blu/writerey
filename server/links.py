@@ -22,10 +22,11 @@ class Links(Resource):
             return '' #abort(500, err)
 
     def put(self, project_dir):
-        pathToLinks = PathUtils.sanitizePathList([basePath, project_dir, metaSubPath, linkFileName])
+        pathToLinks = PathUtils.sanitizePathList([basePath, project_dir, metaSubPath])
         Path(pathToLinks).mkdir(parents=True, exist_ok=True)
+        filePath = PathUtils.sanitizePathList([pathToLinks, linkFileName])
         # TODO check if this is available
         f = request.files['file']
-        f.save(pathToLinks)
-        fileRead = open(pathToLinks, encoding='utf-8')
+        f.save(filePath)
+        fileRead = open(filePath, encoding='utf-8')
         return fileRead.read()
