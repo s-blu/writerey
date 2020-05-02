@@ -11,13 +11,13 @@
     [@fadeInOnEnter]
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
-    (noteCreated)="onSubmit($event)"
+    (noteCreated)="createNote($event)"
   ></wy-create-new-note>
   <wy-create-new-link
     *ngIf="type === typesOfItems.link"
     [@fadeInOnEnter]
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
-    (noteCreated)="onSubmit($event)"
+    (linkCreated)="createLink($event)"
   ></wy-create-new-link>
 </div>

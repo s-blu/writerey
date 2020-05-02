@@ -18,7 +18,6 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   @Output() linkCreated = new EventEmitter<any>();
 
   createNewForm;
-  link;
   project;
   maxLength = 100;
   currentLength = 0;
@@ -40,6 +39,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   ) {
     this.createNewForm = this.formBuilder.group({
       context: this.contexts[0] || null,
+      linkId: null,
       text: ' \n',
     });
   }
@@ -57,6 +57,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   onSubmit(data) {
+    console.log('createNewLink onSubmit', data);
     this.linkCreated.emit(data);
     this.createNewForm.patchValue({ text: '' });
   }
@@ -77,10 +78,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
           })
         )
         .subscribe(link => {
-          console.log('sub', link);
-          if (!link) return;
-          this.link = link;
-          console.log('got a link back', link);
+          this.createNewForm.patchValue({ linkId: link });
         })
     );
   }

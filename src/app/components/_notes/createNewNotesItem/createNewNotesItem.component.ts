@@ -3,6 +3,9 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angu
 import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
 import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
+import * as uuid from 'uuid';
+import { Note } from 'src/app/models/note.interface';
+import { Link } from 'src/app/models/link.interface';
 
 enum typesOfItems {
   'note' = 'note',
@@ -48,7 +51,29 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     this.translatedContextNames.document = this.translocoService.translate('createNotesItem.contexts.document');
   }
 
-  onSubmit(data) {
-    this.itemCreated.emit(data);
+  createNote(event) {
+    if (!event) return;
+    const newNote: Note = {
+      stereotype: 'Note',
+      id: uuid.v4(),
+      type: event.type,
+      color: event.color,
+      context: event.context,
+      text: event.text,
+    };
+
+    this.itemCreated.emit(newNote);
+  }
+
+  createLink(event) {
+    const newLink: Link = {
+      stereotype: 'Link',
+      id: uuid.v4(),
+      linkId: event.linkId,
+      context: event.context,
+      text: event.text,
+    };
+    console.log('newLink', newLink);
+    this.itemCreated.emit(newLink);
   }
 }

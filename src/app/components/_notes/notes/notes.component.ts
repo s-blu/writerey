@@ -1,5 +1,4 @@
 import { MarkerDefinition } from './../../../models/markerDefinition.class';
-import { DEFAULT_CONTEXTS } from '../../../services/context.service';
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
@@ -10,10 +9,8 @@ import { DOC_MODES } from '../../../models/docModes.enum';
 import { NotesService } from '../../../services/notes.service';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Note } from '../../../models/note.interface';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
-import * as uuid from 'uuid';
 import { MarkerStore } from 'src/app/stores/marker.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { ContextService } from 'src/app/services/context.service';
@@ -124,14 +121,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   createNewNote(event) {
     if (!event) return;
-    const newNote: Note = {
-      id: uuid.v4(),
-      type: event.type,
-      color: event.color,
-      context: event.context,
-      text: event.text,
-    };
-    const updatedMetaData = [newNote];
+    const updatedMetaData = [event];
     if (this.notes && this.notes[event.context]) {
       updatedMetaData.push(...this.notes[event.context]);
     }
