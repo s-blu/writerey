@@ -120,11 +120,6 @@ export class DocumentService implements OnDestroy {
     return lastSaved;
   }
 
-  generateLinkForDocument(node) {
-    if (!node) return null;
-    // TODO
-  }
-
   init() {
     const lastSaved = this.getLastSavedFileInfo();
     if (lastSaved) this.documentStore.setFileInfo(lastSaved);

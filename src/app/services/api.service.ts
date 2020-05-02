@@ -26,6 +26,10 @@ export class ApiService {
     return `${this.serverAdress}/tree`;
   }
 
+  getLinkRoute(project) {
+    return `${this.serverAdress}/links${project ? '/' + project : ''}`;
+  }
+
   getGitCommitRoute() {
     return `${this.serverAdress}/git/commit`;
   }
