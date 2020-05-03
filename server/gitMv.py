@@ -4,7 +4,7 @@ from logger import Logger
 from flask import abort
 from pathUtils import PathUtils
 from gitUtils import GitUtils
-from writerey_config import basePath, metaSubPath
+from writerey_config import basePath, metaSubPath, linksFileName
 from os import path
 
 class GitMove(Resource):
@@ -20,6 +20,7 @@ class GitMove(Resource):
         doc_path = request.form['doc_path']
         new_name = request.form['new_doc_name']
         new_doc_path = request.form['new_doc_path']
+        project_dir = request.form['project_dir']
         msg = request.form['msg']
         self.logger.logDebug('params', doc_name, doc_path, new_name, new_doc_path, msg)
 
@@ -41,10 +42,10 @@ class GitMove(Resource):
             self.moveViaGit(doc_path, doc_name, new_doc_path, new_name_ptfrcs, msg)
             doc_name = new_name_ptfrcs
 
-        self.moveViaGit(doc_path, doc_name, new_doc_path, new_name, msg)
+        self.moveViaGit(doc_path, doc_name, new_doc_path, new_name, msg, project_dir)
         return 'finished'
 
-    def moveViaGit(self, doc_path, doc_name, new_doc_path, new_name, msg):
+    def moveViaGit(self, doc_path, doc_name, new_doc_path, new_name, msg, projectDir = None):
         old_path = PathUtils.sanitizePathList([doc_path, doc_name])
         new_path = PathUtils.sanitizePathList([new_doc_path, new_name])
         old_meta_path = PathUtils.sanitizePathList([doc_path, metaSubPath, doc_name])
@@ -58,4 +59,7 @@ class GitMove(Resource):
         self.git.run(["git", "mv", old_path, new_path])
         if path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])):
             self.git.run(["git", "mv", old_meta_path, new_meta_path])
+        if projectDir:
+            # add links file to the commit, since it possibly get changed on a move 
+            self.git.run(["git", "add", PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])])
         self.git.run(["git", "commit", "-m", msg])

@@ -94,17 +94,15 @@ export class DocumentService implements OnDestroy {
     formdata.append('new_doc_path', newPath || path);
     formdata.append('msg', msg);
 
-    let moveResponse;
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
-      flatMap(moveRes => {
-        moveResponse = moveRes;
-        return this.projectStore.project$;
+    return this.projectStore.project$.pipe(
+      flatMap(project => {
+        formdata.append('project_dir', project);
+        return this.linkService.moveLinkDestination(project, name, path, newName, newPath);
       }),
-      flatMap(project => this.linkService.moveLinkDestination(project, name, path, newName, newPath)),
-      flatMap(_ => moveResponse)
+      flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
+      catchError(err => this.api.handleHttpError(err))
     );
   }
 
