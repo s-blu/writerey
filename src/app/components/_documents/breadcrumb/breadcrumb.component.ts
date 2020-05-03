@@ -9,6 +9,7 @@ import { DocumentStore } from 'src/app/stores/document.store';
 })
 export class BreadcrumbComponent implements OnInit, OnChanges {
   @Input() fileInfo?: FileInfo;
+  @Input() skipRoot?: boolean;
   path: Array<string> = [];
   name = '';
 
@@ -33,6 +34,9 @@ export class BreadcrumbComponent implements OnInit, OnChanges {
   private setPathAndName(fileInfo) {
     if (!fileInfo) return;
     const pathParts = (fileInfo.path || '').split('/').filter(el => el && el !== '');
+    if (this.skipRoot) {
+      pathParts.shift();
+    }
     this.path = pathParts;
     this.name = fileInfo?.name || '';
   }

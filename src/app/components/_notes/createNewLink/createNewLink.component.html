@@ -20,7 +20,7 @@
     </span>
     <button class="choose-document-button" mat-stroked-button type="button" (click)="chooseDocument()">
       <span *ngIf="!selectedDocument">{{ t('chooseDocument') }}</span>
-      <wy-breadcrumb *ngIf="selectedDocument" [fileInfo]="selectedDocument"></wy-breadcrumb>
+      <wy-breadcrumb *ngIf="selectedDocument" [fileInfo]="selectedDocument" skipRoot="true"></wy-breadcrumb>
     </button>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">

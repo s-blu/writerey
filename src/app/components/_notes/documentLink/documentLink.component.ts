@@ -43,23 +43,20 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
     } else {
       this.contextName = this.link.context;
     }
-    this.projectStore.project$
-      .pipe(
-        take(1),
-        flatMap((project: string) => {
-          return this.linkService.getDocumentInfoForLink(project, this.link.linkId);
-        }),
-        flatMap((documentLink: DocumentLink) => {
+    this.subscription.add(
+      this.projectStore.project$
+        .pipe(
+          take(1),
+          flatMap((project: string) => {
+            return this.linkService.getDocumentInfoForLink(project, this.link.linkId);
+          })
+        )
+        .subscribe((documentLink: DocumentLink) => {
           if (!documentLink) return;
           this.fileInfo = { name: documentLink.name, path: documentLink.path };
-          return this.documentService.getDocument(documentLink.path, documentLink.name, true);
+          this.loadContentOnExpand();
         })
-      )
-      .subscribe((document: DocumentDefinition) => {
-        if (!document) return;
-
-        this.content = document?.content || '';
-      });
+    );
   }
 
   ngOnDestroy() {
@@ -77,5 +74,20 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
 
   changeExpand() {
     this.isExpanded = !this.isExpanded;
+    this.loadContentOnExpand();
+  }
+
+  private loadContentOnExpand() {
+    if (this.isExpanded && this.fileInfo && this.content === undefined) {
+      this.subscription.add(
+        this.documentService
+          .getDocument(this.fileInfo.path, this.fileInfo.name, true)
+          .subscribe((document: DocumentDefinition) => {
+            if (!document) return;
+
+            this.content = document.content || '';
+          })
+      );
+    }
   }
 }

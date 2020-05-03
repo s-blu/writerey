@@ -20,7 +20,6 @@ export class LinkService {
 
   getLinkForDocument(name, path, project) {
     const findLinkOrCreateNewOne = links => {
-      console.log('findLinkOrCreateNewOne', links);
       let link = links.find(l => l.path === path && l.name === name);
       if (!link) {
         const newLink = {
@@ -49,12 +48,10 @@ export class LinkService {
   }
 
   private getLinksForProject(project, callbackFn) {
-    console.log('getLinksForProject', project, this.linkMap);
     if (!project || !callbackFn) return of(null);
     let linksForProjectObservable;
 
     if (!this.linkMap[project]) {
-      console.log('got no linkmap, getting from server');
       linksForProjectObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
         map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);
@@ -95,7 +92,7 @@ export class LinkService {
 
     return this.httpClient
       .put(this.api.getLinkRoute(project), formdata, { headers: httpHeaders })
-      .pipe(map(_ => newLink.linkId));
+      .pipe(map(_ => newLink));
   }
 
   private saveServerResponseToLinkMap(project, res) {

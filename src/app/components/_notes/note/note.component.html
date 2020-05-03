@@ -11,7 +11,7 @@
     <mat-card-content>
       <quill-view class="note-text" [content]="note.text"></quill-view>
     </mat-card-content>
-    <mat-card-actions class="actions">
+    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
         <mat-icon>done</mat-icon>
       </button>

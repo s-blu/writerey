@@ -9,9 +9,10 @@
   <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
     <mat-card-content>
       <div class="link-destination">
-        <wy-breadcrumb [fileInfo]="fileInfo"></wy-breadcrumb>
+        <wy-breadcrumb [fileInfo]="fileInfo" skipRoot="true"></wy-breadcrumb>
       </div>
       <quill-view class="note-text preview" [content]="link.text"></quill-view>
+      <mat-progress-bar mode="indeterminate" *ngIf="isExpanded && !content"></mat-progress-bar>
       <quill-view class="note-text" *ngIf="content && isExpanded" [@fadeOutOnLeave] [content]="content"></quill-view>
     </mat-card-content>
     <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions">
