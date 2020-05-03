@@ -47,6 +47,27 @@ export class LinkService {
     return this.getLinksForProject(project, findLinkWithId);
   }
 
+  moveLinkDestination(project: string, oldName: string, oldPath: string, newName: string, newPath: string) {
+    if (!project || !oldName || !oldPath) {
+      console.error('linkService -> moveLinkDestination was called with invalid data. Aborting.');
+      return;
+    }
+
+    const replaceNameAndPathForLink = links => {
+      let link = links.find(l => l.path === oldPath && l.name === oldName);
+      if (!link) {
+        // if there is no link available, all is good, no renaming is necessary;
+        return of(null);
+      } else {
+        link.name = newName || oldName;
+        link.path = newPath || oldPath;
+        return this.saveLinksToServer(project, links);
+      }
+    };
+
+    return this.getLinksForProject(project, replaceNameAndPathForLink);
+  }
+
   private getLinksForProject(project, callbackFn) {
     if (!project || !callbackFn) return of(null);
     let linksForProjectObservable;
@@ -72,7 +93,6 @@ export class LinkService {
     let links = this.linkMap[project];
 
     if (!links) {
-      // todo
       console.error(
         'wanted to save new link but didnt get a map for project? will work with empty array',
         project,
@@ -82,6 +102,10 @@ export class LinkService {
     }
     links.push(newLink);
 
+    return this.saveLinksToServer(project, links).pipe(map(_ => newLink));
+  }
+
+  private saveLinksToServer(project, links) {
     const blob = new Blob([JSON.stringify(links)], { type: 'text/html' });
     const file = new File([blob], name, { type: 'text/html' });
     const formdata = new FormData();
@@ -90,9 +114,7 @@ export class LinkService {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.httpClient
-      .put(this.api.getLinkRoute(project), formdata, { headers: httpHeaders })
-      .pipe(map(_ => newLink));
+    return this.httpClient.put(this.api.getLinkRoute(project), formdata, { headers: httpHeaders });
   }
 
   private saveServerResponseToLinkMap(project, res) {

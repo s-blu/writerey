@@ -1,3 +1,5 @@
+import { ProjectStore } from './../stores/project.store';
+import { LinkService } from 'src/app/services/link.service';
 import { FileInfo } from '../models/fileInfo.interface';
 import { DocumentDefinition, LAST_DOCUMENT_KEY } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
@@ -20,7 +22,9 @@ export class DocumentService implements OnDestroy {
     private api: ApiService,
     private httpClient: HttpClient,
     private paragraphService: ParagraphService,
-    private documentStore: DocumentStore
+    private documentStore: DocumentStore,
+    private linkService: LinkService,
+    private projectStore: ProjectStore
   ) {}
 
   ngOnDestroy() {
@@ -90,11 +94,18 @@ export class DocumentService implements OnDestroy {
     formdata.append('new_doc_path', newPath || path);
     formdata.append('msg', msg);
 
+    let moveResponse;
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient
-      .put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })
-      .pipe(catchError(err => this.api.handleHttpError(err)));
+    return this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      flatMap(moveRes => {
+        moveResponse = moveRes;
+        return this.projectStore.project$;
+      }),
+      flatMap(project => this.linkService.moveLinkDestination(project, name, path, newName, newPath)),
+      flatMap(_ => moveResponse)
+    );
   }
 
   createDocument(path: string, name: string) {
