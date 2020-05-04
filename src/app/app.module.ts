@@ -53,7 +53,7 @@ import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
 import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
-import { DocumentMarksComponent } from './components/_labels/documentMarks/documentMarks.component';
+import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
@@ -94,7 +94,7 @@ const matModules = [
     NotesComponent,
     NoteComponent,
     BreadcrumbComponent,
-    DocumentMarksComponent,
+    DocumentLabelsComponent,
     FooterComponent,
     StripFileEndingPipe,
     CreateNewItemDialogComponent,

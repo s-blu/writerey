@@ -16,11 +16,11 @@ import { DocumentStore } from 'src/app/stores/document.store';
 import { sortLabelArray } from 'src/app/utils/label.utils';
 @Component({
   selector: 'wy-document-marks',
-  templateUrl: './documentMarks.component.html',
-  styleUrls: ['./documentMarks.component.scss'],
+  templateUrl: './documentLabels.component.html',
+  styleUrls: ['./documentLabels.component.scss'],
   animations: FADE_ANIMATIONS,
 })
-export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
+export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
   paragraphId: string;
   fileInfo: FileInfo;
   labels: Array<Label> = [];
