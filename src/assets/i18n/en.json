@@ -1,39 +1,39 @@
 {
-  "createMarker": {
-    "title": "Create a new Marker",
+  "createLabel": {
+    "title": "Create a new Label",
     "type": {
-      "title": "Marker type",
+      "title": "Label type",
       "text": "Text",
       "numeric": "Numeric"
     },
-    "name": "Name of Marker",
+    "name": "Name of Label",
     "create": "Create",
     "cancel": "Cancel"
   },
-  "markerDetails": {
-    "name": "Name of Marker Category",
+  "labelDetails": {
+    "name": "Name of Label Category",
     "textvalue": "Value",
     "addNewValue": "Add a new value",
     "removeValue": "Remove Value",
     "save": "Save",
     "cancel": "Cancel",
     "index": "Index",
-    "title": "Edit Marker '{{name}}'",
+    "title": "Edit Label '{{name}}'",
     "titleValues": "Values",
-    "titleMarkerProps": "Marker Properties",
+    "titleLabelProps": "Label Properties",
     "type": {
-      "text": "Text Marker",
-      "numeric": "Numerical Marker"
+      "text": "Text Label",
+      "numeric": "Numerical Label"
     },
     "saved": "Saved!",
     "start": "Start",
     "end": "End",
     "interval": "Interval"
   },
-  "documentMarkers": {
+  "documentLabels": {
     "noneValue": "Unset",
-    "title": "Markers",
-    "placeholderEmpty": "You have no marker definitions yet. As soon as you create some, they will be configurable here."
+    "title": "Labels",
+    "placeholderEmpty": "You have no label definitions yet. As soon as you create some, they will be configurable here."
   },
   "snapshotDialog": {
     "title": "Snapshot message",
@@ -52,8 +52,8 @@
     "type": {
       "file": "File",
       "dir": "Directory",
-      "marker": "Marker",
-      "markerValue": "Marker Value"
+      "label": "Label",
+      "labelValue": "Label Value"
     },
     "snapshot": "Snapshot before deletion of {{type}} '{{name}}'"
   },
@@ -61,16 +61,16 @@
   "explorer": {
     "tabs": {
       "documenttree": "Documents",
-      "markers": "Markers"
+      "labels": "Labels"
     },
     "menu": {
       "backToProjects": "Back to projects",
-      "newmarker": "New Marker"
+      "newlabel": "New Label"
     }
   },
-  "markerTree": {
-    "remove": "Remove Marker",
-    "empty-tree": "You have no markers. Hit the 'New Marker' button above and let them help you organize and track your work!"
+  "labelTree": {
+    "remove": "Remove Label",
+    "empty-tree": "You have no labels. Hit the 'New Label' button above and let them help you organize and track your work!"
   },
   "documentTree": {
     "rename": "Rename",
@@ -127,7 +127,7 @@
   },
   "linkDialog": {
     "title": "Document to link",
-    "message": "Choose a document to link to.", 
+    "message": "Choose a document to link to.",
     "selected": "Currently selected:",
     "submit": "Choose Document",
     "cancel": "Cancel"

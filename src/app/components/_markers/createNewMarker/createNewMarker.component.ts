@@ -3,14 +3,14 @@ import { FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
-  selector: 'wy-createNewMarker',
-  templateUrl: './createNewMarker.component.html',
-  styleUrls: ['./createNewMarker.component.scss'],
+  selector: 'wy-createNewLabel',
+  templateUrl: './createNewLabel.component.html',
+  styleUrls: ['./createNewLabel.component.scss'],
 })
-export class CreateNewMarkerComponent implements OnInit {
+export class CreateNewLabelComponent implements OnInit {
   createNewForm;
 
-  constructor(public dialogRef: MatDialogRef<CreateNewMarkerComponent>, private formBuilder: FormBuilder) {}
+  constructor(public dialogRef: MatDialogRef<CreateNewLabelComponent>, private formBuilder: FormBuilder) {}
 
   cancel(): void {
     this.dialogRef.close();

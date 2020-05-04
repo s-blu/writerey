@@ -1,13 +1,13 @@
-<mat-card class="marker-details mat-elevation-z2" *transloco="let t; read: 'markerDetails'">
+<mat-card class="label-details mat-elevation-z2" *transloco="let t; read: 'labelDetails'">
   <mat-card-header>
-    <mat-card-title>{{ markerDefinition.name }}</mat-card-title>
-    <mat-card-subtitle>{{ t('type.' + markerDefinition.type) }}</mat-card-subtitle>
+    <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
+    <mat-card-subtitle>{{ t('type.' + labelDefinition.type) }}</mat-card-subtitle>
   </mat-card-header>
 
   <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
     <mat-card-content>
       <mat-tab-group>
-        <mat-tab [label]="t('titleMarkerProps')">
+        <mat-tab [label]="t('titleLabelProps')">
           <div class="tab-content">
             <mat-form-field>
               <mat-label>{{ t('name') }}</mat-label>
@@ -21,7 +21,7 @@
         </mat-tab>
 
         <mat-tab [label]="t('titleValues')">
-          <div class="tab-content value-container numeric-values" *ngIf="markerDefinition.type === types.NUMERIC">
+          <div class="tab-content value-container numeric-values" *ngIf="labelDefinition.type === types.NUMERIC">
             <mat-form-field>
               <mat-label>{{ t('start') }}</mat-label>
               <input matInput type="number" required formControlName="start" />
@@ -35,7 +35,7 @@
               <input matInput type="number" required formControlName="interval" />
             </mat-form-field>
           </div>
-          <div *ngIf="markerDefinition.type === types.TEXT">
+          <div *ngIf="labelDefinition.type === types.TEXT">
             <ng-container formArrayName="values">
               <div class="text-value-container tab-content" *ngFor="let _ of values.controls; index as i">
                 <mat-form-field [formGroupName]="i">

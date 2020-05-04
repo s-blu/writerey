@@ -1,39 +1,39 @@
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject} from 'rxjs';
 import { List } from 'immutable';
 import { map} from 'rxjs/operators';
-import { sortMarkerDefinitions } from '../utils/marker.utils';
+import { sortLabelDefinitions } from '../utils/label.utils';
 
 
 @Injectable({ providedIn: 'root' })
-export class MarkerStore {
-  private readonly _markerDefinitionSubject = new BehaviorSubject<List<MarkerDefinition>>(List());
+export class LabelStore {
+  private readonly _labelDefinitionSubject = new BehaviorSubject<List<LabelDefinition>>(List());
 
-  readonly markerDefinitions$ = this._markerDefinitionSubject.asObservable().pipe(
-    map((res: List<MarkerDefinition>) => {
+  readonly labelDefinitions$ = this._labelDefinitionSubject.asObservable().pipe(
+    map((res: List<LabelDefinition>) => {
       const array = res.toArray();
-      array.sort(sortMarkerDefinitions);
+      array.sort(sortLabelDefinitions);
       return array;
     })
   );
 
-  private get markerDefinitionSubject(): any {
-    return this._markerDefinitionSubject.getValue();
+  private get labelDefinitionSubject(): any {
+    return this._labelDefinitionSubject.getValue();
   }
 
-  private set markerDefinitionSubject(val: any) {
-    this._markerDefinitionSubject.next(List(val));
+  private set labelDefinitionSubject(val: any) {
+    this._labelDefinitionSubject.next(List(val));
   }
 
-  public setMarkerDefinitions(newMarkerDefinitions: Array<MarkerDefinition>) {
-    if (!newMarkerDefinitions || !(newMarkerDefinitions instanceof Array)) {
+  public setLabelDefinitions(newLabelDefinitions: Array<LabelDefinition>) {
+    if (!newLabelDefinitions || !(newLabelDefinitions instanceof Array)) {
       console.warn(
-        'setMarkerDefinitions was called with invalid data, will reset to an empty array',
-        newMarkerDefinitions
+        'setLabelDefinitions was called with invalid data, will reset to an empty array',
+        newLabelDefinitions
       );
-      newMarkerDefinitions = [];
+      newLabelDefinitions = [];
     }
-    this.markerDefinitionSubject = List(newMarkerDefinitions);
+    this.labelDefinitionSubject = List(newLabelDefinitions);
   }
 }

@@ -42,8 +42,8 @@ export class ApiService {
     return `${this.serverAdress}/git/tag`;
   }
 
-  getMarkerRoute(markerId = 'definitions') {
-    return `${this.serverAdress}/marker/${markerId}`;
+  getLabelRoute(labelId = 'definitions') {
+    return `${this.serverAdress}/label/${labelId}`;
   }
 
   handleHttpError(error: HttpErrorResponse) {

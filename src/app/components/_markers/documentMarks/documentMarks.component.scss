@@ -5,8 +5,8 @@
   margin-top: 1em;
   position: relative;
 }
-.marker-name {
-  color: $c_marker;
+.label-name {
+  color: $c_label;
   margin-right: 0.5em;
 }
 
@@ -31,7 +31,7 @@ mat-slider,
 mat-form-field {
   width: 100%;
 }
-.numeric-marker mat-label {
+.numeric-label mat-label {
   display: block;
 }
 

@@ -1,6 +1,6 @@
 @import '../../../styles/variables';
 
-.marker-tree {
+.label-tree {
   box-sizing: border-box;
   height: 100%;
   }
@@ -16,7 +16,7 @@
     }
   }
 
-  .marker-node {
+  .label-node {
     .name:hover {
       cursor: pointer;
     }

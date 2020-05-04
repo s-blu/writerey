@@ -3,20 +3,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { MarkerTreeComponent } from './markerTree.component';
+import { LabelTreeComponent } from './labelTree.component';
 
-describe('MarkerTreeComponent', () => {
-  let component: MarkerTreeComponent;
-  let fixture: ComponentFixture<MarkerTreeComponent>;
+describe('LabelTreeComponent', () => {
+  let component: LabelTreeComponent;
+  let fixture: ComponentFixture<LabelTreeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [MarkerTreeComponent],
+      declarations: [LabelTreeComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MarkerTreeComponent);
+    fixture = TestBed.createComponent(LabelTreeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

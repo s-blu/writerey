@@ -2,7 +2,7 @@ import { DocumentModeStore } from './stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DOC_MODES } from './models/docModes.enum';
-import { MarkerDefinition } from './models/markerDefinition.class';
+import { LabelDefinition } from './models/labelDefinition.class';
 import { DocumentStore } from './stores/document.store';
 
 @Component({
@@ -14,7 +14,7 @@ import { DocumentStore } from './stores/document.store';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'writerey';
 
-  markerDef: MarkerDefinition;
+  labelDef: LabelDefinition;
   isLoading = false;
 
   private subscription = new Subscription();
@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(private documentStore: DocumentStore, private documentModeStore: DocumentModeStore) {}
 
   ngOnInit() {
-    this.subscription.add(this.documentStore.fileInfo$.subscribe(() => (this.markerDef = null)));
+    this.subscription.add(this.documentStore.fileInfo$.subscribe(() => (this.labelDef = null)));
   }
 
   ngOnDestroy() {
@@ -30,8 +30,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   // FIXME replace this special handling with proper routing to decide which page to show
-  changeMarker(event: MarkerDefinition) {
+  changeLabel(event: LabelDefinition) {
     this.documentModeStore.setMode(DOC_MODES.WRITE);
-    this.markerDef = event;
+    this.labelDef = event;
   }
 }

@@ -1,4 +1,4 @@
-export interface Marker {
+export interface Label {
   id: string;
   valueId: string;
   index?: number;

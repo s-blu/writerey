@@ -1,12 +1,12 @@
-import { MarkerStore } from 'src/app/stores/marker.store';
+import { LabelStore } from 'src/app/stores/label.store';
 import { ContextStore } from './../stores/context.store';
 import { ParagraphService } from './paragraph.service';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Marker } from '../models/marker.interface';
+import { Label } from '../models/label.interface';
 import { map } from 'rxjs/operators';
-import { MarkerDefinition } from '../models/markerDefinition.class';
+import { LabelDefinition } from '../models/labelDefinition.class';
 import { Subscription, of } from 'rxjs';
-import { sortMarkerArray } from '../utils/marker.utils';
+import { sortLabelArray } from '../utils/label.utils';
 
 export enum DEFAULT_CONTEXTS {
   PARAGRAPH = 'paragraph',
@@ -17,7 +17,7 @@ export enum DEFAULT_CONTEXTS {
   providedIn: 'root',
 })
 export class ContextService implements OnDestroy {
-  private markerDefinitions: Array<MarkerDefinition>;
+  private labelDefinitions: Array<LabelDefinition>;
   private subscription = new Subscription();
 
   ngOnDestroy() {
@@ -26,20 +26,20 @@ export class ContextService implements OnDestroy {
   constructor(
     private paragraphService: ParagraphService,
     private contextStore: ContextStore,
-    private markerStore: MarkerStore
+    private labelStore: LabelStore
   ) {
-    this.subscription.add(this.markerStore.markerDefinitions$.subscribe(res => (this.markerDefinitions = res)));
+    this.subscription.add(this.labelStore.labelDefinitions$.subscribe(res => (this.labelDefinitions = res)));
   }
 
   getContextsForDocument(docPath: string, docName: string, paragraphId?: string) {
     const contexts: Array<string> = [DEFAULT_CONTEXTS.DOCUMENT];
     if (paragraphId) contexts.unshift(DEFAULT_CONTEXTS.PARAGRAPH);
-    return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'markers').pipe(
-      map(markers => {
-        if (markers) {
-          sortMarkerArray(markers, this.markerDefinitions);
-          for (const m of markers) {
-            contexts.push(this.getContextStringForMarker(m));
+    return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'labels').pipe(
+      map(labels => {
+        if (labels) {
+          sortLabelArray(labels, this.labelDefinitions);
+          for (const m of labels) {
+            contexts.push(this.getContextStringForLabel(m));
           }
         }
 
@@ -49,35 +49,35 @@ export class ContextService implements OnDestroy {
     );
   }
 
-  getContextsForMarkerDefinition(markerDef: MarkerDefinition) {
+  getContextsForLabelDefinition(labelDef: LabelDefinition) {
     const contexts: Array<string> = [];
-    if (!markerDef?.values) return contexts;
-    const markers = [];
+    if (!labelDef?.values) return contexts;
+    const labels = [];
 
-    for (const val of markerDef.values) {
-      markers.push({ id: markerDef.id, valueId: val.id, index: markerDef.index } as Marker);
+    for (const val of labelDef.values) {
+      labels.push({ id: labelDef.id, valueId: val.id, index: labelDef.index } as Label);
     }
 
-    sortMarkerArray(markers, this.markerDefinitions);
-    for (const m of markers) {
-      contexts.push(this.getContextStringForMarker(m));
+    sortLabelArray(labels, this.labelDefinitions);
+    for (const m of labels) {
+      contexts.push(this.getContextStringForLabel(m));
     }
     this.contextStore.setContexts(contexts);
     return of(contexts);
   }
 
-  public getContextStringForMarker(marker: Marker) {
-    if (!marker) return '';
-    return `${marker.id}:${marker.valueId}`;
+  public getContextStringForLabel(label: Label) {
+    if (!label) return '';
+    return `${label.id}:${label.valueId}`;
   }
 
-  public getMarkerFromContextString(context: string) {
+  public getLabelFromContextString(context: string) {
     if (!context) return null;
     const [id, valueId] = context.split(':');
-    const newMarker: Marker = {
+    const newLabel: Label = {
       id,
       valueId,
     };
-    return newMarker;
+    return newLabel;
   }
 }

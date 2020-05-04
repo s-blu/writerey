@@ -4,7 +4,7 @@ from flask_cors import CORS
 from pathlib import Path
 
 from documents import Documents
-from marker import Markers
+from label import Labels
 from paragraph_meta import ParagraphMeta
 from directories import Directories
 from git import GitAutomation
@@ -22,7 +22,7 @@ CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 api.add_resource(Documents, '/doc/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
 api.add_resource(Directories, '/dir/<string:dir_name>')
-api.add_resource(Markers, '/marker/<string:marker_id>')
+api.add_resource(Labels, '/label/<string:label_id>')
 api.add_resource(Links, '/links/<string:project_dir>')
 api.add_resource(Tree, '/tree')
 api.add_resource(GitAutomation, '/git/commit')
@@ -32,5 +32,5 @@ api.add_resource(GitMove, '/git/mv')
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-    # app.run(port=5002, debug=True)  # FIXME 
-    serve(app, listen='localhost:5002')
+    app.run(port=5002, debug=True)  # FIXME
+    # serve(app, listen='localhost:5002')

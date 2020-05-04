@@ -1,39 +1,39 @@
 {
-  "createMarker": {
-    "title": "Einen neuen Marker erstellen",
+  "createLabel": {
+    "title": "Einen neuen Label erstellen",
     "type": {
-      "title": "Markertyp",
+      "title": "Labeltyp",
       "text": "Text",
       "numeric": "Numerisch"
     },
-    "name": "Name des Markers",
+    "name": "Name des Labels",
     "create": "Erstellen",
     "cancel": "Abbrechen"
   },
-  "markerDetails": {
-    "name": "Name des Markers",
+  "labelDetails": {
+    "name": "Name des Labels",
     "textvalue": "Wert",
     "addNewValue": "Einen neuen Wert hinzufügen",
     "removeValue": "Wert entfernen",
     "save": "Speichern",
     "cancel": "Abbrechen",
     "index": "Index",
-    "title": "Marker '{{name}}' bearbeiten",
+    "title": "Label '{{name}}' bearbeiten",
     "titleValues": "Werte",
-    "titleMarkerProps": "Markereigenschaften",
+    "titleLabelProps": "Labeleigenschaften",
     "type": {
-      "text": "Text-Marker",
-      "numeric": "Numerischer Marker"
+      "text": "Text-Label",
+      "numeric": "Numerischer Label"
     },
     "saved": "Gespeichert!",
     "start": "Start",
     "end": "Ende",
     "interval": "Intervall"
   },
-  "documentMarkers": {
+  "documentLabels": {
     "noneValue": "Nicht gesetzt",
-    "title": "Marker",
-    "placeholderEmpty": "Du hast noch keine Markerdefinitionen. Sobald du welche angelegt hast, kannst du sie hier konfigurieren."
+    "title": "Label",
+    "placeholderEmpty": "Du hast noch keine Labeldefinitionen. Sobald du welche angelegt hast, kannst du sie hier konfigurieren."
   },
   "snapshotDialog": {
     "title": "Text für Sicherung",
@@ -52,8 +52,8 @@
     "type": {
       "file": "Dokument",
       "dir": "Ordner",
-      "marker": "Marker",
-      "markerValue": "Markerwert"
+      "label": "Label",
+      "labelValue": "Labelwert"
     },
     "snapshot": "Sicherung vor der Löschung von {{type}} '{{name}}'"
   },
@@ -61,16 +61,16 @@
   "explorer": {
     "tabs": {
       "documenttree": "Dokumente",
-      "markers": "Marker"
+      "labels": "Label"
     },
     "menu": {
       "backToProjects": "Zurück zur Projektwahl",
-      "newmarker": "Neuer Marker"
+      "newlabel": "Neuer Label"
     }
   },
-  "markerTree": {
-    "remove": "Marker löschen",
-    "empty-tree": "Du hast noch keine Marker. Nutze 'Neuer Marker' um einen zu erstellen. Sie helfen dir, deine Arbeit zu organisieren und deinen Fortschritt zu protokollieren."
+  "labelTree": {
+    "remove": "Label löschen",
+    "empty-tree": "Du hast noch keine Label. Nutze 'Neuer Label' um einen zu erstellen. Sie helfen dir, deine Arbeit zu organisieren und deinen Fortschritt zu protokollieren."
   },
   "documentTree": {
     "rename": "Umbenennen",

@@ -1,6 +1,6 @@
 import { FADE_ANIMATIONS } from './../../../utils/animation.utils';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
 import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
 import * as uuid from 'uuid';
@@ -19,7 +19,7 @@ enum typesOfItems {
 })
 export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
-  @Input() markerDefs: Array<MarkerDefinition> = [];
+  @Input() labelDefs: Array<LabelDefinition> = [];
   @Output() itemCreated = new EventEmitter<any>();
 
   typesOfItems = typesOfItems;
@@ -35,10 +35,10 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   ngOnChanges() {
     for (const context of this.contexts) {
       if (context.includes(':')) {
-        const [markerId, valueId] = context.split(':');
-        const markerDef = this.markerDefs.find(m => m.id === markerId);
-        const valueName = markerDef?.values?.find(v => v.id === valueId)?.name;
-        this.translatedContextNames[context] = `[${markerDef?.name}] ${valueName}`;
+        const [labelId, valueId] = context.split(':');
+        const labelDef = this.labelDefs.find(m => m.id === labelId);
+        const valueName = labelDef?.values?.find(v => v.id === valueId)?.name;
+        this.translatedContextNames[context] = `[${labelDef?.name}] ${valueName}`;
       } else if (!this.translatedContextNames[context]) {
         this.translatedContextNames[context] = context;
       }

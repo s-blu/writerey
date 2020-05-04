@@ -10,8 +10,8 @@ import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.co
 import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { CreateNewMarkerComponent } from './components/_markers/createNewMarker/createNewMarker.component';
-import { MarkerTreeComponent } from './components/_markers/markerTree/markerTree.component';
+import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
+import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { QuillComponent } from './components/_documents/quill/quill.component';
 import { CreateNewNoteComponent } from './components/_notes/createNewNote/createNewNote.component';
@@ -53,12 +53,12 @@ import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
 import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
-import { DocumentMarksComponent } from './components/_markers/documentMarks/documentMarks.component';
+import { DocumentMarksComponent } from './components/_labels/documentMarks/documentMarks.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { QuillModule } from 'ngx-quill';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
-import { MarkerDetailsComponent } from './components/_markers/markerDetails/markerDetails.component';
+import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { MatDividerModule } from '@angular/material/divider';
@@ -104,9 +104,9 @@ const matModules = [
     CheckForNameSafetyDirective,
     QuillComponent,
     DocumentTreeComponent,
-    MarkerTreeComponent,
-    CreateNewMarkerComponent,
-    MarkerDetailsComponent,
+    LabelTreeComponent,
+    CreateNewLabelComponent,
+    LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
     ProjectsComponent,

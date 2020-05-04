@@ -1,4 +1,4 @@
-import { MarkerService } from 'src/app/services/marker.service';
+import { LabelService } from 'src/app/services/label.service';
 import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
 import { Injectable } from '@angular/core';
@@ -13,7 +13,7 @@ export class NotesService {
   constructor(
     private paragraphService: ParagraphService,
     private api: ApiService,
-    private markerService: MarkerService
+    private labelService: LabelService
   ) {}
 
   getNotesForParagraph(docPath, docName, paragraphId, contexts) {
@@ -30,20 +30,20 @@ export class NotesService {
       flatMap(docRes => {
         notesWrap[DEFAULT_CONTEXTS.DOCUMENT] = docRes || [];
 
-        const markerContexts = [];
+        const labelContexts = [];
         for (const c of contexts) {
           if (c.includes(':')) {
-            markerContexts.push(this.markerService.getMetaForMarkerValue(c, 'notes'));
+            labelContexts.push(this.labelService.getMetaForLabelValue(c, 'notes'));
           }
         }
 
-        return markerContexts.length > 0 ? forkJoin(markerContexts) : of(notesWrap);
+        return labelContexts.length > 0 ? forkJoin(labelContexts) : of(notesWrap);
       }),
-      flatMap((markerRes: Array<any>) => {
-        if (markerRes && markerRes instanceof Array) {
-          for (const markerNotes of markerRes) {
-            const contextOnNote = markerNotes[0]?.context;
-            if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
+      flatMap((labelRes: Array<any>) => {
+        if (labelRes && labelRes instanceof Array) {
+          for (const labelNotes of labelRes) {
+            const contextOnNote = labelNotes[0]?.context;
+            if (contextOnNote) notesWrap[contextOnNote] = labelNotes;
           }
         }
         return of(notesWrap);
@@ -51,25 +51,25 @@ export class NotesService {
     );
   }
 
-  getNotesForMarkerDefinition(markerDef, contexts) {
+  getNotesForLabelDefinition(labelDef, contexts) {
     const notesWrap = {};
     contexts.forEach(c => {
       notesWrap[c] = [];
     });
 
-    const markerContexts = [];
+    const labelContexts = [];
     for (const c of contexts) {
       if (c.includes(':')) {
-        markerContexts.push(this.markerService.getMetaForMarkerValue(c, 'notes'));
+        labelContexts.push(this.labelService.getMetaForLabelValue(c, 'notes'));
       }
     }
 
-    return forkJoin(markerContexts).pipe(
-      flatMap((markerRes: Array<any>) => {
-        if (markerRes && markerRes instanceof Array) {
-          for (const markerNotes of markerRes) {
-            const contextOnNote = markerNotes[0]?.context;
-            if (contextOnNote) notesWrap[contextOnNote] = markerNotes;
+    return forkJoin(labelContexts).pipe(
+      flatMap((labelRes: Array<any>) => {
+        if (labelRes && labelRes instanceof Array) {
+          for (const labelNotes of labelRes) {
+            const contextOnNote = labelNotes[0]?.context;
+            if (contextOnNote) notesWrap[contextOnNote] = labelNotes;
           }
         }
         return of(notesWrap);

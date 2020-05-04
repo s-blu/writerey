@@ -1,24 +1,24 @@
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
 
-export function sortMarkerArray(markerArray, markerDefinitions) {
-  if (!markerDefinitions) return markerArray;
-  markerArray.sort((a, b) => {
-    const defA = markerDefinitions.find(m => m.id === a.id) || ({} as any);
-    const defB = markerDefinitions.find(m => m.id === b.id) || ({} as any);
+export function sortLabelArray(labelArray, labelDefinitions) {
+  if (!labelDefinitions) return labelArray;
+  labelArray.sort((a, b) => {
+    const defA = labelDefinitions.find(m => m.id === a.id) || ({} as any);
+    const defB = labelDefinitions.find(m => m.id === b.id) || ({} as any);
 
-    return sortMarkerDefinitions(defA, defB, a.valueId, b.valueId);
+    return sortLabelDefinitions(defA, defB, a.valueId, b.valueId);
   });
 }
 
-export function sortMarkerDefinitions(
-  markerDefA: MarkerDefinition,
-  markerDefB: MarkerDefinition,
+export function sortLabelDefinitions(
+  labelDefA: LabelDefinition,
+  labelDefB: LabelDefinition,
   valueIdA?: string,
   valueIdB?: string
 ) {
-  const indexA = markerDefA.index;
-  const indexB = markerDefB.index;
-  // markers with index should appear before markers without
+  const indexA = labelDefA.index;
+  const indexB = labelDefB.index;
+  // labels with index should appear before labels without
   if (isIndexAvailable(indexA) || isIndexAvailable(indexB)) {
     if (!isIndexAvailable(indexA)) {
       return 1;
@@ -26,21 +26,21 @@ export function sortMarkerDefinitions(
       return -1;
     } else if (indexA === indexB) {
       // if both indexes are equal, sort lexically
-      return compareName(markerDefA, markerDefB, valueIdA, valueIdB);
+      return compareName(labelDefA, labelDefB, valueIdA, valueIdB);
     } else {
       return indexA < indexB ? -1 : 1;
     }
   } else {
     // if both definitions have no index, sort lexically
-    return compareName(markerDefA, markerDefB, valueIdA, valueIdB);
+    return compareName(labelDefA, labelDefB, valueIdA, valueIdB);
   }
 
-  function compareName(markerDefA, markerDefB, valueIdA?, valueIdB?) {
-    let compareResult = compareStringsLexically(markerDefA.name, markerDefB.name);
+  function compareName(labelDefA, labelDefB, valueIdA?, valueIdB?) {
+    let compareResult = compareStringsLexically(labelDefA.name, labelDefB.name);
 
     if (compareResult === 0) {
-      const nameValueA = markerDefA.values.find(v => v.id === valueIdA)?.name;
-      const nameValueB = markerDefB.values.find(v => v.id === valueIdB)?.name;
+      const nameValueA = labelDefA.values.find(v => v.id === valueIdA)?.name;
+      const nameValueB = labelDefB.values.find(v => v.id === valueIdB)?.name;
 
       compareResult = compareStringsLexically(nameValueA, nameValueB);
     }
@@ -57,12 +57,12 @@ export function sortMarkerDefinitions(
   }
 }
 
-export function getReadableNameForMarkerContext(context, markerDefs) {
+export function getReadableNameForLabelContext(context, labelDefs) {
   if (context?.includes(':')) {
-    const [markerId, valueId] = context.split(':');
-    const markerDef = markerDefs.find(m => m.id === markerId);
-    const valueName = markerDef?.values?.find(v => v.id === valueId)?.name;
-    return `[${markerDef?.name}] ${valueName}`;
+    const [labelId, valueId] = context.split(':');
+    const labelDef = labelDefs.find(m => m.id === labelId);
+    const valueName = labelDef?.values?.find(v => v.id === valueId)?.name;
+    return `[${labelDef?.name}] ${valueName}`;
   } else {
     return context;
   }

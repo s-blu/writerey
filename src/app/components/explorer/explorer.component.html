@@ -27,9 +27,9 @@
             [path]="selectedProject"
             (itemCreated)="changeTabIndex(0)"
           ></wy-create-new-dir-or-file>
-          <button mat-menu-item (click)="addNewMarkerCategory()">
+          <button mat-menu-item (click)="addNewLabelCategory()">
             <mat-icon class="material-icons-outlined">add_location</mat-icon>
-            <span>{{ t('menu.newmarker') }}</span>
+            <span>{{ t('menu.newlabel') }}</span>
           </button>
           <mat-divider></mat-divider>
           <button mat-menu-item (click)="resetProject()">
@@ -42,13 +42,13 @@
         <mat-tab [label]="t('tabs.documenttree')">
           <wy-document-explorer [project]="selectedProject"></wy-document-explorer>
         </mat-tab>
-        <mat-tab [label]="t('tabs.markers')">
-          <wy-marker-tree
-            (markerChanged)="openMarker($event)"
-            [activeMarkerId]="activeMarkerId"
+        <mat-tab [label]="t('tabs.labels')">
+          <wy-label-tree
+            (labelChanged)="openLabel($event)"
+            [activeLabelId]="activeLabelId"
             [project]="selectedProject"
             selectedIndex
-          ></wy-marker-tree>
+          ></wy-label-tree>
         </mat-tab>
       </mat-tab-group>
     </div>

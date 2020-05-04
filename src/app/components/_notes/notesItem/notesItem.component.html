@@ -2,14 +2,14 @@
   <wy-document-link
   *ngIf="item.stereotype === stereotypes.LINK; else note"
   [link]="item"
-  [markerDefs]="markerDefinitions"
+  [labelDefs]="labelDefinitions"
   (deleteLink)="onDelete($event)"
   (editLink)="onEdit($event)"
 ></wy-document-link>
 <ng-template #note>
   <wy-note
   [note]="item"
-  [markerDefs]="markerDefinitions"
+  [labelDefs]="labelDefinitions"
   (deleteNote)="onDelete($event)"
   (editNote)="onEdit($event)"
 ></wy-note>

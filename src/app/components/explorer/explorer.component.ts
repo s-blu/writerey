@@ -4,9 +4,9 @@ import { DistractionFreeStore } from '../../stores/distractionFree.store';
 import { ProjectStore } from '../../stores/project.store';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateNewMarkerComponent } from '../_markers/createNewMarker/createNewMarker.component';
+import { CreateNewLabelComponent } from '../_labels/createNewLabel/createNewLabel.component';
 import { Subscription } from 'rxjs';
-import { MarkerService } from 'src/app/services/marker.service';
+import { LabelService } from 'src/app/services/label.service';
 
 @Component({
   selector: 'wy-explorer',
@@ -15,13 +15,13 @@ import { MarkerService } from 'src/app/services/marker.service';
   animations: FADE_ANIMATIONS,
 })
 export class ExplorerComponent implements OnInit, OnDestroy {
-  @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() labelChanged: EventEmitter<any> = new EventEmitter<any>();
 
   selectedProject = null;
   distractionFreeStatus: DISTRACTION_FREE_STATES;
   DISTRACTION_FREE_STATES = DISTRACTION_FREE_STATES;
   // FIXME loosen this dependency again with proper routing
-  activeMarkerId: string;
+  activeLabelId: string;
   tabIndex;
 
   private subscription = new Subscription();
@@ -42,12 +42,12 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private projectStore: ProjectStore,
     private distractionFreeStore: DistractionFreeStore,
-    private markerService: MarkerService
+    private labelService: LabelService
   ) {}
 
-  openMarker(event) {
-    this.markerChanged.emit(event);
-    this.activeMarkerId = event?.id;
+  openLabel(event) {
+    this.labelChanged.emit(event);
+    this.activeLabelId = event?.id;
   }
 
   selectProject(event) {
@@ -63,16 +63,16 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     this.tabIndex = index;
   }
 
-  addNewMarkerCategory() {
-    const dialogRef = this.dialog.open(CreateNewMarkerComponent);
+  addNewLabelCategory() {
+    const dialogRef = this.dialog.open(CreateNewLabelComponent);
 
     this.subscription.add(
       dialogRef.afterClosed().subscribe(data => {
         if (!data) return;
         this.subscription.add(
-          this.markerService.createNewMarkerCategory(data.name, data.type).subscribe((res: any) => {
-            this.activeMarkerId = res[0]?.id;
-            this.markerChanged.emit(res[0]);
+          this.labelService.createNewLabelCategory(data.name, data.type).subscribe((res: any) => {
+            this.activeLabelId = res[0]?.id;
+            this.labelChanged.emit(res[0]);
             this.changeTabIndex(1);
           })
         );

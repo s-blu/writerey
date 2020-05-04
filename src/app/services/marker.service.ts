@@ -1,20 +1,20 @@
 import { ProjectStore } from './../stores/project.store';
-import { Marker } from 'src/app/models/marker.interface';
+import { Label } from 'src/app/models/label.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map, take } from 'rxjs/operators';
-import { MarkerDefinition, MarkerTypes } from '../models/markerDefinition.class';
+import { LabelDefinition, LabelTypes } from '../models/labelDefinition.class';
 import { ContextStore } from '../stores/context.store';
-import { MarkerStore } from '../stores/marker.store';
+import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MarkerService implements OnDestroy {
+export class LabelService implements OnDestroy {
   private subscription = new Subscription();
   private project: string;
 
@@ -23,7 +23,7 @@ export class MarkerService implements OnDestroy {
     private httpClient: HttpClient,
     private paragraphService: ParagraphService,
     private contextStore: ContextStore,
-    private markerStore: MarkerStore,
+    private labelStore: LabelStore,
     private projectStore: ProjectStore,
     private contextService: ContextService
   ) {}
@@ -32,58 +32,58 @@ export class MarkerService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  createNewMarkerCategory(name: string, type: MarkerTypes) {
-    const newMarker = new MarkerDefinition(name, type);
+  createNewLabelCategory(name: string, type: LabelTypes) {
+    const newLabel = new LabelDefinition(name, type);
 
-    return this.getMarkerDefinitions().pipe(
-      flatMap(markerDefRes => {
-        let newMarkerDef;
-        if (!markerDefRes) {
-          newMarkerDef = [newMarker];
+    return this.getLabelDefinitions().pipe(
+      flatMap(labelDefRes => {
+        let newLabelDef;
+        if (!labelDefRes) {
+          newLabelDef = [newLabel];
         } else {
-          newMarkerDef = [newMarker, ...markerDefRes];
+          newLabelDef = [newLabel, ...labelDefRes];
         }
-        return this.setMarkerDefinitions(newMarkerDef);
+        return this.setLabelDefinitions(newLabelDef);
       })
     );
   }
 
-  deleteMarkerCategory(markerId: string) {
-    if (!markerId) return;
+  deleteLabelCategory(labelId: string) {
+    if (!labelId) return;
     // TODO REMOVE META FILES
 
-    return this.getMarkerDefinitions().pipe(
-      flatMap(markerDefRes => {
-        if (!markerDefRes) return;
-        const index = markerDefRes.findIndex(m => m.id === markerId);
+    return this.getLabelDefinitions().pipe(
+      flatMap(labelDefRes => {
+        if (!labelDefRes) return;
+        const index = labelDefRes.findIndex(m => m.id === labelId);
         if (index > -1) {
-          markerDefRes.splice(index, 1);
-          return this.setMarkerDefinitions(markerDefRes);
+          labelDefRes.splice(index, 1);
+          return this.setLabelDefinitions(labelDefRes);
         }
       })
     );
   }
 
-  getMarkerDefinitions() {
+  getLabelDefinitions() {
     const params = {
       project: this.project,
     };
 
-    return this.httpClient.get(this.api.getMarkerRoute('definitions'), { params }).pipe(
+    return this.httpClient.get(this.api.getLabelRoute('definitions'), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        return this.parseMarkerValueResponse(res);
+        return this.parseLabelValueResponse(res);
       }),
       map((res: any) => {
         if (res && res instanceof Array) {
-          res = res.sort((markerA, markerB) => {
-            if (markerA.index === undefined) return 1;
-            if (markerA.index < markerB.index) return -1;
-            if (markerA.index > markerB.index) return 1;
+          res = res.sort((labelA, labelB) => {
+            if (labelA.index === undefined) return 1;
+            if (labelA.index < labelB.index) return -1;
+            if (labelA.index > labelB.index) return 1;
             return 0;
           });
         }
-        this.markerStore.setMarkerDefinitions(res);
+        this.labelStore.setLabelDefinitions(res);
         return res;
       })
     );
@@ -94,34 +94,34 @@ export class MarkerService implements OnDestroy {
       this.projectStore.project$.subscribe(project => {
         this.project = project;
         if (!project) return;
-        this.getMarkerDefinitions().pipe(take(1)).subscribe();
+        this.getLabelDefinitions().pipe(take(1)).subscribe();
       })
     );
   }
 
-  updateMarkerDefinition(markerDef: MarkerDefinition) {
-    return this.getMarkerDefinitions().pipe(
-      flatMap(markerDefRes => {
-        let updatedMarkerDefs;
-        if (!markerDefRes) {
-          console.error('Could not get any marker definitions, even though I try to update an existing one. Aborting.');
+  updateLabelDefinition(labelDef: LabelDefinition) {
+    return this.getLabelDefinitions().pipe(
+      flatMap(labelDefRes => {
+        let updatedLabelDefs;
+        if (!labelDefRes) {
+          console.error('Could not get any label definitions, even though I try to update an existing one. Aborting.');
           return;
         } else {
-          const oldIndex = markerDefRes.findIndex(el => el.id === markerDef.id);
+          const oldIndex = labelDefRes.findIndex(el => el.id === labelDef.id);
           if (oldIndex === -1) {
-            console.warn('could not find old item for markerDef. Inserting new.', markerDef);
-            updatedMarkerDefs = [markerDef, ...markerDefRes];
+            console.warn('could not find old item for labelDef. Inserting new.', labelDef);
+            updatedLabelDefs = [labelDef, ...labelDefRes];
           } else {
-            updatedMarkerDefs = markerDefRes;
-            updatedMarkerDefs.splice(oldIndex, 1, markerDef);
+            updatedLabelDefs = labelDefRes;
+            updatedLabelDefs.splice(oldIndex, 1, labelDef);
           }
         }
-        return this.setMarkerDefinitions(updatedMarkerDefs);
+        return this.setLabelDefinitions(updatedLabelDefs);
       })
     );
   }
 
-  setMarkerDefinitions(content) {
+  setLabelDefinitions(content) {
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
 
@@ -132,19 +132,19 @@ export class MarkerService implements OnDestroy {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
-    return this.httpClient.put(this.api.getMarkerRoute('definitions'), formdata, { headers: httpHeaders }).pipe(
+    return this.httpClient.put(this.api.getLabelRoute('definitions'), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        const result = this.parseMarkerValueResponse(res);
-        this.markerStore.setMarkerDefinitions(result);
+        const result = this.parseLabelValueResponse(res);
+        this.labelStore.setLabelDefinitions(result);
         return result;
       })
     );
   }
-  
+
   // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
-  saveMetaForMarkerValue(contextId, content, metaType?) {
-    const [markerId, valueId] = contextId.split(':');
+  saveMetaForLabelValue(contextId, content, metaType?) {
+    const [labelId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
 
@@ -155,75 +155,75 @@ export class MarkerService implements OnDestroy {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.httpClient.put(this.api.getMarkerRoute(markerId), formdata, { headers: httpHeaders }).pipe(
+    return this.httpClient.put(this.api.getLabelRoute(labelId), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
-      map((res: any) => this.parseMarkerValueResponse(res))
+      map((res: any) => this.parseLabelValueResponse(res))
     );
   }
 
   // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
-  getMetaForMarkerValue(contextId, metaType?): Observable<any> {
+  getMetaForLabelValue(contextId, metaType?): Observable<any> {
     if (!contextId) return of([]);
-    const marker = this.contextService.getMarkerFromContextString(contextId);
+    const label = this.contextService.getLabelFromContextString(contextId);
     const params = {
-      value_id: marker.valueId,
+      value_id: label.valueId,
       project: this.project,
     };
-    return this.httpClient.get(this.api.getMarkerRoute(marker.id), { params }).pipe(
+    return this.httpClient.get(this.api.getLabelRoute(label.id), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
-        return this.parseMarkerValueResponse(res);
+        return this.parseLabelValueResponse(res);
       })
     );
   }
 
-  upsertMarkerForParagraph(path, name, paragraphId, markers, markerId, valueId) {
-    if (!markerId || !valueId) {
-      console.error('upsertMarkerForParagraph was called with invalid data, aborting');
+  upsertLabelForParagraph(path, name, paragraphId, labels, labelId, valueId) {
+    if (!labelId || !valueId) {
+      console.error('upsertLabelForParagraph was called with invalid data, aborting');
       return;
     }
-    const newMarkers = [...markers];
-    const existingMarker = newMarkers.find(m => m.id === markerId);
-    if (existingMarker) {
-      const oldContext = this.contextService.getContextStringForMarker(existingMarker);
-      existingMarker.valueId = valueId;
-      this.contextStore.replaceContext(oldContext, this.contextService.getContextStringForMarker(existingMarker));
+    const newLabels = [...labels];
+    const existingLabel = newLabels.find(m => m.id === labelId);
+    if (existingLabel) {
+      const oldContext = this.contextService.getContextStringForLabel(existingLabel);
+      existingLabel.valueId = valueId;
+      this.contextStore.replaceContext(oldContext, this.contextService.getContextStringForLabel(existingLabel));
     } else {
-      const newMarker: Marker = {
-        id: markerId,
+      const newLabel: Label = {
+        id: labelId,
         valueId,
       };
-      newMarkers.push(newMarker);
-      this.contextStore.addContext(this.contextService.getContextStringForMarker(newMarker));
+      newLabels.push(newLabel);
+      this.contextStore.addContext(this.contextService.getContextStringForLabel(newLabel));
     }
 
-    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', newMarkers);
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'labels', newLabels);
   }
 
-  removeMarkerFromParagraph(path, name, paragraphId, markers, markerId) {
-    if (!markerId) {
-      console.error('removeMarkerFromParagraph was called with invalid data, aborting');
+  removeLabelFromParagraph(path, name, paragraphId, labels, labelId) {
+    if (!labelId) {
+      console.error('removeLabelFromParagraph was called with invalid data, aborting');
       return;
     }
-    const indexToRemove = (markers || []).findIndex(m => m.id === markerId);
+    const indexToRemove = (labels || []).findIndex(m => m.id === labelId);
     if (indexToRemove === -1) {
-      console.warn('removeMarkerFromParagraph could not find item to remove, do nothing', markers, markerId);
+      console.warn('removeLabelFromParagraph could not find item to remove, do nothing', labels, labelId);
       return;
     }
-    const updatedMarkers = [...markers];
-    const [removedMarker] = updatedMarkers.splice(indexToRemove, 1);
-    this.contextStore.removeContext(this.contextService.getContextStringForMarker(removedMarker));
+    const updatedLabels = [...labels];
+    const [removedLabel] = updatedLabels.splice(indexToRemove, 1);
+    this.contextStore.removeContext(this.contextService.getContextStringForLabel(removedLabel));
 
-    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'markers', updatedMarkers);
+    return this.paragraphService.setParagraphMeta(path, name, paragraphId, 'labels', updatedLabels);
   }
 
-  private parseMarkerValueResponse(res) {
+  private parseLabelValueResponse(res) {
     if (!res || res === '') return res;
     try {
       const data = JSON.parse(res);
       return data;
     } catch {
-      console.warn('Was not able to parse marker value meta. Returning result as-is.');
+      console.warn('Was not able to parse label value meta. Returning result as-is.');
       return res;
     }
   }

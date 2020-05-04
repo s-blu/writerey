@@ -1,7 +1,7 @@
 import { DirectoryService } from './directory.service';
 import { DocumentService } from './document.service';
 import { SnapshotService } from './snapshot.service';
-import { MarkerService } from './marker.service';
+import { LabelService } from './label.service';
 import { Injectable } from '@angular/core';
 
 import * as QuillNamespace from 'quill';
@@ -14,7 +14,7 @@ const Quill: any = QuillNamespace;
 })
 export class WyInitService {
   constructor(
-    private markerService: MarkerService,
+    private labelService: LabelService,
     private snapshotService: SnapshotService,
     private documentService: DocumentService,
     private directoryService: DirectoryService,
@@ -25,7 +25,7 @@ export class WyInitService {
   init() {
     this.configureClassesForQuill();
     this.addWritereyIconToMatIcon();
-    this.markerService.init();
+    this.labelService.init();
     this.snapshotService.init();
     this.documentService.init();
     this.directoryService.init();

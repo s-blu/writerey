@@ -1,21 +1,21 @@
-<div class="marker-tree" *transloco="let t; read: 'markerTree'">
+<div class="label-tree" *transloco="let t; read: 'labelTree'">
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node
       *matTreeNodeDef="let node"
       matTreeNodePadding
       matTreeNodePaddingIndent="10"
-      class="marker-node"
-      [class]="{active: node.id === activeMarkerId}"
-      (click)="openMarkerCategory(node)"
+      class="label-node"
+      [class]="{active: node.id === activeLabelId}"
+      (click)="openLabelCategory(node)"
     >
       <button mat-icon-button disabled matTreeNodeToggle class="explorer-btn"></button>
       <div class="name">{{ node.name }}</div>
-      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="markerMenu">
+      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="labelMenu">
         <mat-icon class="menu">more_vert</mat-icon>
       </button>
 
-      <mat-menu #markerMenu="matMenu">
-        <button mat-menu-item (click)="removeMarker(node)">
+      <mat-menu #labelMenu="matMenu">
+        <button mat-menu-item (click)="removeLabel(node)">
           <mat-icon>delete</mat-icon>
           <span>{{ t('remove') }}</span>
         </button>

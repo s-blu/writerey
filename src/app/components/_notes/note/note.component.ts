@@ -1,9 +1,9 @@
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Note } from '../../../models/notesItems.interface';
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
 import { rotateAnimation } from 'angular-animations';
-import { getReadableNameForMarkerContext } from 'src/app/utils/marker.utils';
+import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
 
 @Component({
   selector: 'wy-note',
@@ -13,7 +13,7 @@ import { getReadableNameForMarkerContext } from 'src/app/utils/marker.utils';
 })
 export class NoteComponent implements OnInit {
   @Input() note: Note;
-  @Input() markerDefs: Array<MarkerDefinition>;
+  @Input() labelDefs: Array<LabelDefinition>;
 
   @Output() deleteNote = new EventEmitter<any>();
   @Output() editNote = new EventEmitter<any>();
@@ -33,7 +33,7 @@ export class NoteComponent implements OnInit {
     }
 
     if (this.note.context.includes(':')) {
-      this.contextName = getReadableNameForMarkerContext(this.note.context, this.markerDefs);
+      this.contextName = getReadableNameForLabelContext(this.note.context, this.labelDefs);
     } else {
       this.contextName = this.note.context;
     }

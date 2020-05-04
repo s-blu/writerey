@@ -3,8 +3,8 @@ import { DocumentService } from 'src/app/services/document.service';
 import { ProjectStore } from './../../../stores/project.store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Link, DocumentLink } from 'src/app/models/notesItems.interface';
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { getReadableNameForMarkerContext } from 'src/app/utils/marker.utils';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
+import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
 import { FADE_ANIMATIONS } from 'src/app/utils/animation.utils';
 import { rotateAnimation } from 'angular-animations';
 import { LinkService } from 'src/app/services/link.service';
@@ -19,7 +19,7 @@ import { Subscription } from 'rxjs';
 })
 export class DocumentLinkComponent implements OnInit, OnDestroy {
   @Input() link: Link;
-  @Input() markerDefs: Array<MarkerDefinition>;
+  @Input() labelDefs: Array<LabelDefinition>;
 
   @Output() deleteLink = new EventEmitter<any>();
   @Output() editLink = new EventEmitter<any>();
@@ -39,7 +39,7 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
     this.isExpanded = !!this.link.keepOpen;
 
     if (this.link.context.includes(':')) {
-      this.contextName = getReadableNameForMarkerContext(this.link.context, this.markerDefs);
+      this.contextName = getReadableNameForLabelContext(this.link.context, this.labelDefs);
     } else {
       this.contextName = this.link.context;
     }

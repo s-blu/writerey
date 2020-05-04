@@ -1,17 +1,17 @@
-import { MarkerDefinition } from './../../../models/markerDefinition.class';
+import { LabelDefinition } from './../../../models/labelDefinition.class';
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
 import { ContextStore } from '../../../stores/context.store';
-import { MarkerService } from 'src/app/services/marker.service';
+import { LabelService } from 'src/app/services/label.service';
 import { DOC_MODES } from '../../../models/docModes.enum';
 import { NotesService } from '../../../services/notes.service';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
-import { MarkerStore } from 'src/app/stores/marker.store';
+import { LabelStore } from 'src/app/stores/label.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { ContextService } from 'src/app/services/context.service';
 
@@ -22,16 +22,16 @@ import { ContextService } from 'src/app/services/context.service';
   animations: FADE_ANIMATIONS,
 })
 export class NotesComponent implements OnInit, OnDestroy {
-  @Input() set markerDefinition(md: MarkerDefinition) {
-    this.markerDef = md;
+  @Input() set labelDefinition(md: LabelDefinition) {
+    this.labelDef = md;
     this.getContexts();
   }
 
-  markerDef: MarkerDefinition;
+  labelDef: LabelDefinition;
   MODES = DOC_MODES;
   mode: DOC_MODES;
   noteContexts;
-  markerDefinitions;
+  labelDefinitions;
   parId: string;
   fileInfo: FileInfo;
   notes: any = {
@@ -45,10 +45,10 @@ export class NotesComponent implements OnInit, OnDestroy {
   constructor(
     private paragraphService: ParagraphService,
     private notesService: NotesService,
-    private markerService: MarkerService,
+    private labelService: LabelService,
     private contextStore: ContextStore,
     private contextService: ContextService,
-    private markerStore: MarkerStore,
+    private labelStore: LabelStore,
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
     private distractionFreeStore: DistractionFreeStore
@@ -61,8 +61,8 @@ export class NotesComponent implements OnInit, OnDestroy {
       })
     );
     this.subscription.add(
-      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
-        this.markerDefinitions = markerDefs;
+      this.labelStore.labelDefinitions$.subscribe(labelDefs => {
+        this.labelDefinitions = labelDefs;
       })
     );
     this.subscription.add(
@@ -131,7 +131,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   private updateParagraphMeta(context, data) {
     let obs;
     if (context.includes(':')) {
-      obs = this.markerService.saveMetaForMarkerValue(context, data, 'notes');
+      obs = this.labelService.saveMetaForLabelValue(context, data, 'notes');
     } else {
       const con = context === 'paragraph' ? this.parId : context;
       obs = this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data);
@@ -160,22 +160,22 @@ export class NotesComponent implements OnInit, OnDestroy {
     );
   }
 
-  private fetchNotesForMarkerDefinition() {
+  private fetchNotesForLabelDefinition() {
     this.notes = {};
 
     this.subscription.add(
       this.notesService
-        .getNotesForMarkerDefinition(this.markerDef, this.noteContexts)
+        .getNotesForLabelDefinition(this.labelDef, this.noteContexts)
         .subscribe(res => (this.notes = res))
     );
   }
 
   private getContexts() {
-    if (!this.fileInfo && !this.markerDef) return;
+    if (!this.fileInfo && !this.labelDef) return;
     let fetchObservable;
 
-    if (this.markerDef) {
-      fetchObservable = this.contextService.getContextsForMarkerDefinition(this.markerDef);
+    if (this.labelDef) {
+      fetchObservable = this.contextService.getContextsForLabelDefinition(this.labelDef);
     } else {
       fetchObservable = this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.parId);
     }
@@ -188,8 +188,8 @@ export class NotesComponent implements OnInit, OnDestroy {
 
   private updateContexts(contexts) {
     this.noteContexts = contexts;
-    if (this.markerDef) {
-      this.fetchNotesForMarkerDefinition();
+    if (this.labelDef) {
+      this.fetchNotesForLabelDefinition();
     } else {
       this.fetchNotesForParagraph();
     }

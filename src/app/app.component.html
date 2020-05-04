@@ -2,17 +2,17 @@
   <wy-topbar></wy-topbar>
   <div class="main">
     <div class="left">
-      <wy-explorer (markerChanged)="changeMarker($event)"></wy-explorer>
+      <wy-explorer (labelChanged)="changeLabel($event)"></wy-explorer>
       <wy-document-marks></wy-document-marks>
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor *ngIf="!markerDef"></wy-document-editor>
-        <wy-marker-details *ngIf="markerDef" [markerDef]="markerDef"></wy-marker-details>
+        <wy-document-editor *ngIf="!labelDef"></wy-document-editor>
+        <wy-label-details *ngIf="labelDef" [labelDef]="labelDef"></wy-label-details>
       </div>
     </div>
     <div class="notes">
-      <wy-notes [markerDefinition]="markerDef"></wy-notes>
+      <wy-notes [labelDefinition]="labelDef"></wy-notes>
     </div>
   </div>
   <wy-footer></wy-footer>

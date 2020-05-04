@@ -2,18 +2,18 @@ import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.en
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
-import { MarkerStore } from '../../../stores/marker.store';
+import { LabelStore } from '../../../stores/label.store';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { DOC_MODES } from '../../../models/docModes.enum';
 import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { FileInfo } from 'src/app/models/fileInfo.interface';
-import { MarkerDefinition, MarkerTypes } from 'src/app/models/markerDefinition.class';
-import { MarkerService } from 'src/app/services/marker.service';
+import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
+import { LabelService } from 'src/app/services/label.service';
 import * as uuid from 'uuid';
-import { Marker } from 'src/app/models/marker.interface';
+import { Label } from 'src/app/models/label.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
-import { sortMarkerArray } from 'src/app/utils/marker.utils';
+import { sortLabelArray } from 'src/app/utils/label.utils';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './documentMarks.component.html',
@@ -23,13 +23,13 @@ import { sortMarkerArray } from 'src/app/utils/marker.utils';
 export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
   paragraphId: string;
   fileInfo: FileInfo;
-  markers: Array<Marker> = [];
-  markersFromServer: Array<Marker> = [];
+  labels: Array<Label> = [];
+  labelsFromServer: Array<Label> = [];
   values: any = {};
-  markerDefinitions: Array<MarkerDefinition>;
+  labelDefinitions: Array<LabelDefinition>;
   MODES = DOC_MODES;
   mode: DOC_MODES;
-  TYPES = MarkerTypes;
+  TYPES = LabelTypes;
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATE = DISTRACTION_FREE_STATES;
 
@@ -37,8 +37,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(
     private paragraphService: ParagraphService,
-    private markerService: MarkerService,
-    private markerStore: MarkerStore,
+    private labelService: LabelService,
+    private labelStore: LabelStore,
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
     private distractionFreeStore: DistractionFreeStore
@@ -46,8 +46,8 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnInit() {
     this.subscription.add(
-      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
-        this.markerDefinitions = markerDefs;
+      this.labelStore.labelDefinitions$.subscribe(labelDefs => {
+        this.labelDefinitions = labelDefs;
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
@@ -76,21 +76,21 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
     this.refresh();
   }
 
-  setValOfTextMarker(def, event) {
+  setValOfTextLabel(def, event) {
     const newValue = event.value;
     if (!newValue) {
-      this.removeMarker(def.id);
+      this.removeLabel(def.id);
       return;
     }
 
-    this.upsertMarker(def.id, newValue);
+    this.upsertLabel(def.id, newValue);
   }
 
-  setValOfNumMarker(def, event) {
+  setValOfNumLabel(def, event) {
     const newValue = event.value;
 
     if (newValue < def.start) {
-      this.removeMarker(def.id);
+      this.removeLabel(def.id);
       return;
     }
     let valueDef = def.values.find(v => v.name === newValue);
@@ -101,101 +101,101 @@ export class DocumentMarksComponent implements OnInit, OnChanges, OnDestroy {
       };
       def.values.push(valueDef);
       this.subscription.add(
-        this.markerService.setMarkerDefinitions(this.markerDefinitions).subscribe(res => {
-          this.markerDefinitions = res;
-          this.upsertMarker(def.id, valueDef.id);
+        this.labelService.setLabelDefinitions(this.labelDefinitions).subscribe(res => {
+          this.labelDefinitions = res;
+          this.upsertLabel(def.id, valueDef.id);
         })
       );
     } else {
-      this.upsertMarker(def.id, valueDef.id);
+      this.upsertLabel(def.id, valueDef.id);
     }
   }
 
   private refresh() {
     if (!this.fileInfo || !this.paragraphId) return;
-    this.markers = [];
+    this.labels = [];
     this.values = {};
     this.subscription.add(
       this.paragraphService
-        .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'markers')
+        .getParagraphMeta(this.fileInfo.path, this.fileInfo.name, this.paragraphId, 'labels')
         .subscribe(res => {
-          this.markersFromServer = res || [];
+          this.labelsFromServer = res || [];
           this.updateDisplayInfo(res);
         })
     );
   }
-  private removeMarker(markerId) {
-    if (!markerId) return;
-    const index = this.markers.findIndex(m => m.id === markerId);
+  private removeLabel(labelId) {
+    if (!labelId) return;
+    const index = this.labels.findIndex(m => m.id === labelId);
     if (index === -1) return;
 
     this.subscription.add(
-      this.markerService
-        .removeMarkerFromParagraph(
+      this.labelService
+        .removeLabelFromParagraph(
           this.fileInfo.path,
           this.fileInfo.name,
           this.paragraphId,
-          this.markersFromServer,
-          markerId
+          this.labelsFromServer,
+          labelId
         )
         .subscribe(res => {
-          this.values[markerId] = undefined;
-          this.markers.splice(index, 1);
-          this.markersFromServer = res;
+          this.values[labelId] = undefined;
+          this.labels.splice(index, 1);
+          this.labelsFromServer = res;
         })
     );
   }
 
-  private upsertMarker(markerId, valueId) {
+  private upsertLabel(labelId, valueId) {
     this.subscription.add(
-      this.markerService
-        .upsertMarkerForParagraph(
+      this.labelService
+        .upsertLabelForParagraph(
           this.fileInfo.path,
           this.fileInfo.name,
           this.paragraphId,
-          this.markersFromServer,
-          markerId,
+          this.labelsFromServer,
+          labelId,
           valueId
         )
         .subscribe(res => {
-          this.markersFromServer = res;
+          this.labelsFromServer = res;
           this.updateDisplayInfo(res);
         })
     );
   }
 
   private updateDisplayInfo(responseFromServer) {
-    this.markers = [];
+    this.labels = [];
     this.values = {};
     if (!responseFromServer) return;
     responseFromServer = JSON.parse(JSON.stringify(responseFromServer));
-    sortMarkerArray(responseFromServer, this.markerDefinitions);
+    sortLabelArray(responseFromServer, this.labelDefinitions);
 
     for (const m of responseFromServer) {
       try {
-        this.enhanceMarkerWithDisplayInfo(m);
-        this.markers.push(m);
-        if (m.type === MarkerTypes.TEXT) {
+        this.enhanceLabelWithDisplayInfo(m);
+        this.labels.push(m);
+        if (m.type === LabelTypes.TEXT) {
           this.values[m.id] = m.valueId;
         } else {
           this.values[m.id] = m.valueName;
         }
       } catch (err) {
-        console.warn('Was not able to find a marker definition for a marker. Will remove it since it is invalid.', m);
+        console.warn('Was not able to find a label definition for a label. Will remove it since it is invalid.', m);
       }
     }
   }
 
-  private enhanceMarkerWithDisplayInfo(marker) {
-    const markerDef = this.markerDefinitions.find(m => m.id === marker.id);
-    if (markerDef) {
-      marker.name = markerDef.name;
-      marker.type = markerDef.type;
-      marker.index = markerDef.index;
-      const value = markerDef.values.find(val => val.id === marker.valueId);
-      if (value) marker.valueName = value.name;
+  private enhanceLabelWithDisplayInfo(label) {
+    const labelDef = this.labelDefinitions.find(m => m.id === label.id);
+    if (labelDef) {
+      label.name = labelDef.name;
+      label.type = labelDef.type;
+      label.index = labelDef.index;
+      const value = labelDef.values.find(val => val.id === label.valueId);
+      if (value) label.valueName = value.name;
     } else {
-      throw Error('Could not find Markerdefinition');
+      throw Error('Could not find Labeldefinition');
     }
   }
 }

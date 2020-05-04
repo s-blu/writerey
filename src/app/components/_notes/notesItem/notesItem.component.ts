@@ -9,11 +9,11 @@ import { Subscription } from 'rxjs';
 })
 export class NotesItemComponent implements OnInit {
   @Input() item;
-  @Input() markerDefs;
+  @Input() labelDefs;
   @Output() editItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
 
-  markerDefinitions;
+  labelDefinitions;
   stereotypes = NoteItemStereotypes;
 
   constructor() {}

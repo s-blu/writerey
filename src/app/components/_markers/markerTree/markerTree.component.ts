@@ -1,20 +1,20 @@
 import { DeletionService } from '../../../services/deletion.service';
-import { CreateNewMarkerComponent } from '../createNewMarker/createNewMarker.component';
+import { CreateNewLabelComponent } from '../createNewLabel/createNewLabel.component';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
-import { MarkerService } from 'src/app/services/marker.service';
-import { MarkerDefinition } from 'src/app/models/markerDefinition.class';
-import { MarkerStore } from 'src/app/stores/marker.store';
+import { LabelService } from 'src/app/services/label.service';
+import { LabelDefinition } from 'src/app/models/labelDefinition.class';
+import { LabelStore } from 'src/app/stores/label.store';
 
 /**
  * Food data with nested structure.
  * Each node has a name and an optional list of children.
  */
 /** Flat node with expandable and level information */
-interface MarkerNode {
+interface LabelNode {
   id: string;
   name: string;
   level: number;
@@ -22,19 +22,19 @@ interface MarkerNode {
 }
 
 @Component({
-  selector: 'wy-marker-tree',
-  templateUrl: './markerTree.component.html',
-  styleUrls: ['./markerTree.component.scss'],
+  selector: 'wy-label-tree',
+  templateUrl: './labelTree.component.html',
+  styleUrls: ['./labelTree.component.scss'],
 })
-export class MarkerTreeComponent implements OnInit, OnDestroy {
+export class LabelTreeComponent implements OnInit, OnDestroy {
   @Input() project;
-  @Input() activeMarkerId;
+  @Input() activeLabelId;
 
-  @Output() markerChanged: EventEmitter<any> = new EventEmitter<any>();
+  @Output() labelChanged: EventEmitter<any> = new EventEmitter<any>();
 
-  markerDefinitions: Array<MarkerDefinition>;
+  labelDefinitions: Array<LabelDefinition>;
   // Tree Controls
-  treeControl = new FlatTreeControl<MarkerNode>(
+  treeControl = new FlatTreeControl<LabelNode>(
     node => node.level,
     node => node.expandable
   );
@@ -51,15 +51,15 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private deletionService: DeletionService,
-    private markerService: MarkerService,
-    private markerStore: MarkerStore
+    private labelService: LabelService,
+    private labelStore: LabelStore
   ) {}
 
   ngOnInit() {
     this.subscription.add(
-      this.markerStore.markerDefinitions$.subscribe(markerDefs => {
-        this.markerDefinitions = markerDefs;
-        this.dataSource.data = this.markerDefinitions;
+      this.labelStore.labelDefinitions$.subscribe(labelDefs => {
+        this.labelDefinitions = labelDefs;
+        this.dataSource.data = this.labelDefinitions;
       })
     );
   }
@@ -68,16 +68,16 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  openMarkerCategory(node) {
-    const markerDef = this.markerDefinitions.find(el => el.id === node.id);
-    this.markerChanged.emit(markerDef);
+  openLabelCategory(node) {
+    const labelDef = this.labelDefinitions.find(el => el.id === node.id);
+    this.labelChanged.emit(labelDef);
   }
 
-  removeMarker(node) {
+  removeLabel(node) {
     this.subscription.add(
-      this.deletionService.showDeleteConfirmDialog(node.name, 'marker').subscribe(result => {
+      this.deletionService.showDeleteConfirmDialog(node.name, 'label').subscribe(result => {
         if (!result) return;
-        this.markerService.deleteMarkerCategory(node.id).subscribe(() => {
+        this.labelService.deleteLabelCategory(node.id).subscribe(() => {
           // TODO show snackbar
         });
       })
@@ -87,7 +87,7 @@ export class MarkerTreeComponent implements OnInit, OnDestroy {
   /**
    * Tree functions
    */
-  hasChild = (_: number, node: MarkerNode) => node.expandable;
+  hasChild = (_: number, node: LabelNode) => node.expandable;
 
   private _transformer(node, level: number) {
     return {

@@ -48,7 +48,7 @@ export class ParagraphService {
       const regex = RegExp(this.getParagraphBreakRegExString(true, false), 'g');
       const enhancedP = p.replace(regex, pTagWithId);
       if (equalUuids) {
-        this.inheritMarkersFromPreviousParagraph(newUuid, previousUuid, path, name);
+        this.inheritLabelsFromPreviousParagraph(newUuid, previousUuid, path, name);
       }
       return enhancedP;
     }
@@ -163,13 +163,13 @@ export class ParagraphService {
     return `<p(?: class="[^>]*")?>(${quantifier}&nbsp;|<br>)${endTag}`;
   }
 
-  private inheritMarkersFromPreviousParagraph(newUuid: string, previousUuid: string, path: string, name: string) {
-    this.getParagraphMeta(path, name, previousUuid, 'markers')
+  private inheritLabelsFromPreviousParagraph(newUuid: string, previousUuid: string, path: string, name: string) {
+    this.getParagraphMeta(path, name, previousUuid, 'labels')
       .pipe(
         take(1),
-        flatMap(markersOfPreviousP => {
-          if (!markersOfPreviousP) return;
-          return this.setParagraphMeta(path, name, newUuid, 'markers', markersOfPreviousP);
+        flatMap(labelsOfPreviousP => {
+          if (!labelsOfPreviousP) return;
+          return this.setParagraphMeta(path, name, newUuid, 'labels', labelsOfPreviousP);
         }),
         take(1)
       )

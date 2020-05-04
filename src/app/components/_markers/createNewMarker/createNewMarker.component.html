@@ -1,4 +1,4 @@
-<div class="create-note" *transloco="let t; read: 'createMarker'">
+<div class="create-note" *transloco="let t; read: 'createLabel'">
   <h1>{{ t('title') }}</h1>
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
     <mat-form-field>

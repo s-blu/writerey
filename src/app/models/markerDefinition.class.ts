@@ -1,25 +1,25 @@
 import * as uuid from 'uuid';
 
-export enum MarkerTypes {
+export enum LabelTypes {
   NUMERIC = 'numeric',
   TEXT = 'text',
 }
 
-interface MarkerValue {
+interface LabelValue {
   id: string;
   name: string;
 }
-export class MarkerDefinition {
+export class LabelDefinition {
   id: string;
   name: string;
-  type: MarkerTypes;
+  type: LabelTypes;
   index: number;
-  values: Array<MarkerValue>;
+  values: Array<LabelValue>;
   start: number;
   end: number;
   interval: number;
 
-  constructor(name: string, type: MarkerTypes) {
+  constructor(name: string, type: LabelTypes) {
     this.id = uuid.v4();
     this.name = name;
     this.type = type;
