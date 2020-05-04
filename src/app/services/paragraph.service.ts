@@ -1,9 +1,10 @@
+import { FileInfo } from './../models/fileInfo.interface';
 import { TranslocoService } from '@ngneat/transloco';
 import { ApiService } from './api.service';
 import { Injectable } from '@angular/core';
 import * as uuid from 'uuid';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map, flatMap } from 'rxjs/operators';
+import { catchError, map, flatMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 @Injectable({
@@ -19,7 +20,7 @@ export class ParagraphService {
 
   constructor(private api: ApiService, private httpClient: HttpClient) {}
 
-  enhanceDocumentWithParagraphIds(document: string) {
+  enhanceDocumentWithParagraphIds(document: string, path: string, name: string) {
     if (!document) return;
     let enhancedDocument = '';
     let previousUuid = '';
@@ -29,22 +30,26 @@ export class ParagraphService {
       if (p === '') return;
       const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
       currentUuidBeforeEnhance = this._extractUuid(p);
-      p = this.upsertParagraphIdentifierIfNecessary(p, previousUuid);
+      p = this.upsertParagraphIdentifierIfNecessary(p, previousUuid, path, name);
       previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
     });
     return enhancedDocument;
   }
 
-  upsertParagraphIdentifierIfNecessary(p, previousUuid) {
+  upsertParagraphIdentifierIfNecessary(p: string, previousUuid: string, path: string, name: string) {
     if (!p || p === '') return p;
 
     const currentUuid = this._extractUuid(p);
-
-    if (_uuidsAreEqual(previousUuid, currentUuid) || !this.P_ID_REGEX.test(p)) {
-      const pTagWithId = this._getParagraphTagWithIdentifier(uuid.v4());
+    const equalUuids = _uuidsAreEqual(previousUuid, currentUuid);
+    if (equalUuids || !this.P_ID_REGEX.test(p)) {
+      const newUuid = 'p' + uuid.v4(); // needs to start with a character to be useable as a css class
+      const pTagWithId = this._getParagraphTagWithIdentifier(newUuid);
       const regex = RegExp(this.getParagraphBreakRegExString(true, false), 'g');
       const enhancedP = p.replace(regex, pTagWithId);
+      if (equalUuids) {
+        this.inheritMarkersFromPreviousParagraph(newUuid, previousUuid, path, name);
+      }
       return enhancedP;
     }
 
@@ -125,7 +130,7 @@ export class ParagraphService {
   }
 
   private _getParagraphTagWithIdentifier(id: string) {
-    return `<p class="p${id}">`;
+    return `<p class="${id}">`;
   }
 
   private _extractUuid(p) {
@@ -140,14 +145,14 @@ export class ParagraphService {
 
   // TODO do this in an own service
   private getCacheItem(path, name, paragraphId) {
-    return this.paragraphMetaCache[this._getCacheItemKey(path, name, paragraphId)];
+    return this.paragraphMetaCache[this.getCacheItemKey(path, name, paragraphId)];
   }
 
   private setCacheItem(path, name, paragraphId, content) {
-    this.paragraphMetaCache[this._getCacheItemKey(path, name, paragraphId)] = content;
+    this.paragraphMetaCache[this.getCacheItemKey(path, name, paragraphId)] = content;
   }
 
-  private _getCacheItemKey(path, name, paragraphId) {
+  private getCacheItemKey(path, name, paragraphId) {
     const sanitizedPath = path.replace(/[\/\\]/g, '_');
     return `${sanitizedPath}__${name}__${paragraphId}`;
   }
@@ -156,5 +161,18 @@ export class ParagraphService {
     const quantifier = negativeLookahead ? '?!' : '?:';
     const endTag = closingTag ? '</p>' : '';
     return `<p(?: class="[^>]*")?>(${quantifier}&nbsp;|<br>)${endTag}`;
+  }
+
+  private inheritMarkersFromPreviousParagraph(newUuid: string, previousUuid: string, path: string, name: string) {
+    this.getParagraphMeta(path, name, previousUuid, 'markers')
+      .pipe(
+        take(1),
+        flatMap(markersOfPreviousP => {
+          if (!markersOfPreviousP) return;
+          return this.setParagraphMeta(path, name, newUuid, 'markers', markersOfPreviousP);
+        }),
+        take(1)
+      )
+      .subscribe();
   }
 }

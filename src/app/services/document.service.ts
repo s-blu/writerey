@@ -44,7 +44,7 @@ export class DocumentService implements OnDestroy {
   }
 
   enhanceAndSaveDocument(path: string, name: string, content) {
-    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content);
+    const enhancedContent = this.paragraphService.enhanceDocumentWithParagraphIds(content, path, name);
     return this.saveDocument(path, name, enhancedContent).pipe(
       map(res => {
         if (!res) return res;
