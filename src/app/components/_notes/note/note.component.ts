@@ -14,6 +14,7 @@ import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
 export class NoteComponent implements OnInit {
   @Input() note: Note;
   @Input() labelDefs: Array<LabelDefinition>;
+  @Input() labelMode: boolean;
 
   @Output() deleteNote = new EventEmitter<any>();
   @Output() editNote = new EventEmitter<any>();
@@ -50,5 +51,17 @@ export class NoteComponent implements OnInit {
 
   changeExpand() {
     this.isExpanded = !this.isExpanded;
+  }
+
+  getIconForType() {
+    switch (this.note.type) {
+      case 'todo':
+        return 'assignment';
+      case 'label':
+        return 'location_on';
+      case 'info':
+      default:
+        return 'info';
+    }
   }
 }

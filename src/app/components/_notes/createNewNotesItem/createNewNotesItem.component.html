@@ -9,6 +9,7 @@
   <wy-create-new-note
     *ngIf="type === typesOfItems.note"
     [@fadeInOnEnter]
+    [labelMode]="labelMode"
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
     (noteCreated)="createNote($event)"

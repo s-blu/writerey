@@ -11,6 +11,7 @@
       <mat-select formControlName="type" required>
         <mat-option value="info">{{ t('type.info') }}</mat-option>
         <mat-option value="todo">{{ t('type.todo') }}</mat-option>
+        <mat-option *ngIf="labelMode" value="label">{{ t('type.label') }}</mat-option>
       </mat-select>
     </mat-form-field>
     <mat-form-field>

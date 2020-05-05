@@ -8,6 +8,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
+  @Input() labelMode: boolean;
   @Input() contextNames: any = {};
   @Output() noteCreated = new EventEmitter<any>();
 

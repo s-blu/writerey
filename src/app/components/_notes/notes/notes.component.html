@@ -7,6 +7,7 @@
     </mat-expansion-panel-header>
     <wy-create-new-notes-item
       type="Note"
+      [labelMode]="!!labelDef"
       [contexts]="noteContexts"
       [labelDefs]="labelDefinitions"
       (itemCreated)="createNewNote($event)"
@@ -23,6 +24,7 @@
       <wy-notes-item
         *ngFor="let item of notes[key]"
         [item]="item"
+        [labelMode]="labelDef"
         [labelDefs]="labelDefinitions"
         (deleteItem)="deleteNotesItem($event)"
         (editItem)="editNotesItem($event)"

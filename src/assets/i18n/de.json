@@ -168,7 +168,8 @@
     "type": {
       "title": "Art der Notiz",
       "info": "Info",
-      "todo": "To Do"
+      "todo": "To Do",
+      "label": "Rubrikinfo"
     },
     "color": {
       "title": "Farbe",

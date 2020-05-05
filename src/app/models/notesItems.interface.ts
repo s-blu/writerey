@@ -6,7 +6,7 @@ export enum NoteItemStereotypes {
 export interface Note {
   stereotype: NoteItemStereotypes.NOTE;
   id: string;
-  type: 'info' | 'todo';
+  type: 'info' | 'todo' | 'label';
   context: string;
   text: string;
   color?: string;

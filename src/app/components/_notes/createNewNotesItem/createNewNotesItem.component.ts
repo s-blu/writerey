@@ -20,6 +20,7 @@ enum typesOfItems {
 export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() labelDefs: Array<LabelDefinition> = [];
+  @Input() labelMode: boolean;
   @Output() itemCreated = new EventEmitter<any>();
 
   typesOfItems = typesOfItems;
@@ -46,6 +47,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    console.log('labelMode', this.labelMode);
     this.translatedContextNames.paragraph = this.translocoService.translate('createNotesItem.contexts.paragraph');
     this.translatedContextNames.document = this.translocoService.translate('createNotesItem.contexts.document');
   }
