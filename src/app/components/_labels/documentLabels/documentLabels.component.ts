@@ -93,22 +93,8 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
       this.removeLabel(def.id);
       return;
     }
-    let valueDef = def.values.find(v => v.name === newValue);
-    if (!valueDef) {
-      valueDef = {
-        id: uuid.v4(),
-        name: newValue,
-      };
-      def.values.push(valueDef);
-      this.subscription.add(
-        this.labelService.setLabelDefinitions(this.labelDefinitions).subscribe(res => {
-          this.labelDefinitions = res;
-          this.upsertLabel(def.id, valueDef.id);
-        })
-      );
-    } else {
-      this.upsertLabel(def.id, valueDef.id);
-    }
+    const valueDef = def.values.find(v => v.name === newValue);
+    this.upsertLabel(def.id, valueDef.id);
   }
 
   private refresh() {
