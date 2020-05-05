@@ -1,17 +1,17 @@
 <div>
   <wy-document-link
-  *ngIf="item.stereotype === stereotypes.LINK; else note"
-  [link]="item"
-  [labelDefs]="labelDefinitions"
-  (deleteLink)="onDelete($event)"
-  (editLink)="onEdit($event)"
-></wy-document-link>
-<ng-template #note>
-  <wy-note
-  [note]="item"
-  [labelDefs]="labelDefinitions"
-  (deleteNote)="onDelete($event)"
-  (editNote)="onEdit($event)"
-></wy-note>
-</ng-template>
+    *ngIf="item.stereotype === stereotypes.LINK; else note"
+    [link]="item"
+    [labelDefs]="labelDefs"
+    (deleteLink)="onDelete($event)"
+    (editLink)="onEdit($event)"
+  ></wy-document-link>
+  <ng-template #note>
+    <wy-note
+      [note]="item"
+      [labelDefs]="labelDefs"
+      (deleteNote)="onDelete($event)"
+      (editNote)="onEdit($event)"
+    ></wy-note>
+  </ng-template>
 </div>

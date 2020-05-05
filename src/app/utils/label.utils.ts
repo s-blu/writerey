@@ -58,6 +58,7 @@ export function sortLabelDefinitions(
 }
 
 export function getReadableNameForLabelContext(context, labelDefs) {
+  if (!labelDefs) return context;
   if (context?.includes(':')) {
     const [labelId, valueId] = context.split(':');
     const labelDef = labelDefs.find(m => m.id === labelId);

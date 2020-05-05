@@ -43,5 +43,5 @@ class Labels(Resource):
         if label_id == 'definitions':
             filename = '_writerey_label_defs'
         else:
-            filename = 'mv_' + value_id
+            filename = 'lv_' + value_id
         return PathUtils.sanitizePathList([self.getPathToLabels(projectDir), filename])

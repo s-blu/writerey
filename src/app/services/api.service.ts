@@ -51,11 +51,8 @@ export class ApiService {
       // A client-side or network error occurred. Handle it accordingly.
       console.error('An error occurred:', JSON.stringify(error));
     } else {
-      // The backend returned an unsuccessful response code.
-      // The response body may contain clues as to what went wrong,
       console.error(`Backend returned code ${error.status}`, JSON.stringify(error));
     }
-    // return an observable with a user-facing error message
     return throwError('Backend said no.');
   }
 }

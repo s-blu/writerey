@@ -1,29 +1,29 @@
 {
   "createLabel": {
-    "title": "Einen neuen Label erstellen",
+    "title": "Eine neue Rubrik erstellen",
     "type": {
-      "title": "Labeltyp",
+      "title": "Rubriktyp",
       "text": "Text",
       "numeric": "Numerisch"
     },
-    "name": "Name des Labels",
+    "name": "Name der Rubrik",
     "create": "Erstellen",
     "cancel": "Abbrechen"
   },
   "labelDetails": {
-    "name": "Name des Labels",
+    "name": "Name der Rubrik",
     "textvalue": "Wert",
     "addNewValue": "Einen neuen Wert hinzufügen",
     "removeValue": "Wert entfernen",
     "save": "Speichern",
     "cancel": "Abbrechen",
     "index": "Index",
-    "title": "Label '{{name}}' bearbeiten",
+    "title": "Rubrik '{{name}}' bearbeiten",
     "titleValues": "Werte",
-    "titleLabelProps": "Labeleigenschaften",
+    "titleLabelProps": "Rubrikeigenschaften",
     "type": {
-      "text": "Text-Label",
-      "numeric": "Numerischer Label"
+      "text": "Text-Rubrik",
+      "numeric": "Numerische Rubrik"
     },
     "saved": "Gespeichert!",
     "start": "Start",
@@ -32,8 +32,8 @@
   },
   "documentLabels": {
     "noneValue": "Nicht gesetzt",
-    "title": "Label",
-    "placeholderEmpty": "Du hast noch keine Labeldefinitionen. Sobald du welche angelegt hast, kannst du sie hier konfigurieren."
+    "title": "Rubrik",
+    "placeholderEmpty": "Du hast noch keine Rubrikdefinitionen. Sobald du welche angelegt hast, kannst du sie hier konfigurieren."
   },
   "snapshotDialog": {
     "title": "Text für Sicherung",
@@ -52,8 +52,8 @@
     "type": {
       "file": "Dokument",
       "dir": "Ordner",
-      "label": "Label",
-      "labelValue": "Labelwert"
+      "label": "Rubrik",
+      "labelValue": "Rubrikwert"
     },
     "snapshot": "Sicherung vor der Löschung von {{type}} '{{name}}'"
   },
@@ -61,16 +61,16 @@
   "explorer": {
     "tabs": {
       "documenttree": "Dokumente",
-      "labels": "Label"
+      "labels": "Rubriken"
     },
     "menu": {
       "backToProjects": "Zurück zur Projektwahl",
-      "newlabel": "Neuer Label"
+      "newlabel": "Neue Rubrik"
     }
   },
   "labelTree": {
-    "remove": "Label löschen",
-    "empty-tree": "Du hast noch keine Label. Nutze 'Neuer Label' um einen zu erstellen. Sie helfen dir, deine Arbeit zu organisieren und deinen Fortschritt zu protokollieren."
+    "remove": "Rubrik löschen",
+    "empty-tree": "Du hast noch keine Rubriken. Nutze 'Neue Rubik' im Menü oben, um eine zu erstellen. Sie helfen dir, deine Arbeit dokumentübergreifend zu organisieren."
   },
   "documentTree": {
     "rename": "Umbenennen",

@@ -13,7 +13,6 @@ export class NotesItemComponent implements OnInit {
   @Output() editItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
 
-  labelDefinitions;
   stereotypes = NoteItemStereotypes;
 
   constructor() {}
