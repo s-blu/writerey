@@ -55,13 +55,44 @@ export class LabelDetailsComponent implements OnInit {
   }
 
   onSubmit(newValues) {
-    // TODO take over new values to obj
+    if (
+      this.labelDefinition.type === LabelTypes.NUMERIC &&
+      (this.labelDefinition.start !== newValues.start ||
+        this.labelDefinition.end !== newValues.end ||
+        this.labelDefinition.interval !== newValues.interval)
+    ) {
+      const newNumValues = [];
+      for (let i = newValues.start; i <= newValues.end; i += newValues.interval) {
+        newNumValues.push(i);
+      }
+      const newLabelValues = this.labelDefinition.values.filter(v => newNumValues.includes(v.name));
+      if (newLabelValues.length < this.labelDefinition.values.length) {
+        // todo show a user facing warning with the possibility to abort
+        console.warn(
+          `Changing start/end/interval of ${this.labelDefinition.name} led` +
+            ` to removal of ${this.labelDefinition.values.length - newLabelValues.length} values.`
+        );
+      }
+      for (const newValName of newNumValues) {
+        let val = newLabelValues.find(v => v.name === newValName);
+        if (!val) {
+          val = {
+            id: uuid.v4(),
+            name: newValName,
+          };
+          newLabelValues.push(val);
+        }
+      }
+      newLabelValues.sort((a, b) => ('' + a.name).localeCompare('' + b.name));
+      newValues.values = newLabelValues;
+    }
     this.labelService.updateLabelDefinition(newValues).subscribe(res => {
       const msg = this.translocoService.translate('labelDetails.saved');
       this.snackBar.open(msg, '', {
         duration: 2000,
         horizontalPosition: 'right',
       });
+      this.labelDefinition = res;
     });
   }
 
@@ -91,7 +122,7 @@ export class LabelDetailsComponent implements OnInit {
       });
     } else if (labelDef.type === LabelTypes.NUMERIC) {
       this.editForm.addControl('start', new FormControl(labelDef.start || 1, Validators.required));
-      this.editForm.addControl('end', new FormControl(labelDef.end || 10, Validators.required));
+      this.editForm.addControl('end', new FormControl(labelDef.end || 1, Validators.required));
       this.editForm.addControl('interval', new FormControl(labelDef.interval || 1, Validators.required));
     } else {
       console.error('Could not determine type of labelDefinition, cannot render edit form', labelDef);

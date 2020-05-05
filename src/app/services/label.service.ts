@@ -116,7 +116,7 @@ export class LabelService implements OnDestroy {
             updatedLabelDefs.splice(oldIndex, 1, labelDef);
           }
         }
-        return this.setLabelDefinitions(updatedLabelDefs);
+        return this.setLabelDefinitions(updatedLabelDefs).pipe(map(res => res.find(def => def.id === labelDef.id)));
       })
     );
   }

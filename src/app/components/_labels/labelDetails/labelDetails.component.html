@@ -34,6 +34,7 @@
               <mat-label>{{ t('interval') }}</mat-label>
               <input matInput type="number" required formControlName="interval" />
             </mat-form-field>
+            <span>{{ t('currentNumericalValues', {first: labelDefinition.start, last: labelDefinition.end, interval: labelDefinition.interval, count: labelDefinition.values.length}) }}</span>
           </div>
           <div *ngIf="labelDefinition.type === types.TEXT">
             <ng-container formArrayName="values">

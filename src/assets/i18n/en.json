@@ -28,7 +28,8 @@
     "saved": "Saved!",
     "start": "Start",
     "end": "End",
-    "interval": "Interval"
+    "interval": "Interval",
+    "currentNumericalValues": "{{count}} values, {{first}} as first, {{last}} as last (Interval {{interval}}"
   },
   "documentLabels": {
     "noneValue": "Unset",
