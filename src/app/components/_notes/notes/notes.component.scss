@@ -7,3 +7,13 @@
 .create-note {
   margin-bottom: 0.5em;
 }
+
+.filters .filteredOut {
+  color: grey;
+}
+
+.filters mat-icon {
+  font-size: 20px;
+  margin-right: 0.5em;
+  cursor: pointer;
+}

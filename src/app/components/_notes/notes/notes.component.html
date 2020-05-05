@@ -1,4 +1,15 @@
 <div class="notes" *transloco="let t; read: 'notes'">
+  <div class="filters">
+    <mat-icon
+      *ngFor="let filter of filters | keyvalue"
+      class="material-icons-outlined"
+      [class]="{ filteredOut: !filter.value.isShown }"
+      [matTooltip]="t('filter.' + filter.key)"
+      (click)="filterNotes(filter.key)"
+    >
+      {{ filter.value.icon }}
+    </mat-icon>
+  </div>
   <mat-expansion-panel class="create-note" [expanded]="true" *ngIf="mode === MODES.REVIEW" [@fadeInOnEnter]>
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -22,7 +33,7 @@
   >
     <div *ngFor="let key of noteContexts" class="notes-item">
       <wy-notes-item
-        *ngFor="let item of notes[key]"
+        *ngFor="let item of filteredNotes[key]"
         [item]="item"
         [labelMode]="labelDef"
         [labelDefs]="labelDefinitions"

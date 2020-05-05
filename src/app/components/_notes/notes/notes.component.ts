@@ -39,9 +39,27 @@ export class NotesComponent implements OnInit, OnDestroy {
   };
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATES = DISTRACTION_FREE_STATES;
+  filteredNotes;
+  filters = {
+    todo: {
+      isShown: true,
+      icon: 'assignment',
+    },
+    info: {
+      isShown: true,
+      icon: 'info',
+    },
+    label: {
+      isShown: true,
+      icon: 'location_on',
+    },
+    link: {
+      isShown: true,
+      icon: 'link',
+    },
+  };
 
   private subscription = new Subscription();
-
   constructor(
     private paragraphService: ParagraphService,
     private notesService: NotesService,
@@ -149,6 +167,20 @@ export class NotesComponent implements OnInit, OnDestroy {
     return this.mode !== DOC_MODES.READ;
   }
 
+  filterNotes(typeOfNote?) {
+    if (typeOfNote) {
+      this.filters[typeOfNote].isShown = !this.filters[typeOfNote].isShown;
+    }
+
+    this.filteredNotes = {};
+    for (const key of Object.keys(this.notes)) {
+      this.filteredNotes[key] = this.notes[key].filter(n => {
+        const noteItemType = n.type || n.stereotype;
+        return this.filters[noteItemType]?.isShown;
+      });
+    }
+  }
+
   private fetchNotesForParagraph() {
     this.notes = {};
     if (!this.fileInfo && !this.parId) return;
@@ -156,7 +188,10 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.notesService
         .getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, this.parId, this.noteContexts)
-        .subscribe(res => (this.notes = res))
+        .subscribe(res => {
+          this.notes = res;
+          this.filterNotes();
+        })
     );
   }
 
@@ -164,9 +199,10 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.notes = {};
 
     this.subscription.add(
-      this.notesService
-        .getNotesForLabelDefinition(this.labelDef, this.noteContexts)
-        .subscribe(res => (this.notes = res))
+      this.notesService.getNotesForLabelDefinition(this.labelDef, this.noteContexts).subscribe(res => {
+        this.notes = res;
+        this.filterNotes();
+      })
     );
   }
 

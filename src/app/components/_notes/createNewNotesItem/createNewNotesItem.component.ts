@@ -47,7 +47,6 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    console.log('labelMode', this.labelMode);
     this.translatedContextNames.paragraph = this.translocoService.translate('createNotesItem.contexts.paragraph');
     this.translatedContextNames.document = this.translocoService.translate('createNotesItem.contexts.document');
   }

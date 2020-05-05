@@ -134,7 +134,13 @@
     "cancel": "Cancel"
   },
   "notes": {
-    "createNew": "Create a note"
+    "createNew": "Create a note",
+    "filter": {
+      "todo": "Filter todo notes",
+      "info": "Filter Info notes",
+      "link": "Filter links",
+      "label": "Filter label notes"
+    }
   },
   "note": {
     "delete": "Done!",
