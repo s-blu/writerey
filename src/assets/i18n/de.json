@@ -1,4 +1,7 @@
 {
+  "distractionFreeMode": {
+    "tooltip": "Sichtbarkeit UI umschalten"
+  },
   "createLabel": {
     "title": "Eine neue Rubrik erstellen",
     "type": {

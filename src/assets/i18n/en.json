@@ -1,4 +1,7 @@
 {
+  "distractionFreeMode": {
+    "tooltip": "Toggle distraction free mode"
+  },
   "createLabel": {
     "title": "Create a new Label",
     "type": {
