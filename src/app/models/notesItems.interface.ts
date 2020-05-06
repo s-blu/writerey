@@ -1,25 +1,33 @@
 export enum NoteItemStereotypes {
   NOTE = 'Note',
   LINK = 'Link',
+  LABEL = 'LabelInfo',
 }
 
-export interface Note {
-  stereotype: NoteItemStereotypes.NOTE;
+interface NotesItem {
+  stereotype: NoteItemStereotypes;
   id: string;
-  type: 'info' | 'todo' | 'label';
   context: string;
+  keepOpen?: boolean;
+}
+
+export interface Note extends NotesItem {
+  stereotype: NoteItemStereotypes.NOTE;
+  type: 'info' | 'todo' | 'label';
   text: string;
   color?: string;
-  keepOpen?: boolean;
 }
 
-export interface Link {
-  stereotype: NoteItemStereotypes.LINK;
-  id: string;
-  linkId: string;
-  context: string;
+export interface LabelInfo extends NotesItem {
+  stereotype: NoteItemStereotypes.LABEL;
   text: string;
-  keepOpen?: boolean;
+  color?: string;
+}
+
+export interface Link extends NotesItem {
+  stereotype: NoteItemStereotypes.LINK;
+  linkId: string;
+  text: string;
 }
 
 export interface DocumentLink {

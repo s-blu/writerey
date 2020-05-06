@@ -6,11 +6,6 @@ import { FormBuilder } from '@angular/forms';
 import * as uuid from 'uuid';
 import { Note, NoteItemStereotypes, Link } from 'src/app/models/notesItems.interface';
 
-enum typesOfItems {
-  'note' = 'note',
-  'link' = 'link',
-}
-
 @Component({
   selector: 'wy-create-new-notes-item',
   templateUrl: './createNewNotesItem.component.html',
@@ -20,11 +15,11 @@ enum typesOfItems {
 export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() labelDefs: Array<LabelDefinition> = [];
-  @Input() labelMode: boolean;
+  @Input() labelDefinition: LabelDefinition;
   @Output() itemCreated = new EventEmitter<any>();
 
-  typesOfItems = typesOfItems;
-  type = typesOfItems.note;
+  typesOfItems = NoteItemStereotypes;
+  type = NoteItemStereotypes.NOTE;
 
   translatedContextNames = {
     paragraph: 'paragraph',

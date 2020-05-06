@@ -63,6 +63,7 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
+import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
 
 const matModules = [
   MatIconModule,
@@ -122,6 +123,7 @@ const matModules = [
     ChooseFileForLinkDialogComponent,
     NotesItemComponent,
     DocumentLinkComponent,
+    CreateNewLabelInfoComponent
   ],
   imports: [
     BrowserModule,

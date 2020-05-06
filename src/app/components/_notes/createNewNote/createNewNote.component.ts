@@ -9,7 +9,6 @@ import { quillWyStyles, quillWyNotesModules } from 'src/app/utils/quill.utils';
 })
 export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
-  @Input() labelMode: boolean;
   @Input() contextNames: any = {};
   @Output() noteCreated = new EventEmitter<any>();
 

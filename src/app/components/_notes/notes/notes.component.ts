@@ -39,7 +39,7 @@ export class NotesComponent implements OnInit, OnDestroy {
   };
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATES = DISTRACTION_FREE_STATES;
-  filteredNotes;
+  filteredNotes = {};
   filters = {
     todo: {
       available: false,

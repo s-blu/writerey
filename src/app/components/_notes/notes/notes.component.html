@@ -18,7 +18,7 @@
     </mat-expansion-panel-header>
     <wy-create-new-notes-item
       type="Note"
-      [labelMode]="!!labelDef"
+      [labelDefinition]="labelDef"
       [contexts]="noteContexts"
       [labelDefs]="labelDefinitions"
       (itemCreated)="createNewNote($event)"

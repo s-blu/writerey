@@ -2,23 +2,31 @@
   <mat-form-field>
     <mat-label>{{ t('typeOfItem.title') }}</mat-label>
     <mat-select [(value)]="type">
-      <mat-option [value]="typesOfItems.note">{{ t('typeOfItem.note') }}</mat-option>
-      <mat-option [value]="typesOfItems.link">{{ t('typeOfItem.link') }}</mat-option>
+      <mat-option [value]="typesOfItems.NOTE">{{ t('typeOfItem.note') }}</mat-option>
+      <mat-option [value]="typesOfItems.LINK">{{ t('typeOfItem.link') }}</mat-option>
+      <mat-option *ngIf="labelDefinition" [value]="typesOfItems.LABEL">{{ t('typeOfItem.label') }}</mat-option>
     </mat-select>
   </mat-form-field>
   <wy-create-new-note
-    *ngIf="type === typesOfItems.note"
+    *ngIf="type === typesOfItems.NOTE"
     [@fadeInOnEnter]
-    [labelMode]="labelMode"
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
     (noteCreated)="createNote($event)"
   ></wy-create-new-note>
   <wy-create-new-link
-    *ngIf="type === typesOfItems.link"
+    *ngIf="type === typesOfItems.LINK"
     [@fadeInOnEnter]
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
     (linkCreated)="createLink($event)"
   ></wy-create-new-link>
+  <wy-create-new-label-info
+    *ngIf="type === typesOfItems.LABEL"
+    [@fadeInOnEnter]
+    [labelDefinition]="labelDefinition"
+    [contexts]="contexts"
+    [contextNames]="translatedContextNames"
+    (noteCreated)="createNote($event)"
+  ></wy-create-new-label-info>
 </div>
