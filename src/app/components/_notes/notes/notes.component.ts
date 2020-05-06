@@ -51,7 +51,7 @@ export class NotesComponent implements OnInit, OnDestroy {
       isShown: true,
       icon: 'info',
     },
-    label: {
+    labelinfo: {
       available: false,
       isShown: true,
       icon: 'location_on',

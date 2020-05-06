@@ -141,7 +141,7 @@
       "todo": "Filter todo notes",
       "info": "Filter Info notes",
       "link": "Filter links",
-      "label": "Filter label notes"
+      "labelinfo": "Filter label infos"
     }
   },
   "note": {
@@ -162,8 +162,13 @@
     "typeOfItem": {
       "title": "Type of note",
       "note": "Text note",
-      "link": "Document link"
+      "link": "Document link",
+      "label": "Label info"
     }
+  },
+  "createLabelInfo": {
+    "context": "Context",
+    "comment": "Label info"
   },
   "createLink": {
     "context": "Context",

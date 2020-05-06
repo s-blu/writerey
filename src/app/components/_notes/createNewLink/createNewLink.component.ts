@@ -80,7 +80,6 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
         )
         .subscribe((link: Link) => {
           if (!link) return;
-          console.log('got link obj in createNewLink', link);
           this.selectedDocument = link;
           this.createNewForm.patchValue({ linkId: link.linkId });
         })

@@ -1,3 +1,5 @@
+import { LabelInfo } from './../../../models/notesItems.interface';
+import { NoteItemStereotypes } from 'src/app/models/notesItems.interface';
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Note } from '../../../models/notesItems.interface';
@@ -12,7 +14,7 @@ import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
   animations: [...FADE_ANIMATIONS, rotateAnimation()],
 })
 export class NoteComponent implements OnInit {
-  @Input() note: Note;
+  @Input() note: Note | LabelInfo;
   @Input() labelDefs: Array<LabelDefinition>;
   @Input() labelMode: boolean;
 
@@ -27,7 +29,9 @@ export class NoteComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.classes += ` type-${this.note.type}`;
+    if (this.note.stereotype !== NoteItemStereotypes.LABEL) {
+      this.classes += ` type-${this.note.type}`;
+    }
     this.isExpanded = !!this.note.keepOpen;
     if (this.note.color) {
       this.noteStyles = 'background-color:' + this.note.color;
@@ -54,11 +58,10 @@ export class NoteComponent implements OnInit {
   }
 
   getIconForType() {
+    if (this.note.stereotype === NoteItemStereotypes.LABEL) return 'location_on';
     switch (this.note.type) {
       case 'todo':
         return 'assignment';
-      case 'label':
-        return 'location_on';
       case 'info':
       default:
         return 'info';

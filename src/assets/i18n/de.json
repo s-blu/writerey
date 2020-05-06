@@ -141,7 +141,7 @@
       "todo": "Filtere Todo Notizen",
       "info": "Filtere Info Notizen",
       "link": "Filtere Links",
-      "label": "Filtere Rubriknotizen"
+      "labelinfo": "Filtere Rubrikinfos"
     }
   },
   "note": {
@@ -162,8 +162,13 @@
     "typeOfItem": {
       "title": "Typ der Notiz",
       "note": "Textnotiz",
-      "link": "Dokumentenlink"
+      "link": "Dokumentenlink",
+      "label": "Rubrikinfo"
     }
+  },
+  "createLabelInfo": {
+    "context": "Kontext",
+    "comment": "Rubrikinfo"
   },
   "createLink": {
     "context": "Kontext",

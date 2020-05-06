@@ -1,3 +1,4 @@
+import { LabelInfo } from './../../../models/notesItems.interface';
 import { FADE_ANIMATIONS } from './../../../utils/animation.utils';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { LabelDefinition } from 'src/app/models/labelDefinition.class';
@@ -58,6 +59,18 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     };
 
     this.itemCreated.emit(newNote);
+  }
+
+  createLabelInfo(event) {
+    if (!event) return;
+    const newLabelInfo: LabelInfo = {
+      stereotype: NoteItemStereotypes.LABEL,
+      id: uuid.v4(),
+      context: event.context,
+      text: event.text,
+    };
+
+    this.itemCreated.emit(newLabelInfo);
   }
 
   createLink(event) {
