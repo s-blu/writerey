@@ -78,7 +78,7 @@ export class LabelDetailsComponent implements OnInit {
         );
       }
       for (const newValName of newNumValues) {
-        let val = newLabelValues.find(v => v.name === newValName);
+        let val = newLabelValues.find(v => '' + v.name === '' + newValName);
         if (!val) {
           val = {
             id: uuid.v4(),
@@ -112,7 +112,7 @@ export class LabelDetailsComponent implements OnInit {
       name: labelDef.name,
       index: labelDef.index,
       values: new FormArray([]),
-      template: labelDef.template || ' \n'
+      template: labelDef.template || ' \n',
     });
 
     if (labelDef.type === LabelTypes.TEXT) {
