@@ -30,3 +30,14 @@
 .create-note .ql-toolbar.ql-snow {
   background-color: white;
 }
+
+.mat-tab-group,
+.mat-tab-body-wrapper,
+.mat-tab-content {
+  height: 100%;
+  box-sizing: border-box;
+}
+.label-details .editor {
+  height: calc(100% - 100px);
+  display: block;
+}

@@ -62,7 +62,7 @@
         </mat-tab>
 
         <mat-tab [label]="t('titleInfoTemplate')">
-          <div class="tab-content">
+          <ng-template matTabContent class="tab-content">
             <p>{{ t('template') }}</p>
             <quill-editor
               class="editor"
@@ -71,7 +71,7 @@
               [styles]="quillConfig.styles"
               [placeholder]="t('titleInfoTemplate')"
             ></quill-editor>
-          </div>
+          </ng-template>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
