@@ -1,6 +1,6 @@
 <mat-card [style]="noteStyles" class="{{ classes }}" [@fadeInOnEnter] *transloco="let t; read: 'note'">
   <mat-card-header>
-    <i class="material-icons-outlined type-icon">{{getIconForType()}}</i>
+    <i class="material-icons-outlined type-icon">{{ getIconForType() }}</i>
     <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
     <mat-icon class="expand" [@rotate]="isExpanded" (click)="changeExpand()">
       expand_more
@@ -10,8 +10,15 @@
     <mat-card-content>
       <quill-view class="note-text" [content]="note.text"></quill-view>
     </mat-card-content>
-    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
-      <button *ngIf="note.type !== 'label' || labelMode" mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
+    <mat-card-actions [style]="noteStyles" *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
+      <button
+        *ngIf="note.type || labelMode"
+        mat-icon-button
+        color="primary"
+        (click)="delete()"
+        [matTooltip]="t('delete')"
+        class="done-button"
+      >
         <mat-icon>done</mat-icon>
       </button>
       <button mat-icon-button (click)="changeKeepOpen()" [matTooltip]="t(note.keepOpen ? 'keepClosed' : 'keepOpen')">

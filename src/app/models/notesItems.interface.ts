@@ -22,6 +22,7 @@ export interface LabelInfo extends NotesItem {
   stereotype: NoteItemStereotypes.LABEL;
   text: string;
   color?: string;
+  type?: string; // quick and dirty fix, the type check annoys me
 }
 
 export interface Link extends NotesItem {
