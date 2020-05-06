@@ -16,4 +16,9 @@
   font-size: 20px;
   margin-right: 0.5em;
   cursor: pointer;
+  display: none;
+
+  &.available {
+    display: inline-block;
+  }
 }

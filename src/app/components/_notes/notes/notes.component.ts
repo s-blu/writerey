@@ -42,18 +42,22 @@ export class NotesComponent implements OnInit, OnDestroy {
   filteredNotes;
   filters = {
     todo: {
+      available: false,
       isShown: true,
       icon: 'assignment',
     },
     info: {
+      available: false,
       isShown: true,
       icon: 'info',
     },
     label: {
+      available: false,
       isShown: true,
       icon: 'location_on',
     },
     link: {
+      available: false,
       isShown: true,
       icon: 'link',
     },
@@ -157,6 +161,7 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     obs.subscribe(res => {
       this.notes[context] = res;
+      this.filterNotesForContext(context);
     });
   }
 
@@ -174,11 +179,20 @@ export class NotesComponent implements OnInit, OnDestroy {
 
     this.filteredNotes = {};
     for (const key of Object.keys(this.notes)) {
-      this.filteredNotes[key] = this.notes[key].filter(n => {
-        const noteItemType = n.type || n.stereotype;
-        return this.filters[noteItemType]?.isShown;
-      });
+      this.filterNotesForContext(key);
     }
+  }
+
+  private filterNotesForContext(context) {
+    if (!this.filteredNotes) this.filteredNotes = {};
+    this.filteredNotes[context] = this.notes[context].filter(n => {
+      const noteItemType = (n.type || n.stereotype || '').toLowerCase();
+      if (this.filters[noteItemType]) {
+        this.filters[noteItemType].available = true;
+        return this.filters[noteItemType].isShown;
+      }
+      return true;
+    });
   }
 
   private fetchNotesForParagraph() {

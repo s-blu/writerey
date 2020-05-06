@@ -10,3 +10,18 @@ export default class QuillUtils {
     }
   }
 }
+
+export const quillWyStyles = {
+  'font-family': 'Roboto, "Helvetica Neue", sans-serif',
+  'font-size': '14px',
+  'min-height': '7em',
+};
+
+export const quillWyNotesModules = {
+  toolbar: [
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
+    ['blockquote', 'code-block', 'link', 'image'],
+    ['clean'],
+  ],
+};

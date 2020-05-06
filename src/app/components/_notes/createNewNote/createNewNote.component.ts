@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { quillWyStyles, quillWyNotesModules } from 'src/app/utils/quill.utils';
 
 @Component({
   selector: 'wy-create-new-note',
@@ -15,18 +16,8 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   noteColor;
   createNewForm;
   quillConfig = {
-    modules: {
-      toolbar: [
-        ['bold', 'italic', 'underline', 'strike'],
-        [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-        ['blockquote', 'code-block', 'link', 'image'], // add's image support
-        ['clean'],
-      ],
-    },
-    styles: {
-      'font-family': 'Roboto, "Helvetica Neue", sans-serif',
-      'font-size': '14px',
-    },
+    modules: quillWyNotesModules,
+    styles: quillWyStyles,
   };
 
   constructor(private formBuilder: FormBuilder) {

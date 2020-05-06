@@ -18,6 +18,7 @@ export class LabelDefinition {
   start: number;
   end: number;
   interval: number;
+  template: string;
 
   constructor(name: string, type: LabelTypes) {
     this.id = uuid.v4();

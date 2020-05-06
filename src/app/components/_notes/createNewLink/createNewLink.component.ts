@@ -1,6 +1,6 @@
-import { ProjectStore } from './../../../stores/project.store';
-import { LinkService } from './../../../services/link.service';
-import { ChooseFileForLinkDialogComponent } from './../chooseFileForLinkDialog/chooseFileForLinkDialog.component';
+import { ProjectStore } from '../../../stores/project.store';
+import { LinkService } from '../../../services/link.service';
+import { ChooseFileForLinkDialogComponent } from '../chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';

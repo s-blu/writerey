@@ -6,6 +6,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
+import { quillWyNotesModules, quillWyStyles } from 'src/app/utils/quill.utils';
 
 @Component({
   selector: 'wy-label-details',
@@ -22,7 +23,10 @@ export class LabelDetailsComponent implements OnInit {
   labelDefinition: LabelDefinition;
   types = LabelTypes;
   values;
-
+  quillConfig = {
+    modules: quillWyNotesModules,
+    styles: quillWyStyles,
+  };
   constructor(
     private formBuilder: FormBuilder,
     private labelService: LabelService,
@@ -108,6 +112,7 @@ export class LabelDetailsComponent implements OnInit {
       name: labelDef.name,
       index: labelDef.index,
       values: new FormArray([]),
+      template: labelDef.template || ' \n'
     });
 
     if (labelDef.type === LabelTypes.TEXT) {

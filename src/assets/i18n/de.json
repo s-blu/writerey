@@ -21,6 +21,8 @@
     "title": "Rubrik '{{name}}' bearbeiten",
     "titleValues": "Werte",
     "titleLabelProps": "Rubrikeigenschaften",
+    "titleInfoTemplate": "Vorlage für Labelinfos",
+    "template": "Füge hier eine Vorlage für deine Labelinfos ein. Das ist besonders hilfreich, wenn du gleichartige Informationen zu deinen Label Werten speichern möchtest",
     "type": {
       "text": "Text-Rubrik",
       "numeric": "Numerische Rubrik"

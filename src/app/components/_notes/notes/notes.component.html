@@ -3,7 +3,7 @@
     <mat-icon
       *ngFor="let filter of filters | keyvalue"
       class="material-icons-outlined"
-      [class]="{ filteredOut: !filter.value.isShown }"
+      [class]="{ filteredOut: !filter.value.isShown, available: filter.value.available }"
       [matTooltip]="t('filter.' + filter.key)"
       (click)="filterNotes(filter.key)"
     >

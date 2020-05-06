@@ -53,6 +53,18 @@
             </button>
           </div>
         </mat-tab>
+
+        <mat-tab [label]="t('titleInfoTemplate')">
+          <div class="tab-content">
+            <quill-editor
+            class="editor"
+            [formControl]="editForm.controls['template']"
+            [modules]="quillConfig.modules"
+            [styles]="quillConfig.styles"
+            [placeholder]="t('template')"
+          ></quill-editor>
+          </div>
+        </mat-tab>
       </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>

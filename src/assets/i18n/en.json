@@ -21,6 +21,8 @@
     "title": "Edit Label '{{name}}'",
     "titleValues": "Values",
     "titleLabelProps": "Label Properties",
+    "titleInfoTemplate": "Template for Label Infos",
+    "template": "Insert a template here to prefill your label infos. This is very useful if you want to store similar meta information for your label values",
     "type": {
       "text": "Text Label",
       "numeric": "Numerical Label"
