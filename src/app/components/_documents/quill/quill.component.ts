@@ -15,6 +15,7 @@ import { DocumentDefinition } from 'src/app/models/documentDefinition.interface'
 export class QuillComponent implements OnInit {
   @Input() content: string;
   @Input() isLoading: boolean;
+  @Input() isReadonly: boolean;
   @Input() document: DocumentDefinition;
 
   @Output() contentChanged: EventEmitter<any> = new EventEmitter();
@@ -65,6 +66,6 @@ export class QuillComponent implements OnInit {
   }
 
   isReadOnly() {
-    return this.isLoading || !this.document;
+    return this.isLoading || this.isReadonly || !this.document;
   }
 }

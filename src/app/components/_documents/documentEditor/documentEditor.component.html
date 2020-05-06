@@ -6,6 +6,7 @@
     (updateParagraphMeta)="onClick($event)"
     (contentChanged)="onChange($event)"
     [isLoading]="isLoading"
+    [isReadonly]="docMode === DOC_MODES.READ"
   >
   </wy-quill>
 </div>

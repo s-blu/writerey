@@ -17,6 +17,7 @@ import QuillUtils from 'src/app/utils/quill.utils';
 export class DocumentEditorComponent implements OnInit, OnDestroy {
   content: string;
   docMode: DOC_MODES;
+  DOC_MODES = DOC_MODES;
   isLoading: boolean;
   document: DocumentDefinition;
 

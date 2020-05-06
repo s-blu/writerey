@@ -1,5 +1,5 @@
 <div class="notes" *transloco="let t; read: 'notes'">
-  <div class="filters">
+  <div class="filters" *ngIf="mode !== MODES.READ" [@fadeOutOnLeave]>
     <mat-icon
       *ngFor="let filter of filters | keyvalue"
       class="material-icons-outlined"

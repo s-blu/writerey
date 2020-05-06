@@ -11,7 +11,8 @@
   background-color: $c_bg_boxes;
   padding: 0 12px;
 
-  &, .introduction .ql-container {
+  &,
+  .introduction .ql-container {
     border: none;
     font-family: 'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif;
     font-size: 16px;
@@ -27,7 +28,8 @@
     margin-left: -12px;
   }
 
-  &.ql-container, .ql-container {
+  &.ql-container,
+  .ql-container {
     height: 100%;
     padding: 12px 0;
   }
@@ -41,8 +43,7 @@
     width: 26px;
   }
 
-  .readonly .ql-toolbar {
+  &.readonly .ql-toolbar {
     visibility: hidden;
   }
 }
-
