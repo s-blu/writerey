@@ -115,22 +115,19 @@ export class LabelDetailsComponent implements OnInit {
       template: labelDef.template || ' \n',
     });
 
-    if (labelDef.type === LabelTypes.TEXT) {
-      this.values = this.editForm.get('values') as FormArray;
-      (labelDef.values || []).forEach(val => {
-        this.values.push(
-          new FormGroup({
-            name: new FormControl(val.name),
-            id: new FormControl(val.id),
-          })
-        );
-      });
-    } else if (labelDef.type === LabelTypes.NUMERIC) {
+    this.values = this.editForm.get('values') as FormArray;
+    (labelDef.values || []).forEach(val => {
+      this.values.push(
+        new FormGroup({
+          name: new FormControl(val.name),
+          id: new FormControl(val.id),
+        })
+      );
+    });
+    if (labelDef.type === LabelTypes.NUMERIC) {
       this.editForm.addControl('start', new FormControl(labelDef.start || 1, Validators.required));
       this.editForm.addControl('end', new FormControl(labelDef.end || 1, Validators.required));
       this.editForm.addControl('interval', new FormControl(labelDef.interval || 1, Validators.required));
-    } else {
-      console.error('Could not determine type of labelDefinition, cannot render edit form', labelDef);
     }
   }
 }

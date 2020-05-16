@@ -40,6 +40,6 @@ export class CreateNewLabelInfoComponent implements OnInit, OnChanges {
 
   onSubmit(data) {
     this.labelInfoCreated.emit(data);
-    this.createNewForm.patchValue({ text: '' });
+    this.createNewForm.patchValue({ text: this.labelDefinition?.template || '' });
   }
 }

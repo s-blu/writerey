@@ -3,7 +3,6 @@ import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.en
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
-import { ContextStore } from '../../../stores/context.store';
 import { LabelService } from 'src/app/services/label.service';
 import { DOC_MODES } from '../../../models/docModes.enum';
 import { NotesService } from '../../../services/notes.service';
@@ -68,7 +67,6 @@ export class NotesComponent implements OnInit, OnDestroy {
     private paragraphService: ParagraphService,
     private notesService: NotesService,
     private labelService: LabelService,
-    private contextStore: ContextStore,
     private contextService: ContextService,
     private labelStore: LabelStore,
     private documentModeStore: DocumentModeStore,
@@ -77,11 +75,6 @@ export class NotesComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subscription.add(
-      this.contextStore.contexts$.subscribe(contexts => {
-        this.updateContexts(contexts);
-      })
-    );
     this.subscription.add(
       this.labelStore.labelDefinitions$.subscribe(labelDefs => {
         this.labelDefinitions = labelDefs;
