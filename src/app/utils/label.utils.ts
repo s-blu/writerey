@@ -39,8 +39,8 @@ export function sortLabelDefinitions(
     let compareResult = compareStringsLexically(labelDefA.name, labelDefB.name);
 
     if (compareResult === 0) {
-      const nameValueA = labelDefA.values.find(v => v.id === valueIdA)?.name;
-      const nameValueB = labelDefB.values.find(v => v.id === valueIdB)?.name;
+      const nameValueA = labelDefA.values?.find(v => v.id === valueIdA)?.name;
+      const nameValueB = labelDefB.values?.find(v => v.id === valueIdB)?.name;
 
       compareResult = compareStringsLexically(nameValueA, nameValueB);
     }
