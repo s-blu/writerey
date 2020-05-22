@@ -11,7 +11,7 @@
   </wy-quill> -->
   <wy-ckeditor
   *ngIf="document"
-  [content]="content"
+  [content]="editorData"
   (editorClicked)="onClick($event)"
   (editorChange)="onChange($event)"
   [readonly]="docMode === DOC_MODES.READ"

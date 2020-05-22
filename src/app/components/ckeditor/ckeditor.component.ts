@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import * as CkEditorDecoubled from '@ckeditor/ckeditor5-build-decoupled-document';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -10,43 +10,39 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class CkeditorComponent implements OnInit, OnDestroy {
   @Input() readonly = false;
-  // @Input() set content(c: string) {
-  //   console.log('got new content', c);
-  //   if (c !== undefined) this.contentWrap.content = c;
-  // }
-  @Input() content: string;
+  @Input() set content(c: string) {
+    if (c !== this.editorData) {
+      this.editorData = c;
+      if (this.editor) {
+        this.editor.setData(c);
+      }
+    }
+  }
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
   @Output() editorClicked: EventEmitter<any> = new EventEmitter();
 
-  public contentWrap = { content: null };
-  public Editor = ClassicEditor;
+  private editorData: string;
+  public editor: CkEditorDecoubled;
   public config = {
-    toolbar: [
-      'heading',
-      '|',
-      'bold',
-      'italic',
-      '|',
-      'numberedList',
-      'bulletedList',
-      '|',
-      'blockQuote',
-      'indent',
-      'outdent',
-      '|',
-      'undo',
-      'redo',
-    ],
-    extraPlugins: [],
-    wordCount: {
-      // FIXME
-      container: document.getElementById('ckeditor-word-count-container'),
-      onUpdate(event) {
-        console.log('wordCount on update triggered', event);
-      },
-    },
+    // toolbar: [
+    //   'heading',
+    //   '|',
+    //   'bold',
+    //   'italic',
+    //   '|',
+    //   'numberedList',
+    //   'bulletedList',
+    //   '|',
+    //   'blockQuote',
+    //   'indent',
+    //   'outdent',
+    //   '|',
+    //   'undo',
+    //   'redo',
+    // ],
+    extraPlugins: [AllowClassesOnP],
   };
 
   private changeDebounce = new Subject();
@@ -54,24 +50,34 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    let ed;
-    ClassicEditor.create(document.querySelector('.editorbby'))
+    CkEditorDecoubled.create(document.querySelector('.editorbby'), this.config)
       .then(editor => {
-        ed = editor;
-        ed.model.document.on('change:data', (ev) => {
+        editor.setData(this.editorData);
+        editor.model.document.on('change:data', ev => {
           console.log('The data has changed!');
+          this.changeDebounce.next(ev);
+        });
+        editor.editing.view.document.on('blur', ev => {
+          console.log('Blurred');
+          this.editorBlur.emit(ev);
         });
 
-        console.log(editor);
+        const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
+        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+
+        this.editor = editor;
       })
       .catch(error => {
         console.error(error);
       });
 
     this.subscription.add(
-      this.changeDebounce
-        .pipe(distinctUntilChanged(), debounceTime(600))
-        .subscribe(event => this.editorChange.emit(event))
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1200)).subscribe(async (event: any) => {
+        event.content = this.editor.getData();
+        event.plainContent = this.editor.sourceElement.innerText;
+        console.log('sending change event', this.editor, event);
+        this.editorChange.emit(event);
+      })
     );
   }
 

@@ -15,12 +15,13 @@ import QuillUtils from 'src/app/utils/quill.utils';
   styleUrls: ['./documentEditor.component.scss'],
 })
 export class DocumentEditorComponent implements OnInit, OnDestroy {
-  content: string;
+  editorData: string;
   docMode: DOC_MODES;
   DOC_MODES = DOC_MODES;
   isLoading: boolean;
   document: DocumentDefinition;
 
+  private content: string;
   private clickSubject = new Subject();
   private subscription = new Subscription();
   private style;
@@ -76,14 +77,15 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     }
   }
   onChange(event) {
+    console.log('onChange', event);
     if (!this.document) return;
-    this.content = event.html;
+    this.content = event.content;
     this.subscription.add(
       this.documentService
-        .saveDocument(this.document.path, this.document.name, event.html)
+        .saveDocument(this.document.path, this.document.name, this.content)
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
-          const count = QuillUtils.calculateWordCount(event.text);
+          const count = QuillUtils.calculateWordCount(event.plainContent);
           this.documentStore.setWordCount(count);
         })
     );
@@ -98,6 +100,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       this.documentService
         .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
         .subscribe(res => {
+          console.log('enhanceAndSaveDocument', res);
+          this.editorData = res.content;
           this.content = res.content;
           this.isLoading = false;
         });
@@ -105,6 +109,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   private switchDocument(newDoc: DocumentDefinition) {
+    console.log('switchDocument', newDoc);
     if (!newDoc) return;
     if (newDoc.path === this.document?.path && newDoc.name === this.document?.name) {
       console.warn(
@@ -116,12 +121,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     let loadObs;
     this.isLoading = true;
     // empty content for editor to prevent app from crashing when switching between two heavy documents
-    const oldContent = this.content;
-    this.content = ' ';
+    this.editorData = ' ';
     // save old doc before switching
     if (this.document) {
       loadObs = this.documentService
-        .saveDocument(this.document.path, this.document.name, oldContent)
+        .saveDocument(this.document.path, this.document.name, this.content)
         .pipe(() => this.documentService.getDocument(newDoc.path, newDoc.name));
     } else {
       loadObs = this.documentService.getDocument(newDoc.path, newDoc.name);
@@ -129,6 +133,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.subscription.add(
       loadObs.subscribe(res => {
         this.content = res.content;
+        this.editorData = res.content;
         this.document = newDoc;
         this.isLoading = false;
       })
