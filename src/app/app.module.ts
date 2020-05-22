@@ -1,3 +1,4 @@
+import { CkeditorComponent } from './components/ckeditor/ckeditor.component';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
@@ -25,6 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -123,7 +125,8 @@ const matModules = [
     ChooseFileForLinkDialogComponent,
     NotesItemComponent,
     DocumentLinkComponent,
-    CreateNewLabelInfoComponent
+    CreateNewLabelInfoComponent,
+    CkeditorComponent,
   ],
   imports: [
     BrowserModule,
@@ -134,6 +137,7 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     QuillModule.forRoot(),
+    CKEditorModule,
   ],
   providers: [
     StripFileEndingPipe,

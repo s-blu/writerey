@@ -1,6 +1,6 @@
 <div class="document-editor" [class]="{ loading: isLoading }">
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
-  <wy-quill
+  <!-- <wy-quill
     [document]="document"
     [content]="content"
     (updateParagraphMeta)="onClick($event)"
@@ -8,5 +8,12 @@
     [isLoading]="isLoading"
     [isReadonly]="docMode === DOC_MODES.READ"
   >
-  </wy-quill>
+  </wy-quill> -->
+  <wy-ckeditor
+  *ngIf="document"
+  [content]="content"
+  (editorClicked)="onClick($event)"
+  (editorChange)="onChange($event)"
+  [readonly]="docMode === DOC_MODES.READ"
+  ></wy-ckeditor>
 </div>
