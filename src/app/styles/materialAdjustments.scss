@@ -1,5 +1,28 @@
 // WARNING: This file is global. Use with care. Specify rules as explicit as possible.
 
+.mat-tab-label {
+  min-width: 120px !important;
+}
+
+.app-body {
+  .mat-menu-panel {
+    $size: 32px;
+    min-height: $size;
+
+    .mat-menu-item {
+      height: $size;
+      line-height: $size;
+
+      .mat-icon {
+        height: $size;
+        line-height: $size;
+        font-size: 12pt;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
 .explorer .mat-tab-label {
   height: 40px;
 }

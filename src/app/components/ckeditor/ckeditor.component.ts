@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as CkEditorDecoubled from '@ckeditor/ckeditor5-build-decoupled-document';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
 
 @Component({
   selector: 'wy-ckeditor',
@@ -26,22 +26,30 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   private editorData: string;
   public editor: CkEditorDecoubled;
   public config = {
-    // toolbar: [
-    //   'heading',
-    //   '|',
-    //   'bold',
-    //   'italic',
-    //   '|',
-    //   'numberedList',
-    //   'bulletedList',
-    //   '|',
-    //   'blockQuote',
-    //   'indent',
-    //   'outdent',
-    //   '|',
-    //   'undo',
-    //   'redo',
-    // ],
+    toolbar: [
+      'heading',
+      'alignment',
+      '|',
+      'bold',
+      'italic',
+      'strikethrough',
+      'underline',
+      '|',
+      'link',
+      'numberedList',
+      'bulletedList',
+      '|',
+      'blockQuote',
+      'indent',
+      'outdent',
+      '|',
+      'fontColor',
+      'fontBackgroundColor',
+      'insertTable',
+      '|',
+      'undo',
+      'redo',
+    ],
     extraPlugins: [AllowClassesOnP],
   };
 
@@ -50,7 +58,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit() {
-    CkEditorDecoubled.create(document.querySelector('.editorbby'), this.config)
+    CkEditorDecoubled.create(document.querySelector('#ckeditor-container'), this.config)
       .then(editor => {
         editor.setData(this.editorData);
         editor.model.document.on('change:data', ev => {
@@ -66,14 +74,18 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
+        console.log(Array.from(editor.ui.componentFactory.names()));
       })
       .catch(error => {
         console.error(error);
       });
 
     this.subscription.add(
-      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1200)).subscribe(async (event: any) => {
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(800), throttleTime(20000)).subscribe(async (event: any) => {
         event.content = this.editor.getData();
+        if (event.content === this.editor.sourceElement.innerHTML) {
+          console.log('==== innerHtml and getData are equal');
+        }
         event.plainContent = this.editor.sourceElement.innerText;
         console.log('sending change event', this.editor, event);
         this.editorChange.emit(event);

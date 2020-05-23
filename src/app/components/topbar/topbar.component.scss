@@ -9,7 +9,6 @@
   padding: 0 1em;
   justify-items: center;
   align-items: center;
-  overflow: hidden;
 
   .left,
   .center,
@@ -23,12 +22,15 @@
   }
 
   .center {
-    justify-content: flex-end;
-    align-items: flex-end;
-    font-size: 10pt;
-    color: $c_hint;
-    margin-right: 4em;
+    justify-content: center;
   }
+  // .center {
+  //   justify-content: flex-end;
+  //   align-items: flex-end;
+  //   font-size: 10pt;
+  //   color: $c_hint;
+  //   margin-right: 4em;
+  // }
 
   wy-breadcrumb {
     font-size: 10pt;

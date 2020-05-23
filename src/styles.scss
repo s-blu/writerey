@@ -1,7 +1,6 @@
 @import 'app/styles/variables';
 @import 'app/styles/materialAdjustments';
 
-/* You can add global styles to this file, and also import other style files */
 html,
 body,
 app-root,
@@ -13,33 +12,37 @@ app-root,
 
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
 }
-.app-body {
-  .mat-menu-panel {
-    $size: 32px;
-    min-height: $size;
-
-    .mat-menu-item {
-      height: $size;
-      line-height: $size;
-
-      .mat-icon {
-        height: $size;
-        line-height: $size;
-        font-size: 12pt;
-        margin-right: 0;
-      }
-    }
-  }
-}
-
-.mat-tab-label {
-  min-width: 120px !important;
-}
 
 body {
   background-color: $c_bg_app;
 }
 
+// CKEDITOR
+.ck.ck-toolbar {
+  border: none;
+  background-color: unset;
+}
+
+.ck-editor,
+.ck-content {
+  border: none;
+}
+.ck-content p {
+  margin: 0;
+}
+
+.wy-ckeditor-toolbar {
+  .ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
+    width: 6em;
+  }
+  .ck.ck-toolbar .ck.ck-toolbar__separator {
+    margin: 9px 0;
+  }
+  .ck.ck-toolbar {
+    background: unset;
+    border: none;
+  }
+}
 //Scrollbar
 ::-webkit-scrollbar {
   height: 16px;
