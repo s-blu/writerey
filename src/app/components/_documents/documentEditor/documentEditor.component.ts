@@ -7,7 +7,7 @@ import { DocumentService } from '../../../services/document.service';
 import { DocumentDefinition } from '../../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import QuillUtils from 'src/app/utils/quill.utils';
+import EditorUtils from 'src/app/utils/editor.utils';
 
 @Component({
   selector: 'wy-document-editor',
@@ -91,7 +91,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         .saveDocument(this.document.path, this.document.name, this.content)
         .subscribe((res: DocumentDefinition) => {
           this.document = res;
-          const count = QuillUtils.calculateWordCount(event.plainContent);
+          const count = EditorUtils.calculateWordCount(event.plainContent);
           this.documentStore.setWordCount(count);
         })
     );

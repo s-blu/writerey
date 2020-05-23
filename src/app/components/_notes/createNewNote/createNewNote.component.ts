@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/quill.utils';
+import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/editor.utils';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({

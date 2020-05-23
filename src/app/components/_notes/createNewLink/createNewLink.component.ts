@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { map, take, flatMap } from 'rxjs/operators';
 import { Link } from 'src/app/models/notesItems.interface';
 import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
-import { setDecoupledToolbar } from 'src/app/utils/quill.utils';
+import { setDecoupledToolbar } from 'src/app/utils/editor.utils';
 
 @Component({
   selector: 'wy-create-new-link',

@@ -1,4 +1,4 @@
-import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/quill.utils';
+import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/editor.utils';
 import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';

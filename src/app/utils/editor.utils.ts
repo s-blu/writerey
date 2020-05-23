@@ -1,4 +1,4 @@
-export default class QuillUtils {
+export default class EditorUtils {
   static calculateWordCount(text: string) {
     if (!text) return 0;
     try {
