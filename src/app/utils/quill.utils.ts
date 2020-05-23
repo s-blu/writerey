@@ -17,11 +17,20 @@ export const quillWyStyles = {
   'min-height': '7em',
 };
 
-export const quillWyNotesModules = {
+export const editorWyNotesModules = {
   toolbar: [
-    ['bold', 'italic', 'underline', 'strike'],
-    [{ list: 'ordered' }, { list: 'bullet' }, { indent: '-1' }, { indent: '+1' }],
-    ['blockquote', 'code-block', 'link', 'image'],
-    ['clean'],
-  ],
-};
+    'alignment',
+    '|',
+    'bold',
+    'italic',
+    'strikethrough',
+    'underline',
+    '|',
+    'link',
+    'numberedList',
+    'bulletedList',
+    '|',
+    'fontColor',
+    'fontBackgroundColor',
+    'insertTable',
+  ]}

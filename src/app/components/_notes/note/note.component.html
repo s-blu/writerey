@@ -8,7 +8,7 @@
   </mat-card-header>
   <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
     <mat-card-content>
-      <quill-view class="note-text" [content]="note.text"></quill-view>
+      <wy-note-item-ckeditor-view [data]="note.text"></wy-note-item-ckeditor-view>
     </mat-card-content>
     <mat-card-actions [style]="noteStyles" *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
       <button

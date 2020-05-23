@@ -74,7 +74,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
-        console.log(Array.from(editor.ui.componentFactory.names()));
       })
       .catch(error => {
         console.error(error);

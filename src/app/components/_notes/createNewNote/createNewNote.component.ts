@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { quillWyStyles, quillWyNotesModules } from 'src/app/utils/quill.utils';
+import { quillWyStyles, editorWyNotesModules } from 'src/app/utils/quill.utils';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'wy-create-new-note',
@@ -12,12 +13,10 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   @Input() contextNames: any = {};
   @Output() noteCreated = new EventEmitter<any>();
 
+  Editor = DecoupledEditor;
   noteColor;
   createNewForm;
-  quillConfig = {
-    modules: quillWyNotesModules,
-    styles: quillWyStyles,
-  };
+  editorConfig = editorWyNotesModules;
 
   constructor(private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({
@@ -33,6 +32,13 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {}
+
+  public onReady(editor) {
+    console.log(editor.ui);
+    editor.ui
+      .getEditableElement()
+      .parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
+  }
 
   onSubmit(data) {
     this.noteCreated.emit(data);

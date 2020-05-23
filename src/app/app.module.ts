@@ -26,6 +26,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -65,6 +66,7 @@ import { AddClassesForDistractionStatesDirective } from './directives/addClasses
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
+import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
 
 const matModules = [
   MatIconModule,
@@ -126,6 +128,7 @@ const matModules = [
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
     CkeditorComponent,
+    NoteItemCkeditorViewComponent
   ],
   imports: [
     BrowserModule,
@@ -136,6 +139,7 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     QuillModule.forRoot(),
+    CKEditorModule,
   ],
   providers: [
     StripFileEndingPipe,

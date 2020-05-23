@@ -23,12 +23,22 @@ body {
   background-color: unset;
 }
 
-.ck-editor,
-.ck-content {
-  border: none;
+.document-editor {
+  .ck-editor,
+  .ck-content {
+    border: none;
+  }
 }
 .ck-content p {
   margin: 0;
+}
+
+.note-editor {
+  .ck.ck-editor__editable_inline {
+    border: 1px solid var(--ck-color-toolbar-border);
+    border-top: none;
+    min-height: 3em;
+  }
 }
 
 .wy-ckeditor-toolbar {
@@ -43,6 +53,13 @@ body {
     border: none;
   }
 }
+
+.readonly-note-ckeditor {
+  .ck.ck-editor__editable_inline > :first-child {
+    margin-top: 0;
+  }
+}
+
 //Scrollbar
 ::-webkit-scrollbar {
   height: 16px;

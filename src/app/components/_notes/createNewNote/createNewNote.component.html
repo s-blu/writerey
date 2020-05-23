@@ -23,14 +23,14 @@
         <mat-option value="#fffeae">{{ t('color.yellow') }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <quill-editor
-      class="editor"
+    <ckeditor
+      class="note-editor"
       [formControl]="createNewForm.controls['text']"
-      [modules]="quillConfig.modules"
-      [styles]="quillConfig.styles"
-      [placeholder]="t('comment')"
+      [editor]="Editor"
+      [config]="editorConfig"
+      (ready)="onReady($event)"
       [style.background-color]="noteColor"
-    ></quill-editor>
+    ></ckeditor>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
         <mat-icon>add</mat-icon>
