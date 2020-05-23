@@ -25,6 +25,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   private clickSubject = new Subject();
   private subscription = new Subscription();
   private style;
+  private paragraphId;
 
   constructor(
     private documentService: DocumentService,
@@ -55,6 +56,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
   onClick(event) {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event) && this.docMode !== DOC_MODES.READ) {
+      this.paragraphId = event;
       let rule = '';
       if (this.docMode === DOC_MODES.REVIEW) {
         // TODO is it possible to use the scss variable value here?
@@ -71,14 +73,18 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         }`;
       }
 
-      if (this.style.cssRules.length > 0) this.style.deleteRule(0);
+      this.deleteParagraphStyles();
       this.style.insertRule(rule);
       this.clickSubject.next(event);
     }
   }
   onChange(event) {
-    console.log('onChange', event);
+    console.log('onChange in document editor');
     if (!this.document) return;
+    if (this.isLoading) {
+      console.warn('Document Editor is loading new data, canceling on change event');
+      return;
+    }
     this.content = event.content;
     this.subscription.add(
       this.documentService
@@ -92,11 +98,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   private switchMode(m) {
-    if (this.documentService === m) return;
+    if (this.docMode === m) return;
+    this.isLoading = true;
     this.docMode = m;
-    if (this.style?.cssRules?.length > 0) this.style.deleteRule(0);
+    this.deleteParagraphStyles();
     if (m === DOC_MODES.REVIEW) {
-      this.isLoading = true;
       this.documentService
         .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
         .subscribe(res => {
@@ -104,7 +110,11 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
           this.editorData = res.content;
           this.content = res.content;
           this.isLoading = false;
+          this.onClick(this.paragraphId);
         });
+    } else if (this.paragraphId) {
+      this.onClick(this.paragraphId);
+      this.isLoading = false;
     }
   }
 
@@ -121,11 +131,14 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     let loadObs;
     this.isLoading = true;
     // empty content for editor to prevent app from crashing when switching between two heavy documents
+    // save this.content before doing so - emptying editorData could lead to a racing condition with the change event
+    const contentToSave = this.content;
     this.editorData = ' ';
+    this.paragraphId = null;
     // save old doc before switching
     if (this.document) {
       loadObs = this.documentService
-        .saveDocument(this.document.path, this.document.name, this.content)
+        .saveDocument(this.document.path, this.document.name, contentToSave)
         .pipe(() => this.documentService.getDocument(newDoc.path, newDoc.name));
     } else {
       loadObs = this.documentService.getDocument(newDoc.path, newDoc.name);
@@ -138,5 +151,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         this.isLoading = false;
       })
     );
+  }
+
+  private deleteParagraphStyles() {
+    if (this.style?.cssRules?.length > 0) {
+      for (let i = 0; i < this.style.cssRules.length; i++) {
+        this.style.deleteRule(i);
+      }
+    }
   }
 }

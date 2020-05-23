@@ -71,7 +71,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         });
 
         const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
-        toolbarContainer.appendChild(editor.ui.view.toolbar.element);
+        if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
         console.log(Array.from(editor.ui.componentFactory.names()));
@@ -81,20 +81,19 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       });
 
     this.subscription.add(
-      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(800), throttleTime(20000)).subscribe(async (event: any) => {
-        event.content = this.editor.getData();
-        if (event.content === this.editor.sourceElement.innerHTML) {
-          console.log('==== innerHtml and getData are equal');
-        }
-        event.plainContent = this.editor.sourceElement.innerText;
-        console.log('sending change event', this.editor, event);
-        this.editorChange.emit(event);
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe(async (event: any) => {
+        this.sendChangeEvent(event);
       })
     );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
+    if (toolbarContainer) toolbarContainer.removeChild(this.editor.ui.view.toolbar.element);
+    this.editor.destroy().catch(error => {
+      console.log('destroying editor failed', error);
+    });
   }
 
   onBlur(event) {
@@ -105,7 +104,15 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onEditorClick(event) {
-    this.editorClicked.emit(event?.srcElement?.className);
+    const className = event?.srcElement?.className || event?.srcElement?.parentNode?.className;
+    this.editorClicked.emit(className);
+  }
+
+  private sendChangeEvent(event) {
+    event.content = this.editor.getData();
+    event.plainContent = this.editor.sourceElement.innerText;
+    console.log(new Date().toISOString() + ' !!! sending change event');
+    this.editorChange.emit(event);
   }
 }
 
