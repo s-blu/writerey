@@ -23,12 +23,10 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   createNewForm;
   selectedDocument;
   project;
-  maxLength = 100;
-  currentLength = 0;
 
   Editor = DecoupledEditor;
   editorConfig = {
-    toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
+    toolbar: ['bold', 'italic', 'underline', 'strike', '|', 'link'],
   };
   onReady = setDecoupledToolbar;
 
@@ -63,9 +61,6 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
     this.createNewForm.patchValue({ text: '', linkId: null });
   }
 
-  getCurrentLength(event) {
-    this.currentLength = event?.text?.length || '?';
-  }
 
   chooseDocument() {
     const dialogRef = this.dialog.open(ChooseFileForLinkDialogComponent);
