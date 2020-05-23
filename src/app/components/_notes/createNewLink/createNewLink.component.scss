@@ -11,15 +11,6 @@ mat-form-field {
   width: 100%;
 }
 
-.quill-max-length {
-  float: right;
-  font-size: 8pt;
-  color: $c_hint;
-
-  &.invalid {
-    color: #d50000;
-  }
-}
 
 .choose-document-button {
   display: block;

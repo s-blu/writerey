@@ -220,7 +220,7 @@
       }
     }
   },
-  "quill": {
+  "editor": {
     "placeholder": "Fill this space with your thoughts and ideas ...",
     "loading": "Loading file, please wait ..."
   },

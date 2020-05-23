@@ -11,12 +11,6 @@ export default class EditorUtils {
   }
 }
 
-export const quillWyStyles = {
-  'font-family': 'Roboto, "Helvetica Neue", sans-serif',
-  'font-size': '14px',
-  'min-height': '7em',
-};
-
 export const editorWyNotesModules = {
   toolbar: [
     'alignment',

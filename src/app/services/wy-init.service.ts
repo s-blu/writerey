@@ -4,10 +4,8 @@ import { SnapshotService } from './snapshot.service';
 import { LabelService } from './label.service';
 import { Injectable } from '@angular/core';
 
-import * as QuillNamespace from 'quill';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer } from '@angular/platform-browser';
-const Quill: any = QuillNamespace;
 
 @Injectable({
   providedIn: 'root',
@@ -23,18 +21,11 @@ export class WyInitService {
   ) {}
 
   init() {
-    this.configureClassesForQuill();
     this.addWritereyIconToMatIcon();
     this.labelService.init();
     this.snapshotService.init();
     this.documentService.init();
     this.directoryService.init();
-  }
-
-  private configureClassesForQuill() {
-    const Parchment = Quill.import('parchment');
-    const allowClasses = new Parchment.Attributor.Attribute('class', 'class');
-    Parchment.register(allowClasses);
   }
 
   private addWritereyIconToMatIcon() {

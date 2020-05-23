@@ -22,7 +22,7 @@ Writerey is build with
 - Angular 9
 - node.js
 - [Electron](https://www.electronjs.org/)
-- [ngx-quill](https://github.com/KillerCodeMonkey/ngx-quill)
+- [CKEditor5](https://ckeditor.com/ckeditor-5/)
 - [python-shell](https://github.com/extrabacon/python-shell)
 
 

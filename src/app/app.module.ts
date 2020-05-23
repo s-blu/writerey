@@ -14,7 +14,6 @@ import { DeleteConfirmationDialogComponent } from './components/deleteConfirmati
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
 import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
-import { QuillComponent } from './components/_documents/quill/quill.component';
 import { CreateNewNoteComponent } from './components/_notes/createNewNote/createNewNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
@@ -57,7 +56,6 @@ import { NoteComponent } from './components/_notes/note/note.component';
 import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
 import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { QuillModule } from 'ngx-quill';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
@@ -106,7 +104,6 @@ const matModules = [
     LastModifiedComponent,
     CreateNewNoteComponent,
     CheckForNameSafetyDirective,
-    QuillComponent,
     DocumentTreeComponent,
     LabelTreeComponent,
     CreateNewLabelComponent,
@@ -138,7 +135,6 @@ const matModules = [
     BrowserAnimationsModule,
     ...matModules,
     TranslocoRootModule,
-    QuillModule.forRoot(),
     CKEditorModule,
   ],
   providers: [

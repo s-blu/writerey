@@ -220,7 +220,7 @@
       }
     }
   },
-  "quill": {
+  "editor": {
     "placeholder": "Fülle dieses Blatt mit deinen Gedanken und Ideen ...",
     "loading": "Lade Dokument. Bitte habe kurz Geduld ..."
   },
