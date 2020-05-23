@@ -7,6 +7,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { map, take, flatMap } from 'rxjs/operators';
 import { Link } from 'src/app/models/notesItems.interface';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import { setDecoupledToolbar } from 'src/app/utils/quill.utils';
 
 @Component({
   selector: 'wy-create-new-link',
@@ -23,15 +25,13 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   project;
   maxLength = 100;
   currentLength = 0;
-  quillConfig = {
-    modules: {
-      toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
-    },
-    styles: {
-      'font-family': 'Roboto, "Helvetica Neue", sans-serif',
-      'font-size': '14px',
-    },
+
+  Editor = DecoupledEditor;
+  editorConfig = {
+    toolbar: [['bold', 'italic', 'underline', 'strike'], ['link']],
   };
+  onReady = setDecoupledToolbar;
+
   private subscription = new Subscription();
   constructor(
     private formBuilder: FormBuilder,

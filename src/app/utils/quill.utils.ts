@@ -33,4 +33,11 @@ export const editorWyNotesModules = {
     'fontColor',
     'fontBackgroundColor',
     'insertTable',
-  ]}
+  ],
+};
+
+export function setDecoupledToolbar(editor) {
+  editor.ui
+    .getEditableElement()
+    .parentElement.insertBefore(editor.ui.view.toolbar.element, editor.ui.getEditableElement());
+}

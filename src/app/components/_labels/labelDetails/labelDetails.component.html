@@ -64,13 +64,13 @@
         <mat-tab [label]="t('titleInfoTemplate')">
           <ng-template matTabContent class="tab-content">
             <p>{{ t('template') }}</p>
-            <quill-editor
-              class="editor"
-              [formControl]="editForm.controls['template']"
-              [modules]="quillConfig.modules"
-              [styles]="quillConfig.styles"
-              [placeholder]="t('titleInfoTemplate')"
-            ></quill-editor>
+            <ckeditor
+            class="note-editor"
+            [formControl]="editForm.controls['template']"
+            [editor]="Editor"
+            [config]="editorConfig"
+            (ready)="onReady($event)"
+          ></ckeditor>
           </ng-template>
         </mat-tab>
       </mat-tab-group>

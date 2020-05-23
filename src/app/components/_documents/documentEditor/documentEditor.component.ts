@@ -102,6 +102,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.docMode = m;
     this.deleteParagraphStyles();
+
     if (m === DOC_MODES.REVIEW) {
       this.documentService
         .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
@@ -112,8 +113,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.onClick(this.paragraphId);
         });
-    } else if (this.paragraphId) {
-      this.onClick(this.paragraphId);
+    } else {
+      if (this.paragraphId) this.onClick(this.paragraphId);
       this.isLoading = false;
     }
   }

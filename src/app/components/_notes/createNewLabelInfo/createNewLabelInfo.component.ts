@@ -1,7 +1,8 @@
 import { LabelDefinition } from 'src/app/models/labelDefinition.class';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { quillWyNotesModules, quillWyStyles } from 'src/app/utils/quill.utils';
 import { FormBuilder } from '@angular/forms';
+import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/quill.utils';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'wy-create-new-label-info',
@@ -16,10 +17,9 @@ export class CreateNewLabelInfoComponent implements OnInit, OnChanges {
 
   noteColor;
   createNewForm;
-  quillConfig = {
-    modules: quillWyNotesModules,
-    styles: quillWyStyles,
-  };
+  Editor = DecoupledEditor;
+  editorConfig = editorWyNotesModules;
+  onReady = setDecoupledToolbar;
 
   constructor(private formBuilder: FormBuilder) {
     this.createNewForm = this.formBuilder.group({

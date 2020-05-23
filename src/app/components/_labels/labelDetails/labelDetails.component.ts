@@ -1,3 +1,4 @@
+import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/quill.utils';
 import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -6,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
-import { quillWyNotesModules, quillWyStyles } from 'src/app/utils/quill.utils';
+import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
 
 @Component({
   selector: 'wy-label-details',
@@ -23,10 +24,10 @@ export class LabelDetailsComponent implements OnInit {
   labelDefinition: LabelDefinition;
   types = LabelTypes;
   values;
-  quillConfig = {
-    modules: quillWyNotesModules,
-    styles: quillWyStyles,
-  };
+  Editor = DecoupledEditor;
+  editorConfig = editorWyNotesModules;
+  onReady = setDecoupledToolbar;
+
   constructor(
     private formBuilder: FormBuilder,
     private labelService: LabelService,

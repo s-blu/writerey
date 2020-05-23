@@ -89,7 +89,13 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
     const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
-    if (toolbarContainer) toolbarContainer.removeChild(this.editor.ui.view.toolbar.element);
+    if (toolbarContainer) {
+      try {
+        toolbarContainer.removeChild(this.editor.ui.view.toolbar.element);
+      } catch (e) {
+        console.warn('Could not remove editor toolbar on destroy', e);
+      }
+    }
     this.editor.destroy().catch(error => {
       console.log('destroying editor failed', error);
     });
