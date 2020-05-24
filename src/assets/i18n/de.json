@@ -198,7 +198,7 @@
   },
   "tagDialog": {
     "title": "Einen Tag erstellen",
-    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden. (Beispielsweise: Erster Entwurf, Erste Korrektur, ...)",
+    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden. Bitte keine Leerzeichen verwenden.",
     "input": "Tagname",
     "cancel": "Abbrechen",
     "create": "Erstellen"

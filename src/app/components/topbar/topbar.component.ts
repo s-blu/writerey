@@ -8,6 +8,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatDialog } from '@angular/material/dialog';
+import { SnapshotStore } from 'src/app/stores/snapshot.store';
 
 @Component({
   selector: 'wy-topbar',
@@ -15,10 +16,9 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./topbar.component.scss'],
 })
 export class TopbarComponent implements OnInit {
-  @Input() lastSnapshotDate: Date;
-
   @Output() snapshotted = new EventEmitter<any>();
 
+  private lastSnapshotDate: Date;
   private subscription = new Subscription();
 
   constructor(
@@ -26,10 +26,16 @@ export class TopbarComponent implements OnInit {
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     public dialog: MatDialog,
-    private documentModeStore: DocumentModeStore
+    private snapshotStore: SnapshotStore
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription.add(this.snapshotStore.snapshotDate$.subscribe(res => (this.lastSnapshotDate = res)));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   snapshot() {
     const date = new Date();
@@ -61,7 +67,7 @@ export class TopbarComponent implements OnInit {
   }
 
   tag() {
-    const displayDate = this.lastSnapshotDate.toLocaleString();
+    const displayDate = this.lastSnapshotDate?.toLocaleString();
 
     const dialogRef = this.dialog.open(TagDialogComponent, {
       data: { lastSnapshotDate: displayDate },
