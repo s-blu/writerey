@@ -41,16 +41,32 @@ body {
   }
 }
 
-.wy-ckeditor-toolbar {
-  .ck.ck-dropdown.ck-heading-dropdown .ck-dropdown__button .ck-button__label {
-    width: 6em;
+.readonly-note-ckeditor {
+  .ck-content.ck-editor__editable.ck-read-only {
+    padding: 0;
   }
-  .ck.ck-toolbar .ck.ck-toolbar__separator {
-    margin: 9px 0;
+}
+
+.mat-typography .ckeditor-component .ck-content {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: 'Noto Serif', 'Libertinus Serif', 'Palatino Linotype', 'Book Antiqua', serif;
   }
-  .ck.ck-toolbar {
-    background: unset;
-    border: none;
+
+  h1 {
+    font-weight: bold;
+  }
+  h1,
+  h2 {
+    font-size: 2.1em;
+  }
+  h3 {
+    font-size: 1.8em;
+  }
+  h4 {
+    font-size: 1.4em;
   }
 }
 

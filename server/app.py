@@ -32,5 +32,5 @@ api.add_resource(GitMove, '/git/mv')
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-    app.run(port=5002, debug=True)  # FIXME
-    # serve(app, listen='localhost:5002')
+    # app.run(port=5002, debug=True)  # FIXME
+    serve(app, listen='localhost:5002')

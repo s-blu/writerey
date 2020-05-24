@@ -9,7 +9,9 @@ import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators
   styleUrls: ['./ckeditor.component.scss'],
 })
 export class CkeditorComponent implements OnInit, OnDestroy {
-  @Input() readonly = false;
+  @Input() set readonly(readonly: boolean) {
+    if (this.editor) this.editor.isReadOnly = readonly;
+  }
   @Input() set content(c: string) {
     if (c !== this.editorData) {
       this.editorData = c;
