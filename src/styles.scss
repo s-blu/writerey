@@ -47,7 +47,8 @@ body {
   }
 }
 
-.mat-typography .ckeditor-component .ck-content {
+.mat-typography .ckeditor-component .ck-content,
+.mat-typography .readonly-note-ckeditor .ck-content {
   h1,
   h2,
   h3,

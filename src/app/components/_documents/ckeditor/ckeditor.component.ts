@@ -64,11 +64,9 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       .then(editor => {
         editor.setData(this.editorData);
         editor.model.document.on('change:data', ev => {
-          console.log('The data has changed!');
           this.changeDebounce.next(ev);
         });
         editor.editing.view.document.on('blur', ev => {
-          console.log('Blurred');
           this.editorBlur.emit(ev);
         });
 
@@ -99,7 +97,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       }
     }
     this.editor.destroy().catch(error => {
-      console.log('destroying editor failed', error);
+      console.warn('destroying editor failed', error);
     });
   }
 
@@ -118,7 +116,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   private sendChangeEvent(event) {
     event.content = this.editor.getData();
     event.plainContent = this.editor.sourceElement.innerText;
-    console.log(new Date().toISOString() + ' !!! sending change event');
     this.editorChange.emit(event);
   }
 }

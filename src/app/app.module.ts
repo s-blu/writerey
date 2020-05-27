@@ -1,3 +1,4 @@
+import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
 import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
@@ -127,7 +128,8 @@ const matModules = [
     CreateNewLabelInfoComponent,
     CkeditorComponent,
     CkeditorToolbarComponent,
-    NoteItemCkeditorViewComponent
+    NoteItemCkeditorViewComponent,
+    IntroductionComponent
   ],
   imports: [
     BrowserModule,

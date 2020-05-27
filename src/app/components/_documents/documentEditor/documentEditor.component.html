@@ -1,10 +1,13 @@
 <div class="document-editor" [class]="{ loading: isLoading }">
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
   <wy-ckeditor
-  *ngIf="document"
-  [content]="editorData"
-  (editorClicked)="onClick($event)"
-  (editorChange)="onChange($event)"
-  [readonly]="docMode === DOC_MODES.READ"
+    *ngIf="document; else emptyHint"
+    [content]="editorData"
+    (editorClicked)="onClick($event)"
+    (editorChange)="onChange($event)"
+    [readonly]="docMode === DOC_MODES.READ"
   ></wy-ckeditor>
+  <ng-template #emptyHint>
+    <wy-introduction></wy-introduction>
+  </ng-template>
 </div>

@@ -79,7 +79,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     }
   }
   onChange(event) {
-    console.log('onChange in document editor');
     if (!this.document) return;
     if (this.isLoading) {
       console.warn('Document Editor is loading new data, canceling on change event');
@@ -107,7 +106,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       this.documentService
         .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
         .subscribe(res => {
-          console.log('enhanceAndSaveDocument', res);
           this.editorData = res.content;
           this.content = res.content;
           this.isLoading = false;
@@ -120,7 +118,6 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   private switchDocument(newDoc: DocumentDefinition) {
-    console.log('switchDocument', newDoc);
     if (!newDoc) return;
     if (newDoc.path === this.document?.path && newDoc.name === this.document?.name) {
       console.warn(
