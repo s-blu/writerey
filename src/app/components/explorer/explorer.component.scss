@@ -1,6 +1,11 @@
 @import '../../styles/variables';
 @import '../../styles/distractionFree';
 
+:host {
+  overflow: auto;
+  padding: 5px;
+  padding-left: 0;
+}
 .explorer {
   background-color: $c_bg_boxes;
   height: 100%;
