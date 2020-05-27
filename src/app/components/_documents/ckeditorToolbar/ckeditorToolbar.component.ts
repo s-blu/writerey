@@ -24,7 +24,6 @@ export class CkeditorToolbarComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.documentModeStore.mode$.subscribe(mode => {
-        console.log('doc mode', mode,  mode === DOC_MODES.READ)
         this.readonly = mode === DOC_MODES.READ;
       })
     );
