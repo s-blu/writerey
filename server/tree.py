@@ -55,7 +55,7 @@ class Tree(Resource):
                 break
         result = directoryStructure
         if (treeBase): 
-            result = next(x for x in directoryStructure['dirs'] if x['name'] == treeBase)
+            result = next((x for x in directoryStructure['dirs'] if x['name'] == treeBase), result)
 
         return json.dumps(result)
 

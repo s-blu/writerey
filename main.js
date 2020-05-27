@@ -4,7 +4,6 @@ let win;
 
 function createWindow() {
   let { PythonShell } = require("python-shell");
-
   shell = PythonShell.run(
     `${__dirname}/dist/writerey/server/app.py`,
     null,
@@ -26,7 +25,7 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
-    icon: `file://${__dirname}/dist/assets/logo.png`,
+    icon: `file://${__dirname}/dist/writerey/assets/logo.png`,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: true,

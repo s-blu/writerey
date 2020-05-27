@@ -59,9 +59,13 @@ class GitAutomation(Resource):
         return {'status': 0, 'text': commitReturn, 'commitDate': self.getCommitDate()}
 
     def getCommitDate(self, tag: str = None):
-        if tag:
-            cmds = ['git', 'log', '-1', tag, r'--format=%cd']
-        else:
-            cmds = ['git', 'log', '-1', r'--format=%cd']
-        date = self.git.run(cmds)
-        return date.replace("\n", "")
+        try:
+            if tag:
+                cmds = ['git', 'log', '-1', tag, r'--format=%cd']
+            else:
+                cmds = ['git', 'log', '-1', r'--format=%cd']
+            date = self.git.run(cmds)
+            return date.replace("\n", "")
+        except:
+            return ''
+
