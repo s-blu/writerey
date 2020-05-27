@@ -48,7 +48,7 @@
               <div class="text-value-container tab-content" *ngFor="let _ of values.controls; index as i">
                 <mat-form-field [formGroupName]="i">
                   <mat-label>{{ t('textvalue') }}</mat-label>
-                  <input matInput formControlName="name" />
+                  <input matInput type="text" formControlName="name" />
                 </mat-form-field>
                 <button mat-icon-button type="button" (click)="removeValue(i, _.value)" [matTooltip]="t('removeValue')">
                   <mat-icon>remove</mat-icon>
@@ -65,21 +65,21 @@
           <ng-template matTabContent class="tab-content">
             <p>{{ t('template') }}</p>
             <ckeditor
-            class="note-editor"
-            [formControl]="editForm.controls['template']"
-            [editor]="Editor"
-            [config]="editorConfig"
-            (ready)="onReady($event)"
-          ></ckeditor>
+              class="note-editor"
+              [formControl]="editForm.controls['template']"
+              [editor]="Editor"
+              [config]="editorConfig"
+              (ready)="onReady($event)"
+            ></ckeditor>
           </ng-template>
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button color="primary" [disabled]="editForm.invalid" type="submit">
+      <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">
         {{ t('save') }}
       </button>
-      <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
+      <button mat-button type="button" color="warn" class="cancel-button" (click)="cancel()">{{ t('cancel') }}</button>
     </mat-card-actions>
   </form>
 </mat-card>

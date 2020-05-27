@@ -56,7 +56,7 @@ export class LabelDetailsComponent implements OnInit {
   }
 
   cancel() {
-    // reset form to last saved state
+    this.initializeForm(this.labelDefinition);
   }
 
   onSubmit(newValues) {

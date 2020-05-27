@@ -13,6 +13,13 @@
   border-radius: 0;
   box-sizing: border-box;
 
+  .mat-card-actions {
+    margin: 0;
+    .cancel-button {
+      float: right;
+    }
+  }
+
   form {
     overflow: auto;
     overflow-x: hidden;
@@ -53,5 +60,3 @@
     }
   }
 }
-
-
