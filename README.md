@@ -12,7 +12,6 @@ To use writerey, you need the following tools installed on your machine:
 
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
-- Probably also [node.js](https://nodejs.org/)
 
 
 ## Used technologies 
@@ -30,7 +29,10 @@ For a complete list of used packages, please refer to package.json.
 
 ## Installation
 
-TODO
+- Install Python 3
+- Install Git 
+- Download the executable of writerey
+- Launch writerey.exe (on Windows)
 
 ## Guide
 
