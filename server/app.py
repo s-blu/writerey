@@ -4,6 +4,7 @@ from flask_cors import CORS
 from pathlib import Path
 
 from documents import Documents
+from images import Images
 from label import Labels
 from paragraph_meta import ParagraphMeta
 from directories import Directories
@@ -12,7 +13,7 @@ from gitTag import Tag
 from gitMv import GitMove
 from tree import Tree
 from links import Links
-from writerey_config import basePath, metaSubPath
+from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
 
 app = Flask(__name__)
@@ -20,6 +21,7 @@ api = Api(app)
 CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
 api.add_resource(Documents, '/doc/<string:doc_name>')
+api.add_resource(Images, '/img/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
 api.add_resource(Directories, '/dir/<string:dir_name>')
 api.add_resource(Labels, '/label/<string:label_id>')
@@ -32,5 +34,5 @@ api.add_resource(GitMove, '/git/mv')
 if __name__ == '__main__':
     gitA = GitAutomation()
     gitA.init()
-    # app.run(port=5002, debug=True)  # FIXME
-    serve(app, listen='localhost:5002')
+    app.run(port=port, debug=True)  # FIXME
+    # serve(app, listen= host + ":" + port)

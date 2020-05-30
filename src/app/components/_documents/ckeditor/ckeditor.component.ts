@@ -1,3 +1,5 @@
+import { DocumentDefinition } from './../../../models/documentDefinition.interface';
+import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
 import { Subject, Subscription } from 'rxjs';
@@ -20,6 +22,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       }
     }
   }
+  @Input() document: DocumentDefinition;
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
@@ -29,56 +32,58 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   public editor: CkEditorDecoubled;
   public config = {
     toolbar: {
-    items: [
-      'heading',
-      'alignment',
-      '|',
-      'bold',
-      'italic',
-      'underline',
-      'strikethrough',
-      '|',
-      'numberedList',
-      'bulletedList',
-      'indent',
-      'outdent',
-      '|',
-      'fontColor',
-      'fontBackgroundColor',
-      '|',
-      'link',
-      'blockQuote',
-      'imageUpload',
-      'insertTable',
-      '|',
-      'removeFormat',
-      'undo',
-      'redo'
-    ]
-  },
-  language: 'en',
-  image: {
-    toolbar: [
-      'imageTextAlternative',
-      'imageStyle:full',
-      'imageStyle:side'
-    ]
-  },
-  table: {
-    contentToolbar: [
-      'tableColumn',
-      'tableRow',
-      'mergeTableCells',
-      'tableProperties'
-    ],
-    extraPlugins: [AllowClassesOnP]}
+      items: [
+        'heading',
+        'alignment',
+        '|',
+        'bold',
+        'italic',
+        'underline',
+        'strikethrough',
+        '|',
+        'numberedList',
+        'bulletedList',
+        'indent',
+        'outdent',
+        '|',
+        'fontColor',
+        'fontBackgroundColor',
+        '|',
+        'link',
+        'blockQuote',
+        'imageUpload',
+        'insertTable',
+        '|',
+        'removeFormat',
+        'undo',
+        'redo',
+      ],
+    },
+    language: 'en',
+    image: {
+      toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+    },
+    table: {
+      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
+    },
+    simpleUpload: {},
+    extraPlugins: [AllowClassesOnP],
   };
 
   private changeDebounce = new Subject();
   private subscription = new Subscription();
-  constructor() {}
+  constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    this.config.simpleUpload = {
+      // The URL that the images are uploaded to.
+      uploadUrl: this.apiService.getImagetRoute(this.document.name),
+
+      // Headers sent along with the XMLHttpRequest to the upload server.
+      headers: {
+        docpath: this.document.path,
+      },
+    };
     CkEditorDecoubled.create(document.querySelector('#ckeditor-container'), this.config)
       .then(editor => {
         editor.setData(this.editorData);

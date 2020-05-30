@@ -3,6 +3,7 @@
   <wy-ckeditor
     *ngIf="document; else emptyHint"
     [content]="editorData"
+    [document]="document"
     (editorClicked)="onClick($event)"
     (editorChange)="onChange($event)"
     [readonly]="docMode === DOC_MODES.READ"
