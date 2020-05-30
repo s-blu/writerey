@@ -1,10 +1,10 @@
 from flask import request, send_file
 from flask_restful import Resource
 from pathlib import Path
-from writerey_config import basePath, metaSubPath, host, port
+from writerey_config import basePath, metaSubPath, host, port, getAppPath
 from pathUtils import PathUtils
 
-import os
+import os, sys
 from stat import ST_MTIME
 
 
@@ -12,15 +12,10 @@ class Images(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
         image_name = request.args.get('image_name')
-        try:
-            # fixme this path will probably change in the build version
-            path = PathUtils.sanitizePathList(
-                ['..', basePath, path, metaSubPath, doc_name, image_name])
+        path = PathUtils.sanitizePathList(
+            [getAppPath(), basePath, path, metaSubPath, doc_name, image_name])
+        return send_file(path)
 
-            return send_file(path)
-        except OSError as err:
-            print('get image failed', err)
-            return None
 
     def post(self, doc_name):
         path = request.headers['docpath']

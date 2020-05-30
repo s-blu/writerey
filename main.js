@@ -4,14 +4,10 @@ let win;
 
 function createWindow() {
   let { PythonShell } = require("python-shell");
-  shell = PythonShell.run(
-    `${__dirname}/dist/writerey/server/app.py`,
-    null,
-    function (err) {
-      if (err) throw err;
-      console.log("app.py finished");
-    }
-  );
+  shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`, {
+    args: [__dirname],
+  });
+
   shell.on("message", function (message) {
     console.log("[Python] Log", message);
   });

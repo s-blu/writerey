@@ -15,6 +15,7 @@ from tree import Tree
 from links import Links
 from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
+import sys
 
 app = Flask(__name__)
 api = Api(app)
