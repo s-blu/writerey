@@ -14,7 +14,6 @@ export class IntroductionComponent implements OnInit {
   ngOnInit() {
     const lang = this.transloco.getActiveLang();
     this.http.get(`assets/introduction_${lang}.html`, { responseType: 'text' }).subscribe((res: any) => {
-      console.log('intro', res);
       this.introduction = res || '';
     });
   }

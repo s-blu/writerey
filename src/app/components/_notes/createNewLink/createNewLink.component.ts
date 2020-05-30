@@ -7,7 +7,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { map, take, flatMap } from 'rxjs/operators';
 import { Link } from 'src/app/models/notesItems.interface';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { setDecoupledToolbar } from 'src/app/utils/editor.utils';
 
 @Component({
@@ -60,7 +60,6 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
     this.linkCreated.emit(data);
     this.createNewForm.patchValue({ text: '', linkId: null });
   }
-
 
   chooseDocument() {
     const dialogRef = this.dialog.open(ChooseFileForLinkDialogComponent);

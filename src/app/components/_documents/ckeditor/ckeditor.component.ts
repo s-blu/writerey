@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import * as CkEditorDecoubled from '@ckeditor/ckeditor5-build-decoupled-document';
+import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
 
@@ -28,31 +28,50 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   private editorData: string;
   public editor: CkEditorDecoubled;
   public config = {
-    toolbar: [
+    toolbar: {
+    items: [
       'heading',
       'alignment',
       '|',
       'bold',
       'italic',
-      'strikethrough',
       'underline',
+      'strikethrough',
       '|',
-      'link',
       'numberedList',
       'bulletedList',
-      '|',
-      'blockQuote',
       'indent',
       'outdent',
       '|',
       'fontColor',
       'fontBackgroundColor',
+      '|',
+      'link',
+      'blockQuote',
+      'imageUpload',
       'insertTable',
       '|',
+      'removeFormat',
       'undo',
-      'redo',
+      'redo'
+    ]
+  },
+  language: 'en',
+  image: {
+    toolbar: [
+      'imageTextAlternative',
+      'imageStyle:full',
+      'imageStyle:side'
+    ]
+  },
+  table: {
+    contentToolbar: [
+      'tableColumn',
+      'tableRow',
+      'mergeTableCells',
+      'tableProperties'
     ],
-    extraPlugins: [AllowClassesOnP],
+    extraPlugins: [AllowClassesOnP]}
   };
 
   private changeDebounce = new Subject();

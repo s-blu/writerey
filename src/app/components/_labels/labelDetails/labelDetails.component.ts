@@ -7,7 +7,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
-import * as DecoupledEditor from '@ckeditor/ckeditor5-build-decoupled-document';
+import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 
 @Component({
   selector: 'wy-label-details',
