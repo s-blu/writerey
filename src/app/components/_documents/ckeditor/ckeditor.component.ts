@@ -22,12 +22,19 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       }
     }
   }
-  @Input() document: DocumentDefinition;
+  @Input() set document(df: DocumentDefinition) {
+    if (!df) return;
+    if (!this.editor || this.documentDef?.name !== df.name || this.documentDef?.path !== df.path) {
+      this.documentDef = df;
+      this.setupEditor(df);
+    }
+  }
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
   @Output() editorClicked: EventEmitter<any> = new EventEmitter();
 
+  private documentDef: DocumentDefinition;
   private editorData: string;
   public editor: CkEditorDecoubled;
   public config = {
@@ -75,13 +82,25 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
+    this.subscription.add(
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe(async (event: any) => {
+        this.sendChangeEvent(event);
+      })
+    );
+  }
+
+  async setupEditor(doc) {
+    if (this.editor) {
+      await this.destroyEditor();
+    }
+
     this.config.simpleUpload = {
       // The URL that the images are uploaded to.
-      uploadUrl: this.apiService.getImagetRoute(this.document.name),
+      uploadUrl: this.apiService.getImagetRoute(doc.name),
 
       // Headers sent along with the XMLHttpRequest to the upload server.
       headers: {
-        docpath: this.document.path,
+        docpath: doc.path,
       },
     };
     CkEditorDecoubled.create(document.querySelector('#ckeditor-container'), this.config)
@@ -102,16 +121,14 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       .catch(error => {
         console.error(error);
       });
-
-    this.subscription.add(
-      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe(async (event: any) => {
-        this.sendChangeEvent(event);
-      })
-    );
   }
 
   ngOnDestroy() {
     this.subscription.unsubscribe();
+    this.destroyEditor();
+  }
+
+  destroyEditor() {
     const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
     if (toolbarContainer) {
       try {
@@ -120,9 +137,12 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         console.warn('Could not remove editor toolbar on destroy', e);
       }
     }
-    this.editor.destroy().catch(error => {
-      console.warn('destroying editor failed', error);
-    });
+    return this.editor
+      .destroy()
+      .then(_ => (this.editor = null))
+      .catch(error => {
+        console.warn('destroying editor failed', error);
+      });
   }
 
   onBlur(event) {
