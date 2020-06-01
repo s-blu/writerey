@@ -4,9 +4,7 @@ let win;
 
 function createWindow() {
   let { PythonShell } = require("python-shell");
-  shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`, {
-    args: [__dirname],
-  });
+  shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`);
 
   shell.on("message", function (message) {
     console.log("[Python] Log", message);
@@ -21,7 +19,7 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
-    icon: `file://${__dirname}/dist/writerey/assets/logo.png`,
+    icon: `${__dirname}/dist/writerey/assets/writerey.ico`,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: true,
@@ -44,6 +42,10 @@ function createWindow() {
 
   const { Menu, MenuItem } = require("electron");
 
+  win.webContents.session.setSpellCheckerLanguages([
+    "en-US",
+    "de-DE", // FIXME get the userlanguage here, but how? navigator.language doesnt work ...
+  ]);
   win.webContents.on("context-menu", (event, params) => {
     const menu = new Menu();
 

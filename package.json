@@ -19,7 +19,8 @@
     "build-exe": "electron-packager . --overwrite",
     "flask": "python server/app.py",
     "package": "electron-forge package",
-    "make": "ng build --prod && electron-forge make"
+    "build-make": "ng build --prod && electron-forge make",
+    "make": "electron-forge make"
   },
   "private": true,
   "dependencies": {

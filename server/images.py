@@ -1,7 +1,7 @@
-from flask import request, send_file
+from flask import request, send_file, send_from_directory
 from flask_restful import Resource
 from pathlib import Path
-from writerey_config import basePath, metaSubPath, host, port, getAppPath
+from writerey_config import basePath, metaSubPath, host, port
 from pathUtils import PathUtils
 
 import os, sys
@@ -12,9 +12,8 @@ class Images(Resource):
     def get(self, doc_name):
         path = request.args.get('doc_path')
         image_name = request.args.get('image_name')
-        path = PathUtils.sanitizePathList(
-            [getAppPath(), basePath, path, metaSubPath, doc_name, image_name])
-        return send_file(path)
+        path = PathUtils.sanitizePathList([basePath, path, metaSubPath, doc_name])
+        return send_from_directory(path, filename=image_name)
 
 
     def post(self, doc_name):
