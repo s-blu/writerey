@@ -40,7 +40,9 @@ body {
     min-height: 3em;
   }
 }
-
+#ckeditor-container.ck-content.ck-editor__editable {
+  overflow-y: hidden;
+}
 .readonly-note-ckeditor {
   .ck-content.ck-editor__editable.ck-read-only {
     padding: 0;
@@ -68,12 +70,6 @@ body {
   }
   h4 {
     font-size: 1.4em;
-  }
-}
-
-.readonly-note-ckeditor {
-  .ck.ck-editor__editable_inline > :first-child {
-    margin-top: 0;
   }
 }
 

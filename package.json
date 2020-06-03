@@ -94,7 +94,8 @@
           "e2e",
           "src",
           "__pycache__",
-          ".gitignore"
+          ".gitignore",
+          "node_modules"
         ]
       },
       "makers": [

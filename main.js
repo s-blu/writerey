@@ -3,18 +3,36 @@ const { app, BrowserWindow } = require("electron");
 let win;
 
 function createWindow() {
-  let { PythonShell } = require("python-shell");
-  shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`);
+  app.on("window-all-closed", () => {
+    app.quit();
+  });
 
-  shell.on("message", function (message) {
-    console.log("[Python] Log", message);
-  });
-  shell.on("stdout", function (message) {
-    console.log("[Python] stdout", message);
-  });
-  shell.on("stderr", function (stderr) {
-    console.error("[Python] [[ERR]]", JSON.stringify(stderr).substring(0, 300));
-  });
+  try {
+    let { PythonShell } = require("python-shell");
+    shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`);
+
+    shell.on("message", function (message) {
+      console.log("[Python] Log", message);
+    });
+    shell.on("stdout", function (message) {
+      console.log("[Python] stdout", message);
+    });
+    shell.on("stderr", function (stderr) {
+      console.error(
+        "[Python] [[ERR]]",
+        JSON.stringify(stderr).substring(0, 300)
+      );
+    });
+  } catch (err) {
+    console.error("Failed to launch python server", err);
+    errorWindow = new BrowserWindow();
+
+    errorWindow.loadURL(`${__dirname}/dist/writerey/assets/python_error.html`);
+    errorWindow.on("closed", function () {
+      errorWindow = null;
+    });
+    return;
+  }
 
   // Create the browser window.
   win = new BrowserWindow({
