@@ -1,3 +1,8 @@
+from initialize_env import initialize_env
+
+if __name__ == '__main__':
+    initialize_env()
+
 from flask import Flask, request
 from flask_restful import Resource, Api
 from flask_cors import CORS
@@ -15,6 +20,8 @@ from tree import Tree
 from links import Links
 from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
+
+
 import sys
 
 app = Flask(__name__)
@@ -33,7 +40,5 @@ api.add_resource(Tag, '/git/tag')
 api.add_resource(GitMove, '/git/mv')
 
 if __name__ == '__main__':
-    gitA = GitAutomation()
-    gitA.init()
     app.run(port=port, debug=True)  # FIXME
     # serve(app, listen= host + ":" + port)

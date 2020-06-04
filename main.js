@@ -1,6 +1,7 @@
 const { app, BrowserWindow } = require("electron");
 
 let win;
+const PATH_TO_APP = `${__dirname}/dist/writerey`;
 
 function createWindow() {
   app.on("window-all-closed", () => {
@@ -8,26 +9,37 @@ function createWindow() {
   });
 
   try {
-    let { PythonShell } = require("python-shell");
-    shell = new PythonShell(`${__dirname}/dist/writerey/server/app.py`);
+    let {
+      PythonShell,
+    } = require(`${PATH_TO_APP}/assets/thirdparty/python-shell`);
+    shell = new PythonShell(`${PATH_TO_APP}/server/app.py`, {
+      pythonOptions: ["-u"],
+      parser: function (message) {
+        if (!message) return;
+        console.log("[Py] Log", message);
+      },
+      stderrParser: function (stderr) {
+          if (!stderr) return;
+          console.error(
+            "[Py] [[ERR]]",
+            (JSON.stringify(stderr) || "").substring(0, 300)
+          );
+      }
+    });
 
-    shell.on("message", function (message) {
-      console.log("[Python] Log", message);
-    });
+    shell.on("close", function (message) {
+      if (!message) return;
+      console.log("[Python] [CLOSED]", message);
+    });;
     shell.on("stdout", function (message) {
+      if (!message) return;
       console.log("[Python] stdout", message);
-    });
-    shell.on("stderr", function (stderr) {
-      console.error(
-        "[Python] [[ERR]]",
-        JSON.stringify(stderr).substring(0, 300)
-      );
     });
   } catch (err) {
     console.error("Failed to launch python server", err);
     errorWindow = new BrowserWindow();
 
-    errorWindow.loadURL(`${__dirname}/dist/writerey/assets/python_error.html`);
+    errorWindow.loadURL(`${PATH_TO_APP}/assets/python_error.html`);
     errorWindow.on("closed", function () {
       errorWindow = null;
     });
@@ -37,14 +49,14 @@ function createWindow() {
   // Create the browser window.
   win = new BrowserWindow({
     show: false,
-    icon: `${__dirname}/dist/writerey/assets/writerey.ico`,
+    icon: `${PATH_TO_APP}/assets/writerey.ico`,
     webPreferences: {
       nodeIntegration: true,
       spellcheck: true,
     },
   });
 
-  win.loadURL(`${__dirname}/dist/writerey/index.html`);
+  win.loadURL(`${PATH_TO_APP}/index.html`);
 
   win.maximize();
   win.show();
