@@ -1,7 +1,7 @@
 {
   "name": "writerey",
   "description": "Writerey helps you to organize, compose and refine your stories.",
-  "version": "0.7.0-SN",
+  "version": "0.7.0",
   "author": {
     "name": "Stefanie S",
     "email": "sts@s-blu.de"
@@ -96,7 +96,8 @@
           "__pycache__",
           ".gitignore",
           "node_modules"
-        ]
+        ],
+        "icon": "dist/writerey/assets/writerey.ico"
       },
       "makers": [
         {
