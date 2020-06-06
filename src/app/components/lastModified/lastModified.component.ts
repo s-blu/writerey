@@ -1,14 +1,16 @@
 import { DocumentStore } from './../../stores/document.store';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
-import { rubberBandAnimation } from 'angular-animations';
+import {
+  wobbleAnimation,
+} from 'angular-animations';
 
 @Component({
   selector: 'wy-last-modified',
   templateUrl: './lastModified.component.html',
   styleUrls: ['./lastModified.component.scss'],
-  animations: [rubberBandAnimation()],
+  animations: [wobbleAnimation()],
 })
 export class LastModifiedComponent implements OnInit, OnDestroy {
   lastSnapshot: Date;

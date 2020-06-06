@@ -1,6 +1,6 @@
 <span class="saveInfo" *transloco="let t">
   <span class="last-saved" *ngIf="lastSave" [matTooltip]="t('saveInfo.lastSaved')">
-    <mat-icon [@rubberBand]="saved">save</mat-icon>
+    <mat-icon [@wobble]="saved">save</mat-icon>
     {{ lastSave | date: t('dateFormat') }}
   </span>
   <span *ngIf="lastSnapshot" [matTooltip]="t('saveInfo.lastSnapshotted')">
