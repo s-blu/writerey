@@ -16,7 +16,7 @@ import { DeleteConfirmationDialogComponent } from './components/deleteConfirmati
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
 import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
-import { CreateNewNoteComponent } from './components/_notes/createNewNote/createNewNote.component';
+import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
 import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
@@ -104,7 +104,7 @@ const matModules = [
     CreateNewItemDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
-    CreateNewNoteComponent,
+    UpsertNoteComponent,
     CheckForNameSafetyDirective,
     DocumentTreeComponent,
     LabelTreeComponent,

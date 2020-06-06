@@ -149,6 +149,7 @@
   },
   "note": {
     "delete": "Done!",
+    "edit": "Edit",
     "keepOpen": "Expand note on load",
     "keepClosed": "Collapse note on load"
   },

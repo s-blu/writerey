@@ -1,16 +1,18 @@
+import { Note } from 'src/app/models/notesItems.interface';
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 
 @Component({
-  selector: 'wy-create-new-note',
-  templateUrl: './createNewNote.component.html',
-  styleUrls: ['./createNewNote.component.scss'],
+  selector: 'wy-upsert-note',
+  templateUrl: './upsertNote.component.html',
+  styleUrls: ['./upsertNote.component.scss'],
 })
-export class CreateNewNoteComponent implements OnInit, OnChanges {
+export class UpsertNoteComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() contextNames: any = {};
+  @Input() editNote?;
   @Output() noteCreated = new EventEmitter<any>();
 
   noteColor;
@@ -32,7 +34,16 @@ export class CreateNewNoteComponent implements OnInit, OnChanges {
     this.createNewForm.patchValue({ context: this.contexts[0] });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const preset = {
+      type: this.editNote?.type || 'todo',
+      color: this.editNote?.color || '',
+      context: this.editNote?.context || this.contexts[0] || null,
+      text: this.editNote?.text || ' \n',
+    };
+
+    this.createNewForm.patchValue(preset);
+  }
 
   onSubmit(data) {
     this.noteCreated.emit(data);

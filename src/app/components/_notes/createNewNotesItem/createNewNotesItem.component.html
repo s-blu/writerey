@@ -7,13 +7,13 @@
       <mat-option *ngIf="labelDefinition" [value]="typesOfItems.LABEL">{{ t('typeOfItem.label') }}</mat-option>
     </mat-select>
   </mat-form-field>
-  <wy-create-new-note
+  <wy-upsert-note
     *ngIf="type === typesOfItems.NOTE"
     [@fadeInOnEnter]
     [contexts]="contexts"
     [contextNames]="translatedContextNames"
     (noteCreated)="createNote($event)"
-  ></wy-create-new-note>
+  ></wy-upsert-note>
   <wy-create-new-link
     *ngIf="type === typesOfItems.LINK"
     [@fadeInOnEnter]

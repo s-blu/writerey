@@ -1,6 +1,6 @@
 <div class="create-note" *transloco="let t; read: 'createNote'">
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
-    <mat-form-field>
+    <mat-form-field *ngIf="!editNote">
       <mat-label>{{ t('context') }}</mat-label>
       <mat-select formControlName="context" required>
         <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
@@ -33,7 +33,7 @@
     ></ckeditor>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
-        <mat-icon>add</mat-icon>
+        <mat-icon>{{ editNote ? 'edit' : 'add' }}</mat-icon>
       </button>
     </div>
   </form>

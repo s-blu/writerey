@@ -25,6 +25,7 @@ export class NoteComponent implements OnInit {
   classes = 'note';
   contextName = '';
   isExpanded = false;
+  noteForEditing;
 
   constructor() {}
 
@@ -46,6 +47,17 @@ export class NoteComponent implements OnInit {
 
   delete() {
     this.deleteNote.emit(this.note);
+  }
+
+  switchToEditMode() {
+    this.noteForEditing = Object.assign({}, this.note);
+    console.log(this.noteForEditing);
+  }
+
+  finishEditing($event) {
+    this.note = Object.assign(this.note, $event);
+    this.noteForEditing = null;
+    this.editNote.emit(this.note);
   }
 
   changeKeepOpen() {
