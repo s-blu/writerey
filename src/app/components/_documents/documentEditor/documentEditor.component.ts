@@ -84,12 +84,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       console.warn('Document Editor is loading new data, canceling on change event');
       return;
     }
-    console.log('saving doc on change event ', event.document.name);
     this.subscription.add(
       this.documentService
         .saveDocument(event.document.path, event.document.name, event.content)
         .subscribe((res: DocumentDefinition) => {
-          console.log('save answe', res);
           this.document = res;
           this.document.content = event.content;
           const count = EditorUtils.calculateWordCount(event.plainContent);
@@ -99,7 +97,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   }
 
   onBlur(event) {
+    if (!event?.document || !event?.content) return;
     this.blurSubject.next(event);
+    this.subscription.add(
+      this.documentService
+        .saveDocument(event.document.path, event.document.name, event.content)
+        .subscribe()
+    );
   }
 
   private switchMode(m) {
@@ -109,11 +113,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.deleteParagraphStyles();
 
     if (m === DOC_MODES.REVIEW) {
-      console.log('switching to review', this.document.content);
       this.documentService
         .enhanceAndSaveDocument(this.document.path, this.document.name, this.document.content)
         .subscribe(res => {
-          console.log('enhanceAndSave response', res);
           this.editorData = res.content;
           this.isLoading = false;
           this.onClick(this.paragraphId);
@@ -133,27 +135,13 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       );
       return;
     }
-    console.log('==============================');
-    console.log('SWITCHING DOC TO', newDoc);
-    let loadObs;
+    // empty content for editor to prevent app from crashing when switching between two heavy documents
+    this.editorData = ' ';
     this.isLoading = true;
     this.paragraphId = null;
-    // save old doc before switching
-    if (this.document) {
-      loadObs = this.documentService.saveDocument(this.document.path, this.document.name, this.document.content).pipe(
-        tap(() => {
-          console.log('saved last document before switching to new one', this.document)
-          // empty content for editor to prevent app from crashing when switching between two heavy documents
-          this.editorData = ' ';
-        }),
-        () => this.documentService.getDocument(newDoc.path, newDoc.name)
-      );
-    } else {
-      loadObs = this.documentService.getDocument(newDoc.path, newDoc.name);
-    }
 
     this.subscription.add(
-      loadObs.subscribe(res => {
+      this.documentService.getDocument(newDoc.path, newDoc.name).subscribe(res => {
         this.editorData = res.content;
         this.document = res;
         this.isLoading = false;

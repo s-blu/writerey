@@ -110,7 +110,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
           this.changeDebounce.next(ev);
         });
         editor.editing.view.document.on('blur', ev => {
-          this.editorBlur.emit(ev);
+          this.onBlur(ev);
         });
 
         const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
@@ -146,10 +146,10 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onBlur(editorEvent) {
-    console.log('sending [BLUR] event');
     const event = this.getDocumentChangedEvent();
     this.editorBlur.emit(event);
   }
+
   onChange(event) {
     this.changeDebounce.next(event);
   }
@@ -160,7 +160,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   private sendChangeEvent(editorEvent) {
-    console.log('sending change event');
     const event = this.getDocumentChangedEvent();
     this.editorChange.emit(event);
   }
@@ -173,8 +172,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     return event;
   }
 }
-
-
 
 class AllowClassesOnP {
   editor;
