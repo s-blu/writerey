@@ -228,7 +228,8 @@
   "projects": {
     "new": "New Project",
     "title": "Projects",
-    "empty-hint": "You have no projects. Hit the button above to create a new one and get started with your writing adventure!"
+    "empty-hint": "You have no projects. Hit the button above to create a new one and get started with your writing adventure!",
+    "nameAlreadyInUse": "This name is already in use. Please choose a different one."
   },
   "modeSwitcher": {
     "read": "Read",

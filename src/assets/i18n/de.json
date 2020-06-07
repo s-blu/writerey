@@ -228,7 +228,8 @@
   "projects": {
     "new": "Neues Projekt",
     "title": "Projekte",
-    "empty-hint": "Du hast noch keine Projekte. Klicke die Schaltfläche, um ein Neues zu erstellen und mit deinem Vorhaben loszulegen!"
+    "empty-hint": "Du hast noch keine Projekte. Klicke die Schaltfläche, um ein Neues zu erstellen und mit deinem Vorhaben loszulegen!",
+    "nameAlreadyInUse": "Dieser Name ist bereits vergeben. Bitte nutze einen anderen."
   },
   "modeSwitcher": {
     "read": "Lesen",
