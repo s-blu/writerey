@@ -96,6 +96,9 @@
     "lastSaved": "Last saved on",
     "lastSnapshotted": "Last snapshotted on"
   },
+  "createDirOrFile": {
+    "alreadyInUse": "This name is already in use. Please choose a different one."
+  },
   "createFileDialog": {
     "title": "Create new document",
     "message": "Name your new document.",
