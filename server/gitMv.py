@@ -60,6 +60,7 @@ class GitMove(Resource):
         if path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])):
             self.git.run(["git", "mv", old_meta_path, new_meta_path])
         if projectDir:
-            # add links file to the commit, since it possibly get changed on a move 
-            self.git.run(["git", "add", PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])])
+            linksFilePath = PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])
+            if path.exists(linksFilePath):
+                self.git.run(["git", "add", linksFilePath])
         self.git.run(["git", "commit", "-m", msg])
