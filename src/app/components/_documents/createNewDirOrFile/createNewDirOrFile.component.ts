@@ -3,12 +3,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { DirectoryStore } from './../../../stores/directory.store';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription, merge, forkJoin, combineLatest, zip, of } from 'rxjs';
+import { Subscription, zip, of } from 'rxjs';
 import { CreateNewItemDialogComponent } from '../../createNewItemDialog/createNewItemDialog.component';
 import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DocumentStore } from 'src/app/stores/document.store';
-import { mergeAll, mergeMap, take, flatMap } from 'rxjs/operators';
+import { take, flatMap } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
 
 @Component({
@@ -47,16 +47,15 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
         take(1),
         flatMap(([name, tree]) => {
           if (!name) return;
-          console.log('zipped', name, tree, this.path);
           const containingDir = this.getDirSubTree(tree);
-          console.log('containingDir', containingDir);
-          let createObservable;
 
+          let createObservable;
           if (this.type === 'file') {
             const existing = containingDir.files.find(file => {
               return this.stripFileEndingPipe.transform(file.name).toLowerCase() === name.toLowerCase();
             });
             if (!existing) createObservable = this.documentService.createDocument(this.path, name);
+
           } else if (this.type === 'dir') {
             const existing = containingDir.dirs.find(dir => dir.name.toLowerCase() === name.toLowerCase());
             if (!existing) createObservable = this.directoryService.createDirectory(this.path, name);
