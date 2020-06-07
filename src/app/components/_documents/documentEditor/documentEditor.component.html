@@ -6,6 +6,7 @@
     [document]="document"
     (editorClicked)="onClick($event)"
     (editorChange)="onChange($event)"
+    (editorBlur)="onBlur($event)"
     [readonly]="docMode === DOC_MODES.READ"
   ></wy-ckeditor>
   <ng-template #emptyHint>

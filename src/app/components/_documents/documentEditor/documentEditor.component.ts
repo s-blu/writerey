@@ -6,7 +6,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
 import { DocumentDefinition } from '../../../models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import EditorUtils from 'src/app/utils/editor.utils';
 
 @Component({
@@ -21,8 +21,8 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   isLoading: boolean;
   document: DocumentDefinition;
 
-  private content: string;
   private clickSubject = new Subject();
+  private blurSubject = new Subject();
   private subscription = new Subscription();
   private style;
   private paragraphId;
@@ -79,21 +79,27 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     }
   }
   onChange(event) {
-    if (!this.document) return;
+    if (!event?.document || !event?.content) return;
     if (this.isLoading) {
       console.warn('Document Editor is loading new data, canceling on change event');
       return;
     }
-    this.content = event.content;
+    console.log('saving doc on change event ', event.document.name);
     this.subscription.add(
       this.documentService
-        .saveDocument(this.document.path, this.document.name, this.content)
+        .saveDocument(event.document.path, event.document.name, event.content)
         .subscribe((res: DocumentDefinition) => {
+          console.log('save answe', res);
           this.document = res;
+          this.document.content = event.content;
           const count = EditorUtils.calculateWordCount(event.plainContent);
           this.documentStore.setWordCount(count);
         })
     );
+  }
+
+  onBlur(event) {
+    this.blurSubject.next(event);
   }
 
   private switchMode(m) {
@@ -103,11 +109,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.deleteParagraphStyles();
 
     if (m === DOC_MODES.REVIEW) {
+      console.log('switching to review', this.document.content);
       this.documentService
-        .enhanceAndSaveDocument(this.document.path, this.document.name, this.content)
+        .enhanceAndSaveDocument(this.document.path, this.document.name, this.document.content)
         .subscribe(res => {
+          console.log('enhanceAndSave response', res);
           this.editorData = res.content;
-          this.content = res.content;
           this.isLoading = false;
           this.onClick(this.paragraphId);
         });
@@ -126,26 +133,29 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
       );
       return;
     }
+    console.log('==============================');
+    console.log('SWITCHING DOC TO', newDoc);
     let loadObs;
     this.isLoading = true;
-    // empty content for editor to prevent app from crashing when switching between two heavy documents
-    // save this.content before doing so - emptying editorData could lead to a racing condition with the change event
-    const contentToSave = this.content;
-    this.editorData = ' ';
     this.paragraphId = null;
     // save old doc before switching
     if (this.document) {
-      loadObs = this.documentService
-        .saveDocument(this.document.path, this.document.name, contentToSave)
-        .pipe(() => this.documentService.getDocument(newDoc.path, newDoc.name));
+      loadObs = this.documentService.saveDocument(this.document.path, this.document.name, this.document.content).pipe(
+        tap(() => {
+          console.log('saved last document before switching to new one', this.document)
+          // empty content for editor to prevent app from crashing when switching between two heavy documents
+          this.editorData = ' ';
+        }),
+        () => this.documentService.getDocument(newDoc.path, newDoc.name)
+      );
     } else {
       loadObs = this.documentService.getDocument(newDoc.path, newDoc.name);
     }
+
     this.subscription.add(
       loadObs.subscribe(res => {
-        this.content = res.content;
         this.editorData = res.content;
-        this.document = newDoc;
+        this.document = res;
         this.isLoading = false;
       })
     );

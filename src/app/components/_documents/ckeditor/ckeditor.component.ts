@@ -145,7 +145,9 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       });
   }
 
-  onBlur(event) {
+  onBlur(editorEvent) {
+    console.log('sending [BLUR] event');
+    const event = this.getDocumentChangedEvent();
     this.editorBlur.emit(event);
   }
   onChange(event) {
@@ -157,12 +159,22 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     this.editorClicked.emit(className);
   }
 
-  private sendChangeEvent(event) {
-    event.content = this.editor.getData();
-    event.plainContent = this.editor.sourceElement.innerText;
+  private sendChangeEvent(editorEvent) {
+    console.log('sending change event');
+    const event = this.getDocumentChangedEvent();
     this.editorChange.emit(event);
   }
+
+  private getDocumentChangedEvent() {
+    const event: any = {};
+    event.document = this.documentDef;
+    event.content = this.editor.getData();
+    event.plainContent = this.editor.sourceElement.innerText;
+    return event;
+  }
 }
+
+
 
 class AllowClassesOnP {
   editor;
