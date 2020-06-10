@@ -5,7 +5,7 @@ export const LAST_PROJECT_KEY = 'writerey_last_selected_project';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectStore {
-  private readonly _projectSubject = new BehaviorSubject<string>(null);
+  private readonly _projectSubject = new BehaviorSubject<string>(undefined);
 
   readonly project$ = this._projectSubject.asObservable();
 

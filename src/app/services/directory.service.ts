@@ -1,6 +1,6 @@
 import { DirectoryStore } from './../stores/directory.store';
 import { ProjectStore, LAST_PROJECT_KEY } from './../stores/project.store';
-import { catchError, flatMap, map, tap, take } from 'rxjs/operators';
+import { catchError, flatMap, map, tap, take, filter } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -69,6 +69,7 @@ export class DirectoryService implements OnDestroy {
     this.subscription.add(
       this.projectStore.project$
         .pipe(
+          filter(res => res !== undefined),
           tap(res => (this.project = res)),
           flatMap(_ => {
             return this.getTree();
@@ -76,5 +77,5 @@ export class DirectoryService implements OnDestroy {
         )
         .subscribe()
     );
-  };
+  }
 }
