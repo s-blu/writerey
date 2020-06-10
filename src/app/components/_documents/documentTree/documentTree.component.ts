@@ -91,9 +91,9 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       dialogRef.afterClosed().subscribe(newName => {
         if (!newName) return;
-        this.documentService.moveDocument(node.path, node.name, newName).subscribe(() => {
-          this.directoryService.getTree().subscribe();
-        });
+        this.documentService.moveDocument(node.path, node.name, newName)
+        .pipe(() => this.directoryService.getTree())
+        .subscribe();
       })
     );
   }

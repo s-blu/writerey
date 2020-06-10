@@ -63,6 +63,9 @@ export class DirectoryService implements OnDestroy {
   }
 
   init() {
+    const lastProject = localStorage.getItem(LAST_PROJECT_KEY);
+    if (lastProject) this.projectStore.setProject(lastProject);
+
     this.subscription.add(
       this.projectStore.project$
         .pipe(
@@ -70,11 +73,8 @@ export class DirectoryService implements OnDestroy {
           flatMap(_ => {
             return this.getTree();
           })
-        ).subscribe()
+        )
+        .subscribe()
     );
-
-    const lastProject = localStorage.getItem(LAST_PROJECT_KEY);
-    if (lastProject) this.projectStore.setProject(lastProject);
-    this.subscription.add(this.getTree().pipe(take(1)).subscribe());
-  }
+  };
 }
