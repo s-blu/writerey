@@ -53,6 +53,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         'indent',
         'outdent',
         '|',
+        'fontSize',
         'fontColor',
         'fontBackgroundColor',
         '|',
