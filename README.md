@@ -4,6 +4,8 @@ Writerey is a small tool that wants to help you with your next writing project: 
 
 It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. Read more about the functionality you get from writerey below.
 
+For License information see LICENSE
+
 ## System requirements
 
 This app is only tested for Windows 10. If you use it for any other operating system, I'd appreciate feedback!

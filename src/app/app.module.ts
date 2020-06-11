@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
 import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
@@ -129,7 +135,7 @@ const matModules = [
     CkeditorComponent,
     CkeditorToolbarComponent,
     NoteItemCkeditorViewComponent,
-    IntroductionComponent
+    IntroductionComponent,
   ],
   imports: [
     BrowserModule,

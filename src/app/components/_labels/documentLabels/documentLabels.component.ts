@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+// 
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';

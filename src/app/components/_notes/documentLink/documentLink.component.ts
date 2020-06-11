@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+// 
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { DocumentDefinition } from 'src/app/models/documentDefinition.interface';
 import { DocumentService } from 'src/app/services/document.service';
 import { ProjectStore } from './../../../stores/project.store';
