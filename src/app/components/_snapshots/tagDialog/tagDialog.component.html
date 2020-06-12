@@ -12,7 +12,7 @@
     <p>{{ t('message', { date: data.lastSnapshotDate }) }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
-      <input matInput wyCheckForNameSafety="tag" [(ngModel)]="data.tagname" />
+      <input matInput [(ngModel)]="data.tagname" />
       <mat-error *ngIf="!isTagNameValid">BOOOOH!</mat-error>
     </mat-form-field>
   </div>

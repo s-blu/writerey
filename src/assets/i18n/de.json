@@ -97,7 +97,9 @@
     "lastSnapshotted": "Letzte Sicherung vom"
   },
   "createDirOrFile": {
-    "alreadyInUse": "Dieser Name ist bereits vergeben. Bitte wähle einen anderen."
+    "alreadyInUse": "Dieser Name ist bereits vergeben. Bitte wähle einen anderen.",
+    "forbiddenName": "Folgende Zeichen dürfen nicht verwendet werden: < > : / \\ * ? \" | ",
+    "required": "Bitte gib einen Namen ein."
   },
   "createFileDialog": {
     "title": "Neues Dokument erstellen",

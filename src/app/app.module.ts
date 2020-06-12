@@ -23,7 +23,6 @@ import { CreateNewLabelComponent } from './components/_labels/createNewLabel/cre
 import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
-import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
@@ -111,7 +110,6 @@ const matModules = [
     TagDialogComponent,
     LastModifiedComponent,
     UpsertNoteComponent,
-    CheckForNameSafetyDirective,
     DocumentTreeComponent,
     LabelTreeComponent,
     CreateNewLabelComponent,

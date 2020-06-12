@@ -97,7 +97,9 @@
     "lastSnapshotted": "Last snapshotted on"
   },
   "createDirOrFile": {
-    "alreadyInUse": "This name is already in use. Please choose a different one."
+    "alreadyInUse": "This name is already in use. Please choose a different one.",
+    "forbiddenName": "The following characters cannot be used: < > : / \\ * ? \" | ",
+    "required": "Please input a name"
   },
   "createFileDialog": {
     "title": "Create new document",
