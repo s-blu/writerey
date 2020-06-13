@@ -22,14 +22,17 @@ class GitMove(Resource):
         abort(501, 'not implemented yet')
 
     def put(self):
-        #TODO BE ABLE TO HANDLE DIRS
-        doc_name = request.form['doc_name']
+        doc_name = None
+        new_name = None
         doc_path = request.form['doc_path']
-        new_name = request.form['new_doc_name']
         new_doc_path = request.form['new_doc_path']
         project_dir = request.form['project_dir']
         msg = request.form['msg']
-        self.logger.logDebug('params', doc_name, doc_path, new_name, new_doc_path, msg)
+        try:
+            doc_name = request.form['doc_name']
+            new_name = request.form['new_doc_name']
+        except:
+            pass
 
         if doc_name and not new_name:
             abort(400, 'Got no new name, cannot move')
@@ -40,7 +43,7 @@ class GitMove(Resource):
 
         if doc_path == new_doc_path and doc_name == new_name:
             self.logger.logDebug('path and name are identical to new path and name, return 400')
-            abort(400, 'New path and name are identical to existing path and name. Do nothing.')
+            abort(400, 'New path and name are identical to existing path and name.')
         
         if doc_path == new_doc_path and doc_name.lower() == new_name.lower():
             self.logger.logInfo('Rename is only changing case sensitivity. Doing extra commit to prevent trouble.', doc_name, '-->', new_name)

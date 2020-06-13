@@ -53,6 +53,25 @@ export class LinkService {
     return this.getLinksForProject(project, findLinkWithId);
   }
 
+  moveLinkDestinations(project: string, oldPath: string, newPath: string) {
+    console.log('moveLinkDestinations', project, oldPath, newPath)
+    if (!project || !oldPath || !newPath) {
+      console.error('linkService -> moveLinkDestinations was called with invalid data. Aborting.');
+      return;
+    }
+
+    const replaceNameAndPathForLinks = links => {
+      const affectedLinks = links.filter(l => l.path.startsWith(oldPath));
+
+      for (const link of affectedLinks) {
+        link.path = link.path.replace(oldPath, newPath);
+      }
+      return this.saveLinksToServer(project, links);
+    };
+
+    return this.getLinksForProject(project, replaceNameAndPathForLinks);
+  }
+
   moveLinkDestination(project: string, oldName: string, oldPath: string, newName: string, newPath: string) {
     if (!project || !oldName || !oldPath) {
       console.error('linkService -> moveLinkDestination was called with invalid data. Aborting.');
