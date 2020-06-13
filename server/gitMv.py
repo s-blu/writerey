@@ -12,6 +12,7 @@ from pathUtils import PathUtils
 from gitUtils import GitUtils
 from writerey_config import basePath, metaSubPath, linksFileName
 from os import path
+import shutil
 
 class GitMove(Resource):
     logger = Logger('GitMove')
@@ -41,7 +42,6 @@ class GitMove(Resource):
             self.logger.logDebug('path and name are identical to new path and name, return 400')
             abort(400, 'New path and name are identical to existing path and name. Do nothing.')
         
-        # TODO do a "before move" commit...? Maybe do that on FE side?
         if doc_path == new_doc_path and doc_name.lower() == new_name.lower():
             self.logger.logInfo('Rename is only changing case sensitivity. Doing extra commit to prevent trouble.', doc_name, '-->', new_name)
             new_name_ptfrcs = new_name[:6] + '_ptfrcs'  # "prevent trouble from renaming case sensitivity"
@@ -56,16 +56,28 @@ class GitMove(Resource):
         new_path = PathUtils.sanitizePathList([new_doc_path, new_name])
         old_meta_path = PathUtils.sanitizePathList([doc_path, metaSubPath, doc_name])
         new_meta_path = PathUtils.sanitizePathList([new_doc_path, metaSubPath, new_name])
+        metaExists = path.exists(PathUtils.sanitizePathList([basePath, old_meta_path]))
 
+        try:
+            self.git.run(['git', 'ls-files', '--error-unmatch', old_path])
+        except:
+            self.logger.logDebug('file is not under version control yet, do a file system move')
+            shutil.move(PathUtils.sanitizePathList([basePath, old_path]), PathUtils.sanitizePathList([basePath, new_path])) 
+            if (metaExists):
+                shutil.move(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
+            return
+        
         self.logger.logDebug('moving file ...', old_path, new_path)
         self.logger.logDebug('moving meta ...', old_meta_path, new_meta_path)
-        self.logger.logDebug('moving meta if ...', path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])))
+        self.logger.logDebug('moving meta if ...', metaExists)
         if not msg:
             msg = 'Rename ' + old_path + ' to ' + new_path
         self.git.run(["git", "mv", old_path, new_path])
-        if path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])):
+        if metaExists:
             self.git.run(["git", "mv", old_meta_path, new_meta_path])
         if projectDir:
             # add links file to the commit, since it possibly get changed on a move 
-            self.git.run(["git", "add", PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])])
+            linksFilePath = PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])
+            if path.exists(linksFilePath):
+                self.git.run(["git", "add", linksFilePath])
         self.git.run(["git", "commit", "-m", msg])

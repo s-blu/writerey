@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -15,6 +15,7 @@ import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angu
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
+import { flatMap } from 'rxjs/operators';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -97,9 +98,12 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.subscription.add(
       dialogRef.afterClosed().subscribe(newName => {
         if (!newName) return;
-        this.documentService.moveDocument(node.path, node.name, newName)
-        .pipe(() => this.directoryService.getTree())
-        .subscribe();
+        this.documentService
+          .moveDocument(node.path, node.name, newName)
+          .pipe(
+            flatMap(_ => this.directoryService.getTree())
+          )
+          .subscribe();
       })
     );
   }
