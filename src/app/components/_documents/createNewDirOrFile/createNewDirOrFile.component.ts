@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -47,6 +47,7 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
   createNewItem() {
     const dialogRef = this.dialog.open(CreateNewItemDialogComponent, {
       data: { dirPath: this.path, typeOfDialog: this.type },
+      minWidth: 500,
     });
     zip(dialogRef.afterClosed(), this.directoryStore.tree$)
       .pipe(
@@ -61,7 +62,6 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
               return this.stripFileEndingPipe.transform(file.name).toLowerCase() === name.toLowerCase();
             });
             if (!existing) createObservable = this.documentService.createDocument(this.path, name);
-
           } else if (this.type === 'dir') {
             const existing = containingDir.dirs.find(dir => dir.name.toLowerCase() === name.toLowerCase());
             if (!existing) createObservable = this.directoryService.createDirectory(this.path, name);

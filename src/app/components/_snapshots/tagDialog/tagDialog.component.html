@@ -8,16 +8,24 @@
 
 <span *transloco="let t; read: 'tagDialog'">
   <h1 mat-dialog-title>{{ t('title') }}</h1>
-  <div mat-dialog-content>
-    <p>{{ t('message', { date: data.lastSnapshotDate }) }}</p>
-    <mat-form-field>
-      <mat-label>{{ t('input') }}</mat-label>
-      <input matInput [(ngModel)]="data.tagname" />
-      <mat-error *ngIf="!isTagNameValid">BOOOOH!</mat-error>
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
-    <button mat-button [mat-dialog-close]="data.tagname">{{ t('create') }}</button>
-  </div>
+  <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+    <div mat-dialog-content>
+      <p>{{ t('message', { date: data.lastSnapshotDate }) }}</p>
+      <mat-form-field>
+        <mat-label>{{ t('input') }}</mat-label>
+        <input
+          matInput
+          required
+          formControlName="name"
+          (keyup.enter)="submit(form.value)"
+          [errorStateMatcher]="matcher"
+        />
+        <mat-error *ngIf="form.get('name').errors?.forbiddenName">{{ t('forbiddenName') }}</mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button type="button" (click)="cancel()">{{ t('cancel') }}</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ t('create') }}</button>
+    </div>
+  </form>
 </span>

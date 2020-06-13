@@ -9,6 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { NameSafetyValidator } from 'src/app/directives/nameSafetyValidator';
 import { slideInDownAnimation, slideInDownOnEnterAnimation } from 'angular-animations';
+import { OnChangeErrorMatcher } from 'src/app/utils/form.utils';
 
 @Component({
   selector: 'wy-createNewFileDialog',
@@ -19,6 +20,7 @@ import { slideInDownAnimation, slideInDownOnEnterAnimation } from 'angular-anima
 export class CreateNewItemDialogComponent implements OnInit {
   typeOfDialog = '';
   form;
+  matcher = new OnChangeErrorMatcher();
 
   constructor(
     public dialogRef: MatDialogRef<CreateNewItemDialogComponent>,
@@ -52,6 +54,7 @@ export class CreateNewItemDialogComponent implements OnInit {
   }
 
   submit(values) {
+    if (this.form.invalid) return;
     this.dialogRef.close(values.name);
   }
 }

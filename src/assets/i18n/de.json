@@ -204,10 +204,11 @@
   },
   "tagDialog": {
     "title": "Einen Tag erstellen",
-    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden. Bitte keine Leerzeichen verwenden.",
+    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden.",
     "input": "Tagname",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "create": "Erstellen",
+    "forbiddenName": "Folgende Zeichen dürfen nicht verwendet werden: Leerzeichen  ~.^:?*[]@\\"
   },
   "git": {
     "message": {

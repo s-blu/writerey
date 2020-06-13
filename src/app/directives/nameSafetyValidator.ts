@@ -7,7 +7,7 @@
 import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function NameSafetyValidator(typeToCheck = 'explorer') {
-  const nameValidator = (control: AbstractControl): { [key: string]: boolean } | null => {
+  const nameValidator: ValidatorFn = (control: AbstractControl): { [key: string]: boolean } | null => {
     const forbidden = regex.test(control.value);
     return forbidden ? { forbiddenName: true } : null;
   };

@@ -207,7 +207,8 @@
     "message": "Create a tag to mark your latest snapshot from {{date}}",
     "input": "name of tag",
     "cancel": "Cancel",
-    "create": "Create"
+    "create": "Create",
+    "forbiddenName": "The following characters cannot be used: Spaces ~.^:?*[]@\\"
   },
   "git": {
     "message": {
