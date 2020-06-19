@@ -32,6 +32,7 @@ import SimpleUploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/simpleu
 import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough.js';
 import Table from '@ckeditor/ckeditor5-table/src/table.js';
 import TableProperties from '@ckeditor/ckeditor5-table/src/tableproperties';
+import TableCellProperties from '@ckeditor/ckeditor5-table/src/tablecellproperties';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar.js';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation.js';
 import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline.js';
@@ -40,38 +41,39 @@ class Editor extends DecoupledDocumentEditor {}
 
 // Plugins to include in the build.
 Editor.builtinPlugins = [
-	Alignment,
-	Autoformat,
-	BlockQuote,
-	Bold,
-	Essentials,
-	FontBackgroundColor,
-	FontColor,
-	FontSize,
-	Heading,
-	Highlight,
-	Image,
-	ImageCaption,
-	ImageResize,
-	ImageStyle,
-	ImageToolbar,
-	ImageUpload,
-	Indent,
-	IndentBlock,
-	Italic,
-	Link,
-	List,
-	MediaEmbed,
-	Paragraph,
-	PasteFromOffice,
-	RemoveFormat,
-	SimpleUploadAdapter,
-	Strikethrough,
-	Table,
-	TableProperties,
-	TableToolbar,
-	TextTransformation,
-	Underline
+  Alignment,
+  Autoformat,
+  BlockQuote,
+  Bold,
+  Essentials,
+  FontBackgroundColor,
+  FontColor,
+  FontSize,
+  Heading,
+  Highlight,
+  Image,
+  ImageCaption,
+  ImageResize,
+  ImageStyle,
+  ImageToolbar,
+  ImageUpload,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link,
+  List,
+  MediaEmbed,
+  Paragraph,
+  PasteFromOffice,
+  RemoveFormat,
+  SimpleUploadAdapter,
+  Strikethrough,
+  Table,
+  TableCellProperties,
+  TableProperties,
+  TableToolbar,
+  TextTransformation,
+  Underline,
 ];
 
 export default Editor;
