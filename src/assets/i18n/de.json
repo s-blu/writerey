@@ -162,7 +162,8 @@
   "link": {
     "delete": "Erledigt!",
     "keepOpen": "Link initial öffnen",
-    "keepClosed": "Link initial schließen"
+    "keepClosed": "Link initial schließen",
+    "documentError": "Das Dokument ist nicht (mehr) verfügbar."
   },
   "createNotesItem": {
     "contexts": {

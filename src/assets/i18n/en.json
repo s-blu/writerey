@@ -162,7 +162,8 @@
   "link": {
     "delete": "Done!",
     "keepOpen": "Expand link on load",
-    "keepClosed": "Collapse link on load"
+    "keepClosed": "Collapse link on load",
+    "documentError": "The document is not available (anymore)."
   },
   "createNotesItem": {
     "contexts": {

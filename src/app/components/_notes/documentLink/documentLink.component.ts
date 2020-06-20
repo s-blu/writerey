@@ -1,9 +1,10 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { catchError } from 'rxjs/operators';
 import { DocumentDefinition } from 'src/app/models/documentDefinition.interface';
 import { DocumentService } from 'src/app/services/document.service';
 import { ProjectStore } from './../../../stores/project.store';
@@ -15,7 +16,7 @@ import { FADE_ANIMATIONS } from 'src/app/utils/animation.utils';
 import { rotateAnimation } from 'angular-animations';
 import { LinkService } from 'src/app/services/link.service';
 import { take, flatMap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Subscription, throwError } from 'rxjs';
 
 @Component({
   selector: 'wy-document-link',
@@ -34,6 +35,7 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
   fileInfo;
   content: string;
   isExpanded = false;
+  unableToFetchDocument = false;
   private subscription = new Subscription();
   constructor(
     private linkService: LinkService,
@@ -88,10 +90,16 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
       this.subscription.add(
         this.documentService
           .getDocument(this.fileInfo.path, this.fileInfo.name, true)
+          .pipe(
+            catchError(err => {
+              this.unableToFetchDocument = true;
+              return throwError(err);
+            })
+          )
           .subscribe((document: DocumentDefinition) => {
             if (!document) return;
 
-            this.content = document.content || '';
+            this.content = document.content || ' ';
           })
       );
     }
