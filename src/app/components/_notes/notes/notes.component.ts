@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -19,6 +19,7 @@ import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { ContextService } from 'src/app/services/context.service';
+import { ContextStore } from 'src/app/stores/context.store';
 
 @Component({
   selector: 'wy-notes',
@@ -77,7 +78,8 @@ export class NotesComponent implements OnInit, OnDestroy {
     private labelStore: LabelStore,
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
-    private distractionFreeStore: DistractionFreeStore
+    private distractionFreeStore: DistractionFreeStore,
+    private contextStore: ContextStore
   ) {}
 
   ngOnInit() {
@@ -89,6 +91,12 @@ export class NotesComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
         this.distractionFreeState = status;
+      })
+    );
+    this.subscription.add(
+      this.contextStore.contexts$.subscribe(newContexts => {
+        if (!newContexts) return;
+        this.updateContexts(newContexts);
       })
     );
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));

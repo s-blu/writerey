@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -16,10 +16,11 @@ import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular
 import { FileInfo } from 'src/app/models/fileInfo.interface';
 import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
 import { LabelService } from 'src/app/services/label.service';
-import * as uuid from 'uuid';
 import { Label } from 'src/app/models/label.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { sortLabelArray } from 'src/app/utils/label.utils';
+import { flatMap, tap } from 'rxjs/operators';
+import { ContextService } from 'src/app/services/context.service';
 @Component({
   selector: 'wy-document-marks',
   templateUrl: './documentLabels.component.html',
@@ -47,7 +48,8 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
     private labelStore: LabelStore,
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
-    private distractionFreeStore: DistractionFreeStore
+    private distractionFreeStore: DistractionFreeStore,
+    private contextService: ContextService
   ) {}
 
   ngOnInit() {
@@ -149,10 +151,16 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
           labelId,
           valueId
         )
-        .subscribe(res => {
-          this.labelsFromServer = res;
-          this.updateDisplayInfo(res);
-        })
+        .pipe(
+          tap(res => {
+            this.labelsFromServer = res;
+            this.updateDisplayInfo(res);
+          }),
+          flatMap(_ =>
+            this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.paragraphId)
+          )
+        )
+        .subscribe()
     );
   }
 
