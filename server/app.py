@@ -34,6 +34,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
+class Ping(Resource):
+    def get(self):
+        return {'message': 'Server is started up and ready to go. '}
+
+api.add_resource(Ping, '/ping')
 api.add_resource(Documents, '/doc/<string:doc_name>')
 api.add_resource(Images, '/img/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
