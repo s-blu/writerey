@@ -28,7 +28,6 @@ export class SnapshotService implements OnDestroy {
   ) {}
 
   createSnapshot(msg) {
-    console.log('creating snapshot ...', msg);
     const formdata = new FormData();
     formdata.append('message', msg);
     const httpHeaders = new HttpHeaders();
@@ -39,7 +38,6 @@ export class SnapshotService implements OnDestroy {
         if (res?.commitDate) {
           this.snapshotStore.setLastSnapshotDate(res.commitDate);
         }
-        console.log('snappshotted', res);
       }),
       catchError(err => this.api.handleHttpError(err))
     );

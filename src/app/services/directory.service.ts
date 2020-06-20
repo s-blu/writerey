@@ -48,7 +48,6 @@ export class DirectoryService implements OnDestroy {
   }
 
   public moveDirectory(path: string, name: string, newName: string, movedPath?: string) {
-    console.log('moveDir', path, name, newName);
     if (!newName) {
       console.error('moveDirectory got called without a new name. do nothing.');
       return;

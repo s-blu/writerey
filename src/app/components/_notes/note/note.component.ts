@@ -57,7 +57,6 @@ export class NoteComponent implements OnInit {
 
   switchToEditMode() {
     this.noteForEditing = Object.assign({}, this.note);
-    console.log(this.noteForEditing);
   }
 
   finishEditing($event) {

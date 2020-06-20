@@ -91,7 +91,6 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
   private getDirSubTree(tree) {
     const pathParts = this.path.split('/');
     pathParts.shift();
-    console.log(pathParts);
     if (pathParts.length === 0) return tree;
     let subTree = tree;
     for (const pathPart of pathParts) {
