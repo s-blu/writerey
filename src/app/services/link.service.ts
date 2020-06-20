@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+// 
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { ApiService } from 'src/app/services/api.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -45,6 +51,24 @@ export class LinkService {
     };
 
     return this.getLinksForProject(project, findLinkWithId);
+  }
+
+  moveLinkDestinations(project: string, oldPath: string, newPath: string) {
+    if (!project || !oldPath || !newPath) {
+      console.error('linkService -> moveLinkDestinations was called with invalid data. Aborting.');
+      return;
+    }
+
+    const replaceNameAndPathForLinks = links => {
+      const affectedLinks = links.filter(l => l.path.startsWith(oldPath));
+
+      for (const link of affectedLinks) {
+        link.path = link.path.replace(oldPath, newPath);
+      }
+      return this.saveLinksToServer(project, links);
+    };
+
+    return this.getLinksForProject(project, replaceNameAndPathForLinks);
   }
 
   moveLinkDestination(project: string, oldName: string, oldPath: string, newName: string, newPath: string) {

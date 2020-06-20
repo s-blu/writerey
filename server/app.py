@@ -1,3 +1,9 @@
+# Copyright (c) 2020 s-blu
+# 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from initialize_env import initialize_env
 
 if __name__ == '__main__':
@@ -28,6 +34,11 @@ app = Flask(__name__)
 api = Api(app)
 CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
+class Ping(Resource):
+    def get(self):
+        return {'message': 'Server is started up and ready to go. '}
+
+api.add_resource(Ping, '/ping')
 api.add_resource(Documents, '/doc/<string:doc_name>')
 api.add_resource(Images, '/img/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
@@ -40,5 +51,5 @@ api.add_resource(Tag, '/git/tag')
 api.add_resource(GitMove, '/git/mv')
 
 if __name__ == '__main__':
-    # app.run(port=port, debug=True)  # FIXME
-    serve(app, listen= host + ":" + port)
+    app.run(port=port, debug=True)  # FIXME
+    # serve(app, listen= host + ":" + port)

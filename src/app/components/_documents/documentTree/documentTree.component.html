@@ -1,3 +1,11 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <div class="document-tree" *transloco="let t; read: 'documentTree'">
 
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
@@ -22,6 +30,10 @@
         <button mat-menu-item (click)="renameDir(node)">
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="deleteDir(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
         </button>
         <wy-create-new-dir-or-file
           type="dir"
@@ -53,6 +65,10 @@
         <button mat-menu-item (click)="renameFile(node)">
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="deleteFile(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
         </button>
       </mat-menu>
     </mat-tree-node>

@@ -80,6 +80,7 @@
   },
   "documentTree": {
     "rename": "Umbenennen",
+    "delete": "Löschen",
     "newfile": "Neues Dokument",
     "newdir": "Neuer Ordner",
     "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!"
@@ -97,7 +98,9 @@
     "lastSnapshotted": "Letzte Sicherung vom"
   },
   "createDirOrFile": {
-    "alreadyInUse": "Dieser Name ist bereits vergeben. Bitte wähle einen anderen."
+    "alreadyInUse": "Dieser Name ist bereits vergeben. Bitte wähle einen anderen.",
+    "forbiddenName": "Folgende Zeichen dürfen nicht verwendet werden: < > : / \\ * ? \" | ",
+    "required": "Bitte gib einen Namen ein."
   },
   "createFileDialog": {
     "title": "Neues Dokument erstellen",
@@ -159,7 +162,8 @@
   "link": {
     "delete": "Erledigt!",
     "keepOpen": "Link initial öffnen",
-    "keepClosed": "Link initial schließen"
+    "keepClosed": "Link initial schließen",
+    "documentError": "Das Dokument ist nicht (mehr) verfügbar."
   },
   "createNotesItem": {
     "contexts": {
@@ -202,10 +206,11 @@
   },
   "tagDialog": {
     "title": "Einen Tag erstellen",
-    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden. Bitte keine Leerzeichen verwenden.",
+    "message": "Erstelle einen Tag, um deine letzte Sicherung von {{date}} zu markieren und jederzeit wiederzufinden.",
     "input": "Tagname",
     "cancel": "Abbrechen",
-    "create": "Erstellen"
+    "create": "Erstellen",
+    "forbiddenName": "Folgende Zeichen dürfen nicht verwendet werden: Leerzeichen  ~.^:?*[]@\\"
   },
   "git": {
     "message": {

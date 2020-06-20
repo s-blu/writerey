@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 .mat-card-header {
   max-height: 1.5em;
   display: flex;
@@ -40,7 +46,7 @@
 }
 
 .exandable-wrap.collapsed {
-  max-height: 2.5em;
+  max-height: 2.6em;
   overflow-y: hidden;
   transition: ease-in-out max-height 400ms;
 }

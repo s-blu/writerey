@@ -1,3 +1,9 @@
+# Copyright (c) 2020 s-blu
+# 
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 from flask import request
 from flask_restful import Resource
 from logger import Logger
@@ -6,6 +12,7 @@ from pathUtils import PathUtils
 from gitUtils import GitUtils
 from writerey_config import basePath, metaSubPath, linksFileName
 from os import path
+import shutil
 
 class GitMove(Resource):
     logger = Logger('GitMove')
@@ -15,14 +22,17 @@ class GitMove(Resource):
         abort(501, 'not implemented yet')
 
     def put(self):
-        #TODO BE ABLE TO HANDLE DIRS
-        doc_name = request.form['doc_name']
+        doc_name = None
+        new_name = None
         doc_path = request.form['doc_path']
-        new_name = request.form['new_doc_name']
         new_doc_path = request.form['new_doc_path']
         project_dir = request.form['project_dir']
         msg = request.form['msg']
-        self.logger.logDebug('params', doc_name, doc_path, new_name, new_doc_path, msg)
+        try:
+            doc_name = request.form['doc_name']
+            new_name = request.form['new_doc_name']
+        except:
+            pass
 
         if doc_name and not new_name:
             abort(400, 'Got no new name, cannot move')
@@ -33,9 +43,8 @@ class GitMove(Resource):
 
         if doc_path == new_doc_path and doc_name == new_name:
             self.logger.logDebug('path and name are identical to new path and name, return 400')
-            abort(400, 'New path and name are identical to existing path and name. Do nothing.')
+            abort(400, 'New path and name are identical to existing path and name.')
         
-        # TODO do a "before move" commit...? Maybe do that on FE side?
         if doc_path == new_doc_path and doc_name.lower() == new_name.lower():
             self.logger.logInfo('Rename is only changing case sensitivity. Doing extra commit to prevent trouble.', doc_name, '-->', new_name)
             new_name_ptfrcs = new_name[:6] + '_ptfrcs'  # "prevent trouble from renaming case sensitivity"
@@ -50,16 +59,27 @@ class GitMove(Resource):
         new_path = PathUtils.sanitizePathList([new_doc_path, new_name])
         old_meta_path = PathUtils.sanitizePathList([doc_path, metaSubPath, doc_name])
         new_meta_path = PathUtils.sanitizePathList([new_doc_path, metaSubPath, new_name])
+        metaExists = path.exists(PathUtils.sanitizePathList([basePath, old_meta_path]))
 
+        try:
+            self.git.run(['git', 'ls-files', '--error-unmatch', old_path])
+        except:
+            self.logger.logDebug('file is not under version control yet, do a file system move')
+            shutil.move(PathUtils.sanitizePathList([basePath, old_path]), PathUtils.sanitizePathList([basePath, new_path])) 
+            if (metaExists):
+                shutil.move(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
+            return
+        
         self.logger.logDebug('moving file ...', old_path, new_path)
         self.logger.logDebug('moving meta ...', old_meta_path, new_meta_path)
-        self.logger.logDebug('moving meta if ...', path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])))
+        self.logger.logDebug('moving meta if ...', metaExists)
         if not msg:
             msg = 'Rename ' + old_path + ' to ' + new_path
         self.git.run(["git", "mv", old_path, new_path])
-        if path.exists(PathUtils.sanitizePathList([basePath, old_meta_path])):
+        if metaExists:
             self.git.run(["git", "mv", old_meta_path, new_meta_path])
         if projectDir:
+            # add links file to the commit, since it possibly get changed on a move 
             linksFilePath = PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])
             if path.exists(linksFilePath):
                 self.git.run(["git", "add", linksFilePath])

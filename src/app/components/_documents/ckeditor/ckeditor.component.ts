@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { DocumentDefinition } from './../../../models/documentDefinition.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
@@ -53,6 +59,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         'indent',
         'outdent',
         '|',
+        'fontSize',
         'fontColor',
         'fontBackgroundColor',
         '|',
@@ -71,7 +78,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
       toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
     },
     table: {
-      contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties'],
+      contentToolbar: ['tableProperties', 'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties'],
     },
     simpleUpload: {},
     extraPlugins: [AllowClassesOnP],

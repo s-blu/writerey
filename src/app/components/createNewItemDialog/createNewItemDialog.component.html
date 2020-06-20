@@ -1,14 +1,28 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <span *transloco="let t; read: typeOfDialog">
   <h1 mat-dialog-title>{{ t('title') }}</h1>
-  <div mat-dialog-content>
-    <p class="message">{{ t('message') }}</p>
-    <mat-form-field>
-      <mat-label>{{ t('input') }}</mat-label>
-      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.filename" />
-    </mat-form-field>
-  </div>
-  <div mat-dialog-actions>
-    <button mat-button (click)="cancel()">{{ t('cancel') }}</button>
-    <button mat-raised-button color="primary" (click)="submit()">{{ t('submit') }}</button>
-  </div>
+  <form [formGroup]="form" (ngSubmit)="submit(form.value)">
+    <div mat-dialog-content>
+      <p class="message">{{ t('message') }}</p>
+      <mat-form-field>
+        <mat-label>{{ t('input') }}</mat-label>
+        <input matInput (keyup.enter)="submit(form.value)" required formControlName="name" [errorStateMatcher]="matcher"/>
+        <mat-error *ngIf="form.get('name').errors?.forbiddenName"
+          >{{ 'createDirOrFile.forbiddenName' | transloco }}
+        </mat-error>
+        <mat-error *ngIf="form.get('name').errors?.required">{{ 'createDirOrFile.required' | transloco }} </mat-error>
+      </mat-form-field>
+    </div>
+    <div mat-dialog-actions>
+      <button mat-button type="button" (click)="cancel()">{{ t('cancel') }}</button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">{{ t('submit') }}</button>
+    </div>
+  </form>
 </span>

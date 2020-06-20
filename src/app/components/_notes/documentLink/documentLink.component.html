@@ -1,3 +1,11 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
 <mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
   <mat-card-header>
     <mat-icon class="icon">link</mat-icon>
@@ -12,13 +20,16 @@
         <wy-breadcrumb [fileInfo]="fileInfo" skipRoot="true"></wy-breadcrumb>
       </div>
       <wy-note-item-ckeditor-view class="note-text preview" [data]="link.text"></wy-note-item-ckeditor-view>
-      <mat-progress-bar mode="indeterminate" *ngIf="isExpanded && !content"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate" *ngIf="isExpanded && !content && !unableToFetchDocument"></mat-progress-bar>
       <wy-note-item-ckeditor-view
         class="note-text"
-        *ngIf="content && isExpanded"
+        *ngIf="content && isExpanded && !unableToFetchDocument"
         [@fadeOutOnLeave]
         [data]="content"
       ></wy-note-item-ckeditor-view>
+      <div class="document-error" *ngIf="unableToFetchDocument">
+        {{ t('documentError') }}
+      </div>
     </mat-card-content>
     <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">

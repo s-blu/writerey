@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { ProjectStore } from './../stores/project.store';
 import { LinkService } from 'src/app/services/link.service';
 import { FileInfo } from '../models/fileInfo.interface';
@@ -111,6 +117,17 @@ export class DocumentService implements OnDestroy {
     name = ensureFileEnding(name);
 
     return this.saveDocument(path, name, '');
+  }
+
+  deleteDocument(path: string, name: string) {
+    const params: any = {
+      doc_path: path
+    };
+
+    return this.httpClient.delete(this.api.getDocumentRoute(name), { params }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      tap(_ => console.log(`deleted document [${new Date().toISOString()}] ${path}/${name} `))
+    );
   }
 
   getLastSavedFileInfo(): FileInfo {

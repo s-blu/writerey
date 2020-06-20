@@ -1,11 +1,12 @@
 {
   "name": "writerey",
   "description": "Writerey helps you to organize, compose and refine your stories.",
-  "version": "0.7.2",
+  "version": "0.8.0-PRE1",
   "author": {
     "name": "Stefanie S",
     "email": "sts@s-blu.de"
   },
+  "license": "MPL-2.0",
   "main": "main.js",
   "scripts": {
     "ng": "ng",
@@ -15,9 +16,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
-    "electron-build": "ng build --prod && npm run electron .",
-    "build-exe": "electron-packager . --overwrite",
+    "build-electron": "ng build --prod && npm run electron .",
     "flask": "python server/app.py",
+    "build-exe": "electron-packager . --overwrite",
     "package": "electron-forge package",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make"

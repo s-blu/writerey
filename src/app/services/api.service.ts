@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { throwError } from 'rxjs';
@@ -9,6 +15,10 @@ export class ApiService {
   serverAdress = 'http://localhost:5002';
 
   constructor() {}
+
+  getServerReadyRoute() {
+    return `${this.serverAdress}/ping`;
+  }
 
   getDocumentRoute(docName) {
     return docName ? `${this.serverAdress}/doc/${docName}` : `${this.serverAdress}/doc`;

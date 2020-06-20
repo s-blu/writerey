@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
 import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
@@ -17,7 +23,6 @@ import { CreateNewLabelComponent } from './components/_labels/createNewLabel/cre
 import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
-import { CheckForNameSafetyDirective } from './directives/checkForNameSafety.directive';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
@@ -105,7 +110,6 @@ const matModules = [
     TagDialogComponent,
     LastModifiedComponent,
     UpsertNoteComponent,
-    CheckForNameSafetyDirective,
     DocumentTreeComponent,
     LabelTreeComponent,
     CreateNewLabelComponent,
@@ -129,7 +133,7 @@ const matModules = [
     CkeditorComponent,
     CkeditorToolbarComponent,
     NoteItemCkeditorViewComponent,
-    IntroductionComponent
+    IntroductionComponent,
   ],
   imports: [
     BrowserModule,
