@@ -31,6 +31,10 @@
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
         </button>
+        <button mat-menu-item (click)="deleteDir(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
+        </button>
         <wy-create-new-dir-or-file
           type="dir"
           [path]="prettifyPath(node)"

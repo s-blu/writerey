@@ -81,6 +81,17 @@ export class DirectoryService implements OnDestroy {
     );
   }
 
+  deleteDirectory(path: string, name: string) {
+    const params: any = {
+      dir_path: path
+    };
+
+    return this.httpClient.delete(this.api.getDirectoryRoute(name), { params }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      tap(_ => console.log(`deleted directory [${new Date().toISOString()}] ${path}/${name} `))
+    );
+  }
+
   public getTree(params?) {
     const parameter: any = {
       params: {

@@ -80,6 +80,7 @@
   },
   "documentTree": {
     "rename": "Rename",
+    "delete": "Delete",
     "newfile": "New document",
     "newdir": "New directory",
     "empty-tree": "You have no directories or documents. Hit the 'New directory' button above and get started!"

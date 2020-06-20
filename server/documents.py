@@ -9,7 +9,6 @@ from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
 from pathUtils import PathUtils
-from gitUtils import GitUtils
 
 import os
 import shutil
@@ -46,25 +45,16 @@ class Documents(Resource):
         return self.getResponseObject(open(filePath, encoding='utf-8'))
 
     def delete(self, doc_name):
-        git = GitUtils()
         if request.args.get('doc_path'):
             pathToDelete = PathUtils.sanitizePathList(
                 [basePath, request.args.get('doc_path')])
         else:
             pathToDelete = basePath
+
         filePath = PathUtils.sanitizePathList([pathToDelete, doc_name])
         if not os.path.exists(filePath):
             return abort(400, 'File for deletion was not found')
         
-        msg = f'Pre deletion snapshot for {filePath}'
-        try: 
-            msg = request.args.get('message')
-        except: 
-            pass
-
-        # git.run(["git", "add", '.'])
-        # git.run(["git", "commit", '-m', msg])
-        print('would run git add and commit with ', msg)
         os.remove(filePath)
 
         meta_path = PathUtils.sanitizePathList([pathToDelete, metaSubPath, doc_name])

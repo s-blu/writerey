@@ -80,6 +80,7 @@
   },
   "documentTree": {
     "rename": "Umbenennen",
+    "delete": "Löschen",
     "newfile": "Neues Dokument",
     "newdir": "Neuer Ordner",
     "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!"
@@ -215,8 +216,7 @@
       "manualCommit": "Manuelle Sicherung [{{date}}]",
       "automateCommit": "Automatische Sicherung [{{date}}]",
       "rename": "{{oldName}} wurde zu {{newName}} umbenannt [{{path}}]",
-      "move": "{{name}} wurde von '{{oldPath}}' in '{{newPath}}' verschoben",
-      "delete": "Sicherung vor Löschung von {{name}} [{{path}}]"
+      "move": "{{name}} wurde von '{{oldPath}}' in '{{newPath}}' verschoben"
     },
     "snackbar": {
       "manualCommit": "Sicherung wurde erfolgreich erstellt [{{date}}]",

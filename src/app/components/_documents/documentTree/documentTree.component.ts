@@ -96,15 +96,29 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.renameItem(node, 'file');
   }
 
+  deleteDir(node: ExplorerNode) {
+    this.deleteItem(node, 'dir');
+  }
+
   deleteFile(node: ExplorerNode) {
+    this.deleteItem(node, 'file');
+  }
+
+  deleteItem(node, typeOfItem) {
     this.subscription.add(
-      this.deletionService.showDeleteConfirmDialog(node.name, 'file').subscribe(res => {
-        if (!res) return;
-        this.documentService
-          .deleteDocument(node.path, node.name)
-          .pipe(flatMap(_ => this.directoryService.getTree()))
-          .subscribe();
-      })
+      this.deletionService
+        .showDeleteConfirmDialog(node.name, typeOfItem)
+        .pipe(
+          filter(res => res),
+          flatMap(_ => {
+            let deleteObs = of({});
+            if (typeOfItem === 'dir') deleteObs = this.directoryService.deleteDirectory(node.path, node.name);
+            if (typeOfItem === 'file') deleteObs = this.documentService.deleteDocument(node.path, node.name);
+            return deleteObs;
+          }),
+          flatMap(_ => this.directoryService.getTree())
+        )
+        .subscribe()
     );
   }
 

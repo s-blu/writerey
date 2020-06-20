@@ -121,12 +121,9 @@ export class DocumentService implements OnDestroy {
 
   deleteDocument(path: string, name: string) {
     const params: any = {
-      doc_path: path,
-      message: translate('git.message.delete', { name, path }),
+      doc_path: path
     };
 
-    const httpHeaders = new HttpHeaders();
-    httpHeaders.append('Content-Type', 'multipart/form-data');
     return this.httpClient.delete(this.api.getDocumentRoute(name), { params }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       tap(_ => console.log(`deleted document [${new Date().toISOString()}] ${path}/${name} `))
