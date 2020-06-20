@@ -215,7 +215,8 @@
       "manualCommit": "Manuelle Sicherung [{{date}}]",
       "automateCommit": "Automatische Sicherung [{{date}}]",
       "rename": "{{oldName}} wurde zu {{newName}} umbenannt [{{path}}]",
-      "move": "{{name}} wurde von '{{oldPath}}' in '{{newPath}}' verschoben"
+      "move": "{{name}} wurde von '{{oldPath}}' in '{{newPath}}' verschoben",
+      "delete": "Sicherung vor Löschung von {{name}} [{{path}}]"
     },
     "snackbar": {
       "manualCommit": "Sicherung wurde erfolgreich erstellt [{{date}}]",

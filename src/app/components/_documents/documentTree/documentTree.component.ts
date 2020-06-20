@@ -6,6 +6,7 @@
 
 import { StripFileEndingPipe } from './../../../pipes/stripFileEnding.pipe';
 import { DirectoryService } from 'src/app/services/directory.service';
+import { DeletionService } from './../../../services/deletion.service';
 import { RenameItemDialogComponent } from './../../renameItemDialog/renameItemDialog.component';
 import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryStore } from './../../../stores/directory.store';
@@ -73,7 +74,8 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     private documentStore: DocumentStore,
     private documentService: DocumentService,
     private directoryService: DirectoryService,
-    private stripFileEndingPipe: StripFileEndingPipe
+    private stripFileEndingPipe: StripFileEndingPipe,
+    private deletionService: DeletionService
   ) {}
 
   setTree(tree) {
@@ -92,6 +94,18 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   renameFile(node: ExplorerNode) {
     this.renameItem(node, 'file');
+  }
+
+  deleteFile(node: ExplorerNode) {
+    this.subscription.add(
+      this.deletionService.showDeleteConfirmDialog(node.name, 'file').subscribe(res => {
+        if (!res) return;
+        this.documentService
+          .deleteDocument(node.path, node.name)
+          .pipe(flatMap(_ => this.directoryService.getTree()))
+          .subscribe();
+      })
+    );
   }
 
   renameItem(node, typeOfItem: 'dir' | 'file') {

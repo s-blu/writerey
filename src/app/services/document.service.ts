@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -117,6 +117,20 @@ export class DocumentService implements OnDestroy {
     name = ensureFileEnding(name);
 
     return this.saveDocument(path, name, '');
+  }
+
+  deleteDocument(path: string, name: string) {
+    const params: any = {
+      doc_path: path,
+      message: translate('git.message.delete', { name, path }),
+    };
+
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'multipart/form-data');
+    return this.httpClient.delete(this.api.getDocumentRoute(name), { params }).pipe(
+      catchError(err => this.api.handleHttpError(err)),
+      tap(_ => console.log(`deleted document [${new Date().toISOString()}] ${path}/${name} `))
+    );
   }
 
   getLastSavedFileInfo(): FileInfo {

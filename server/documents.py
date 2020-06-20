@@ -4,13 +4,15 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
+from flask import request, abort
 from flask_restful import Resource
 from pathlib import Path
-from writerey_config import basePath
+from writerey_config import basePath, metaSubPath
 from pathUtils import PathUtils
+from gitUtils import GitUtils
 
 import os
+import shutil
 from stat import ST_MTIME
 
 
@@ -27,7 +29,7 @@ class Documents(Resource):
             return response
         except OSError as err:
             print('get document failed', err)
-            return ''  # TODO send an error back here
+            return abort(500, err) 
 
     def put(self, doc_name):
         if request.form['doc_path']:
@@ -42,6 +44,35 @@ class Documents(Resource):
         f = request.files['file']
         f.save(filePath)
         return self.getResponseObject(open(filePath, encoding='utf-8'))
+
+    def delete(self, doc_name):
+        git = GitUtils()
+        if request.args.get('doc_path'):
+            pathToDelete = PathUtils.sanitizePathList(
+                [basePath, request.args.get('doc_path')])
+        else:
+            pathToDelete = basePath
+        filePath = PathUtils.sanitizePathList([pathToDelete, doc_name])
+        if not os.path.exists(filePath):
+            return abort(400, 'File for deletion was not found')
+        
+        msg = f'Pre deletion snapshot for {filePath}'
+        try: 
+            msg = request.args.get('message')
+        except: 
+            pass
+
+        # git.run(["git", "add", '.'])
+        # git.run(["git", "commit", '-m', msg])
+        print('would run git add and commit with ', msg)
+        os.remove(filePath)
+
+        meta_path = PathUtils.sanitizePathList([pathToDelete, metaSubPath, doc_name])
+        metaExists = os.path.exists(meta_path)
+        if (metaExists):
+            shutil.rmtree(meta_path)
+
+        return {}
 
     def getResponseObject(self, file):
         fstats = os.stat(file.name)

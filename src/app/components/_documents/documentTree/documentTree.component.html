@@ -62,6 +62,10 @@
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
         </button>
+        <button mat-menu-item (click)="deleteFile(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
+        </button>
       </mat-menu>
     </mat-tree-node>
   </mat-tree>
