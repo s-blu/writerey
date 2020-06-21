@@ -47,6 +47,29 @@ export class DirectoryService implements OnDestroy {
       .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 
+  public renameProject(name: string, newName: string) {
+    if (!newName) {
+      console.error('renameProject got called without a new name. do nothing.');
+      return;
+    }
+    newName = sanitizeName(newName);
+
+    let msg = translate('git.message.rename', { oldName: name, newName });
+
+    const formdata = new FormData();
+    formdata.append('doc_path', name);
+    formdata.append('project_dir', newName);
+    formdata.append('new_doc_path', newName);
+    formdata.append('msg', msg);
+
+    const httpHeaders = new HttpHeaders();
+    httpHeaders.append('Content-Type', 'multipart/form-data');
+    return this.linkService.moveLinkDestinations(name, name, newName).pipe(
+      flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
+      catchError(err => this.api.handleHttpError(err))
+    );
+  }
+
   public moveDirectory(path: string, name: string, newName: string, movedPath?: string) {
     if (!newName) {
       console.error('moveDirectory got called without a new name. do nothing.');
@@ -54,7 +77,7 @@ export class DirectoryService implements OnDestroy {
     }
     newName = sanitizeName(newName);
     const oldPath = path + '/' + name;
-    const newPath  = movedPath ? `${movedPath}/${newName}` : `${path}/${newName}`;
+    const newPath = movedPath ? `${movedPath}/${newName}` : `${path}/${newName}`;
 
     let msg;
     if (movedPath) {
@@ -82,7 +105,7 @@ export class DirectoryService implements OnDestroy {
 
   deleteDirectory(path: string, name: string) {
     const params: any = {
-      dir_path: path
+      dir_path: path,
     };
 
     return this.httpClient.delete(this.api.getDirectoryRoute(name), { params }).pipe(
@@ -104,6 +127,7 @@ export class DirectoryService implements OnDestroy {
         (res: any) => {
           try {
             res = JSON.parse(res);
+            console.log('got new tree', res);
             this.directoryStore.setTree(res);
             return res;
           } catch (err) {

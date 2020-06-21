@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -11,9 +11,30 @@
   height: 36px;
 }
 
-.project-item:hover {
-  cursor: pointer;
-  background-color: $c_hover_highlight;
+.project-item {
+  &:hover {
+    cursor: pointer;
+    background-color: $c_hover_highlight;
+
+    .explorer-btn {
+      display: inline;
+    }
+  }
+
+  .name {
+    flex-grow: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .explorer-btn {
+    display: none;
+
+    .material-icons {
+      font-size: 12pt;
+    }
+  }
 }
 
 .project-title {

@@ -56,6 +56,7 @@
   },
   "deletion": {
     "type": {
+      "project": "Projekt",
       "file": "Dokument",
       "dir": "Ordner",
       "label": "Rubrik",
@@ -237,7 +238,9 @@
     "new": "Neues Projekt",
     "title": "Projekte",
     "empty-hint": "Du hast noch keine Projekte. Klicke die Schaltfläche, um ein Neues zu erstellen und mit deinem Vorhaben loszulegen!",
-    "nameAlreadyInUse": "Dieser Name ist bereits vergeben. Bitte nutze einen anderen."
+    "nameAlreadyInUse": "Dieser Name ist bereits vergeben. Bitte nutze einen anderen.",
+    "rename": "Umbenennen",
+    "delete": "Löschen"
   },
   "modeSwitcher": {
     "read": "Lesen",

@@ -107,7 +107,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   deleteItem(node, typeOfItem) {
     this.subscription.add(
       this.deletionService
-        .showDeleteConfirmDialog(node.name, typeOfItem)
+        .handleDeleteUserInputAndSnapshot(node.name, typeOfItem)
         .pipe(
           filter(res => res),
           flatMap(_ => {

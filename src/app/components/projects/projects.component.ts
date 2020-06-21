@@ -1,5 +1,6 @@
+import { DeletionService } from './../../services/deletion.service';
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -9,10 +10,10 @@ import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CreateNewItemDialogComponent } from '../createNewItemDialog/createNewItemDialog.component';
-import { HttpClient } from '@angular/common/http';
-import { ApiService } from 'src/app/services/api.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
+import { filter, flatMap } from 'rxjs/operators';
+import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
 
 @Component({
   selector: 'wy-projects',
@@ -26,7 +27,12 @@ export class ProjectsComponent implements OnInit {
 
   private subscription = new Subscription();
 
-  constructor(private dialog: MatDialog, private directoryService: DirectoryService, private snackBar: MatSnackBar) {}
+  constructor(
+    private dialog: MatDialog,
+    private directoryService: DirectoryService,
+    private snackBar: MatSnackBar,
+    private deletionService: DeletionService
+  ) {}
 
   ngOnInit() {
     this.fetchProjects();
@@ -56,12 +62,40 @@ export class ProjectsComponent implements OnInit {
         }
 
         this.subscription.add(
-          this.directoryService.createDirectory('/', name).subscribe((res: any) => {
+          this.directoryService.createDirectory('/', name).subscribe(() => {
             this.fetchProjects();
             this.selectProject(name);
           })
         );
       })
+    );
+  }
+
+  deleteProject(project) {
+    this.subscription.add(
+      this.deletionService
+        .handleDeleteUserInputAndSnapshot(project.name, 'project')
+        .pipe(
+          filter(res => res),
+          flatMap(_ => this.directoryService.deleteDirectory('', project.name))
+        )
+        .subscribe(_ => this.fetchProjects())
+    );
+  }
+
+  renameProject(project) {
+    const dialogRef = this.dialog.open(RenameItemDialogComponent, {
+      data: { oldName: project.name },
+    });
+
+    this.subscription.add(
+      dialogRef
+        .afterClosed()
+        .pipe(
+          filter(res => res),
+          flatMap(newName => this.directoryService.renameProject(project.name, newName))
+        )
+        .subscribe(_ => this.fetchProjects())
     );
   }
 

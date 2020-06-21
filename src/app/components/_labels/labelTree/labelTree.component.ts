@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -81,7 +81,7 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
 
   removeLabel(node) {
     this.subscription.add(
-      this.deletionService.showDeleteConfirmDialog(node.name, 'label').subscribe(result => {
+      this.deletionService.handleDeleteUserInputAndSnapshot(node.name, 'label').subscribe(result => {
         if (!result) return;
         this.labelService.deleteLabelCategory(node.id).subscribe(() => {
           // TODO show snackbar
