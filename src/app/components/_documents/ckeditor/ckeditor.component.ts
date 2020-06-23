@@ -75,7 +75,8 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     },
     language: 'en',
     image: {
-      toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+      toolbar: ['imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+      styles: ['full', 'alignLeft', 'alignRight'],
     },
     table: {
       contentToolbar: ['tableProperties', 'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties'],
