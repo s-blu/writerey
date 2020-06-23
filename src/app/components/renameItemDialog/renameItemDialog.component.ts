@@ -14,6 +14,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 })
 export class RenameItemDialogComponent implements OnInit {
   ngOnInit() {
+    this.data.newName = this.data.oldName;
   }
 
   constructor(public dialogRef: MatDialogRef<RenameItemDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {}
