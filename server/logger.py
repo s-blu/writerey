@@ -40,6 +40,9 @@ class Logger:
             try:
                 concatted += ' ' + m
             except:
-                m = json.dumps(m)
-                concatted += ' ' + m
+                try:
+                    m = json.dumps(m)
+                    concatted += ' ' + m
+                except:
+                    pass
         return concatted

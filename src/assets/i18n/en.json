@@ -250,5 +250,9 @@
   "wordcount": {
     "word": "Word",
     "words": "Words"
+  },
+  "error": {
+    "couldNotFetchTree": "Was unable to fetch tree, cannot display directories. Please try restart the application or return to project overview.",
+    "couldNotLoadDocument": "Was unable to load document :("
   }
 }

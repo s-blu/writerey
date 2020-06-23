@@ -1,10 +1,12 @@
-import { LinkService } from 'src/app/services/link.service';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { LinkService } from 'src/app/services/link.service';
 import { DirectoryStore } from './../stores/directory.store';
 import { ProjectStore, LAST_PROJECT_KEY } from './../stores/project.store';
 import { catchError, flatMap, map, tap, take, filter } from 'rxjs/operators';
@@ -27,7 +29,8 @@ export class DirectoryService implements OnDestroy {
     private httpClient: HttpClient,
     private projectStore: ProjectStore,
     private directoryStore: DirectoryStore,
-    private linkService: LinkService
+    private linkService: LinkService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnDestroy() {
@@ -121,22 +124,32 @@ export class DirectoryService implements OnDestroy {
       },
     };
     if (params) parameter.params = params;
-
     return this.httpClient.get(this.api.getTreeRoute(), parameter).pipe(
-      map(
-        (res: any) => {
-          try {
-            res = JSON.parse(res);
-            console.log('got new tree', res);
-            this.directoryStore.setTree(res);
-            return res;
-          } catch (err) {
-            console.error('Could not parse response of tree route. Will return empty object.');
-            return {};
-          }
-        },
-        catchError(err => this.api.handleHttpError(err))
-      )
+      catchError(err => {
+        this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
+          duration: 10000,
+        });
+
+        if (this.project === localStorage.getItem(LAST_PROJECT_KEY)) {
+          console.warn(
+            'Was not able to open last project. Will unset last project to avoid future problems.',
+            this.project
+          );
+          localStorage.removeItem(LAST_PROJECT_KEY);
+        }
+
+        return this.api.handleHttpError(err);
+      }),
+      map((res: any) => {
+        try {
+          res = JSON.parse(res);
+          this.directoryStore.setTree(res);
+          return res;
+        } catch (err) {
+          console.error('Could not parse response of tree route. Will return empty object.');
+          return {};
+        }
+      })
     );
   }
 
@@ -147,7 +160,7 @@ export class DirectoryService implements OnDestroy {
     this.subscription.add(
       this.projectStore.project$
         .pipe(
-          filter(res => res !== undefined),
+          filter(res => res !== undefined && res !== ''),
           tap(res => (this.project = res)),
           flatMap(_ => {
             return this.getTree();

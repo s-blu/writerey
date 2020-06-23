@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectStore } from './../stores/project.store';
 import { LinkService } from 'src/app/services/link.service';
 import { FileInfo } from '../models/fileInfo.interface';
@@ -30,7 +31,8 @@ export class DocumentService implements OnDestroy {
     private paragraphService: ParagraphService,
     private documentStore: DocumentStore,
     private linkService: LinkService,
-    private projectStore: ProjectStore
+    private projectStore: ProjectStore,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnDestroy() {
@@ -121,7 +123,7 @@ export class DocumentService implements OnDestroy {
 
   deleteDocument(path: string, name: string) {
     const params: any = {
-      doc_path: path
+      doc_path: path,
     };
 
     return this.httpClient.delete(this.api.getDocumentRoute(name), { params }).pipe(
@@ -143,6 +145,7 @@ export class DocumentService implements OnDestroy {
 
   init() {
     const lastSaved = this.getLastSavedFileInfo();
+    let fInfo;
     if (lastSaved) this.documentStore.setFileInfo(lastSaved);
 
     this.subscription.add(
@@ -150,7 +153,22 @@ export class DocumentService implements OnDestroy {
         .pipe(
           flatMap((fileInfo: FileInfo) => {
             if (!fileInfo) return of(null);
+            fInfo = fileInfo;
             return this.getDocument(fileInfo.path, fileInfo.name, false);
+          }),
+          catchError(err => {
+            this.snackBar.open(translate('error.couldNotLoadDocument', { name: fInfo.name }), '', {
+              duration: 10000,
+            });
+            if (fInfo.name === lastSaved.name && fInfo.path === lastSaved.path) {
+              console.warn(
+                'Was not able to open last document. Will unset last document to avoid future problems.',
+                fInfo.name
+              );
+              localStorage.removeItem(LAST_DOCUMENT_KEY);
+            }
+
+            return this.api.handleHttpError(err);
           })
         )
         .subscribe((document: DocumentDefinition) => {
