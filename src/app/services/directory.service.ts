@@ -4,7 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-
+import { DocumentStore } from 'src/app/stores/document.store';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LinkService } from 'src/app/services/link.service';
 import { DirectoryStore } from './../stores/directory.store';
@@ -16,6 +16,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { sanitizeName } from '../utils/name.util';
 import { Subscription, of } from 'rxjs';
 import { translate } from '@ngneat/transloco';
+import { FileInfo } from '../models/fileInfo.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,7 @@ export class DirectoryService implements OnDestroy {
     private httpClient: HttpClient,
     private projectStore: ProjectStore,
     private directoryStore: DirectoryStore,
+    private documentStore: DocumentStore,
     private linkService: LinkService,
     private snackBar: MatSnackBar
   ) {}
@@ -74,6 +76,8 @@ export class DirectoryService implements OnDestroy {
   }
 
   public moveDirectory(path: string, name: string, newName: string, movedPath?: string) {
+    let currentFileInfo;
+
     if (!newName) {
       console.error('moveDirectory got called without a new name. do nothing.');
       return;
@@ -96,13 +100,22 @@ export class DirectoryService implements OnDestroy {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.projectStore.project$.pipe(
+    return this.documentStore.fileInfo$.pipe(
+      tap(res => (currentFileInfo = res)),
+      flatMap(_ => this.projectStore.project$),
       flatMap(project => {
         formdata.append('project_dir', project);
         return this.linkService.moveLinkDestinations(project, oldPath, newPath);
       }),
       flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
-      catchError(err => this.api.handleHttpError(err))
+      catchError(err => this.api.handleHttpError(err)),
+      tap((res: FileInfo) => {
+        if (currentFileInfo && currentFileInfo?.path.startsWith(oldPath)) {
+          currentFileInfo.path = currentFileInfo.path.replace(oldPath, res.path);
+          console.log('path of current document was renamed or moved, will update current file information');
+          this.documentStore.setFileInfo(currentFileInfo);
+        }
+      })
     );
   }
 
@@ -129,7 +142,7 @@ export class DirectoryService implements OnDestroy {
         this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
           duration: 10000,
         });
-        
+
         return this.api.handleHttpError(err);
       }),
       map((res: any) => {

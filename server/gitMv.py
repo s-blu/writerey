@@ -52,7 +52,7 @@ class GitMove(Resource):
             self.moveViaGit(doc_path, doc_name, new_doc_path, new_name_ptfrcs, msg)
             doc_name = new_name_ptfrcs
         self.moveViaGit(doc_path, doc_name, new_doc_path, new_name, msg, project_dir)
-        return 'finished'
+        return {'name': new_name or doc_name, 'path': new_doc_path or doc_path}
 
     def moveViaGit(self, doc_path, doc_name, new_doc_path, new_name, msg, projectDir = None):
         old_path = PathUtils.sanitizePathList([doc_path, doc_name])

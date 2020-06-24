@@ -81,6 +81,8 @@ export class DocumentService implements OnDestroy {
   }
 
   moveDocument(path: string, name: string, newName: string, newPath?: string) {
+    let currentFileInfo;
+
     if (!newName) {
       console.error('moveDocument got called without a new name. do nothing.');
       return;
@@ -104,13 +106,21 @@ export class DocumentService implements OnDestroy {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.projectStore.project$.pipe(
+    return this.documentStore.fileInfo$.pipe(
+      tap(res => (currentFileInfo = res)),
+      flatMap(_ => this.projectStore.project$),
       flatMap(project => {
         formdata.append('project_dir', project);
         return this.linkService.moveLinkDestination(project, name, path, newName, newPath);
       }),
       flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
-      catchError(err => this.api.handleHttpError(err))
+      catchError(err => this.api.handleHttpError(err)),
+      tap((res: FileInfo) => {
+        if (currentFileInfo?.path === path && currentFileInfo.name === name) {
+          console.log('current document was renamed or moved, will update current file information');
+          this.documentStore.setFileInfo(res);
+        }
+      })
     );
   }
 
@@ -132,27 +142,27 @@ export class DocumentService implements OnDestroy {
     );
   }
 
-  getLastSavedFileInfo(): { lastSaved: FileInfo; containingProject: string } {
-    let lastSaved = null;
+  getLastSavedInfo(): { lastSavedFileInfo: FileInfo; containingProject: string } {
+    let lastSavedFileInfo = null;
     let containingProject;
     try {
-      lastSaved = localStorage.getItem(LAST_DOCUMENT_KEY);
-      lastSaved = JSON.parse(lastSaved);
-      containingProject = lastSaved.path.split('/')[0];
+      lastSavedFileInfo = localStorage.getItem(LAST_DOCUMENT_KEY);
+      lastSavedFileInfo = JSON.parse(lastSavedFileInfo);
+      containingProject = lastSavedFileInfo.path.split('/')[0];
     } catch {
-      lastSaved = null;
+      lastSavedFileInfo = null;
     }
     return {
-      lastSaved,
+      lastSavedFileInfo,
       containingProject,
     };
   }
 
   init() {
-    const { lastSaved, containingProject } = this.getLastSavedFileInfo();
+    const { lastSavedFileInfo, containingProject } = this.getLastSavedInfo();
     let fInfo;
-    if (lastSaved) {
-      this.documentStore.setFileInfo(lastSaved);
+    if (lastSavedFileInfo) {
+      this.documentStore.setFileInfo(lastSavedFileInfo);
       this.projectStore.setProject(containingProject);
     }
     this.subscription.add(
@@ -167,7 +177,7 @@ export class DocumentService implements OnDestroy {
             this.snackBar.open(translate('error.couldNotLoadDocument', { name: fInfo.name }), '', {
               duration: 10000,
             });
-            if (fInfo.name === lastSaved.name && fInfo.path === lastSaved.path) {
+            if (fInfo.name === lastSavedFileInfo.name && fInfo.path === lastSavedFileInfo.path) {
               console.warn(
                 'Was not able to open last document. Will unset last document to avoid future problems.',
                 fInfo.name

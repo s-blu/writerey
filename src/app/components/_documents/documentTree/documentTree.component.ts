@@ -166,7 +166,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       const nextDir = flattenedTreeNodes.find(dir => dir.name === step && dir.path === pathUpUntilNow);
 
       if (!nextDir) {
-        console.error('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
+        console.warn('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
         return;
       }
 
