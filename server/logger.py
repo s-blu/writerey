@@ -36,13 +36,16 @@ class Logger:
 
     def parseToString(self, *msg):
         concatted = ''
-        for m in msg:
-            try:
-                concatted += ' ' + m
-            except:
+        try: 
+            for m in msg:
                 try:
-                    m = json.dumps(m)
                     concatted += ' ' + m
                 except:
-                    pass
+                    try:
+                        m = json.dumps(m)
+                        concatted += ' ' + m
+                    except:
+                        pass
+        except:
+            concatted = 'ERROR ON PARSING LOG STRING'
         return concatted
