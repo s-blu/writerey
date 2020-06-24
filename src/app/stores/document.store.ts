@@ -8,7 +8,7 @@ import { FileInfo } from './../models/fileInfo.interface';
 import { DocumentDefinition, LAST_DOCUMENT_KEY } from './../models/documentDefinition.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map, tap, shareReplay } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class DocumentStore {
@@ -31,7 +31,8 @@ export class DocumentStore {
       if (res) {
         localStorage.setItem(LAST_DOCUMENT_KEY, JSON.stringify({ name: res.name, path: res.path }));
       }
-    })
+    }),
+    shareReplay(1)
   );
   readonly paragraphId$ = this._paragraphIdSubject.asObservable();
   readonly lastSaved$ = this._lastSavedSubject.asObservable();

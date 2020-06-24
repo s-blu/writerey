@@ -34,6 +34,7 @@ class GitMove(Resource):
         except:
             pass
 
+
         if doc_name and not new_name:
             abort(400, 'Got no new name, cannot move')
         if not doc_name:
@@ -50,9 +51,8 @@ class GitMove(Resource):
             new_name_ptfrcs = new_name[:6] + '_ptfrcs'  # "prevent trouble from renaming case sensitivity"
             self.moveViaGit(doc_path, doc_name, new_doc_path, new_name_ptfrcs, msg)
             doc_name = new_name_ptfrcs
-
         self.moveViaGit(doc_path, doc_name, new_doc_path, new_name, msg, project_dir)
-        return 'finished'
+        return {'name': new_name or doc_name, 'path': new_doc_path or doc_path}
 
     def moveViaGit(self, doc_path, doc_name, new_doc_path, new_name, msg, projectDir = None):
         old_path = PathUtils.sanitizePathList([doc_path, doc_name])
@@ -66,7 +66,7 @@ class GitMove(Resource):
         except:
             self.logger.logDebug('file is not under version control yet, do a file system move')
             shutil.move(PathUtils.sanitizePathList([basePath, old_path]), PathUtils.sanitizePathList([basePath, new_path])) 
-            if (metaExists):
+            if (metaExists and new_name):
                 shutil.move(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
             return
         
@@ -76,7 +76,7 @@ class GitMove(Resource):
         if not msg:
             msg = 'Rename ' + old_path + ' to ' + new_path
         self.git.run(["git", "mv", old_path, new_path])
-        if metaExists:
+        if metaExists and new_name:
             self.git.run(["git", "mv", old_meta_path, new_meta_path])
         if projectDir:
             # add links file to the commit, since it possibly get changed on a move 

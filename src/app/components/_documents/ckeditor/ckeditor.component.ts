@@ -75,7 +75,8 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     },
     language: 'en',
     image: {
-      toolbar: ['imageTextAlternative', 'imageStyle:full', 'imageStyle:side'],
+      toolbar: ['imageStyle:alignLeft', 'imageStyle:full', 'imageStyle:alignRight'],
+      styles: ['full', 'alignLeft', 'alignRight'],
     },
     table: {
       contentToolbar: ['tableProperties', 'tableColumn', 'tableRow', 'mergeTableCells', 'tableCellProperties'],
@@ -102,10 +103,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     }
 
     this.config.simpleUpload = {
-      // The URL that the images are uploaded to.
-      uploadUrl: this.apiService.getImagetRoute(doc.name),
-
-      // Headers sent along with the XMLHttpRequest to the upload server.
+      uploadUrl: this.apiService.getImageRoute(doc.name),
       headers: {
         docpath: doc.path,
       },

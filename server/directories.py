@@ -17,22 +17,22 @@ from logger import Logger
 
 
 class Directories(Resource):
+    log = Logger('directories')
     def get(self, dir_name):
         return 'Not implemented yet'
 
     def put(self, dir_name):
-        log = Logger('directories.put')
-        log.logDebug('put called', dir_name)
+        self.log.logDebug('put called', dir_name)
         dir_name = PathUtils.sanitizeFilename(dir_name)
         if not request.form or (not request.form['doc_path'] and not request.form['root_dir']):
-            log.logWarn(
+            self.log.logWarn(
                 'directories put was called with invalid data. Do nothing.')
             return None
         newPath = PathUtils.sanitizePathList(
                 [basePath, request.form['doc_path'], dir_name])
-        log.logDebug('saving path', newPath)
+        self.log.logDebug('saving path', newPath)
         Path(newPath).mkdir()
-        log.logDebug('mkdir:', {'path': PathUtils.sanitizePathString(newPath, True)})
+        self.log.logDebug('mkdir:', {'path': PathUtils.sanitizePathString(newPath, True)})
         return {'path': PathUtils.sanitizePathString(newPath, True)}
 
     def delete(self, dir_name): 
@@ -41,8 +41,8 @@ class Directories(Resource):
                 [basePath, request.args.get('dir_path')])
         else:
             pathToDelete = basePath
-
         dirPath = PathUtils.sanitizePathList([pathToDelete, dir_name])
+        self.log.logDebug('will delete directory', dirPath)
         if not os.path.exists(dirPath):
             return abort(400, 'File for deletion was not found')
         

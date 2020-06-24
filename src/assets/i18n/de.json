@@ -56,6 +56,7 @@
   },
   "deletion": {
     "type": {
+      "project": "Projekt",
       "file": "Dokument",
       "dir": "Ordner",
       "label": "Rubrik",
@@ -81,9 +82,15 @@
   "documentTree": {
     "rename": "Umbenennen",
     "delete": "Löschen",
+    "setStartPage": "Als Startseite setzen",
+    "removeStartPage": "Als Startseite entfernen",
     "newfile": "Neues Dokument",
     "newdir": "Neuer Ordner",
-    "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!"
+    "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!",
+    "snackBar": {
+      "setStartPage": "{{name}} wurde als Startseite festgelegt.",
+      "removeStartPage": "{{name}} wird nicht mehr als Startseite verwendet."
+    }
   },
   "topbar": {
     "newfile": "Neue Datei",
@@ -237,7 +244,9 @@
     "new": "Neues Projekt",
     "title": "Projekte",
     "empty-hint": "Du hast noch keine Projekte. Klicke die Schaltfläche, um ein Neues zu erstellen und mit deinem Vorhaben loszulegen!",
-    "nameAlreadyInUse": "Dieser Name ist bereits vergeben. Bitte nutze einen anderen."
+    "nameAlreadyInUse": "Dieser Name ist bereits vergeben. Bitte nutze einen anderen.",
+    "rename": "Umbenennen",
+    "delete": "Löschen"
   },
   "modeSwitcher": {
     "read": "Lesen",
@@ -246,5 +255,9 @@
   },
   "wordcount": {
     "words": "Wörter"
+  },
+  "error": {
+    "couldNotFetchTree": "Konnte Ordner für {{name}} nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
+    "couldNotLoadDocument": "Das Dokument '{{name}}' konnte nicht geladen werden :("
   }
 }

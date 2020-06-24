@@ -4,10 +4,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectStore } from './../stores/project.store';
 import { LinkService } from 'src/app/services/link.service';
 import { FileInfo } from '../models/fileInfo.interface';
-import { DocumentDefinition, LAST_DOCUMENT_KEY } from '../models/documentDefinition.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -30,7 +31,8 @@ export class DocumentService implements OnDestroy {
     private paragraphService: ParagraphService,
     private documentStore: DocumentStore,
     private linkService: LinkService,
-    private projectStore: ProjectStore
+    private projectStore: ProjectStore,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnDestroy() {
@@ -73,12 +75,14 @@ export class DocumentService implements OnDestroy {
     return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.transformLastEditedIntoDate(res)),
-      tap(res => this.documentStore.setLastSaved(res?.last_edited)),
-      tap(_ => console.log(`saved document [${new Date().toISOString()}] ${path}/${name} `))
+      tap(res => this.documentStore.setLastSaved(res?.last_edited))
+      // tap(_ => console.log(`saved document [${new Date().toISOString()}] ${path}/${name} `)) // FIXME enable that on debug mode
     );
   }
 
   moveDocument(path: string, name: string, newName: string, newPath?: string) {
+    let currentFileInfo;
+
     if (!newName) {
       console.error('moveDocument got called without a new name. do nothing.');
       return;
@@ -102,13 +106,21 @@ export class DocumentService implements OnDestroy {
 
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
-    return this.projectStore.project$.pipe(
+    return this.documentStore.fileInfo$.pipe(
+      tap(res => (currentFileInfo = res)),
+      flatMap(_ => this.projectStore.project$),
       flatMap(project => {
         formdata.append('project_dir', project);
         return this.linkService.moveLinkDestination(project, name, path, newName, newPath);
       }),
       flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
-      catchError(err => this.api.handleHttpError(err))
+      catchError(err => this.api.handleHttpError(err)),
+      tap((res: FileInfo) => {
+        if (currentFileInfo?.path === path && currentFileInfo.name === name) {
+          console.log('current document was renamed or moved, will update current file information');
+          this.documentStore.setFileInfo(res);
+        }
+      })
     );
   }
 
@@ -121,7 +133,7 @@ export class DocumentService implements OnDestroy {
 
   deleteDocument(path: string, name: string) {
     const params: any = {
-      doc_path: path
+      doc_path: path,
     };
 
     return this.httpClient.delete(this.api.getDocumentRoute(name), { params }).pipe(
@@ -130,27 +142,71 @@ export class DocumentService implements OnDestroy {
     );
   }
 
-  getLastSavedFileInfo(): FileInfo {
-    let lastSaved = null;
+  getInitialDocumentInfo(): { initFileInfo: FileInfo; containingProject: string } {
+    let initFileInfo = this.getStartPage();
+    let containingProject;
+
     try {
-      lastSaved = localStorage.getItem(LAST_DOCUMENT_KEY);
-      lastSaved = JSON.parse(lastSaved);
+      if (!initFileInfo) {
+        initFileInfo = JSON.parse(localStorage.getItem(LAST_DOCUMENT_KEY));
+      }
+
+      containingProject = initFileInfo.path.split('/')[0];
     } catch {
-      lastSaved = null;
+      initFileInfo = null;
     }
-    return lastSaved;
+    return {
+      initFileInfo,
+      containingProject,
+    };
+  }
+
+  getStartPage(): FileInfo | null {
+    let startPage;
+    try {
+      startPage = JSON.parse(localStorage.getItem(START_PAGE_KEY));
+    } catch {
+      startPage = null;
+    }
+    return startPage;
+  }
+
+  setStartPage(fileInfo: FileInfo) {
+    localStorage.setItem(START_PAGE_KEY, JSON.stringify(fileInfo));
+  }
+
+  removeStartPage() {
+    localStorage.removeItem(START_PAGE_KEY);
   }
 
   init() {
-    const lastSaved = this.getLastSavedFileInfo();
-    if (lastSaved) this.documentStore.setFileInfo(lastSaved);
-
+    const { initFileInfo, containingProject } = this.getInitialDocumentInfo();
+    let fInfo;
+    if (initFileInfo) {
+      this.documentStore.setFileInfo(initFileInfo);
+      this.projectStore.setProject(containingProject);
+    }
     this.subscription.add(
       this.documentStore.fileInfo$
         .pipe(
           flatMap((fileInfo: FileInfo) => {
             if (!fileInfo) return of(null);
+            fInfo = fileInfo;
             return this.getDocument(fileInfo.path, fileInfo.name, false);
+          }),
+          catchError(err => {
+            this.snackBar.open(translate('error.couldNotLoadDocument', { name: fInfo.name }), '', {
+              duration: 10000,
+            });
+            if (fInfo.name === initFileInfo.name && fInfo.path === initFileInfo.path) {
+              console.warn(
+                'Was not able to open last document. Will unset last document to avoid future problems.',
+                fInfo.name
+              );
+              localStorage.removeItem(LAST_DOCUMENT_KEY);
+            }
+
+            return this.api.handleHttpError(err);
           })
         )
         .subscribe((document: DocumentDefinition) => {

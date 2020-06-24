@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -21,7 +21,7 @@ export class DeletionService {
     private translocoService: TranslocoService
   ) {}
 
-  showDeleteConfirmDialog(name: string, type: string) {
+  handleDeleteUserInputAndSnapshot(name: string, type: string) {
     const typeTranslation = this.translocoService.translate(`deletion.type.${type}`);
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, {
       width: '350px',

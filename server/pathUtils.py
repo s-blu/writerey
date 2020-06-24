@@ -22,7 +22,7 @@ class PathUtils:
         path = parts[0]
         parts.pop(0)
         for p in parts:
-            if p == '':
+            if p == '' or p == None:
                 continue
             if p.endswith('/'):
                 p = p[:-1]

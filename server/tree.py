@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
+from flask import request, abort
 from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
@@ -24,10 +24,15 @@ class Tree(Resource):
             'files': []
         }
         treeBase = request.args.get('base')
+
         log.logDebug('========== GET TREE =========')       
         log.logDebug('os.getcwd:', os.getcwd())
         log.logDebug('base:', treeBase)
         log.logDebug('==========')
+
+        if (treeBase and not os.path.exists(PathUtils.sanitizePathList([basePath, treeBase]))):
+                abort(400, 'given treeBase is not part of the dir structure')
+
         for (dirpath, dirnames, filenames) in os.walk(basePath):
             filePath = PathUtils.sanitizePathString(dirpath, True)
             path = filePath.split('/')
@@ -62,7 +67,7 @@ class Tree(Resource):
         result = directoryStructure
         if (treeBase): 
             result = next((x for x in directoryStructure['dirs'] if x['name'] == treeBase), result)
-
+    
         return json.dumps(result)
 
     @staticmethod

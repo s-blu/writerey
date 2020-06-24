@@ -51,5 +51,5 @@ api.add_resource(Tag, '/git/tag')
 api.add_resource(GitMove, '/git/mv')
 
 if __name__ == '__main__':
-    app.run(port=port, debug=True)  # FIXME
-    # serve(app, listen= host + ":" + port)
+    # app.run(port=port, debug=True)  # FIXME
+    serve(app, listen= host + ":" + port)

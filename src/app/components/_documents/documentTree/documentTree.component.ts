@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { StripFileEndingPipe } from './../../../pipes/stripFileEnding.pipe';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DeletionService } from './../../../services/deletion.service';
@@ -17,6 +18,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { flatMap, filter } from 'rxjs/operators';
+import { translate } from '@ngneat/transloco';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -38,6 +40,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Output() documentSelected = new EventEmitter<any>();
 
   activeFileInfo;
+  currentStartPage;
   tree;
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
@@ -54,6 +57,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit() {
+    this.currentStartPage = this.documentService.getStartPage();
     this.subscription.add(this.directoryStore.tree$.subscribe(res => this.setTree(res)));
 
     this.subscription.add(
@@ -75,17 +79,42 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     private documentService: DocumentService,
     private directoryService: DirectoryService,
     private stripFileEndingPipe: StripFileEndingPipe,
-    private deletionService: DeletionService
+    private deletionService: DeletionService,
+    private snackBar: MatSnackBar
   ) {}
 
   setTree(tree) {
     if (!tree) return;
     this.tree = tree;
     this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
+    this.expandToActiveDocument();
   }
 
   clickedDocument(node) {
     this.documentSelected.emit(node);
+  }
+
+  toggleStartPage(node) {
+    if (this.isNodeCurrentStartPage(node)) {
+      this.documentService.removeStartPage();
+      this.currentStartPage = null;
+      this.snackBar.open(translate('documentTree.snackBar.removeStartPage', { name: node.name }), '', {
+        duration: 5000,
+        horizontalPosition: 'right',
+      });
+    } else {
+      const newStartPage = { path: node.path, name: node.name };
+      this.documentService.setStartPage(newStartPage);
+      this.currentStartPage = newStartPage;
+      this.snackBar.open(translate('documentTree.snackBar.setStartPage', { name: node.name }), '', {
+        duration: 5000,
+        horizontalPosition: 'right',
+      });
+    }
+  }
+
+  isNodeCurrentStartPage(node) {
+    return this.currentStartPage?.name === node.name && this.currentStartPage?.path === node.path;
   }
 
   renameDir(node) {
@@ -107,7 +136,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   deleteItem(node, typeOfItem) {
     this.subscription.add(
       this.deletionService
-        .showDeleteConfirmDialog(node.name, typeOfItem)
+        .handleDeleteUserInputAndSnapshot(node.name, typeOfItem)
         .pipe(
           filter(res => res),
           flatMap(_ => {
@@ -165,7 +194,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       const nextDir = flattenedTreeNodes.find(dir => dir.name === step && dir.path === pathUpUntilNow);
 
       if (!nextDir) {
-        console.error('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
+        console.warn('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
         return;
       }
 

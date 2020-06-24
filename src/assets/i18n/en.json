@@ -56,6 +56,7 @@
   },
   "deletion": {
     "type": {
+      "project": "Project",
       "file": "File",
       "dir": "Directory",
       "label": "Label",
@@ -81,9 +82,15 @@
   "documentTree": {
     "rename": "Rename",
     "delete": "Delete",
+    "setStartPage": "Use as start page",
+    "removeStartPage": "Remove as start page",
     "newfile": "New document",
     "newdir": "New directory",
-    "empty-tree": "You have no directories or documents. Hit the 'New directory' button above and get started!"
+    "empty-tree": "You have no directories or documents. Hit the 'New directory' button above and get started!",
+    "snackBar": {
+      "setStartPage": "{{name}} is now your start page.",
+      "removeStartPage": "{{name}} is no longer used as start page."
+    }
   },
   "topbar": {
     "newfile": "Create a new file",
@@ -237,7 +244,9 @@
     "new": "New Project",
     "title": "Projects",
     "empty-hint": "You have no projects. Hit the button above to create a new one and get started with your writing adventure!",
-    "nameAlreadyInUse": "This name is already in use. Please choose a different one."
+    "nameAlreadyInUse": "This name is already in use. Please choose a different one.",
+    "rename": "Rename",
+    "delete": "Delete"
   },
   "modeSwitcher": {
     "read": "Read",
@@ -247,5 +256,9 @@
   "wordcount": {
     "word": "Word",
     "words": "Words"
+  },
+  "error": {
+    "couldNotFetchTree": "Was unable to fetch tree, cannot display directories. Please try restart the application or return to project overview.",
+    "couldNotLoadDocument": "Was unable to load document :("
   }
 }
