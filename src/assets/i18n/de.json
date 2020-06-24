@@ -82,9 +82,15 @@
   "documentTree": {
     "rename": "Umbenennen",
     "delete": "Löschen",
+    "setStartPage": "Als Startseite setzen",
+    "removeStartPage": "Als Startseite entfernen",
     "newfile": "Neues Dokument",
     "newdir": "Neuer Ordner",
-    "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!"
+    "empty-tree": "Du hast noch keine Dokumente oder Ordner. Nutze die Schaltflächen, um loszulegen!",
+    "snackBar": {
+      "setStartPage": "{{name}} wurde als Startseite festgelegt.",
+      "removeStartPage": "{{name}} wird nicht mehr als Startseite verwendet."
+    }
   },
   "topbar": {
     "newfile": "Neue Datei",

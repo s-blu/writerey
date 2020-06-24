@@ -7,7 +7,6 @@
 -->
 
 <div class="document-tree" *transloco="let t; read: 'documentTree'">
-
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
     <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
       <button
@@ -35,14 +34,8 @@
           <mat-icon>delete</mat-icon>
           <span>{{ t('delete') }}</span>
         </button>
-        <wy-create-new-dir-or-file
-          type="dir"
-          [path]="prettifyPath(node)"
-        ></wy-create-new-dir-or-file>
-        <wy-create-new-dir-or-file
-          type="file"
-          [path]="prettifyPath(node)"
-        ></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file type="dir" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file type="file" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
       </mat-menu>
     </mat-tree-node>
 
@@ -51,7 +44,9 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="15"
       class="file-node"
-      [class]="{ active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name }"
+      [class]="{
+        active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name
+      }"
     >
       <button mat-icon-button (click)="clickedDocument(node)" class="explorer-btn file-btn">
         <i class="material-icons-outlined">insert_drive_file</i>
@@ -65,6 +60,10 @@
         <button mat-menu-item (click)="renameFile(node)">
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="toggleStartPage(node)">
+          <mat-icon>push_pin</mat-icon>
+          <span>{{ isNodeCurrentStartPage(node) ? t('removeStartPage') : t('setStartPage') }}</span>
         </button>
         <button mat-menu-item (click)="deleteFile(node)">
           <mat-icon>delete</mat-icon>

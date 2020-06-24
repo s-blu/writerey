@@ -82,9 +82,15 @@
   "documentTree": {
     "rename": "Rename",
     "delete": "Delete",
+    "setStartPage": "Use as start page",
+    "removeStartPage": "Remove as start page",
     "newfile": "New document",
     "newdir": "New directory",
-    "empty-tree": "You have no directories or documents. Hit the 'New directory' button above and get started!"
+    "empty-tree": "You have no directories or documents. Hit the 'New directory' button above and get started!",
+    "snackBar": {
+      "setStartPage": "{{name}} is now your start page.",
+      "removeStartPage": "{{name}} is no longer used as start page."
+    }
   },
   "topbar": {
     "newfile": "Create a new file",

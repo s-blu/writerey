@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectStore } from './../stores/project.store';
 import { LinkService } from 'src/app/services/link.service';
 import { FileInfo } from '../models/fileInfo.interface';
-import { DocumentDefinition, LAST_DOCUMENT_KEY } from '../models/documentDefinition.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -142,27 +142,48 @@ export class DocumentService implements OnDestroy {
     );
   }
 
-  getLastSavedInfo(): { lastSavedFileInfo: FileInfo; containingProject: string } {
-    let lastSavedFileInfo = null;
+  getInitialDocumentInfo(): { initFileInfo: FileInfo; containingProject: string } {
+    let initFileInfo = this.getStartPage();
     let containingProject;
+
     try {
-      lastSavedFileInfo = localStorage.getItem(LAST_DOCUMENT_KEY);
-      lastSavedFileInfo = JSON.parse(lastSavedFileInfo);
-      containingProject = lastSavedFileInfo.path.split('/')[0];
+      if (!initFileInfo) {
+        initFileInfo = JSON.parse(localStorage.getItem(LAST_DOCUMENT_KEY));
+      }
+
+      containingProject = initFileInfo.path.split('/')[0];
     } catch {
-      lastSavedFileInfo = null;
+      initFileInfo = null;
     }
     return {
-      lastSavedFileInfo,
+      initFileInfo,
       containingProject,
     };
   }
 
+  getStartPage(): FileInfo | null {
+    let startPage;
+    try {
+      startPage = JSON.parse(localStorage.getItem(START_PAGE_KEY));
+    } catch {
+      startPage = null;
+    }
+    return startPage;
+  }
+
+  setStartPage(fileInfo: FileInfo) {
+    localStorage.setItem(START_PAGE_KEY, JSON.stringify(fileInfo));
+  }
+
+  removeStartPage() {
+    localStorage.removeItem(START_PAGE_KEY);
+  }
+
   init() {
-    const { lastSavedFileInfo, containingProject } = this.getLastSavedInfo();
+    const { initFileInfo, containingProject } = this.getInitialDocumentInfo();
     let fInfo;
-    if (lastSavedFileInfo) {
-      this.documentStore.setFileInfo(lastSavedFileInfo);
+    if (initFileInfo) {
+      this.documentStore.setFileInfo(initFileInfo);
       this.projectStore.setProject(containingProject);
     }
     this.subscription.add(
@@ -177,7 +198,7 @@ export class DocumentService implements OnDestroy {
             this.snackBar.open(translate('error.couldNotLoadDocument', { name: fInfo.name }), '', {
               duration: 10000,
             });
-            if (fInfo.name === lastSavedFileInfo.name && fInfo.path === lastSavedFileInfo.path) {
+            if (fInfo.name === initFileInfo.name && fInfo.path === initFileInfo.path) {
               console.warn(
                 'Was not able to open last document. Will unset last document to avoid future problems.',
                 fInfo.name
