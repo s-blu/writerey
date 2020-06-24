@@ -8,7 +8,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LinkService } from 'src/app/services/link.service';
 import { DirectoryStore } from './../stores/directory.store';
-import { ProjectStore, LAST_PROJECT_KEY } from './../stores/project.store';
+import { ProjectStore } from './../stores/project.store';
 import { catchError, flatMap, map, tap, take, filter } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
@@ -129,15 +129,7 @@ export class DirectoryService implements OnDestroy {
         this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
           duration: 10000,
         });
-
-        if (this.project === localStorage.getItem(LAST_PROJECT_KEY)) {
-          console.warn(
-            'Was not able to open last project. Will unset last project to avoid future problems.',
-            this.project
-          );
-          localStorage.removeItem(LAST_PROJECT_KEY);
-        }
-
+        
         return this.api.handleHttpError(err);
       }),
       map((res: any) => {
@@ -154,9 +146,6 @@ export class DirectoryService implements OnDestroy {
   }
 
   init() {
-    const lastProject = localStorage.getItem(LAST_PROJECT_KEY);
-    if (lastProject) this.projectStore.setProject(lastProject);
-
     this.subscription.add(
       this.projectStore.project$
         .pipe(

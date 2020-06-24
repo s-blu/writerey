@@ -132,22 +132,29 @@ export class DocumentService implements OnDestroy {
     );
   }
 
-  getLastSavedFileInfo(): FileInfo {
+  getLastSavedFileInfo(): { lastSaved: FileInfo; containingProject: string } {
     let lastSaved = null;
+    let containingProject;
     try {
       lastSaved = localStorage.getItem(LAST_DOCUMENT_KEY);
       lastSaved = JSON.parse(lastSaved);
+      containingProject = lastSaved.path.split('/')[0];
     } catch {
       lastSaved = null;
     }
-    return lastSaved;
+    return {
+      lastSaved,
+      containingProject,
+    };
   }
 
   init() {
-    const lastSaved = this.getLastSavedFileInfo();
+    const { lastSaved, containingProject } = this.getLastSavedFileInfo();
     let fInfo;
-    if (lastSaved) this.documentStore.setFileInfo(lastSaved);
-
+    if (lastSaved) {
+      this.documentStore.setFileInfo(lastSaved);
+      this.projectStore.setProject(containingProject);
+    }
     this.subscription.add(
       this.documentStore.fileInfo$
         .pipe(

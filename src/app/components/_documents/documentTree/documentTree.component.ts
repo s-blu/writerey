@@ -82,6 +82,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     if (!tree) return;
     this.tree = tree;
     this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
+    this.expandToActiveDocument();
   }
 
   clickedDocument(node) {

@@ -6,14 +6,13 @@
 
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-
-export const LAST_PROJECT_KEY = 'writerey_last_selected_project';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
 export class ProjectStore {
   private readonly _projectSubject = new BehaviorSubject<string>(undefined);
 
-  readonly project$ = this._projectSubject.asObservable();
+  readonly project$ = this._projectSubject.asObservable().pipe(shareReplay(1));
 
   private get projectSubject(): any {
     return this._projectSubject.getValue();
@@ -24,7 +23,6 @@ export class ProjectStore {
   }
 
   public setProject(newproject: string) {
-    if (newproject) localStorage.setItem(LAST_PROJECT_KEY, newproject);
     this.projectSubject = newproject;
   }
 }
