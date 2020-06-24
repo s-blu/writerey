@@ -54,7 +54,6 @@ export class LinkService {
   }
 
   moveLinkDestinations(project: string, oldPath: string, newPath: string) {
-    console.log(`moveLinkDestinations project "${project}" oldPath "${oldPath}" newPath "${newPath}"`);
     if (!project || !oldPath || !newPath) {
       console.error('linkService -> moveLinkDestinations was called with invalid data. Aborting.');
       return;

@@ -103,10 +103,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     }
 
     this.config.simpleUpload = {
-      // The URL that the images are uploaded to.
-      uploadUrl: this.apiService.getImagetRoute(doc.name),
-
-      // Headers sent along with the XMLHttpRequest to the upload server.
+      uploadUrl: this.apiService.getImageRoute(doc.name),
       headers: {
         docpath: doc.path,
       },

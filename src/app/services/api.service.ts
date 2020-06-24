@@ -56,7 +56,7 @@ export class ApiService {
     return `${this.serverAdress}/label/${labelId}`;
   }
 
-  getImagetRoute(docName) {
+  getImageRoute(docName) {
     return docName ? `${this.serverAdress}/img/${docName}` : `${this.serverAdress}/img`;
   }
 
