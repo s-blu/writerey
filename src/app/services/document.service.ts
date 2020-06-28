@@ -80,15 +80,19 @@ export class DocumentService implements OnDestroy {
     );
   }
 
-  moveDocument(path: string, name: string, newName: string, newPath?: string) {
+  moveDocument(path: string, name: string, newName?: string, newPath?: string) {
     let currentFileInfo;
 
-    if (!newName) {
-      console.error('moveDocument got called without a new name. do nothing.');
-      return;
+    if (!newName && !newPath) {
+      console.error('moveDocument got called without a new name or path. do nothing.');
+      return of(null);
     }
-    newName = sanitizeName(newName);
-    newName = ensureFileEnding(newName);
+    if (!newName) {
+      newName = name;
+    } else {
+      newName = sanitizeName(newName);
+      newName = ensureFileEnding(newName);  
+    }
 
     let msg;
     if (newPath) {

@@ -8,7 +8,15 @@
 
 <div class="document-tree" *transloco="let t; read: 'documentTree'">
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="10" class="dir-node">
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="10"
+      class="dir-node"
+      [ngClass]="{
+        moving: node.path === moveNode?.path && node.name === moveNode?.name
+      }"
+    >
       <button
         mat-icon-button
         [disabled]="!node.expandable"
@@ -21,7 +29,15 @@
         </mat-icon>
       </button>
       <div class="name">{{ node.name }}</div>
-      <button *ngIf="showMenus" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="dirMenu">
+      <button
+        *ngIf="node.path === moveNode?.path && node.name === moveNode?.name; else moveHereButton"
+        mat-icon-button
+        class="explorer-btn"
+        (click)="cancelMoving()"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button *ngIf="showMenus && !moveNode" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="dirMenu">
         <mat-icon class="menu">more_vert</mat-icon>
       </button>
 
@@ -30,6 +46,10 @@
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
         </button>
+        <button mat-menu-item (click)="setMoveNode(node)">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>{{ t('move') }}</span>
+        </button>
         <button mat-menu-item (click)="deleteDir(node)">
           <mat-icon>delete</mat-icon>
           <span>{{ t('delete') }}</span>
@@ -37,6 +57,12 @@
         <wy-create-new-dir-or-file type="dir" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
         <wy-create-new-dir-or-file type="file" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
       </mat-menu>
+
+      <ng-template #moveHereButton>
+        <button *ngIf="moveNode" mat-icon-button class="explorer-btn" (click)="finishMoving(node)">
+          <mat-icon class="menu">call_received</mat-icon>
+        </button>
+      </ng-template>
     </mat-tree-node>
 
     <mat-tree-node
@@ -44,22 +70,35 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="15"
       class="file-node"
-      [class]="{
-        active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name
+      [ngClass]="{
+        active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name,
+        moving: node.path === moveNode?.path && node.name === moveNode?.name
       }"
     >
       <button mat-icon-button (click)="clickedDocument(node)" class="explorer-btn file-btn">
         <i class="material-icons-outlined">insert_drive_file</i>
       </button>
       <div (click)="clickedDocument(node)" class="name">{{ node.name | stripFileEnding }} {{ node.isActive }}</div>
-      <button *ngIf="showMenus" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="fileMenu">
+      <button *ngIf="showMenus && !moveNode" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="fileMenu">
         <mat-icon class="menu">more_vert</mat-icon>
+      </button>
+      <button
+        *ngIf="node.path === moveNode?.path && node.name === moveNode?.name"
+        mat-icon-button
+        class="explorer-btn"
+        (click)="cancelMoving()"
+      >
+        <mat-icon>clear</mat-icon>
       </button>
 
       <mat-menu #fileMenu="matMenu">
         <button mat-menu-item (click)="renameFile(node)">
           <mat-icon>text_fields</mat-icon>
           <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="setMoveNode(node)">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>{{ t('move') }}</span>
         </button>
         <button mat-menu-item (click)="toggleStartPage(node)">
           <mat-icon>push_pin</mat-icon>

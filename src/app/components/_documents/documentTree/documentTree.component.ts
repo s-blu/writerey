@@ -31,7 +31,7 @@ interface ExplorerNode {
 @Component({
   selector: 'wy-document-tree',
   templateUrl: './documentTree.component.html',
-  styleUrls: ['./documentTree.component.scss'],
+  styleUrls: ['./documentTree.component.scss']
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
@@ -53,6 +53,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     node => [...node.dirs, ...node.files]
   );
   dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
+  moveNode;
 
   private subscription = new Subscription();
 
@@ -131,6 +132,38 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
 
   deleteFile(node: ExplorerNode) {
     this.deleteItem(node, 'file');
+  }
+
+  setMoveNode(node: ExplorerNode) {
+    this.moveNode = node;
+  }
+
+  cancelMoving() {
+    this.moveNode = null;
+  }
+
+  finishMoving(targetNode) {
+    let moveObs;
+
+    if (this.moveNode.isFile) {
+      moveObs = this.documentService.moveDocument(
+        this.moveNode.path,
+        this.moveNode.name,
+        null,
+        `${targetNode.path}/${targetNode.name}`
+      );
+    } else {
+      moveObs = this.directoryService.moveDirectory(
+        this.moveNode.path,
+        this.moveNode.name,
+        null,
+        `${targetNode.path}/${targetNode.name}`
+      );
+    }
+
+    moveObs.pipe(flatMap(_ => this.directoryService.getTree())).subscribe(_ => {
+      this.moveNode = null;
+    });
   }
 
   deleteItem(node, typeOfItem) {

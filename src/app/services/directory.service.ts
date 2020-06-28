@@ -78,17 +78,21 @@ export class DirectoryService implements OnDestroy {
   public moveDirectory(path: string, name: string, newName: string, movedPath?: string) {
     let currentFileInfo;
 
-    if (!newName) {
-      console.error('moveDirectory got called without a new name. do nothing.');
-      return;
+    if (!newName && !movedPath) {
+      console.error('moveDirectory got called without a new name or path. do nothing.');
+      return of(null);
     }
-    newName = sanitizeName(newName);
+    if (!newName) {
+      newName = name;
+    } else {
+      newName = sanitizeName(newName);
+    }
     const oldPath = path + '/' + name;
     const newPath = movedPath ? `${movedPath}/${newName}` : `${path}/${newName}`;
 
     let msg;
     if (movedPath) {
-      msg = translate('git.message.move', { name: oldPath, newName: newPath });
+      msg = translate('git.message.move', { name, newPath, oldPath });
     } else {
       msg = translate('git.message.rename', { oldName: oldPath, newName: newPath });
     }
