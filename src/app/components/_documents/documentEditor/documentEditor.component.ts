@@ -148,6 +148,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.documentService.getDocument(newDoc.path, newDoc.name).subscribe(res => {
+        this.documentModeStore.setMode(DOC_MODES.WRITE);
         this.editorData = res.content;
         this.document = res;
         this.isLoading = false;
