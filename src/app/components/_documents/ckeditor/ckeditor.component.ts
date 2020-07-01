@@ -8,8 +8,10 @@ import { DocumentDefinition } from './../../../models/documentDefinition.interfa
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
+import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wy-ckeditor',
@@ -86,13 +88,20 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   };
 
   private changeDebounce = new Subject();
+  private paragraphIdDebounce = new Subject();
   private subscription = new Subscription();
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.subscription.add(
-      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe(async (event: any) => {
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe((event: any) => {
         this.sendChangeEvent(event);
+      })
+    );
+    this.subscription.add(
+      this.paragraphIdDebounce.pipe(distinctUntilChanged(), debounceTime(250)).subscribe((event: any) => {
+        console.log('paragraph id debounce', event);
+        this.editorClicked.emit(event);
       })
     );
   }
@@ -114,14 +123,26 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         editor.model.document.on('change:data', ev => {
           this.changeDebounce.next(ev);
         });
+        editor.model.document.selection.on('change:range', ev => {
+          const pClass = ev.path[0]?.focus?.textNode?.parent?.getAttribute('class');
+          // console.log('selection changed bby', ev);
+          // console.log(ev.path[0].focus);
+          // console.log(ev.path[0].focus?.textNode?.parent?.getAttribute('class'));
+          if (pClass) this.paragraphIdDebounce.next(pClass);
+        });
         editor.editing.view.document.on('blur', ev => {
           this.onBlur(ev);
         });
+
+        // editor.editing.view.document.selection.focus
 
         const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
         if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
+        if (environment.debugMode) {
+          CKEditorInspector.attach(editor);
+        }
       })
       .catch(error => {
         console.error(error);

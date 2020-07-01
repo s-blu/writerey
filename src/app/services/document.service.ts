@@ -18,6 +18,7 @@ import { Observable, of, Subscription } from 'rxjs';
 import { sanitizeName, ensureFileEnding } from '../utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 import { translate } from '@ngneat/transloco';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -75,8 +76,10 @@ export class DocumentService implements OnDestroy {
     return this.httpClient.put(this.api.getDocumentRoute(name), formdata, { headers: httpHeaders }).pipe(
       catchError(err => this.api.handleHttpError(err)),
       map((res: any) => this.transformLastEditedIntoDate(res)),
-      tap(res => this.documentStore.setLastSaved(res?.last_edited))
-      // tap(_ => console.log(`saved document [${new Date().toISOString()}] ${path}/${name} `)) // FIXME enable that on debug mode
+      tap(res => this.documentStore.setLastSaved(res?.last_edited)),
+      tap(_ => {
+        if (environment.debugMode) console.log(`saved document [${new Date().toISOString()}] ${path}/${name} `);
+      })
     );
   }
 
@@ -91,7 +94,7 @@ export class DocumentService implements OnDestroy {
       newName = name;
     } else {
       newName = sanitizeName(newName);
-      newName = ensureFileEnding(newName);  
+      newName = ensureFileEnding(newName);
     }
 
     let msg;
