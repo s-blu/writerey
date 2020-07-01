@@ -10,7 +10,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
 import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -40,7 +40,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
-  @Output() editorClicked: EventEmitter<any> = new EventEmitter();
+  @Output() paragraphIdUpdated: EventEmitter<any> = new EventEmitter();
 
   private documentDef: DocumentDefinition;
   private editorData: string;
@@ -100,8 +100,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     );
     this.subscription.add(
       this.paragraphIdDebounce.pipe(distinctUntilChanged(), debounceTime(250)).subscribe((event: any) => {
-        console.log('paragraph id debounce', event);
-        this.editorClicked.emit(event);
+        this.paragraphIdUpdated.emit(event);
       })
     );
   }
@@ -125,16 +124,11 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         });
         editor.model.document.selection.on('change:range', ev => {
           const pClass = ev.path[0]?.focus?.textNode?.parent?.getAttribute('class');
-          // console.log('selection changed bby', ev);
-          // console.log(ev.path[0].focus);
-          // console.log(ev.path[0].focus?.textNode?.parent?.getAttribute('class'));
           if (pClass) this.paragraphIdDebounce.next(pClass);
         });
         editor.editing.view.document.on('blur', ev => {
           this.onBlur(ev);
         });
-
-        // editor.editing.view.document.selection.focus
 
         const toolbarContainer = document.querySelector('#ckeditor-toolbar-container');
         if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
@@ -178,11 +172,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   onChange(event) {
     this.changeDebounce.next(event);
-  }
-
-  onEditorClick(event) {
-    const className = event?.srcElement?.className || event?.srcElement?.parentNode?.className;
-    this.editorClicked.emit(className);
   }
 
   private sendChangeEvent(editorEvent) {

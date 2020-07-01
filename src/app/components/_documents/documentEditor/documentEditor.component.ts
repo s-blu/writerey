@@ -60,7 +60,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onClick(event) {
+  onParagraphIdUpdate(event) {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event) && this.docMode !== DOC_MODES.READ) {
       this.paragraphId = event;
       let rule = '';
@@ -70,7 +70,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
           background-color: aliceblue;
         }`;
       } else {
-        // margin-left: -padding-left + -1px
+        // margin-left is equals -(padding-left + 1px)
         rule = `p.${event} {
           margin-left: -9px;
           border-left: 1px solid rgb(193, 215, 234);
@@ -124,10 +124,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
         .subscribe(res => {
           this.editorData = res.content;
           this.isLoading = false;
-          this.onClick(this.paragraphId);
+          this.onParagraphIdUpdate(this.paragraphId);
         });
     } else {
-      if (this.paragraphId) this.onClick(this.paragraphId);
+      if (this.paragraphId) this.onParagraphIdUpdate(this.paragraphId);
       this.isLoading = false;
     }
   }
