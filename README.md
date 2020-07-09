@@ -38,12 +38,20 @@ Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find a detail
 - Download the executable of writerey from the Release page on Github
 - Launch writerey.exe (on Windows)
 
+### Build a executable for your environment
 writerey is build with [electron-forge](https://www.electronforge.io/). To build a executable for your target system, do the following:
 
 - Get the repository locally
 - Install dependencies with `npm i`
 - Run `npm run build-make`
 - Hope for the best since I never tried that for something else than Windows. :)
+
+### Set up development
+
+- Clone the repository
+- Install dependencies with `npm i`
+- Open a terminal and start the server with `npm run flask`
+- Open another terminal and start the ui with `ng serve`
 
 ## Guide
 
