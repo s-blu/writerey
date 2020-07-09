@@ -31,7 +31,7 @@ interface ExplorerNode {
 @Component({
   selector: 'wy-document-tree',
   templateUrl: './documentTree.component.html',
-  styleUrls: ['./documentTree.component.scss']
+  styleUrls: ['./documentTree.component.scss'],
 })
 export class DocumentTreeComponent implements OnInit, OnDestroy {
   @Input() project: string;
@@ -42,6 +42,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   activeFileInfo;
   currentStartPage;
   tree;
+  openedDirs = {};
   treeControl = new FlatTreeControl<ExplorerNode>(
     node => node.level,
     node => node.expandable
@@ -89,6 +90,12 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.tree = tree;
     this.dataSource.data = [...this.tree.dirs, ...this.tree.files];
     this.expandToActiveDocument();
+
+    Object.keys(this.openedDirs).forEach(dir => {
+      if (this.openedDirs[dir]) {
+        this.expandDirectories(dir);
+      }
+    });
   }
 
   clickedDocument(node) {
@@ -213,12 +220,28 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     return path + '/' + node.name;
   }
 
+  toggleExpand(node) {
+    this.treeControl.toggle(node);
+    this.openedDirs[`${node.path}/${node.name}`] = this.treeControl.isExpanded(node);
+  }
+
   private expandToActiveDocument() {
+    return this.expandDirectories(this.activeFileInfo?.path);
+  }
+
+  private expandDirectories(targetPath) {
     if (!this.highlightOpenDocument) return;
-    if (!this.activeFileInfo || !this.treeControl?.dataNodes) return;
+    if (!targetPath || !this.treeControl?.dataNodes) return;
 
     const flattenedTreeNodes = this.treeControl.dataNodes;
-    const pathParts = this.activeFileInfo.path.split('/');
+    const pathParts = targetPath.split('/');
+    if (!pathParts || pathParts.length < 1) {
+      console.warn(
+        'expandDirectories was called with invalid argument. need a / separated path to expand to.',
+        targetPath
+      );
+      return;
+    }
     // first part is project itself and thus root of the tree
     let pathUpUntilNow = pathParts[0];
     pathParts.shift();
@@ -227,7 +250,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       const nextDir = flattenedTreeNodes.find(dir => dir.name === step && dir.path === pathUpUntilNow);
 
       if (!nextDir) {
-        console.warn('Could not find nextDir to expand tree for file', step, this.activeFileInfo);
+        console.warn('Could not find nextDir to expand tree for file', step, targetPath);
         return;
       }
 

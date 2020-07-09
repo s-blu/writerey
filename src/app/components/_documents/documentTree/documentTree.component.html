@@ -20,7 +20,7 @@
       <button
         mat-icon-button
         [disabled]="!node.expandable"
-        matTreeNodeToggle
+        (click)="toggleExpand(node)"
         [attr.aria-label]="'toggle ' + node.name"
         class="explorer-btn"
       >
