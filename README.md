@@ -8,7 +8,7 @@ writerey is open source and licensed under Mozilla Public License Version 2.0. F
 
 ## System requirements
 
-This app is only tested for Windows 10. If you use it for any other operating system, I'd appreciate feedback!
+This app is only tested for Windows (8 and 10). If you use it for any other operating system, I'd appreciate feedback!
 
 To use writerey, you need the following tools installed on your machine:
 
@@ -35,7 +35,7 @@ Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find a detail
 
 - Install Python 3
 - Install Git 
-- Download the executable of writerey from the Release page on Github
+- Download the executable of writerey from the [Release page on Github](https://github.com/s-blu/writerey/releases/latest)
 - Launch writerey.exe (on Windows)
 
 ### Build a executable for your environment
