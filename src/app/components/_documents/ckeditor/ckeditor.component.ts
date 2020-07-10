@@ -25,6 +25,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   @Input() set content(c: string) {
     if (c !== this.editorData) {
       this.editorData = c;
+      this.editorDataIsNewlySet = true;
       if (this.editor) {
         this.editor.setData(c);
       }
@@ -44,6 +45,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   private documentDef: DocumentDefinition;
   private editorData: string;
+  private editorDataIsNewlySet: boolean;
   public editor: CkEditorDecoubled;
   public config = {
     toolbar: {
@@ -95,7 +97,18 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscription.add(
       this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe((event: any) => {
-        this.sendChangeEvent(event);
+        const innerHtmlOfEditor = this.getInnerHtmlOfEditor();
+        if (this.editorDataIsNewlySet) {
+          this.editorData = innerHtmlOfEditor;
+          this.editorDataIsNewlySet = false;
+          return;
+        }
+        const isEqual = this.editorData === innerHtmlOfEditor;
+
+        if (!isEqual) {
+          this.editorData = innerHtmlOfEditor;
+          this.sendChangeEvent(event);
+        }
       })
     );
     this.subscription.add(
@@ -166,8 +179,12 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onBlur(editorEvent) {
-    const event = this.getDocumentChangedEvent();
-    this.editorBlur.emit(event);
+    if (this.editorDataIsNewlySet) {
+      return;
+    } else if (this.getInnerHtmlOfEditor() !== this.editorData) {
+      const event = this.getDocumentChangedEvent();
+      this.editorBlur.emit(event);
+    }
   }
 
   onChange(event) {
@@ -185,6 +202,10 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     event.content = this.editor.getData();
     event.plainContent = this.editor.sourceElement.innerText;
     return event;
+  }
+
+  private getInnerHtmlOfEditor() {
+    return document.querySelector('#ckeditor-container').innerHTML;
   }
 }
 
