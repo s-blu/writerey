@@ -146,6 +146,7 @@ export class DirectoryService implements OnDestroy {
         this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
           duration: 10000,
         });
+        this.projectStore.setProject(null);
 
         return this.api.handleHttpError(err);
       }),

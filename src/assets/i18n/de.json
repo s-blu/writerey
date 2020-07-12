@@ -258,7 +258,7 @@
     "words": "Wörter"
   },
   "error": {
-    "couldNotFetchTree": "Konnte Ordner für {{name}} nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
+    "couldNotFetchTree": "Konnte Projekt \"{{name}}\" nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
     "couldNotLoadDocument": "Das Dokument '{{name}}' konnte nicht geladen werden :("
   }
 }
