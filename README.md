@@ -49,7 +49,8 @@ writerey is build with [electron-forge](https://www.electronforge.io/). To build
 ### Set up development
 
 - Clone the repository
-- Install dependencies with `npm i`
+- Install JS dependencies with `npm i`
+- Install Python dependencies with `pip install pipenv`, followed by `pipenv install`
 - Open a terminal and start the server with `npm run flask`
 - Open another terminal and start the ui with `ng serve`
 
