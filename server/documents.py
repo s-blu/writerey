@@ -28,7 +28,7 @@ class Documents(Resource):
             return response
         except OSError as err:
             print('get document failed', err)
-            return abort(500, err) 
+            return abort(500) 
 
     def put(self, doc_name):
         if request.form['doc_path']:

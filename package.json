@@ -52,6 +52,7 @@
     "@angular/cli": "^9.1.1",
     "@angular/compiler-cli": "^9.1.1",
     "@angular/language-service": "^9.1.1",
+    "@ckeditor/ckeditor5-inspector": "^2.1.0",
     "@electron-forge/cli": "^6.0.0-beta.51",
     "@electron-forge/maker-deb": "^6.0.0-beta.51",
     "@electron-forge/maker-rpm": "^6.0.0-beta.51",

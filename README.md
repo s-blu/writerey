@@ -8,7 +8,7 @@ writerey is open source and licensed under Mozilla Public License Version 2.0. F
 
 ## System requirements
 
-This app is only tested for Windows 10. If you use it for any other operating system, I'd appreciate feedback!
+This app is only tested for Windows (8 and 10). If you use it for any other operating system, I'd appreciate feedback!
 
 To use writerey, you need the following tools installed on your machine:
 
@@ -35,15 +35,27 @@ Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find a detail
 
 - Install Python 3
 - Install Git 
-- Download the executable of writerey from the Release page on Github
+- Download the executable of writerey from the [Release page on Github](https://github.com/s-blu/writerey/releases/latest)
 - Launch writerey.exe (on Windows)
 
+### Build a executable for your environment
 writerey is build with [electron-forge](https://www.electronforge.io/). To build a executable for your target system, do the following:
 
 - Get the repository locally
 - Install dependencies with `npm i`
 - Run `npm run build-make`
-- Hope for the best since I never tried that for something else than Windows. :)
+
+If you want to build the application for a non-windows platform, please refer to [the electron-forge documentation](https://www.electronforge.io/config/makers) to configure a appropiate maker.
+
+### Set up development
+
+- Clone the repository
+- Install JS dependencies with `npm i`
+- Install Python dependencies with `pip install pipenv`, followed by `pipenv install`
+- Open a terminal and start the server with `npm run flask`
+- Open another terminal and start the ui with `ng serve`
+
+Please be aware that some features (currently) don't work like expected in development environment, i.e. deletion. Since the project itself is managed by git, the sub folder is ignored to not commit test data, which leads to some conflicts when trying to commit as part of the application. To have a real test environment, please build the app as executeable.
 
 ## Guide
 

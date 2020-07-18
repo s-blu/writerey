@@ -81,6 +81,8 @@
   },
   "documentTree": {
     "rename": "Rename",
+    "move": "Move",
+    "moveToRoot": "(To Root)",
     "delete": "Delete",
     "setStartPage": "Use as start page",
     "removeStartPage": "Remove as start page",

@@ -81,6 +81,8 @@
   },
   "documentTree": {
     "rename": "Umbenennen",
+    "move": "Verschieben",
+    "moveToRoot": "(Ins Hauptverzeichnis)",
     "delete": "Löschen",
     "setStartPage": "Als Startseite setzen",
     "removeStartPage": "Als Startseite entfernen",
@@ -257,7 +259,7 @@
     "words": "Wörter"
   },
   "error": {
-    "couldNotFetchTree": "Konnte Ordner für {{name}} nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
+    "couldNotFetchTree": "Konnte Projekt \"{{name}}\" nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
     "couldNotLoadDocument": "Das Dokument '{{name}}' konnte nicht geladen werden :("
   }
 }

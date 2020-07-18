@@ -12,7 +12,7 @@
     *ngIf="document; else emptyHint"
     [content]="editorData"
     [document]="document"
-    (editorClicked)="onClick($event)"
+    (paragraphIdUpdated)="onParagraphIdUpdate($event)"
     (editorChange)="onChange($event)"
     (editorBlur)="onBlur($event)"
     [readonly]="docMode === DOC_MODES.READ"

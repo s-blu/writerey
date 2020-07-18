@@ -8,8 +8,10 @@ import { DocumentDefinition } from './../../../models/documentDefinition.interfa
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
+import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
 import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, throttleTime } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'wy-ckeditor',
@@ -23,6 +25,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   @Input() set content(c: string) {
     if (c !== this.editorData) {
       this.editorData = c;
+      this.editorDataIsNewlySet = true;
       if (this.editor) {
         this.editor.setData(c);
       }
@@ -38,10 +41,11 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   @Output() editorBlur: EventEmitter<any> = new EventEmitter();
   @Output() editorChange: EventEmitter<any> = new EventEmitter();
-  @Output() editorClicked: EventEmitter<any> = new EventEmitter();
+  @Output() paragraphIdUpdated: EventEmitter<any> = new EventEmitter();
 
   private documentDef: DocumentDefinition;
   private editorData: string;
+  private editorDataIsNewlySet: boolean;
   public editor: CkEditorDecoubled;
   public config = {
     toolbar: {
@@ -86,13 +90,30 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   };
 
   private changeDebounce = new Subject();
+  private paragraphIdDebounce = new Subject();
   private subscription = new Subscription();
   constructor(private apiService: ApiService) {}
 
   ngOnInit() {
     this.subscription.add(
-      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe(async (event: any) => {
-        this.sendChangeEvent(event);
+      this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe((event: any) => {
+        const innerHtmlOfEditor = this.getInnerHtmlOfEditor();
+        if (this.editorDataIsNewlySet) {
+          this.editorData = innerHtmlOfEditor;
+          this.editorDataIsNewlySet = false;
+          return;
+        }
+        const isEqual = this.editorData === innerHtmlOfEditor;
+
+        if (!isEqual) {
+          this.editorData = innerHtmlOfEditor;
+          this.sendChangeEvent(event);
+        }
+      })
+    );
+    this.subscription.add(
+      this.paragraphIdDebounce.pipe(distinctUntilChanged(), debounceTime(250)).subscribe((event: any) => {
+        this.paragraphIdUpdated.emit(event);
       })
     );
   }
@@ -114,6 +135,10 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         editor.model.document.on('change:data', ev => {
           this.changeDebounce.next(ev);
         });
+        editor.model.document.selection.on('change:range', ev => {
+          const pClass = ev.path[0]?.focus?.textNode?.parent?.getAttribute('class');
+          if (pClass) this.paragraphIdDebounce.next(pClass);
+        });
         editor.editing.view.document.on('blur', ev => {
           this.onBlur(ev);
         });
@@ -122,6 +147,9 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
+        if (environment.debugMode) {
+          CKEditorInspector.attach(editor);
+        }
       })
       .catch(error => {
         console.error(error);
@@ -151,17 +179,16 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onBlur(editorEvent) {
-    const event = this.getDocumentChangedEvent();
-    this.editorBlur.emit(event);
+    if (this.editorDataIsNewlySet) {
+      return;
+    } else if (this.getInnerHtmlOfEditor() !== this.editorData) {
+      const event = this.getDocumentChangedEvent();
+      this.editorBlur.emit(event);
+    }
   }
 
   onChange(event) {
     this.changeDebounce.next(event);
-  }
-
-  onEditorClick(event) {
-    const className = event?.srcElement?.className || event?.srcElement?.parentNode?.className;
-    this.editorClicked.emit(className);
   }
 
   private sendChangeEvent(editorEvent) {
@@ -175,6 +202,10 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     event.content = this.editor.getData();
     event.plainContent = this.editor.sourceElement.innerText;
     return event;
+  }
+
+  private getInnerHtmlOfEditor() {
+    return document.querySelector('#ckeditor-container').innerHTML;
   }
 }
 
