@@ -10,6 +10,19 @@
   box-sizing: border-box;
   height: 100%;
 
+  .move-to-root {
+    display: flex;
+    padding-right: 14px;
+    padding-left: 24px;
+    .label {
+      color: $c_hint;
+      flex-grow: 2;
+    }
+    .menu {
+      font-size: 10pt;
+    }
+  }
+
   .explorer-btn {
     height: 24px;
     width: 24px;

@@ -111,6 +111,12 @@
       </mat-menu>
     </mat-tree-node>
   </mat-tree>
+  <div *ngIf="moveNode" class="move-to-root">
+    <span class="label">{{t('moveToRoot')}}</span>
+    <button mat-icon-button class="explorer-btn" (click)="finishMoving()">
+      <mat-icon class="menu">call_received</mat-icon>
+    </button>
+  </div>
 
   <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
     {{ t('empty-tree') }}

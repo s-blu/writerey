@@ -44,7 +44,8 @@ writerey is build with [electron-forge](https://www.electronforge.io/). To build
 - Get the repository locally
 - Install dependencies with `npm i`
 - Run `npm run build-make`
-- Hope for the best since I never tried that for something else than Windows. :)
+
+If you want to build the application for a non-windows platform, please refer to [the electron-forge documentation](https://www.electronforge.io/config/makers) to configure a appropiate maker.
 
 ### Set up development
 
@@ -53,6 +54,8 @@ writerey is build with [electron-forge](https://www.electronforge.io/). To build
 - Install Python dependencies with `pip install pipenv`, followed by `pipenv install`
 - Open a terminal and start the server with `npm run flask`
 - Open another terminal and start the ui with `ng serve`
+
+Please be aware that some features (currently) don't work like expected in development environment, i.e. deletion. Since the project itself is managed by git, the sub folder is ignored to not commit test data, which leads to some conflicts when trying to commit as part of the application. To have a real test environment, please build the app as executeable.
 
 ## Guide
 

@@ -149,23 +149,14 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.moveNode = null;
   }
 
-  finishMoving(targetNode) {
+  finishMoving(targetNode?) {
     let moveObs;
+    const targetPath = targetNode ? `${targetNode.path}/${targetNode.name}` : this.project;
 
     if (this.moveNode.isFile) {
-      moveObs = this.documentService.moveDocument(
-        this.moveNode.path,
-        this.moveNode.name,
-        null,
-        `${targetNode.path}/${targetNode.name}`
-      );
+      moveObs = this.documentService.moveDocument(this.moveNode.path, this.moveNode.name, null, targetPath);
     } else {
-      moveObs = this.directoryService.moveDirectory(
-        this.moveNode.path,
-        this.moveNode.name,
-        null,
-        `${targetNode.path}/${targetNode.name}`
-      );
+      moveObs = this.directoryService.moveDirectory(this.moveNode.path, this.moveNode.name, null, targetPath);
     }
 
     moveObs.pipe(flatMap(_ => this.directoryService.getTree())).subscribe(_ => {

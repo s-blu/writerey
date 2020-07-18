@@ -82,6 +82,7 @@
   "documentTree": {
     "rename": "Umbenennen",
     "move": "Verschieben",
+    "moveToRoot": "(Ins Hauptverzeichnis)",
     "delete": "Löschen",
     "setStartPage": "Als Startseite setzen",
     "removeStartPage": "Als Startseite entfernen",
