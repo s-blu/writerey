@@ -1,3 +1,9 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
 /**
  * This module
  * - should consist entirely of declarations, most of them exported.
@@ -9,11 +15,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
+import {AddClassesForDistractionStatesDirective} from './directives/addClassesForDistractionStates.directive';
 
 @NgModule({
   imports: [CommonModule],
-  declarations: [StripFileEndingPipe],
-  exports: [StripFileEndingPipe],
+  declarations: [StripFileEndingPipe, AddClassesForDistractionStatesDirective],
+  exports: [StripFileEndingPipe, AddClassesForDistractionStatesDirective],
   // FIXME need to provide that to be able to use it in services. Clashes with Best Practices from Angular. Help.
   providers: [StripFileEndingPipe],
 })
