@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -9,7 +9,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { StripFileEndingPipe } from './stripFileEnding.pipe';
 
-fdescribe('Pipe: StripFileEndinge', () => {
+describe('Pipe: StripFileEndinge', () => {
   it('create an instance', () => {
     let pipe = new StripFileEndingPipe();
     expect(pipe).toBeTruthy();
@@ -29,5 +29,14 @@ fdescribe('Pipe: StripFileEndinge', () => {
 
     expect(pipe.transform('file_without_dot')).toEqual('file_without_dot');
     expect(pipe.transform('')).toEqual('');
+  });
+
+  it('should return empty string on invalid inpit', () => {
+    let pipe = new StripFileEndingPipe();
+
+    expect(pipe.transform(null)).toEqual('');
+    expect(pipe.transform(undefined)).toEqual('');
+    expect(pipe.transform(0)).toEqual('');
+    expect(pipe.transform(123)).toEqual('');
   });
 });
