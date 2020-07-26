@@ -7,15 +7,15 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProjectStore } from './../stores/project.store';
 import { LinkService } from 'src/app/services/link.service';
-import { FileInfo } from '../models/fileInfo.interface';
-import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../models/documentDefinition.interface';
+import { FileInfo } from '../shared/models/fileInfo.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../shared/models/documentDefinition.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map, tap, flatMap } from 'rxjs/operators';
 import { Observable, of, Subscription } from 'rxjs';
-import { sanitizeName, ensureFileEnding } from '../utils/name.util';
+import { sanitizeName, ensureFileEnding } from '../shared/utils/name.util';
 import { DocumentStore } from '../stores/document.store';
 import { translate } from '@ngneat/transloco';
 import { environment } from 'src/environments/environment';

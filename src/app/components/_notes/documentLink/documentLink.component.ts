@@ -5,14 +5,14 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { catchError } from 'rxjs/operators';
-import { DocumentDefinition } from 'src/app/models/documentDefinition.interface';
+import { DocumentDefinition } from 'src/app/shared/models/documentDefinition.interface';
 import { DocumentService } from 'src/app/services/document.service';
 import { ProjectStore } from './../../../stores/project.store';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Link, DocumentLink } from 'src/app/models/notesItems.interface';
-import { LabelDefinition } from 'src/app/models/labelDefinition.class';
-import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
-import { FADE_ANIMATIONS } from 'src/app/utils/animation.utils';
+import { Link, DocumentLink } from 'src/app/shared/models/notesItems.interface';
+import { LabelDefinition } from 'src/app/shared/models/labelDefinition.class';
+import { getReadableNameForLabelContext } from 'src/app/shared/utils/label.utils';
+import { FADE_ANIMATIONS } from 'src/app/shared/utils/animation.utils';
 import { rotateAnimation } from 'angular-animations';
 import { LinkService } from 'src/app/services/link.service';
 import { take, flatMap } from 'rxjs/operators';

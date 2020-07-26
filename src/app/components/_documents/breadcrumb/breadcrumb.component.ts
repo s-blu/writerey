@@ -1,10 +1,10 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FileInfo } from 'src/app/models/fileInfo.interface';
+import { FileInfo } from 'src/app/shared/models/fileInfo.interface';
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { DocumentStore } from 'src/app/stores/document.store';
 

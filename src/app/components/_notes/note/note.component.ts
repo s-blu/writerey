@@ -1,17 +1,17 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelInfo } from './../../../models/notesItems.interface';
-import { NoteItemStereotypes } from 'src/app/models/notesItems.interface';
-import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
+import { LabelInfo } from '../../../shared/models/notesItems.interface';
+import { NoteItemStereotypes } from 'src/app/shared/models/notesItems.interface';
+import { FADE_ANIMATIONS } from '../../../shared/utils/animation.utils';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Note } from '../../../models/notesItems.interface';
-import { LabelDefinition } from 'src/app/models/labelDefinition.class';
+import { Note } from '../../../shared/models/notesItems.interface';
+import { LabelDefinition } from 'src/app/shared/models/labelDefinition.class';
 import { rotateAnimation } from 'angular-animations';
-import { getReadableNameForLabelContext } from 'src/app/utils/label.utils';
+import { getReadableNameForLabelContext } from 'src/app/shared/utils/label.utils';
 
 @Component({
   selector: 'wy-note',

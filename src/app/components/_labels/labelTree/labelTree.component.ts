@@ -12,7 +12,7 @@ import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { MatDialog } from '@angular/material/dialog';
 import { LabelService } from 'src/app/services/label.service';
-import { LabelDefinition } from 'src/app/models/labelDefinition.class';
+import { LabelDefinition } from 'src/app/shared/models/labelDefinition.class';
 import { LabelStore } from 'src/app/stores/label.store';
 
 /**

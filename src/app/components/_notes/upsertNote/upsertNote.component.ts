@@ -1,13 +1,13 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { Note } from 'src/app/models/notesItems.interface';
+import { Note } from 'src/app/shared/models/notesItems.interface';
 import { Component, OnInit, Input, EventEmitter, Output, OnChanges } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/editor.utils';
+import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 
 @Component({

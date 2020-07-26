@@ -1,19 +1,19 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { DocumentStore } from '../../../stores/document.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
-import { DOC_MODES } from '../../../models/docModes.enum';
+import { DOC_MODES } from '../../../shared/models/docModes.enum';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
-import { DocumentDefinition } from '../../../models/documentDefinition.interface';
+import { DocumentDefinition } from '../../../shared/models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import EditorUtils from 'src/app/utils/editor.utils';
+import EditorUtils from 'src/app/shared/utils/editor.utils';
 
 @Component({
   selector: 'wy-document-editor',

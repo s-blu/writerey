@@ -8,7 +8,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormBuilder } from '@angular/forms';
 import { slideInDownAnimation, slideInDownOnEnterAnimation } from 'angular-animations';
-import { OnChangeErrorMatcher } from 'src/app/utils/form.utils';
+import { OnChangeErrorMatcher } from 'src/app/shared/utils/form.utils';
 import {NameSafetyValidator} from '../../shared/directives/nameSafetyValidator';
 
 @Component({

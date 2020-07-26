@@ -6,7 +6,7 @@
 
 import { DocumentModeStore } from '../../stores/documentMode.store';
 import { NameSnapshotDialogComponent } from '../_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
-import { DOC_MODES } from '../../models/docModes.enum';
+import { DOC_MODES } from '../../shared/models/docModes.enum';
 import { TagDialogComponent } from '../_snapshots/tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
 import { SnapshotService } from '../../services/snapshot.service';
