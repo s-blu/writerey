@@ -31,7 +31,7 @@ describe('Pipe: StripFileEndinge', () => {
     expect(pipe.transform('')).toEqual('');
   });
 
-  it('should return empty string on invalid inpit', () => {
+  it('should return empty string on invalid input', () => {
     let pipe = new StripFileEndingPipe();
 
     expect(pipe.transform(null)).toEqual('');
