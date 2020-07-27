@@ -6,14 +6,14 @@
 
 import { DocumentStore } from '../../../stores/document.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
-import { DOC_MODES } from '../../../shared/models/docModes.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DocumentService } from '../../../services/document.service';
-import { DocumentDefinition } from '../../../shared/models/documentDefinition.interface';
+import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import EditorUtils from 'src/app/shared/utils/editor.utils';
+import EditorUtils from '@writerey/shared/utils/editor.utils';
 
 @Component({
   selector: 'wy-document-editor',
@@ -106,9 +106,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     if (!event?.document || !event?.content) return;
     this.blurSubject.next(event);
     this.subscription.add(
-      this.documentService
-        .saveDocument(event.document.path, event.document.name, event.content)
-        .subscribe()
+      this.documentService.saveDocument(event.document.path, event.document.name, event.content).subscribe()
     );
   }
 

@@ -4,14 +4,14 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelInfo } from '../../../shared/models/notesItems.interface';
-import { FADE_ANIMATIONS } from '../../../shared/utils/animation.utils';
+import { LabelInfo } from '@writerey/shared/models/notesItems.interface';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { LabelDefinition } from 'src/app/shared/models/labelDefinition.class';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { TranslocoService } from '@ngneat/transloco';
 import { FormBuilder } from '@angular/forms';
 import * as uuid from 'uuid';
-import { Note, NoteItemStereotypes, Link } from 'src/app/shared/models/notesItems.interface';
+import { Note, NoteItemStereotypes, Link } from '@writerey/shared/models/notesItems.interface';
 
 @Component({
   selector: 'wy-create-new-notes-item',

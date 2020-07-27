@@ -6,7 +6,7 @@
 
 import { DocumentModeStore } from '../../stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DOC_MODES } from 'src/app/shared/models/docModes.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Subscription } from 'rxjs';
 import { DocumentStore } from 'src/app/stores/document.store';
 

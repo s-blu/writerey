@@ -4,14 +4,14 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelInfo } from '../../../shared/models/notesItems.interface';
-import { NoteItemStereotypes } from 'src/app/shared/models/notesItems.interface';
-import { FADE_ANIMATIONS } from '../../../shared/utils/animation.utils';
+import { LabelInfo } from '@writerey/shared/models/notesItems.interface';
+import { NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
-import { Note } from '../../../shared/models/notesItems.interface';
-import { LabelDefinition } from 'src/app/shared/models/labelDefinition.class';
+import { Note } from '@writerey/shared/models/notesItems.interface';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { rotateAnimation } from 'angular-animations';
-import { getReadableNameForLabelContext } from 'src/app/shared/utils/label.utils';
+import { getReadableNameForLabelContext } from '@writerey/shared/utils/label.utils';
 
 @Component({
   selector: 'wy-note',

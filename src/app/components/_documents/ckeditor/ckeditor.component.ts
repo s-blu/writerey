@@ -4,7 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DocumentDefinition } from '../../../shared/models/documentDefinition.interface';
+import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
 import { ApiService } from 'src/app/services/api.service';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';

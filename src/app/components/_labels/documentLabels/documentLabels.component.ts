@@ -4,21 +4,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DISTRACTION_FREE_STATES } from 'src/app/shared/models/distractionFreeStates.enum';
-import { FADE_ANIMATIONS } from '../../../shared/utils/animation.utils';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
 import { LabelStore } from '../../../stores/label.store';
 import { Subscription } from 'rxjs';
 import { ParagraphService } from '../../../services/paragraph.service';
-import { DOC_MODES } from '../../../shared/models/docModes.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
-import { FileInfo } from 'src/app/shared/models/fileInfo.interface';
-import { LabelDefinition, LabelTypes } from 'src/app/shared/models/labelDefinition.class';
+import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
+import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefinition.class';
 import { LabelService } from 'src/app/services/label.service';
-import { Label } from 'src/app/shared/models/label.interface';
+import { Label } from '@writerey/shared/models/label.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
-import { sortLabelArray } from 'src/app/shared/utils/label.utils';
+import { sortLabelArray } from '@writerey/shared/utils/label.utils';
 import { flatMap, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 @Component({

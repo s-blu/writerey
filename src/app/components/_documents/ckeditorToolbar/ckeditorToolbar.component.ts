@@ -4,10 +4,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FADE_ANIMATIONS } from '../../../shared/utils/animation.utils';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { DocumentModeStore } from './../../../stores/documentMode.store';
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { DOC_MODES } from 'src/app/shared/models/docModes.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Subscription } from 'rxjs';
 
 @Component({

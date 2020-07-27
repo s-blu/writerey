@@ -15,7 +15,7 @@ import { DirectoryService } from 'src/app/services/directory.service';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { take, flatMap } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
-import { StripFileEndingPipe } from 'src/app/shared/pipes/stripFileEnding.pipe';
+import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
 @Component({
   selector: 'wy-create-new-dir-or-file',

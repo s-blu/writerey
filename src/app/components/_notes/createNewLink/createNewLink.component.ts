@@ -12,9 +12,9 @@ import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } 
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { map, take, flatMap } from 'rxjs/operators';
-import { Link } from 'src/app/shared/models/notesItems.interface';
+import { Link } from '@writerey/shared/models/notesItems.interface';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
-import { setDecoupledToolbar } from 'src/app/shared/utils/editor.utils';
+import { setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 
 @Component({
   selector: 'wy-create-new-link',

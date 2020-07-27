@@ -5,7 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { ProjectStore } from './../stores/project.store';
-import { Label } from 'src/app/shared/models/label.interface';
+import { Label } from '@writerey/shared/models/label.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';

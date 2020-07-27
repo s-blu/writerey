@@ -4,11 +4,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { OnChangeErrorMatcher } from '../../../shared/utils/form.utils';
+import { OnChangeErrorMatcher } from '@writerey/shared/utils/form.utils';
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormBuilder, FormControl } from '@angular/forms';
-import {NameSafetyValidator} from '../../../shared/directives/nameSafetyValidator';
+import { NameSafetyValidator } from '@writerey/shared/directives/nameSafetyValidator';
 
 @Component({
   selector: 'wy-tagDialog',
@@ -16,11 +16,14 @@ import {NameSafetyValidator} from '../../../shared/directives/nameSafetyValidato
   styleUrls: ['./tagDialog.component.scss'],
 })
 export class TagDialogComponent implements OnInit {
-
   form;
   matcher = new OnChangeErrorMatcher();
 
-  constructor(private formBuilder: FormBuilder, public dialogRef: MatDialogRef<TagDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    public dialogRef: MatDialogRef<TagDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data
+  ) {}
 
   ngOnInit() {
     this.form = this.formBuilder.group({

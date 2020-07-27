@@ -5,7 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { FADE_ANIMATIONS } from '../../shared/utils/animation.utils';
-import { DISTRACTION_FREE_STATES } from 'src/app/shared/models/distractionFreeStates.enum';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { DistractionFreeStore } from '../../stores/distractionFree.store';
 import { ProjectStore } from '../../stores/project.store';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';

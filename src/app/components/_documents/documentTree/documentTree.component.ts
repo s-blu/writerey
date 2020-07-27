@@ -18,7 +18,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { MatDialog } from '@angular/material/dialog';
 import { flatMap, filter } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
-import { StripFileEndingPipe } from 'src/app/shared/pipes/stripFileEnding.pipe';
+import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
 interface ExplorerNode {
   expandable: boolean;
