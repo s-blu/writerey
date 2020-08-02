@@ -1,5 +1,5 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
@@ -8,11 +8,11 @@ import { LabelStore } from 'src/app/stores/label.store';
 import { ContextStore } from './../stores/context.store';
 import { ParagraphService } from './paragraph.service';
 import { Injectable, OnDestroy } from '@angular/core';
-import { Label } from '../models/label.interface';
+import { Label } from '../shared/models/label.interface';
 import { map } from 'rxjs/operators';
-import { LabelDefinition } from '../models/labelDefinition.class';
+import { LabelDefinition } from '../shared/models/labelDefinition.class';
 import { Subscription, of } from 'rxjs';
-import { sortLabelArray } from '../utils/label.utils';
+import { sortLabelArray } from '../shared/utils/label.utils';
 
 export enum DEFAULT_CONTEXTS {
   PARAGRAPH = 'paragraph',

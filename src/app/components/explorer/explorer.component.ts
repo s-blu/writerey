@@ -1,11 +1,11 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FADE_ANIMATIONS } from '../../utils/animation.utils';
-import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from '../../shared/utils/animation.utils';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { DistractionFreeStore } from '../../stores/distractionFree.store';
 import { ProjectStore } from '../../stores/project.store';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';

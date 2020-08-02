@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { SharedModule } from './shared/shared.module';
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
 import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
@@ -27,7 +28,6 @@ import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
-import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -67,7 +67,6 @@ import { FooterComponent } from './components/footer/footer.component';
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
-import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
@@ -105,7 +104,6 @@ const matModules = [
     BreadcrumbComponent,
     DocumentLabelsComponent,
     FooterComponent,
-    StripFileEndingPipe,
     CreateNewItemDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
@@ -120,7 +118,6 @@ const matModules = [
     ModeSwitcherComponent,
     WordCountComponent,
     DistractionFreeModeComponent,
-    AddClassesForDistractionStatesDirective,
     CreateNewDirOrFileComponent,
     RenameItemDialogComponent,
     CreateNewNotesItemComponent,
@@ -144,9 +141,9 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     CKEditorModule,
+    SharedModule
   ],
   providers: [
-    StripFileEndingPipe,
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
     {
       provide: LOCALE_ID,

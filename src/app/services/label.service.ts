@@ -1,18 +1,18 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { ProjectStore } from './../stores/project.store';
-import { Label } from 'src/app/models/label.interface';
+import { Label } from '@writerey/shared/models/label.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, flatMap, map, take } from 'rxjs/operators';
-import { LabelDefinition, LabelTypes } from '../models/labelDefinition.class';
+import { LabelDefinition, LabelTypes } from '../shared/models/labelDefinition.class';
 import { ContextStore } from '../stores/context.store';
 import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';

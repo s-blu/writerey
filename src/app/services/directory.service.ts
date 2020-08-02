@@ -13,10 +13,10 @@ import { catchError, flatMap, map, tap, take, filter } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
-import { sanitizeName } from '../utils/name.util';
+import { sanitizeName } from '../shared/utils/name.util';
 import { Subscription, of } from 'rxjs';
 import { translate } from '@ngneat/transloco';
-import { FileInfo } from '../models/fileInfo.interface';
+import { FileInfo } from '../shared/models/fileInfo.interface';
 
 @Injectable({
   providedIn: 'root',

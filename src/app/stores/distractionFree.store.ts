@@ -1,10 +1,10 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DISTRACTION_FREE_STATES } from './../models/distractionFreeStates.enum';
+import { DISTRACTION_FREE_STATES } from '../shared/models/distractionFreeStates.enum';
 import { distinctUntilChanged, debounceTime } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';

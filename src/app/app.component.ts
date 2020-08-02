@@ -7,8 +7,8 @@
 import { DocumentModeStore } from './stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { DOC_MODES } from './models/docModes.enum';
-import { LabelDefinition } from './models/labelDefinition.class';
+import { DOC_MODES } from './shared/models/docModes.enum';
+import { LabelDefinition } from './shared/models/labelDefinition.class';
 import { DocumentStore } from './stores/document.store';
 
 @Component({
