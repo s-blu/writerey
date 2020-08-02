@@ -1,3 +1,4 @@
+import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -8,7 +9,6 @@ import { DocumentsModule } from './documents/documents.module';
 import { SharedModule } from './shared/shared.module';
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
-import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
@@ -126,7 +126,6 @@ const matModules = [
     NotesItemComponent,
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
-    CkeditorComponent,
     CkeditorToolbarComponent,
     NoteItemCkeditorViewComponent,
     IntroductionComponent,
@@ -141,6 +140,7 @@ const matModules = [
     TranslocoRootModule,
     CKEditorModule,
     SharedModule,
+    WyCkeditorModule,
     DocumentsModule
   ],
   providers: [
