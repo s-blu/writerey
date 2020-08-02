@@ -11,12 +11,14 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WordCountComponent } from './components/wordCount/wordCount.component';
+import { IntroductionComponent } from './components/introduction/introduction.component';
+import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
 
 const materialModules = [MatIconModule];
-const declarationsAndExport = [BreadcrumbComponent, WordCountComponent];
+const declarationsAndExport = [BreadcrumbComponent, WordCountComponent, IntroductionComponent];
 
 @NgModule({
-  imports: [CommonModule, SharedModule, ...materialModules],
+  imports: [CommonModule, SharedModule, WyCkeditorModule, ...materialModules],
   declarations: [...declarationsAndExport],
   exports: [...declarationsAndExport],
 })

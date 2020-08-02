@@ -9,7 +9,6 @@
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { Component, ViewEncapsulation, AfterViewInit, OnDestroy, Input, ViewChild, ElementRef } from '@angular/core';
 
-
 @Component({
   selector: 'wy-ckeditor-readonly',
   templateUrl: './ckeditorReadonly.component.html',
@@ -23,16 +22,13 @@ export class CkeditorReadonlyComponent implements AfterViewInit, OnDestroy {
 
   public editor: DecoupledEditor;
 
-  config = {
-    disabled: true,
-  };
   constructor() {}
 
   ngAfterViewInit() {
-    DecoupledEditor.create(this.container.nativeElement, this.config)
+    DecoupledEditor.create(this.container.nativeElement)
       .then(editor => {
-        editor.setData(this.data || 'mh this seems broken');
-
+        editor.isReadOnly = true;
+        editor.setData(this.data || '');
         this.editor = editor;
       })
       .catch(error => {

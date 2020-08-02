@@ -8,7 +8,6 @@
 
 import { DocumentsModule } from './documents/documents.module';
 import { SharedModule } from './shared/shared.module';
-import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
@@ -124,7 +123,6 @@ const matModules = [
     NotesItemComponent,
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
-    IntroductionComponent,
   ],
   imports: [
     BrowserModule,
