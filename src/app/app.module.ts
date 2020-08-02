@@ -16,7 +16,6 @@ import { CreateNewDirOrFileComponent } from './components/_documents/createNewDi
 import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
-import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
@@ -57,7 +56,6 @@ import { AppComponent } from './app.component';
 import { DocumentEditorComponent } from './components/_documents/documentEditor/documentEditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
 import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
@@ -72,10 +70,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
 import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
+import { ExplorerModule } from './explorer/explorer.module';
 
 const matModules = [
-  MatIconModule,
   MatButtonModule,
+  MatIconModule,
   MatTooltipModule,
   MatTreeModule,
   MatMenuModule,
@@ -99,7 +98,6 @@ const matModules = [
     AppComponent,
     DocumentEditorComponent,
     TopbarComponent,
-    ExplorerComponent,
     NotesComponent,
     NoteComponent,
     BreadcrumbComponent,
@@ -116,7 +114,6 @@ const matModules = [
     LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
-    ProjectsComponent,
     ModeSwitcherComponent,
     WordCountComponent,
     DistractionFreeModeComponent,
@@ -144,6 +141,7 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     CKEditorModule,
+    ExplorerModule,
   ],
   providers: [
     StripFileEndingPipe,
