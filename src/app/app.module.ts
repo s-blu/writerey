@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { DocumentsModule } from './documents/documents.module';
 import { SharedModule } from './shared/shared.module';
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
 import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
@@ -60,7 +61,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
-import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
 import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -101,7 +101,6 @@ const matModules = [
     ExplorerComponent,
     NotesComponent,
     NoteComponent,
-    BreadcrumbComponent,
     DocumentLabelsComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
@@ -141,7 +140,8 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     CKEditorModule,
-    SharedModule
+    SharedModule,
+    DocumentsModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
