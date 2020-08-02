@@ -22,7 +22,7 @@
   <ng-template #noteRead>
     <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
       <mat-card-content>
-        <wy-note-item-ckeditor-view [data]="note.text"></wy-note-item-ckeditor-view>
+        <wy-ckeditor-readonly [data]="note.text"></wy-ckeditor-readonly>
       </mat-card-content>
       <mat-card-actions [style]="noteStyles" *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
         <button

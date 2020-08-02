@@ -1,14 +1,14 @@
-import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
-// Copyright (c) 2020 s-blu
-//
-// This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+/**
+ * Copyright (c) 2020 s-blu
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
 import { DocumentsModule } from './documents/documents.module';
 import { SharedModule } from './shared/shared.module';
 import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
-import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
@@ -34,6 +34,7 @@ import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
@@ -70,7 +71,6 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
-import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
 
 const matModules = [
   MatIconModule,
@@ -126,8 +126,6 @@ const matModules = [
     NotesItemComponent,
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
-    CkeditorToolbarComponent,
-    NoteItemCkeditorViewComponent,
     IntroductionComponent,
   ],
   imports: [
@@ -141,7 +139,7 @@ const matModules = [
     CKEditorModule,
     SharedModule,
     WyCkeditorModule,
-    DocumentsModule
+    DocumentsModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },

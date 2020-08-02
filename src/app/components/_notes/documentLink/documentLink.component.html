@@ -19,14 +19,17 @@
       <div class="link-destination">
         <wy-breadcrumb [fileInfo]="fileInfo" skipRoot="true"></wy-breadcrumb>
       </div>
-      <wy-note-item-ckeditor-view class="note-text preview" [data]="link.text"></wy-note-item-ckeditor-view>
-      <mat-progress-bar mode="indeterminate" *ngIf="isExpanded && !content && !unableToFetchDocument"></mat-progress-bar>
-      <wy-note-item-ckeditor-view
+      <wy-ckeditor-readonly class="note-text preview" [data]="link.text"></wy-ckeditor-readonly>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isExpanded && !content && !unableToFetchDocument"
+      ></mat-progress-bar>
+      <wy-ckeditor-readonly
         class="note-text"
         *ngIf="content && isExpanded && !unableToFetchDocument"
         [@fadeOutOnLeave]
         [data]="content"
-      ></wy-note-item-ckeditor-view>
+      ></wy-ckeditor-readonly>
       <div class="document-error" *ngIf="unableToFetchDocument">
         {{ t('documentError') }}
       </div>
