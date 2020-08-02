@@ -16,7 +16,6 @@ import { DocumentExplorerComponent } from './components/_documents/documentExplo
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
-import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
@@ -115,7 +114,6 @@ const matModules = [
     NameSnapshotDialogComponent,
     ProjectsComponent,
     ModeSwitcherComponent,
-    WordCountComponent,
     DistractionFreeModeComponent,
     CreateNewDirOrFileComponent,
     RenameItemDialogComponent,

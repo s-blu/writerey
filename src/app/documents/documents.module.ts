@@ -7,16 +7,17 @@
  */
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from './../shared/shared.module';
-import { BreadcrumbComponent } from '@writerey/documents/components/breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentsComponent } from './documents.component';
+import { WordCountComponent } from './components/wordCount/wordCount.component';
 
 const materialModules = [MatIconModule];
+const declarationsAndExport = [BreadcrumbComponent, WordCountComponent];
 
 @NgModule({
   imports: [CommonModule, SharedModule, ...materialModules],
-  declarations: [DocumentsComponent, BreadcrumbComponent],
-  exports: [BreadcrumbComponent],
+  declarations: [...declarationsAndExport],
+  exports: [...declarationsAndExport],
 })
 export class DocumentsModule {}
