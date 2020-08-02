@@ -54,7 +54,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
-import { DocumentEditorComponent } from './components/_documents/documentEditor/documentEditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ExplorerComponent } from './components/explorer/explorer.component';
@@ -94,7 +93,6 @@ const matModules = [
 @NgModule({
   declarations: [
     AppComponent,
-    DocumentEditorComponent,
     TopbarComponent,
     ExplorerComponent,
     NotesComponent,

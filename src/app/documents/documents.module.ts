@@ -13,9 +13,10 @@ import { CommonModule } from '@angular/common';
 import { WordCountComponent } from './components/wordCount/wordCount.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
+import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
 
 const materialModules = [MatIconModule];
-const declarationsAndExport = [BreadcrumbComponent, WordCountComponent, IntroductionComponent];
+const declarationsAndExport = [BreadcrumbComponent, WordCountComponent, IntroductionComponent, DocumentEditorComponent];
 
 @NgModule({
   imports: [CommonModule, SharedModule, WyCkeditorModule, ...materialModules],
