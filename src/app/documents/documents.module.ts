@@ -14,8 +14,9 @@ import { WordCountComponent } from './components/wordCount/wordCount.component';
 import { IntroductionComponent } from './components/introduction/introduction.component';
 import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
 import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-const materialModules = [MatIconModule];
+const materialModules = [MatIconModule, MatProgressBarModule];
 const declarationsAndExport = [BreadcrumbComponent, WordCountComponent, IntroductionComponent, DocumentEditorComponent];
 
 @NgModule({

@@ -16,11 +16,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import {AddClassesForDistractionStatesDirective} from './directives/addClassesForDistractionStates.directive';
+import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, TranslocoRootModule],
   declarations: [StripFileEndingPipe, AddClassesForDistractionStatesDirective],
-  exports: [StripFileEndingPipe, AddClassesForDistractionStatesDirective],
+  exports: [TranslocoRootModule, StripFileEndingPipe, AddClassesForDistractionStatesDirective],
   // FIXME need to provide that to be able to use it in services. Clashes with Best Practices from Angular. Help.
   providers: [StripFileEndingPipe],
 })
