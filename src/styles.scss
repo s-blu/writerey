@@ -43,14 +43,14 @@ body {
 #ckeditor-container.ck-content.ck-editor__editable {
   overflow-y: hidden;
 }
-.readonly-note-ckeditor {
+.ckeditor-readonly-wrap {
   .ck-content.ck-editor__editable.ck-read-only {
     padding: 0;
   }
 }
 
 .mat-typography .ckeditor-component .ck-content,
-.mat-typography .readonly-note-ckeditor .ck-content {
+.mat-typography .ckeditor-readonly-wrap .ck-content {
   h1,
   h2,
   h3,

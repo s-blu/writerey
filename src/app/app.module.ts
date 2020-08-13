@@ -1,18 +1,19 @@
-// Copyright (c) 2020 s-blu
-//
-// This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+/**
+ * Copyright (c) 2020 s-blu
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
-import { IntroductionComponent } from './components/_documents/introduction/introduction.component';
-import { CkeditorToolbarComponent } from './components/_documents/ckeditorToolbar/ckeditorToolbar.component';
-import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.component';
+import { DocumentsModule } from '@writerey/documents/documents.module';
+import { ExplorerModule } from '@writerey/explorer/explorer.module';
+import { SharedModule } from '@writerey/shared/shared.module';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { TranslocoService } from '@ngneat/transloco';
-import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
@@ -26,6 +27,7 @@ import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -44,12 +46,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
-import { DocumentEditorComponent } from './components/_documents/documentEditor/documentEditor.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
-import { BreadcrumbComponent } from './components/_documents/breadcrumb/breadcrumb.component';
 import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -59,9 +59,6 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
-import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
-import { ExplorerModule } from '@writerey/explorer/explorer.module';
-import { SharedModule } from '@writerey/shared/shared.module';
 
 const matModules = [
   MatButtonModule,
@@ -84,11 +81,9 @@ const matModules = [
 @NgModule({
   declarations: [
     AppComponent,
-    DocumentEditorComponent,
     TopbarComponent,
     NotesComponent,
     NoteComponent,
-    BreadcrumbComponent,
     DocumentLabelsComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
@@ -100,7 +95,6 @@ const matModules = [
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
     ModeSwitcherComponent,
-    WordCountComponent,
     DistractionFreeModeComponent,
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
@@ -108,10 +102,6 @@ const matModules = [
     NotesItemComponent,
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
-    CkeditorComponent,
-    CkeditorToolbarComponent,
-    NoteItemCkeditorViewComponent,
-    IntroductionComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,6 +114,8 @@ const matModules = [
     CKEditorModule,
     ExplorerModule,
     SharedModule,
+    WyCkeditorModule,
+    DocumentsModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },

@@ -14,7 +14,9 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@writerey/shared/*": ["src/app/shared/*"],
-      "@writerey/explorer/*": ["src/app/explorer/*"]
+      "@writerey/explorer/*": ["src/app/explorer/*"],
+      "@writerey/documents/*": ["src/app/documents/*"],
+      "@writerey/ckeditor/*": ["src/app/wyCkeditor/*"]
     }
   },
   "angularCompilerOptions": {
