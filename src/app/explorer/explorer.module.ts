@@ -1,6 +1,4 @@
-
-import { NgModule } from '@angular/core';
-
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -18,30 +16,19 @@ import { DocumentExplorerComponent } from './components/documentExplorer/documen
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@writerey/shared/shared.module';
+import { TranslocoService } from '@ngneat/transloco';
+import { TranslocoRootModule } from '../transloco-root.module';
+import { MatButtonModule } from '@angular/material/button';
 
 const matModules = [
     MatTabsModule,
     MatTreeModule,
     MatMenuModule,
     MatIconModule,
+    MatButtonModule,
     MatListModule,
     MatFormFieldModule,
     MatTooltipModule,
-  /*MatButtonModule,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-  ,
-  MatProgressBarModule,
-  MatDialogModule,
-  MatInputModule,
-  MatFormFieldModule,
-  MatSnackBarModule,
-  MatSelectModule,
-  MatExpansionModule,
-  MatCardModule,
-  ,
-  MatSliderModule,
-  MatListModule,
-  MatProgressSpinnerModule,
-  MatDividerModule,*/
 ];
 
 @NgModule({
@@ -59,10 +46,22 @@ const matModules = [
     FormsModule,
     CommonModule,
     SharedModule,
+    TranslocoRootModule,
   ],
   exports: [
     ExplorerComponent,
     DocumentTreeComponent,
-  ]
+  ],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      deps: [TranslocoService],
+      useFactory: getLocaleId,
+    },
+  ],
 })
 export class ExplorerModule {}
+
+function getLocaleId(transloco: TranslocoService) {
+  return transloco.getActiveLang();
+}

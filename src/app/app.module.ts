@@ -63,8 +63,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
 import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
-import { ExplorerModule } from './explorer/explorer.module';
-import { SharedModule } from './shared/shared.module';
+import { ExplorerModule } from '@writerey/explorer/explorer.module';
+import { SharedModule } from '@writerey/shared/shared.module';
 
 const matModules = [
   MatButtonModule,
