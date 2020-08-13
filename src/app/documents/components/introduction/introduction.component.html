@@ -6,4 +6,8 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<ckeditor class="readonly-note-ckeditor" [disabled]="true" [editor]="Editor" [data]="data"></ckeditor>
+<div class="introduction mat-elevation-z1">
+  <div class="ckeditor-wrap">
+    <wy-ckeditor-readonly *ngIf="introduction" [data]="introduction"></wy-ckeditor-readonly>
+  </div>
+</div>

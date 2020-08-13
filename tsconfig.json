@@ -13,7 +13,9 @@
     "target": "es2015",
     "lib": ["es2018", "dom"],
     "paths": {
-      "@writerey/shared/*": ["src/app/shared/*"]
+      "@writerey/shared/*": ["src/app/shared/*"],
+      "@writerey/documents/*": ["src/app/documents/*"],
+      "@writerey/ckeditor/*": ["src/app/wyCkeditor/*"]
     }
   },
   "angularCompilerOptions": {
