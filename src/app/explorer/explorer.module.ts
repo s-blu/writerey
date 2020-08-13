@@ -11,6 +11,7 @@ import { MatListModule } from '@angular/material/list';
 import { DocumentTreeComponent } from './components/documentTree/documentTree.component';
 import { LabelTreeComponent } from './components/labelTree/labelTree.component';
 import { CreateNewDirOrFileComponent } from './components/createNewDirOrFile/createNewDirOrFile.component';
+import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
 
 const matModules = [
     MatTabsModule,
@@ -42,7 +43,8 @@ const matModules = [
     ProjectsComponent,
     LabelTreeComponent,
     CreateNewDirOrFileComponent,
-    DocumentTreeComponent,
+    DocumentTreeComponent,    
+    RenameItemDialogComponent,
   ],
   imports: [
     matModules

@@ -13,7 +13,7 @@ import { filter, flatMap } from 'rxjs/operators';
 import { DeletionService } from 'src/app/services/deletion.service';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
-import { RenameItemDialogComponent } from 'src/app/components/renameItemDialog/renameItemDialog.component';
+import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
 
 @Component({
   selector: 'wy-projects',
