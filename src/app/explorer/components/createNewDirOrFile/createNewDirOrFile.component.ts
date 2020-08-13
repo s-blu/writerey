@@ -4,7 +4,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { StripFileEndingPipe } from './../../../pipes/stripFileEnding.pipe';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DirectoryStore } from './../../../stores/directory.store';
 import { MatDialog } from '@angular/material/dialog';
@@ -16,6 +15,7 @@ import { DocumentStore } from 'src/app/stores/document.store';
 import { take, flatMap } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
 import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
+import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
 @Component({
   selector: 'wy-create-new-dir-or-file',

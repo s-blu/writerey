@@ -5,7 +5,6 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { StripFileEndingPipe } from './../../../pipes/stripFileEnding.pipe';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DeletionService } from './../../../services/deletion.service';
 import { RenameItemDialogComponent } from './../../renameItemDialog/renameItemDialog.component';
@@ -19,6 +18,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { MatDialog } from '@angular/material/dialog';
 import { flatMap, filter } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
+import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
 interface ExplorerNode {
   expandable: boolean;

@@ -1,18 +1,18 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { LabelService } from 'src/app/services/label.service';
-import { FADE_ANIMATIONS } from '../utils/animation.utils';
 import { ProjectStore } from '../stores/project.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
 import { CreateNewLabelComponent } from '../components/_labels/createNewLabel/createNewLabel.component';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 
 @Component({
   selector: 'wy-explorer',

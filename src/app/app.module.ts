@@ -23,7 +23,6 @@ import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
-import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -62,12 +61,13 @@ import { FooterComponent } from './components/footer/footer.component';
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
-import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
 import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
 import { ExplorerModule } from './explorer/explorer.module';
+import { SharedModule } from './shared/shared.module';
+import { AddClassesForDistractionStatesDirective } from './shared/directives/addClassesForDistractionStates.directive';
 
 const matModules = [
   MatButtonModule,
@@ -100,7 +100,6 @@ const matModules = [
     BreadcrumbComponent,
     DocumentLabelsComponent,
     FooterComponent,
-    StripFileEndingPipe,
     CreateNewItemDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
@@ -136,9 +135,9 @@ const matModules = [
     TranslocoRootModule,
     CKEditorModule,
     ExplorerModule,
+    SharedModule,
   ],
   providers: [
-    StripFileEndingPipe,
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
     {
       provide: LOCALE_ID,

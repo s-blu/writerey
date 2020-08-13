@@ -4,13 +4,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { editorWyNotesModules, setDecoupledToolbar } from 'src/app/utils/editor.utils';
+import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
 import { Component, OnInit, Input } from '@angular/core';
-import { LabelDefinition, LabelTypes } from 'src/app/models/labelDefinition.class';
+import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';

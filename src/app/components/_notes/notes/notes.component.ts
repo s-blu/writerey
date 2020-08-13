@@ -4,18 +4,18 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelDefinition } from './../../../models/labelDefinition.class';
-import { DISTRACTION_FREE_STATES } from 'src/app/models/distractionFreeStates.enum';
-import { FADE_ANIMATIONS } from '../../../utils/animation.utils';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
 import { LabelService } from 'src/app/services/label.service';
-import { DOC_MODES } from '../../../models/docModes.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { NotesService } from '../../../services/notes.service';
 import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { FileInfo } from 'src/app/models/fileInfo.interface';
+import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { ContextService } from 'src/app/services/context.service';
