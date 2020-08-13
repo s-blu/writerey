@@ -27,11 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 
-import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -42,7 +40,6 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
@@ -70,8 +67,6 @@ const matModules = [
   MatButtonModule,
   MatIconModule,
   MatTooltipModule,
-  MatTreeModule,
-  MatMenuModule,
   MatProgressBarModule,
   MatDialogModule,
   MatInputModule,
@@ -82,7 +77,6 @@ const matModules = [
   MatCardModule,
   MatTabsModule,
   MatSliderModule,
-  MatListModule,
   MatProgressSpinnerModule,
   MatDividerModule,
 ];
