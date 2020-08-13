@@ -9,12 +9,12 @@ import { DirectoryStore } from './../../../stores/directory.store';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Subscription, zip, of } from 'rxjs';
-import { CreateNewItemDialogComponent } from '../../createNewItemDialog/createNewItemDialog.component';
 import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { take, flatMap } from 'rxjs/operators';
 import { translate } from '@ngneat/transloco';
+import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
 import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
 @Component({

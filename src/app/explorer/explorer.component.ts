@@ -4,15 +4,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FADE_ANIMATIONS } from '../../shared/utils/animation.utils';
 import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
-import { DistractionFreeStore } from '../../stores/distractionFree.store';
-import { ProjectStore } from '../../stores/project.store';
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { CreateNewLabelComponent } from '../_labels/createNewLabel/createNewLabel.component';
 import { Subscription } from 'rxjs';
 import { LabelService } from 'src/app/services/label.service';
+import { ProjectStore } from '../stores/project.store';
+import { DistractionFreeStore } from '../stores/distractionFree.store';
+import { CreateNewLabelComponent } from '../components/_labels/createNewLabel/createNewLabel.component';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 
 @Component({
   selector: 'wy-explorer',

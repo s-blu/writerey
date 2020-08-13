@@ -1,18 +1,18 @@
-import { DeletionService } from './../../services/deletion.service';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DirectoryService } from './../../services/directory.service';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { CreateNewItemDialogComponent } from '../createNewItemDialog/createNewItemDialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
 import { filter, flatMap } from 'rxjs/operators';
+import { DeletionService } from 'src/app/services/deletion.service';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
 import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
 
 @Component({

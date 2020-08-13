@@ -7,7 +7,7 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DeletionService } from './../../../services/deletion.service';
-import { RenameItemDialogComponent } from './../../renameItemDialog/renameItemDialog.component';
+import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
 import { DocumentService } from 'src/app/services/document.service';
 import { DirectoryStore } from './../../../stores/directory.store';
 import { DocumentStore } from '../../../stores/document.store';

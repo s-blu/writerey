@@ -6,27 +6,22 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { DocumentsModule } from './documents/documents.module';
-import { SharedModule } from './shared/shared.module';
+import { DocumentsModule } from '@writerey/documents/documents.module';
+import { ExplorerModule } from '@writerey/explorer/explorer.module';
+import { SharedModule } from '@writerey/shared/shared.module';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
-import { DocumentExplorerComponent } from './components/_documents/documentExplorer/documentExplorer.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
-import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
-import { ProjectsComponent } from './components/projects/projects.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
-import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
-import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
-import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -34,11 +29,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 
-import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatMenuModule } from '@angular/material/menu';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
@@ -49,14 +42,12 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSliderModule } from '@angular/material/slider';
-import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ExplorerComponent } from './components/explorer/explorer.component';
 import { NotesComponent } from './components/_notes/notes/notes.component';
 import { NoteComponent } from './components/_notes/note/note.component';
 import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
@@ -70,11 +61,9 @@ import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesI
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
 
 const matModules = [
-  MatIconModule,
   MatButtonModule,
+  MatIconModule,
   MatTooltipModule,
-  MatTreeModule,
-  MatMenuModule,
   MatProgressBarModule,
   MatDialogModule,
   MatInputModule,
@@ -85,7 +74,6 @@ const matModules = [
   MatCardModule,
   MatTabsModule,
   MatSliderModule,
-  MatListModule,
   MatProgressSpinnerModule,
   MatDividerModule,
 ];
@@ -94,7 +82,6 @@ const matModules = [
   declarations: [
     AppComponent,
     TopbarComponent,
-    ExplorerComponent,
     NotesComponent,
     NoteComponent,
     DocumentLabelsComponent,
@@ -103,20 +90,14 @@ const matModules = [
     TagDialogComponent,
     LastModifiedComponent,
     UpsertNoteComponent,
-    DocumentTreeComponent,
-    LabelTreeComponent,
     CreateNewLabelComponent,
     LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
-    ProjectsComponent,
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
-    CreateNewDirOrFileComponent,
-    RenameItemDialogComponent,
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
-    DocumentExplorerComponent,
     ChooseFileForLinkDialogComponent,
     NotesItemComponent,
     DocumentLinkComponent,
@@ -131,6 +112,7 @@ const matModules = [
     ...matModules,
     TranslocoRootModule,
     CKEditorModule,
+    ExplorerModule,
     SharedModule,
     WyCkeditorModule,
     DocumentsModule,

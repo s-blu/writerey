@@ -5,12 +5,10 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { DeletionService } from '../../../services/deletion.service';
-import { CreateNewLabelComponent } from '../createNewLabel/createNewLabel.component';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { MatDialog } from '@angular/material/dialog';
 import { LabelService } from 'src/app/services/label.service';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { LabelStore } from 'src/app/stores/label.store';
@@ -55,7 +53,6 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
   private subscription = new Subscription();
 
   constructor(
-    private dialog: MatDialog,
     private deletionService: DeletionService,
     private labelService: LabelService,
     private labelStore: LabelStore
