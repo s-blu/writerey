@@ -10,7 +10,6 @@ import { CkeditorComponent } from './components/_documents/ckeditor/ckeditor.com
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
-import { DocumentExplorerComponent } from './components/_documents/documentExplorer/documentExplorer.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
@@ -66,7 +65,6 @@ import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelI
 import { NoteItemCkeditorViewComponent } from './components/_notes/noteItemCkeditorView/noteItemCkeditorView.component';
 import { ExplorerModule } from './explorer/explorer.module';
 import { SharedModule } from './shared/shared.module';
-import { AddClassesForDistractionStatesDirective } from './shared/directives/addClassesForDistractionStates.directive';
 
 const matModules = [
   MatButtonModule,
@@ -110,10 +108,8 @@ const matModules = [
     ModeSwitcherComponent,
     WordCountComponent,
     DistractionFreeModeComponent,
-    AddClassesForDistractionStatesDirective,
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
-    DocumentExplorerComponent,
     ChooseFileForLinkDialogComponent,
     NotesItemComponent,
     DocumentLinkComponent,

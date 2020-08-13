@@ -5,6 +5,7 @@ import { MatTreeModule } from '@angular/material/tree';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { ExplorerComponent } from './explorer.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { MatListModule } from '@angular/material/list';
@@ -12,15 +13,19 @@ import { DocumentTreeComponent } from './components/documentTree/documentTree.co
 import { LabelTreeComponent } from './components/labelTree/labelTree.component';
 import { CreateNewDirOrFileComponent } from './components/createNewDirOrFile/createNewDirOrFile.component';
 import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { DocumentExplorerComponent } from './components/documentExplorer/documentExplorer.component';
+import { FormsModule } from '@angular/forms';
 
 const matModules = [
     MatTabsModule,
     MatTreeModule,
     MatMenuModule,
     MatIconModule,
-    //MatListModule,
-  /*MatButtonModule,
-  MatTooltipModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatTooltipModule,
+  /*MatButtonModule,AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
   ,
   MatProgressBarModule,
   MatDialogModule,
@@ -45,12 +50,15 @@ const matModules = [
     CreateNewDirOrFileComponent,
     DocumentTreeComponent,    
     RenameItemDialogComponent,
+    DocumentExplorerComponent,
   ],
   imports: [
-    matModules
+    matModules,
+    FormsModule,
   ],
   exports: [
     ExplorerComponent,
+    DocumentTreeComponent,
   ]
 })
 export class ExplorerModule {}
