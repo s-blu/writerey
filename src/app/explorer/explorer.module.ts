@@ -8,6 +8,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { ExplorerComponent } from './explorer.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { MatListModule } from '@angular/material/list';
+import { LabelTreeComponent } from './components/labelTree/labelTree.component';
 
 const matModules = [
     MatTabsModule,
@@ -35,8 +36,9 @@ const matModules = [
 
 @NgModule({
   declarations: [
-    ProjectsComponent,
     ExplorerComponent,
+    ProjectsComponent,
+    LabelTreeComponent,
   ],
   imports: [
     matModules

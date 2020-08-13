@@ -12,14 +12,12 @@ import { NotesItemComponent } from './components/_notes/notesItem/notesItem.comp
 import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { DocumentExplorerComponent } from './components/_documents/documentExplorer/documentExplorer.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
-import { CreateNewDirOrFileComponent } from './components/_documents/createNewDirOrFile/createNewDirOrFile.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { WordCountComponent } from './components/_documents/wordCount/wordCount.component';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
-import { LabelTreeComponent } from './components/_labels/labelTree/labelTree.component';
 import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
@@ -109,7 +107,6 @@ const matModules = [
     LastModifiedComponent,
     UpsertNoteComponent,
     DocumentTreeComponent,
-    LabelTreeComponent,
     CreateNewLabelComponent,
     LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
@@ -118,7 +115,6 @@ const matModules = [
     WordCountComponent,
     DistractionFreeModeComponent,
     AddClassesForDistractionStatesDirective,
-    CreateNewDirOrFileComponent,
     RenameItemDialogComponent,
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
