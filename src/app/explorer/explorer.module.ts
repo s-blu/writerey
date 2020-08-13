@@ -16,6 +16,8 @@ import { RenameItemDialogComponent } from './components/renameItemDialog/renameI
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DocumentExplorerComponent } from './components/documentExplorer/documentExplorer.component';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { SharedModule } from '@writerey/shared/shared.module';
 
 const matModules = [
     MatTabsModule,
@@ -55,6 +57,8 @@ const matModules = [
   imports: [
     matModules,
     FormsModule,
+    CommonModule,
+    SharedModule,
   ],
   exports: [
     ExplorerComponent,
