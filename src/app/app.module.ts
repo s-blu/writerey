@@ -18,7 +18,6 @@ import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.co
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
-import { DocumentTreeComponent } from './components/_documents/documentTree/documentTree.component';
 import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
@@ -106,7 +105,6 @@ const matModules = [
     TagDialogComponent,
     LastModifiedComponent,
     UpsertNoteComponent,
-    DocumentTreeComponent,
     CreateNewLabelComponent,
     LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
