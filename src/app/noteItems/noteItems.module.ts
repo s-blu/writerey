@@ -20,7 +20,7 @@ import { CreateNewNotesItemComponent } from './components/createNewNotesItem/cre
 import { CreateNewLabelInfoComponent } from './components/createNewLabelInfo/createNewLabelInfo.component';
 import { NotesItemComponent } from './components/notesItem/notesItem.component';
 import { NoteComponent } from './components/note/note.component';
-import { NotesComponent } from './noteItems.component';
+import { NoteItemsComponent } from './noteItems.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 const materialModules = [
@@ -55,8 +55,8 @@ const temporaryExports = [UpsertNoteComponent];
     CreateNewLabelInfoComponent,
     NotesItemComponent,
     NoteComponent,
-    NotesComponent
+    NoteItemsComponent
   ],
-  exports: [NotesComponent],
+  exports: [NoteItemsComponent],
 })
 export class NoteItemsModule {}

@@ -22,12 +22,12 @@ import { DocumentModeStore } from '../stores/documentMode.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
 
 @Component({
-  selector: 'wy-notes',
+  selector: 'wy-note-items',
   templateUrl: './noteItems.component.html',
   styleUrls: ['./noteItems.component.scss'],
   animations: FADE_ANIMATIONS,
 })
-export class NotesComponent implements OnInit, OnDestroy {
+export class NoteItemsComponent implements OnInit, OnDestroy {
   @Input() set labelDefinition(md: LabelDefinition) {
     this.labelDef = md;
     this.getContexts();
