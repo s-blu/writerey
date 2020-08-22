@@ -9,9 +9,7 @@
 import { DocumentsModule } from '@writerey/documents/documents.module';
 import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
-import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
-import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
@@ -97,9 +95,7 @@ const matModules = [
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
     CreateNewNotesItemComponent,
-    CreateNewLinkComponent,
     NotesItemComponent,
-    DocumentLinkComponent,
     CreateNewLabelInfoComponent,
   ],
   imports: [

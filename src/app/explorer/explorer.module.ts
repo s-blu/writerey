@@ -19,6 +19,7 @@ import { SharedModule } from '@writerey/shared/shared.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { MatButtonModule } from '@angular/material/button';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 const matModules = [
     MatTabsModule,
@@ -37,9 +38,10 @@ const matModules = [
     ProjectsComponent,
     LabelTreeComponent,
     CreateNewDirOrFileComponent,
-    DocumentTreeComponent,    
+    DocumentTreeComponent,
     RenameItemDialogComponent,
     DocumentExplorerComponent,
+    BreadcrumbComponent
   ],
   imports: [
     matModules,
@@ -51,6 +53,7 @@ const matModules = [
   exports: [
     ExplorerComponent,
     DocumentTreeComponent,
+    BreadcrumbComponent
   ],
   providers: [
     {
