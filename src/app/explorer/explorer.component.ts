@@ -11,8 +11,8 @@ import { Subscription } from 'rxjs';
 import { LabelService } from 'src/app/services/label.service';
 import { ProjectStore } from '../stores/project.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
-import { CreateNewLabelComponent } from '../components/_labels/createNewLabel/createNewLabel.component';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
+import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLabel/createNewLabel.component';
 
 @Component({
   selector: 'wy-explorer',

@@ -13,7 +13,6 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
 import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
@@ -46,7 +45,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
-import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { NoteItemsModule } from './noteItems/noteItems.module';
@@ -78,8 +76,6 @@ const matModules = [
     CreateNewItemDialogComponent,
     TagDialogComponent,
     LastModifiedComponent,
-    CreateNewLabelComponent,
-    LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
     ModeSwitcherComponent,
