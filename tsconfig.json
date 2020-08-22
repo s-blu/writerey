@@ -18,6 +18,7 @@
       "@writerey/documents/*": ["src/app/documents/*"],
       "@writerey/ckeditor/*": ["src/app/wyCkeditor/*"],
       "@writerey/noteItems/*": ["src/app/noteItems/*"],
+      "@writerey/labels/*": ["src/app/labels/*"]
     }
   },
   "angularCompilerOptions": {

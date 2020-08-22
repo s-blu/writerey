@@ -43,7 +43,6 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
@@ -51,6 +50,7 @@ import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDe
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { NoteItemsModule } from './noteItems/noteItems.module';
+import { LabelsModule } from './labels/labels.module';
 
 const matModules = [
   MatButtonModule,
@@ -74,7 +74,6 @@ const matModules = [
   declarations: [
     AppComponent,
     TopbarComponent,
-    DocumentLabelsComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
     TagDialogComponent,
@@ -99,7 +98,8 @@ const matModules = [
     SharedModule,
     WyCkeditorModule,
     DocumentsModule,
-    NoteItemsModule
+    NoteItemsModule,
+    LabelsModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
