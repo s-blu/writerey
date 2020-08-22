@@ -22,7 +22,7 @@ import { sortLabelArray } from '@writerey/shared/utils/label.utils';
 import { flatMap, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 @Component({
-  selector: 'wy-document-marks',
+  selector: 'wy-document-labels',
   templateUrl: './documentLabels.component.html',
   styleUrls: ['./documentLabels.component.scss'],
   animations: FADE_ANIMATIONS,
