@@ -15,6 +15,9 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UpsertNoteComponent } from './components/upsertNote/upsertNote.component';
+import { CreateNewNotesItemComponent } from './components/createNewNotesItem/createNewNotesItem.component';
+import { CreateNewLabelInfoComponent } from './components/createNewLabelInfo/createNewLabelInfo.component';
 
 const materialModules = [
   MatButtonModule,
@@ -25,8 +28,8 @@ const materialModules = [
   MatSelectModule,
   MatInputModule,
 ];
-const declarationsAndExport = [DocumentLinkComponent, CreateNewLinkComponent];
 
+const temporaryExports = [UpsertNoteComponent];
 @NgModule({
   imports: [
     CommonModule,
@@ -38,7 +41,14 @@ const declarationsAndExport = [DocumentLinkComponent, CreateNewLinkComponent];
     ReactiveFormsModule,
     ...materialModules,
   ],
-  declarations: [ChooseFileForLinkDialogComponent, ...declarationsAndExport],
-  exports: [...declarationsAndExport],
+  declarations: [
+    CreateNewNotesItemComponent,
+    DocumentLinkComponent,
+    ChooseFileForLinkDialogComponent,
+    CreateNewLinkComponent,
+    UpsertNoteComponent,
+    CreateNewLabelInfoComponent,
+  ],
+  exports: [DocumentLinkComponent, CreateNewNotesItemComponent, ...temporaryExports],
 })
 export class NoteItemsModule {}
