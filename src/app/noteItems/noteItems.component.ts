@@ -7,12 +7,8 @@
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
-import { DistractionFreeStore } from '../../../stores/distractionFree.store';
-import { DocumentModeStore } from '../../../stores/documentMode.store';
 import { LabelService } from 'src/app/services/label.service';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
-import { NotesService } from '../../../services/notes.service';
-import { ParagraphService } from '../../../services/paragraph.service';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
@@ -20,11 +16,15 @@ import { LabelStore } from 'src/app/stores/label.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { ContextService } from 'src/app/services/context.service';
 import { ContextStore } from 'src/app/stores/context.store';
+import { ParagraphService } from '../services/paragraph.service';
+import { NotesService } from '../services/notes.service';
+import { DocumentModeStore } from '../stores/documentMode.store';
+import { DistractionFreeStore } from '../stores/distractionFree.store';
 
 @Component({
   selector: 'wy-notes',
-  templateUrl: './notes.component.html',
-  styleUrls: ['./notes.component.scss'],
+  templateUrl: './noteItems.component.html',
+  styleUrls: ['./noteItems.component.scss'],
   animations: FADE_ANIMATIONS,
 })
 export class NotesComponent implements OnInit, OnDestroy {

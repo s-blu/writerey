@@ -18,6 +18,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpsertNoteComponent } from './components/upsertNote/upsertNote.component';
 import { CreateNewNotesItemComponent } from './components/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/createNewLabelInfo/createNewLabelInfo.component';
+import { NotesItemComponent } from './components/notesItem/notesItem.component';
+import { NoteComponent } from './components/note/note.component';
+import { NotesComponent } from './noteItems.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 const materialModules = [
   MatButtonModule,
@@ -27,6 +31,7 @@ const materialModules = [
   MatTooltipModule,
   MatSelectModule,
   MatInputModule,
+  MatExpansionModule
 ];
 
 const temporaryExports = [UpsertNoteComponent];
@@ -48,7 +53,10 @@ const temporaryExports = [UpsertNoteComponent];
     CreateNewLinkComponent,
     UpsertNoteComponent,
     CreateNewLabelInfoComponent,
+    NotesItemComponent,
+    NoteComponent,
+    NotesComponent
   ],
-  exports: [DocumentLinkComponent, CreateNewNotesItemComponent, ...temporaryExports],
+  exports: [NotesComponent],
 })
 export class NoteItemsModule {}

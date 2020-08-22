@@ -9,7 +9,6 @@
 import { DocumentsModule } from '@writerey/documents/documents.module';
 import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
-import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
@@ -44,8 +43,6 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NotesComponent } from './components/_notes/notes/notes.component';
-import { NoteComponent } from './components/_notes/note/note.component';
 import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 
@@ -77,8 +74,6 @@ const matModules = [
   declarations: [
     AppComponent,
     TopbarComponent,
-    NotesComponent,
-    NoteComponent,
     DocumentLabelsComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
@@ -90,7 +85,6 @@ const matModules = [
     NameSnapshotDialogComponent,
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
-    NotesItemComponent,
   ],
   imports: [
     BrowserModule,
