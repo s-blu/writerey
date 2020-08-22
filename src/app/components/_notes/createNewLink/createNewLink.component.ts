@@ -6,7 +6,6 @@
 
 import { ProjectStore } from '../../../stores/project.store';
 import { LinkService } from '../../../services/link.service';
-import { ChooseFileForLinkDialogComponent } from '../chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -15,6 +14,7 @@ import { map, take, flatMap } from 'rxjs/operators';
 import { Link } from '@writerey/shared/models/notesItems.interface';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { ChooseFileForLinkDialogComponent } from '@writerey/noteItems/components/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 
 @Component({
   selector: 'wy-create-new-link',

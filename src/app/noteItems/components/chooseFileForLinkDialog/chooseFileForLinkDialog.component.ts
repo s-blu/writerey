@@ -8,7 +8,6 @@ import { ProjectStore } from './../../../stores/project.store';
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { CreateNewItemDialogComponent } from '../../createNewItemDialog/createNewItemDialog.component';
 
 @Component({
   selector: 'wy-chooseFileForLinkDialog',

@@ -11,7 +11,6 @@ import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
 import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
-import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
 import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
@@ -59,6 +58,7 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { MatDividerModule } from '@angular/material/divider';
 import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
 import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
+import { NoteItemsModule } from './noteItems/noteItems.module';
 
 const matModules = [
   MatButtonModule,
@@ -98,7 +98,6 @@ const matModules = [
     DistractionFreeModeComponent,
     CreateNewNotesItemComponent,
     CreateNewLinkComponent,
-    ChooseFileForLinkDialogComponent,
     NotesItemComponent,
     DocumentLinkComponent,
     CreateNewLabelInfoComponent,
@@ -116,6 +115,7 @@ const matModules = [
     SharedModule,
     WyCkeditorModule,
     DocumentsModule,
+    NoteItemsModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
