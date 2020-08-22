@@ -34,7 +34,6 @@ const materialModules = [
   MatExpansionModule
 ];
 
-const temporaryExports = [UpsertNoteComponent];
 @NgModule({
   imports: [
     CommonModule,
