@@ -8,12 +8,22 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TagDialogComponent } from './components/tagDialog/tagDialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { NameSnapshotDialogComponent } from './components/nameSnapshotDialog/nameSnapshotDialog.component';
+import { LastModifiedComponent } from './components/lastModified/lastModified.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
-const materialModules = [MatDialogModule, MatFormFieldModule, MatButtonModule, MatInputModule];
+const materialModules = [
+  MatDialogModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatInputModule,
+  MatIconModule,
+  MatTooltipModule,
+];
 
 @NgModule({
   imports: [CommonModule, SharedModule, FormsModule, ReactiveFormsModule, ...materialModules],
-  declarations: [TagDialogComponent, NameSnapshotDialogComponent],
-  exports: [TagDialogComponent, NameSnapshotDialogComponent],
+  declarations: [TagDialogComponent, NameSnapshotDialogComponent, LastModifiedComponent],
+  exports: [TagDialogComponent, NameSnapshotDialogComponent, LastModifiedComponent],
 })
 export class HistoryModule {}

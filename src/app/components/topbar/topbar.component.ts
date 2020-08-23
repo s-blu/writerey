@@ -6,7 +6,7 @@
 
 import { Subscription } from 'rxjs';
 import { SnapshotService } from '../../services/snapshot.service';
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatDialog } from '@angular/material/dialog';
@@ -19,7 +19,7 @@ import { NameSnapshotDialogComponent } from '@writerey/history/components/nameSn
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.scss'],
 })
-export class TopbarComponent implements OnInit {
+export class TopbarComponent implements OnInit, OnDestroy {
   @Output() snapshotted = new EventEmitter<any>();
 
   private lastSnapshotDate: Date;
