@@ -11,7 +11,6 @@ import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
-import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
@@ -76,7 +75,6 @@ const matModules = [
     CreateNewItemDialogComponent,
     LastModifiedComponent,
     DeleteConfirmationDialogComponent,
-    NameSnapshotDialogComponent,
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
   ],
