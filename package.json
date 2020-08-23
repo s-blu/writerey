@@ -42,7 +42,7 @@
     "electron-squirrel-startup": "^1.0.0",
     "immutable": "^4.0.0-rc.12",
     "python-shell": "^1.0.8",
-    "rxjs": "^6.5.5",
+    "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
     "uuid": "^7.0.3",
     "zone.js": "^0.10.3"
