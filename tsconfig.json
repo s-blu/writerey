@@ -16,7 +16,10 @@
       "@writerey/shared/*": ["src/app/shared/*"],
       "@writerey/explorer/*": ["src/app/explorer/*"],
       "@writerey/documents/*": ["src/app/documents/*"],
-      "@writerey/ckeditor/*": ["src/app/wyCkeditor/*"]
+      "@writerey/ckeditor/*": ["src/app/wyCkeditor/*"],
+      "@writerey/noteItems/*": ["src/app/noteItems/*"],
+      "@writerey/labels/*": ["src/app/labels/*"],
+      "@writerey/history/*": ["src/app/history/*"]
     }
   },
   "angularCompilerOptions": {

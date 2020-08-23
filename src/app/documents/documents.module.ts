@@ -7,7 +7,6 @@
  */
 import { MatIconModule } from '@angular/material/icon';
 import { SharedModule } from './../shared/shared.module';
-import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WordCountComponent } from './components/wordCount/wordCount.component';
@@ -17,7 +16,7 @@ import { DocumentEditorComponent } from './components/documentEditor/documentEdi
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const materialModules = [MatIconModule, MatProgressBarModule];
-const declarationsAndExport = [BreadcrumbComponent, WordCountComponent, IntroductionComponent, DocumentEditorComponent];
+const declarationsAndExport = [WordCountComponent, IntroductionComponent, DocumentEditorComponent];
 
 @NgModule({
   imports: [CommonModule, SharedModule, WyCkeditorModule, ...materialModules],

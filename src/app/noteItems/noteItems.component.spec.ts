@@ -9,20 +9,20 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { NotesComponent } from './notes.component';
+import { NoteItemsComponent } from './noteItems.component';
 
 describe('NotesComponent', () => {
-  let component: NotesComponent;
-  let fixture: ComponentFixture<NotesComponent>;
+  let component: NoteItemsComponent;
+  let fixture: ComponentFixture<NoteItemsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NotesComponent],
+      declarations: [NoteItemsComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(NotesComponent);
+    fixture = TestBed.createComponent(NoteItemsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

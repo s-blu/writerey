@@ -13,22 +13,25 @@ import { CreateNewDirOrFileComponent } from './components/createNewDirOrFile/cre
 import { RenameItemDialogComponent } from './components/renameItemDialog/renameItemDialog.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { DocumentExplorerComponent } from './components/documentExplorer/documentExplorer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { TranslocoService } from '@ngneat/transloco';
 import { TranslocoRootModule } from '../transloco-root.module';
 import { MatButtonModule } from '@angular/material/button';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { MatInputModule } from '@angular/material/input';
 
 const matModules = [
-    MatTabsModule,
-    MatTreeModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatFormFieldModule,
-    MatTooltipModule,
+  MatTabsModule,
+  MatTreeModule,
+  MatMenuModule,
+  MatIconModule,
+  MatButtonModule,
+  MatListModule,
+  MatFormFieldModule,
+  MatTooltipModule,
+  MatInputModule,
 ];
 
 @NgModule({
@@ -37,21 +40,13 @@ const matModules = [
     ProjectsComponent,
     LabelTreeComponent,
     CreateNewDirOrFileComponent,
-    DocumentTreeComponent,    
+    DocumentTreeComponent,
     RenameItemDialogComponent,
     DocumentExplorerComponent,
+    BreadcrumbComponent,
   ],
-  imports: [
-    matModules,
-    FormsModule,
-    CommonModule,
-    SharedModule,
-    TranslocoRootModule,
-  ],
-  exports: [
-    ExplorerComponent,
-    DocumentTreeComponent,
-  ],
+  imports: [matModules, FormsModule, ReactiveFormsModule, CommonModule, SharedModule, TranslocoRootModule],
+  exports: [ExplorerComponent, DocumentTreeComponent, BreadcrumbComponent],
   providers: [
     {
       provide: LOCALE_ID,

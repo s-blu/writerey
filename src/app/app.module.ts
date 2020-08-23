@@ -9,18 +9,9 @@
 import { DocumentsModule } from '@writerey/documents/documents.module';
 import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
-import { DocumentLinkComponent } from './components/_notes/documentLink/documentLink.component';
-import { NotesItemComponent } from './components/_notes/notesItem/notesItem.component';
-import { ChooseFileForLinkDialogComponent } from './components/_notes/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
-import { CreateNewLinkComponent } from './components/_notes/createNewLink/createNewLink.component';
 import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
-import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { CreateNewLabelComponent } from './components/_labels/createNewLabel/createNewLabel.component';
-import { UpsertNoteComponent } from './components/_notes/upsertNote/upsertNote.component';
-import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
-import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
@@ -48,17 +39,14 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
 import { TopbarComponent } from './components/topbar/topbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NotesComponent } from './components/_notes/notes/notes.component';
-import { NoteComponent } from './components/_notes/note/note.component';
-import { DocumentLabelsComponent } from './components/_labels/documentLabels/documentLabels.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
-import { LabelDetailsComponent } from './components/_labels/labelDetails/labelDetails.component';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { CreateNewNotesItemComponent } from './components/_notes/createNewNotesItem/createNewNotesItem.component';
-import { CreateNewLabelInfoComponent } from './components/_notes/createNewLabelInfo/createNewLabelInfo.component';
+import { NoteItemsModule } from './noteItems/noteItems.module';
+import { LabelsModule } from './labels/labels.module';
+import { HistoryModule } from './history/history.module';
 
 const matModules = [
   MatButtonModule,
@@ -82,26 +70,11 @@ const matModules = [
   declarations: [
     AppComponent,
     TopbarComponent,
-    NotesComponent,
-    NoteComponent,
-    DocumentLabelsComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
-    TagDialogComponent,
-    LastModifiedComponent,
-    UpsertNoteComponent,
-    CreateNewLabelComponent,
-    LabelDetailsComponent,
     DeleteConfirmationDialogComponent,
-    NameSnapshotDialogComponent,
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
-    CreateNewNotesItemComponent,
-    CreateNewLinkComponent,
-    ChooseFileForLinkDialogComponent,
-    NotesItemComponent,
-    DocumentLinkComponent,
-    CreateNewLabelInfoComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,6 +89,9 @@ const matModules = [
     SharedModule,
     WyCkeditorModule,
     DocumentsModule,
+    NoteItemsModule,
+    LabelsModule,
+    HistoryModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
