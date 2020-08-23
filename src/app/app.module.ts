@@ -13,7 +13,6 @@ import { TranslocoService } from '@ngneat/transloco';
 import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { NameSnapshotDialogComponent } from './components/_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { TagDialogComponent } from './components/_snapshots/tagDialog/tagDialog.component';
 import { LastModifiedComponent } from './components/lastModified/lastModified.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -49,6 +48,7 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { MatDividerModule } from '@angular/material/divider';
 import { NoteItemsModule } from './noteItems/noteItems.module';
 import { LabelsModule } from './labels/labels.module';
+import { HistoryModule } from './history/history.module';
 
 const matModules = [
   MatButtonModule,
@@ -74,7 +74,6 @@ const matModules = [
     TopbarComponent,
     FooterComponent,
     CreateNewItemDialogComponent,
-    TagDialogComponent,
     LastModifiedComponent,
     DeleteConfirmationDialogComponent,
     NameSnapshotDialogComponent,
@@ -95,7 +94,8 @@ const matModules = [
     WyCkeditorModule,
     DocumentsModule,
     NoteItemsModule,
-    LabelsModule
+    LabelsModule,
+    HistoryModule
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },

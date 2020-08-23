@@ -4,17 +4,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DocumentModeStore } from '../../stores/documentMode.store';
 import { NameSnapshotDialogComponent } from '../_snapshots/nameSnapshotDialog/nameSnapshotDialog.component';
-import { DOC_MODES } from '../../shared/models/docModes.enum';
-import { TagDialogComponent } from '../_snapshots/tagDialog/tagDialog.component';
 import { Subscription } from 'rxjs';
 import { SnapshotService } from '../../services/snapshot.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatDialog } from '@angular/material/dialog';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
+import { TagDialogComponent } from '@writerey/history/components/tagDialog/tagDialog.component';
 
 @Component({
   selector: 'wy-topbar',
