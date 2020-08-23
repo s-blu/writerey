@@ -12,7 +12,7 @@
     <p>{{ t('message') }}</p>
     <mat-form-field>
       <mat-label>{{ t('input') }}</mat-label>
-      <input (keyup.enter)="submit()" matInput [(ngModel)]="data.msg" />
+      <input (keyup.enter)="submit()" matInput name="snapshotMessage" [(ngModel)]="data.msg" />
     </mat-form-field>
   </div>
   <div mat-dialog-actions>
