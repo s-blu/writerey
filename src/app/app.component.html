@@ -15,8 +15,7 @@
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor *ngIf="!labelDef"></wy-document-editor>
-        <wy-label-details *ngIf="labelDef" [labelDef]="labelDef"></wy-label-details>
+        <router-outlet></router-outlet>
       </div>
     </div>
     <div class="notes">

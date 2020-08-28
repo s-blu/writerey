@@ -38,6 +38,8 @@ import { DistractionFreeModeComponent } from './components/distractionFreeMode/d
 import { NoteItemsModule } from './noteItems/noteItems.module';
 import { LabelsModule } from './labels/labels.module';
 import { HistoryModule } from './history/history.module';
+import { AppRoutingModule } from './app-routing.module';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 const matModules = [
   MatFormFieldModule,
@@ -45,9 +47,9 @@ const matModules = [
   MatDialogModule,
   MatInputModule,
   MatIconModule,
-  MatTooltipModule
-]
-
+  MatTooltipModule,
+  MatSnackBarModule,
+];
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,7 +75,8 @@ const matModules = [
     DocumentsModule,
     NoteItemsModule,
     LabelsModule,
-    HistoryModule
+    HistoryModule,
+    AppRoutingModule,
   ],
   providers: [
     { provide: APP_INITIALIZER, useFactory: initializeApp, deps: [WyInitService], multi: true },
