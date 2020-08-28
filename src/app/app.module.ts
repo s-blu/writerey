@@ -23,17 +23,9 @@ import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatCardModule } from '@angular/material/card';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppComponent } from './app.component';
@@ -43,28 +35,18 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
-import { MatDividerModule } from '@angular/material/divider';
 import { NoteItemsModule } from './noteItems/noteItems.module';
 import { LabelsModule } from './labels/labels.module';
 import { HistoryModule } from './history/history.module';
 
 const matModules = [
+  MatFormFieldModule,
   MatButtonModule,
-  MatIconModule,
-  MatTooltipModule,
-  MatProgressBarModule,
   MatDialogModule,
   MatInputModule,
-  MatFormFieldModule,
-  MatSnackBarModule,
-  MatSelectModule,
-  MatExpansionModule,
-  MatCardModule,
-  MatTabsModule,
-  MatSliderModule,
-  MatProgressSpinnerModule,
-  MatDividerModule,
-];
+  MatIconModule,
+  MatTooltipModule
+]
 
 @NgModule({
   declarations: [
