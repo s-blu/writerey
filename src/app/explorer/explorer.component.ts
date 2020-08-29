@@ -13,6 +13,7 @@ import { ProjectStore } from '../stores/project.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLabel/createNewLabel.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'wy-explorer',
@@ -21,13 +22,9 @@ import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLa
   animations: FADE_ANIMATIONS,
 })
 export class ExplorerComponent implements OnInit, OnDestroy {
-  @Output() labelChanged: EventEmitter<any> = new EventEmitter<any>();
-
   selectedProject = null;
   distractionFreeStatus: DISTRACTION_FREE_STATES;
   DISTRACTION_FREE_STATES = DISTRACTION_FREE_STATES;
-  // FIXME loosen this dependency again with proper routing
-  activeLabelId: string;
   tabIndex;
 
   private subscription = new Subscription();
@@ -48,13 +45,9 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private projectStore: ProjectStore,
     private distractionFreeStore: DistractionFreeStore,
-    private labelService: LabelService
+    private labelService: LabelService,
+    private router: Router
   ) {}
-
-  openLabel(event) {
-    this.labelChanged.emit(event);
-    this.activeLabelId = event?.id;
-  }
 
   selectProject(event) {
     if (!event) return;
@@ -77,8 +70,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         if (!data) return;
         this.subscription.add(
           this.labelService.createNewLabelCategory(data.name, data.type).subscribe((res: any) => {
-            this.activeLabelId = res[0]?.id;
-            this.labelChanged.emit(res[0]);
+            this.router.navigate(['/labelDefinition', { id: res[0]?.id }]);
             this.changeTabIndex(1);
           })
         );

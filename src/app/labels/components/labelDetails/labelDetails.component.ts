@@ -1,3 +1,4 @@
+import { mergeMap } from 'rxjs/operators';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -14,6 +15,8 @@ import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefini
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
+import { Route } from '@angular/compiler/src/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wy-label-details',
@@ -21,11 +24,6 @@ import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
   styleUrls: ['./labelDetails.component.scss'],
 })
 export class LabelDetailsComponent implements OnInit {
-  @Input() set labelDef(md: LabelDefinition) {
-    this.initializeForm(md);
-    this.labelDefinition = md;
-  }
-
   editForm;
   labelDefinition: LabelDefinition;
   types = LabelTypes;
@@ -39,10 +37,20 @@ export class LabelDetailsComponent implements OnInit {
     private labelService: LabelService,
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
-    private deletionService: DeletionService
+    private deletionService: DeletionService,
+    private route: ActivatedRoute
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.params
+      .pipe(
+        mergeMap(params => this.labelService.getLabelDefinition(params.id))
+      )
+      .subscribe(labelDef => {
+        this.initializeForm(labelDef);
+        this.labelDefinition = labelDef;
+      });
+  }
 
   addNewValue() {
     this.values.insert(
@@ -66,12 +74,7 @@ export class LabelDetailsComponent implements OnInit {
   }
 
   onSubmit(newValues) {
-    if (
-      this.labelDefinition.type === LabelTypes.NUMERIC &&
-      (this.labelDefinition.start !== newValues.start ||
-        this.labelDefinition.end !== newValues.end ||
-        this.labelDefinition.interval !== newValues.interval)
-    ) {
+    if (this.numericValuesWereChanged(newValues)) {
       const newNumValues = [];
       for (let i = newValues.start; i <= newValues.end; i += newValues.interval) {
         newNumValues.push(i);
@@ -105,6 +108,15 @@ export class LabelDetailsComponent implements OnInit {
       });
       this.labelDefinition = res;
     });
+  }
+
+  private numericValuesWereChanged(newValues: any) {
+    return (
+      this.labelDefinition.type === LabelTypes.NUMERIC &&
+      (this.labelDefinition.start !== newValues.start ||
+        this.labelDefinition.end !== newValues.end ||
+        this.labelDefinition.interval !== newValues.interval)
+    );
   }
 
   private initializeForm(labelDef) {

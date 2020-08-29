@@ -12,6 +12,7 @@ import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree'
 import { LabelService } from 'src/app/services/label.service';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { LabelStore } from 'src/app/stores/label.store';
+import { Router } from '@angular/router';
 
 /**
  * Food data with nested structure.
@@ -32,10 +33,8 @@ interface LabelNode {
 })
 export class LabelTreeComponent implements OnInit, OnDestroy {
   @Input() project;
-  @Input() activeLabelId;
 
-  @Output() labelChanged: EventEmitter<any> = new EventEmitter<any>();
-
+  activeLabelId;
   labelDefinitions: Array<LabelDefinition>;
   // Tree Controls
   treeControl = new FlatTreeControl<LabelNode>(
@@ -55,7 +54,8 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
   constructor(
     private deletionService: DeletionService,
     private labelService: LabelService,
-    private labelStore: LabelStore
+    private labelStore: LabelStore,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -72,8 +72,8 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
   }
 
   openLabelCategory(node) {
-    const labelDef = this.labelDefinitions.find(el => el.id === node.id);
-    this.labelChanged.emit(labelDef);
+    this.activeLabelId = node.id;
+    this.router.navigate(['/labelDefinition', { id: node.id }]);
   }
 
   removeLabel(node) {

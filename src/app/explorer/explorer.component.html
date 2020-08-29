@@ -52,8 +52,6 @@
         </mat-tab>
         <mat-tab [label]="t('tabs.labels')">
           <wy-label-tree
-            (labelChanged)="openLabel($event)"
-            [activeLabelId]="activeLabelId"
             [project]="selectedProject"
             selectedIndex
           ></wy-label-tree>

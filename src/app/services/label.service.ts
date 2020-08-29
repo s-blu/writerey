@@ -95,6 +95,15 @@ export class LabelService implements OnDestroy {
     );
   }
 
+  getLabelDefinition(id) {
+    return this.labelStore.labelDefinitions$.pipe(
+      take(1),
+      map(defs => {
+        return defs.find(def => def.id === id);
+      })
+    );
+  }
+
   init() {
     this.subscription.add(
       this.projectStore.project$.subscribe(project => {
