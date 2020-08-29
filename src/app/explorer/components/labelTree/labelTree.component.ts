@@ -6,7 +6,7 @@
 
 import { DeletionService } from '../../../services/deletion.service';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { LabelService } from 'src/app/services/label.service';
@@ -73,7 +73,7 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
 
   openLabelCategory(node) {
     this.activeLabelId = node.id;
-    this.router.navigate(['/labelDefinition', { id: node.id }]);
+    this.router.navigate(['/labelDefinition', { labelDefinitionId: node.id }]);
   }
 
   removeLabel(node) {

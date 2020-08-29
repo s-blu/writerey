@@ -1,4 +1,3 @@
-import { mergeMap } from 'rxjs/operators';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,20 +9,22 @@ import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
-import { Route } from '@angular/compiler/src/core';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { mergeMap } from 'rxjs/operators';
+import { LabelStore } from 'src/app/stores/label.store';
 
 @Component({
   selector: 'wy-label-details',
   templateUrl: './labelDetails.component.html',
   styleUrls: ['./labelDetails.component.scss'],
 })
-export class LabelDetailsComponent implements OnInit {
+export class LabelDetailsComponent implements OnInit, OnDestroy {
   editForm;
   labelDefinition: LabelDefinition;
   types = LabelTypes;
@@ -32,9 +33,12 @@ export class LabelDetailsComponent implements OnInit {
   editorConfig = editorWyNotesModules;
   onReady = setDecoupledToolbar;
 
+  private subscription = new Subscription();
+
   constructor(
     private formBuilder: FormBuilder,
     private labelService: LabelService,
+    private labelStore: LabelStore,
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     private deletionService: DeletionService,
@@ -42,14 +46,20 @@ export class LabelDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.params
-      .pipe(
-        mergeMap(params => this.labelService.getLabelDefinition(params.id))
-      )
-      .subscribe(labelDef => {
-        this.initializeForm(labelDef);
-        this.labelDefinition = labelDef;
-      });
+    this.subscription.add(
+      this.route.params
+        .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))
+        .subscribe(labelDef => {
+          if (!labelDef) return;
+          this.initializeForm(labelDef);
+          this.labelDefinition = labelDef;
+          this.labelStore.setLabelDefinition(labelDef);
+        })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   addNewValue() {
