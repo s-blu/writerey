@@ -16,6 +16,7 @@ import { LabelDefinition, LabelTypes } from '../shared/models/labelDefinition.cl
 import { ContextStore } from '../stores/context.store';
 import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';
+import { off } from 'process';
 
 @Injectable({
   providedIn: 'root',
@@ -91,6 +92,16 @@ export class LabelService implements OnDestroy {
         }
         this.labelStore.setLabelDefinitions(res);
         return res;
+      })
+    );
+  }
+
+  getLabelDefinition(id) {
+    if (!id) return of(null);
+    return this.labelStore.labelDefinitions$.pipe(
+      take(1),
+      map(defs => {
+        return defs.find(def => def.id === id);
       })
     );
   }

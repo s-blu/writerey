@@ -10,7 +10,7 @@ import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { LabelService } from 'src/app/services/label.service';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subscription, of } from 'rxjs';
 import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DocumentStore } from 'src/app/stores/document.store';
@@ -20,6 +20,7 @@ import { ParagraphService } from '../services/paragraph.service';
 import { NotesService } from '../services/notes.service';
 import { DocumentModeStore } from '../stores/documentMode.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wy-note-items',
@@ -28,11 +29,6 @@ import { DistractionFreeStore } from '../stores/distractionFree.store';
   animations: FADE_ANIMATIONS,
 })
 export class NoteItemsComponent implements OnInit, OnDestroy {
-  @Input() set labelDefinition(md: LabelDefinition) {
-    this.labelDef = md;
-    this.getContexts();
-  }
-
   labelDef: LabelDefinition;
   MODES = DOC_MODES;
   mode: DOC_MODES;
@@ -79,7 +75,8 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
     private distractionFreeStore: DistractionFreeStore,
-    private contextStore: ContextStore
+    private contextStore: ContextStore,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -103,7 +100,16 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.documentStore.fileInfo$.subscribe(fileInfo => {
         this.fileInfo = fileInfo;
+        this.labelDef = null;
         this.parId = null;
+        this.getContexts();
+      })
+    );
+    this.subscription.add(
+      this.labelStore.labelDefinition$.subscribe(labelDef => {
+        this.fileInfo = null;
+        this.parId = null;
+        this.labelDef = labelDef;
         this.getContexts();
       })
     );
