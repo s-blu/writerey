@@ -24,8 +24,11 @@ Do you want to learn more? Visit the [official website](https://www.python.org/)
 2.	Run the installer
 3.	Check “add Python 3.8 to Path”
 4.	Click on Customize installation
+![](../img/py-4.png)
 5.	Uncheck all but pip and py launcher
+![](../img/py-5.png)
 6.	Choose installation path like you wish and hit Install
+![](../img/py-6.png)
 7.	Click Close to finish python installation
 
 ## What is Git? Why do I need it?
@@ -38,27 +41,16 @@ Do you want to learn more? Visit the [official website](https://git-scm.com/) or
 
 ## How do I install Git?
 
-To make all the Git handling as easy as possible for you, we recommend using the Github Desktop Client like proposed by [the official git website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git). It bundles all the Git tools you need and is more user friendly to install.
-
-### Install Github Desktop Client
-
-1. Get it here
-2. Run the installer
-3. Hit "Skip this step" on the signup
-4. Choose a name and an email like you wish (writerey will overwrite this setting later)
-5. Choose to your liking if you want to sent usage data and continue
-6. Finished! You can close the client again. 
-
-### ... or install git as standalone
-
-If you want to install Git as standalone, do the following. Mind though that installing Git can seem a bit scary, since there are a lot of options you can choose from.
+Installing Git can be a bit alienating, since there are a lot of options to choose from. Fear not though, most of the time you can just hit Next.
 
 1.	Get it here https://git-scm.com/downloads
 2.	Run the installer.
-3.	Accept the GNU License 
+3.	Accept the GNU License
 4.	Choose a installation path you want 
 5.	Uncheck “Windows Explorer Integration”, you won’t need it. Leave the rest as is 
+![](../img/git-5.png)
 6.	Check “Don’t create a Start Menu folder”, you won’t need it 
+![](../img/git-6.png)
 8.	Hit Next until you can hit install                                   
 9.	Hit Install.
 15.	And hit next – a last time! 
@@ -67,7 +59,10 @@ If you want to install Git as standalone, do the following. Mind though that ins
 
 1. If you installed Git or Python, please restart your computer first.
 1. Get it here https://github.com/s-blu/writerey/releases/latest - download the .zip under "assets"
+![](../img/writerey-1.png)
 1. Unzip the zip in your preffered installation path. Please be aware that all the files you'll create in writerey will lay in the same path
+1. Double Click writerey.exe 
+1. You're ready to go!
 
  
 
