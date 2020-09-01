@@ -2,7 +2,7 @@
 
 ## Projects, Folders and Documents
 
-All your writing projects begin with exactly that: A project. To create one, hit the blue button on the side bar and give it a fancy name.
+All your writing projects begin with exactly that: A project. To create one, hit the blue button on the sidebar and give it a fancy name.
 
 Inside a project you can create folders and documents, the hearth of your writing projects. Hit the "More" Menu on the side bar and create them at your liking. To create a folder/document inside another folder, use the menu on the folder. 
 
@@ -62,22 +62,24 @@ After you have created a label and its value, you can assign them.
 
 On the left side, you'll now have your created labels displayed. Choose the values you want to assign to this paragraph. When you now switch back to Write mode and your cursor is inside this paragraph, your labels will show up. 
 
-There is more to them though.
+And there is more to them.
 
 ## Notes
 
 The second type of context information are notes. Just like sticky notes. You can add them on review mode either on the whole document, or your selected paragraph - or on your labels.
 
-If you add a note to a paragraph, it will only show up on this paragraph. If you have notes that you want on multiple places but not on the complete document, labels are what you're looking for. By putting Notes on label values, they'll show up on each paragraph that belongs to this label value. 
+If you add a note to a paragraph, it will only show up on this paragraph. If you have notes that you want on multiple places but not on the complete document, labels are what you're looking for. By putting notes on label values, they'll show up on each paragraph that belongs to this label value. 
 
-You're having a ton of background information to that church scene 37 takes place? Label value 37 of Label Scenes is your friend.
+You're having a ton of background information to that church scene 37 takes place? Label value `37` of label `Scenes` is your friend.
 
 ### How to create notes for the document or a paragraph
 
 1. Go to your document
 1. Switch to Review mode
-1. If you want the note on a paragraph, click on that paragraph and make sure the context of the "New Note" form is set to "Paragraph" - 
-1. Type in whatever you want to note down. Note Type and Colors are two ways to make a note stand out - just try it out.
+1. If you want the note on a paragraph, click on that paragraph and make sure the context of the "New Note" form is set to "Paragraph"
+1. Type in whatever you want to note down. 
+1. Note Type and Colors are two ways to make a note stand out - just try it out. Both are of solely visual effect.
+1. Hit the Plus-Button to add your note.
 
 ### How to create notes for a label value
 
@@ -87,7 +89,7 @@ The second possibility to do so is on the label screen itself.
 
 1. Go to the label screen (Switch the tree on the right with the tab and click on your label)
 1. Switch to Review mode
-1. Choose your wanted Label value as context and write down your note
+1. Choose your wanted label value as context and write down your note
 
 ## Troubleshooting and known Bugs
 
