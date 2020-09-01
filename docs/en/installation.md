@@ -24,10 +24,13 @@ Do you want to learn more? Visit the [official website](https://www.python.org/)
 2.	Run the installer
 3.	Check “add Python 3.8 to Path”
 4.	Click on Customize installation
+
 ![](../img/py-4.png)
 5.	Uncheck all but pip and py launcher
+
 ![](../img/py-5.png)
 6.	Choose installation path like you wish and hit Install
+
 ![](../img/py-6.png)
 7.	Click Close to finish python installation
 
@@ -48,8 +51,10 @@ Installing Git can be a bit alienating, since there are a lot of options to choo
 3.	Accept the GNU License
 4.	Choose a installation path you want 
 5.	Uncheck “Windows Explorer Integration”, you won’t need it. Leave the rest as is 
+
 ![](../img/git-5.png)
 6.	Check “Don’t create a Start Menu folder”, you won’t need it 
+
 ![](../img/git-6.png)
 8.	Hit Next until you can hit install                                   
 9.	Hit Install.
@@ -59,6 +64,7 @@ Installing Git can be a bit alienating, since there are a lot of options to choo
 
 1. If you installed Git or Python, please restart your computer first.
 1. Get it here https://github.com/s-blu/writerey/releases/latest - download the .zip under "assets"
+
 ![](../img/writerey-1.png)
 1. Unzip the zip in your preffered installation path. Please be aware that all the files you'll create in writerey will lay in the same path
 1. Double Click writerey.exe 
