@@ -23,3 +23,10 @@ writerey is build with [electron-forge](https://www.electronforge.io/). To build
 
 If you want to build the application for a non-windows platform, please refer to [the electron-forge documentation](https://www.electronforge.io/config/makers) to configure a appropiate maker.
 
+## Build documentation
+
+- Make sure to have python dependencies installed
+- `cd docs/`
+- `mkdocs build`
+
+For developing the documentation, run `mkdocs serve`
