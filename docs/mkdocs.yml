@@ -1,0 +1,9 @@
+site_name: Writerey Documentation
+nav:
+  - index.md
+  - en/development.md
+  - en/guide.md
+  - en/installation.md
+theme:
+  name: material
+  favicon: img/writerey.ico
