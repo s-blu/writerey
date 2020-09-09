@@ -1,10 +1,19 @@
 site_name: Writerey Documentation
+repo_url: https://github.com/s-blu/writerey
 nav:
   - index.md
   - en/installation.md
   - en/guide.md
   - en/troubleshooting.md
+  - en/roadmap.md
   - en/development.md
+extra_css:
+  - assets/custom.css
 theme:
   name: material
   favicon: img/writerey.ico
+  logo: img/logo.png
+  icon:
+    repo: fontawesome/brands/github
+  palette:
+    accent: teal
