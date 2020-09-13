@@ -127,6 +127,7 @@ function openUrlsInDefaultBrowser() {
 function enableSpellChecking() {
   const { Menu, MenuItem } = require("electron");
 
+  // FIXME get the userlanguage here, but how? navigator.language doesnt work ...
   win.webContents.session.setSpellCheckerLanguages(["en-US", "de-DE"]);
   win.webContents.on("context-menu", (event, params) => {
     const menu = new Menu();
