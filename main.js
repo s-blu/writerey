@@ -19,18 +19,18 @@ function createWindow() {
         console.log("[Py] Log", message);
       },
       stderrParser: function (stderr) {
-          if (!stderr) return;
-          console.error(
-            "[Py] [[ERR]]",
-            (JSON.stringify(stderr) || "").substring(0, 300)
-          );
-      }
+        if (!stderr) return;
+        console.error(
+          "[Py] [[ERR]]",
+          (JSON.stringify(stderr) || "").substring(0, 300)
+        );
+      },
     });
 
     shell.on("close", function (message) {
       if (!message) return;
       console.log("[Python] [CLOSED]", message);
-    });;
+    });
     shell.on("stdout", function (message) {
       if (!message) return;
       console.log("[Python] stdout", message);
@@ -70,6 +70,18 @@ function createWindow() {
     win = null;
   });
 
+  // Open windows in default Browser
+  const handleRedirect = (e, url) => {
+    if (url != win.webContents.getURL()) {
+      e.preventDefault();
+      require("electron").shell.openExternal(url);
+    }
+  };
+
+  win.webContents.on("will-navigate", handleRedirect);
+  win.webContents.on("new-window", handleRedirect);
+
+  // Enable spellchecking
   const { Menu, MenuItem } = require("electron");
 
   win.webContents.session.setSpellCheckerLanguages([
@@ -109,16 +121,14 @@ function createWindow() {
 // Create window on electron intialization
 app.on("ready", createWindow);
 
-// Quit when all windows are closed.
+// macOS specific processes
 app.on("window-all-closed", function () {
   // On macOS specific close process
   if (process.platform !== "darwin") {
     app.quit();
   }
 });
-
 app.on("activate", function () {
-  // macOS specific close process
   if (win === null) {
     createWindow();
   }
