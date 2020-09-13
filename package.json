@@ -17,7 +17,7 @@
     "e2e": "ng e2e",
     "electron": "electron .",
     "build-electron": "ng build --prod && npm run electron .",
-    "flask": "python server/app.py",
+    "flask": "python server/app.py development",
     "build-exe": "electron-packager . --overwrite",
     "package": "electron-forge package",
     "build-make": "ng build --prod && electron-forge make",

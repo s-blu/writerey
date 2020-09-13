@@ -58,6 +58,9 @@ class GitAutomation(Resource):
         if not msg:
             msg = 'Snapshot'
         changesAvailable = self.git.run(['git', 'status', '--porcelain'])
+        # only look at changes inside base path 
+        changesAvailable = list(filter(lambda line: basePath in line, changesAvailable.splitlines()))
+
         if not changesAvailable:
             return {'status': -1, 'text': 'Working dir is clean'}
         self.git.run(["git", "add", '.'])

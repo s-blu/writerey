@@ -27,7 +27,6 @@ from links import Links
 from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
 
-
 import sys
 
 app = Flask(__name__)
@@ -51,5 +50,8 @@ api.add_resource(Tag, '/git/tag')
 api.add_resource(GitMove, '/git/mv')
 
 if __name__ == '__main__':
-    # app.run(port=port, debug=True)  # FIXME
-    serve(app, listen= host + ":" + port)
+    args = sys.argv[1:]
+    if ('development' in args):
+        app.run(port=port, debug=True)
+    else:
+        serve(app, listen= host + ":" + port)
