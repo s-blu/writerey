@@ -5,6 +5,10 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import subprocess
+import os
+from pathlib import Path
+
+from writerey_config import basePath
 
 from pip._internal.utils.misc import get_installed_distributions
 from logger import Logger
@@ -21,7 +25,9 @@ def initialize_env():
       subprocess.run(["pip", "install", package], shell=True, check=True, text=True)
     else:
       log.logDebug('Package is installed, do nothing... ', package)
+      
+  if not os.path.exists(basePath):
+      Path(basePath).mkdir()
 
   from git import GitAutomation
-  gitA = GitAutomation()
-  gitA.init()
+  GitAutomation().init()
