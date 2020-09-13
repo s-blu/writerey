@@ -33,7 +33,7 @@ A guide how to install these tools is found under installation.
 
 ## Installation
 
-Please click [here](./docs/en/installation.md) to visit the installation documentation.
+Please click [here](./docs/docs/en/installation.md) to visit the installation documentation.
 
 
 ## Used technologies 
@@ -48,6 +48,6 @@ Writerey is build with
 
 For a complete list of used packages, please refer to package.json.
 
-## Guide
+## Documentation
 
-Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find out more about writerey.
+Please visit the [Documentation](./docs/docs) to find out more about writerey.

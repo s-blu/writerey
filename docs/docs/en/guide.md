@@ -98,3 +98,7 @@ The second possibility to do so is on the label screen itself.
 1. Go to the label screen (Switch the tree on the right with the tab and click on your label)
 1. Switch to Review mode
 1. Choose your wanted label value as context and write down your note
+
+## Rename, Move and Delete Documents
+
+<WIP>
