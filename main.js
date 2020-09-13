@@ -8,35 +8,9 @@ function createWindow() {
     app.quit();
   });
 
-  try {
-    let {
-      PythonShell,
-    } = require(`${PATH_TO_APP}/assets/thirdparty/python-shell`);
-    shell = new PythonShell(`${PATH_TO_APP}/server/app.py`, {
-      pythonOptions: ["-u"],
-      parser: function (message) {
-        if (!message) return;
-        console.log("[Py] Log", message);
-      },
-      stderrParser: function (stderr) {
-        if (!stderr) return;
-        console.error(
-          "[Py] [[ERR]]",
-          (JSON.stringify(stderr) || "").substring(0, 300)
-        );
-      },
-    });
+  const isBackendRunning = startupPythonBackend();
 
-    shell.on("close", function (message) {
-      if (!message) return;
-      console.log("[Python] [CLOSED]", message);
-    });
-    shell.on("stdout", function (message) {
-      if (!message) return;
-      console.log("[Python] stdout", message);
-    });
-  } catch (err) {
-    console.error("Failed to launch python server", err);
+  if (!isBackendRunning) {
     errorWindow = new BrowserWindow();
 
     errorWindow.loadURL(`${PATH_TO_APP}/assets/python_error.html`);
@@ -71,6 +45,71 @@ function createWindow() {
   });
 
   // Open windows in default Browser
+  openUrlsInDefaultBrowser();
+
+  // Enable spellchecking
+  enableSpellChecking();
+}
+
+// Create window on electron intialization
+app.on("ready", createWindow);
+
+// macOS specific processes
+app.on("window-all-closed", function () {
+  // On macOS specific close process
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
+app.on("activate", function () {
+  if (win === null) {
+    createWindow();
+  }
+});
+
+/**
+ * Startup python backend in python shell
+ */
+function startupPythonBackend() {
+  try {
+    let {
+      PythonShell,
+    } = require(`${PATH_TO_APP}/assets/thirdparty/python-shell`);
+    shell = new PythonShell(`${PATH_TO_APP}/server/app.py`, {
+      pythonOptions: ["-u"],
+      parser: function (message) {
+        if (!message) return;
+        console.log("[Py] Log", message);
+      },
+      stderrParser: function (stderr) {
+        if (!stderr) return;
+        console.error(
+          "[Py] [[ERR]]",
+          (JSON.stringify(stderr) || "").substring(0, 300)
+        );
+      },
+    });
+
+    shell.on("close", function (message) {
+      if (!message) return;
+      console.log("[Python] [CLOSED]", message);
+    });
+    shell.on("stdout", function (message) {
+      if (!message) return;
+      console.log("[Python] stdout", message);
+    });
+
+    return true;
+  } catch (err) {
+    console.error("Failed to launch python server", err);
+    return false;
+  }
+}
+
+/**
+ * Opens URLs in the default browser instead of the electron instance
+ */
+function openUrlsInDefaultBrowser() {
   const handleRedirect = (e, url) => {
     if (url != win.webContents.getURL()) {
       e.preventDefault();
@@ -80,14 +119,15 @@ function createWindow() {
 
   win.webContents.on("will-navigate", handleRedirect);
   win.webContents.on("new-window", handleRedirect);
+}
 
-  // Enable spellchecking
+/**
+ * Enables chrome integrated spell checking and shows corrections in context menu
+ */
+function enableSpellChecking() {
   const { Menu, MenuItem } = require("electron");
 
-  win.webContents.session.setSpellCheckerLanguages([
-    "en-US",
-    "de-DE", // FIXME get the userlanguage here, but how? navigator.language doesnt work ...
-  ]);
+  win.webContents.session.setSpellCheckerLanguages(["en-US", "de-DE"]);
   win.webContents.on("context-menu", (event, params) => {
     const menu = new Menu();
 
@@ -117,19 +157,3 @@ function createWindow() {
     menu.popup();
   });
 }
-
-// Create window on electron intialization
-app.on("ready", createWindow);
-
-// macOS specific processes
-app.on("window-all-closed", function () {
-  // On macOS specific close process
-  if (process.platform !== "darwin") {
-    app.quit();
-  }
-});
-app.on("activate", function () {
-  if (win === null) {
-    createWindow();
-  }
-});
