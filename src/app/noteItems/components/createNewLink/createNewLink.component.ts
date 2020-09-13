@@ -65,6 +65,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
   onSubmit(data) {
     this.linkCreated.emit(data);
     this.createNewForm.patchValue({ text: '', linkId: null });
+    this.selectedDocument = null;
   }
 
   chooseDocument() {
