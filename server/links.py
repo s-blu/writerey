@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
+from flask import request, abort
 from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
@@ -31,8 +31,10 @@ class Links(Resource):
         pathToLinks = PathUtils.sanitizePathList([basePath, project_dir, metaSubPath])
         Path(pathToLinks).mkdir(parents=True, exist_ok=True)
         filePath = PathUtils.sanitizePathList([pathToLinks, linkFileName])
-        # TODO check if this is available
-        f = request.files['file']
+        try:
+            f = request.files['file']
+        except:
+            return abort(400, 'No or invalid file given')
         f.save(filePath)
         fileRead = open(filePath, encoding='utf-8')
         return fileRead.read()
