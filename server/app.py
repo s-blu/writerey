@@ -31,7 +31,8 @@ import sys
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
+
+CORS(app, origins="http://localhost:4200") 
 
 class Ping(Resource):
     def get(self):
@@ -54,4 +55,4 @@ if __name__ == '__main__':
     if ('development' in args):
         app.run(port=port, debug=True)
     else:
-        serve(app, listen= host + ":" + port)
+        serve(app, listen=host + ":" + port)
