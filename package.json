@@ -1,7 +1,7 @@
 {
   "name": "writerey",
   "description": "Writerey helps you to organize, compose and refine your stories.",
-  "version": "0.8.0-SNAPSHOT",
+  "version": "0.9.0-SNAPSHOT",
   "author": {
     "name": "Stefanie S",
     "email": "sts@s-blu.de"
@@ -18,10 +18,9 @@
     "electron": "electron .",
     "build-electron": "ng build --prod && npm run electron .",
     "flask": "python server/app.py development",
-    "build-exe": "electron-packager . --overwrite",
-    "package": "electron-forge package",
     "build-make": "ng build --prod && electron-forge make",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "build-docs": "cd docs && mkdocs build"
   },
   "private": true,
   "dependencies": {
@@ -84,7 +83,7 @@
     }
   },
   "lint-staged": {
-    ".ts|.html|.scss": "prettier --write"
+    ".ts|.html|.scss": "prettier --write && ng lint"
   },
   "config": {
     "forge": {
