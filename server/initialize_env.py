@@ -14,7 +14,7 @@ flat_installed_packages = [package.project_name for package in installed_package
 
 def initialize_env(): 
   log = Logger('initialize_app')
-  required_packages = ['Flask', 'Flask-RESTful', 'Flask-Cors', 'waitress']
+  required_packages = ['Flask', 'Flask-RESTful', 'waitress']
   log.logDebug('installed packages ...', flat_installed_packages)
   for package in required_packages:
     if package not in flat_installed_packages:
