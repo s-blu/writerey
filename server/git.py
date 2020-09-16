@@ -26,9 +26,6 @@ class GitAutomation(Resource):
         if not os.path.exists('.git'):
             subprocess.run(['git', 'init'], shell=True, check=True)
             self.git.setGitConfig()
-            # subprocess.run(['git', 'add', '.'], shell=True, check=True)
-            # subprocess.run(
-            #     ['git', 'commit', '-m', '"(please ignore me) initial application commit"'], shell=True, check=True)
         else:
             self.logger.logDebug('git is already initialized, do nothing')
         return
