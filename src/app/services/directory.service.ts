@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LinkService } from 'src/app/services/link.service';
 import { DirectoryStore } from './../stores/directory.store';
 import { ProjectStore } from './../stores/project.store';
-import { catchError, flatMap, map, tap, take, filter } from 'rxjs/operators';
+import { catchError, mergeMap, map, tap, take, filter } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
@@ -70,7 +70,7 @@ export class DirectoryService implements OnDestroy {
     const httpHeaders = new HttpHeaders();
     httpHeaders.append('Content-Type', 'multipart/form-data');
     return this.linkService.moveLinkDestinations(name, name, newName).pipe(
-      flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
+      mergeMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
       catchError(err => this.api.handleHttpError(err))
     );
   }
@@ -106,12 +106,12 @@ export class DirectoryService implements OnDestroy {
     httpHeaders.append('Content-Type', 'multipart/form-data');
     return this.documentStore.fileInfo$.pipe(
       tap(res => (currentFileInfo = res)),
-      flatMap(_ => this.projectStore.project$),
-      flatMap(project => {
+      mergeMap(_ => this.projectStore.project$),
+      mergeMap(project => {
         formdata.append('project_dir', project);
         return this.linkService.moveLinkDestinations(project, oldPath, newPath);
       }),
-      flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
+      mergeMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
       catchError(err => this.api.handleHttpError(err)),
       tap((res: FileInfo) => {
         if (currentFileInfo && currentFileInfo?.path.startsWith(oldPath)) {
@@ -143,10 +143,12 @@ export class DirectoryService implements OnDestroy {
     if (params) parameter.params = params;
     return this.httpClient.get(this.api.getTreeRoute(), parameter).pipe(
       catchError(err => {
-        this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
-          duration: 10000,
-        });
-        this.projectStore.setProject(null);
+        if (this.project) {
+          this.snackBar.open(translate('error.couldNotFetchTree', { name: this.project }), '', {
+            duration: 10000,
+          });
+          this.projectStore.setProject(null);
+        }
 
         return this.api.handleHttpError(err);
       }),
@@ -169,7 +171,7 @@ export class DirectoryService implements OnDestroy {
         .pipe(
           filter(res => res !== undefined && res !== ''),
           tap(res => (this.project = res)),
-          flatMap(_ => {
+          mergeMap(_ => {
             return this.getTree();
           })
         )
