@@ -83,7 +83,7 @@
     }
   },
   "lint-staged": {
-    ".ts|.html|.scss": "prettier --write && ng lint"
+    "*.ts|*.html|*.scss": "prettier --write"
   },
   "config": {
     "forge": {
