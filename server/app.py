@@ -11,7 +11,6 @@ if __name__ == '__main__':
 
 from flask import Flask, request
 from flask_restful import Resource, Api
-from flask_cors import CORS
 from pathlib import Path
 
 from documents import Documents
@@ -31,7 +30,6 @@ import sys
 
 app = Flask(__name__)
 api = Api(app)
-CORS(app)  # resources={r"*": {"origins": '*'}})  # boooh. FIXME.
 
 class Ping(Resource):
     def get(self):
@@ -52,6 +50,9 @@ api.add_resource(GitMove, '/git/mv')
 if __name__ == '__main__':
     args = sys.argv[1:]
     if ('development' in args):
+        from flask_cors import CORS
+        CORS(app, origins="http://localhost:4200") 
+
         app.run(port=port, debug=True)
     else:
-        serve(app, listen= host + ":" + port)
+        serve(app, listen=host + ":" + port)

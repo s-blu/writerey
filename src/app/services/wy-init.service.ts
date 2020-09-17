@@ -65,7 +65,7 @@ export class WyInitService {
       retryWhen(response =>
         response.pipe(
           tap(_ =>
-            console.warn(`Ping was not successfull, server could not be reached. Retrying ${retries} more times...`)
+            console.warn(`Ping was not successfull, server could not be reached. Trying ${retries} more times...`)
           ),
           delay(400),
           mergeMap(err => (retries-- > 0 ? of(err) : throwError(err)))
