@@ -1,26 +1,17 @@
+import { EventEmitter } from '@angular/core';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
-import { LabelService } from 'src/app/services/label.service';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Subscription, of } from 'rxjs';
-import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
-import { LabelStore } from 'src/app/stores/label.store';
-import { DocumentStore } from 'src/app/stores/document.store';
-import { ContextService } from 'src/app/services/context.service';
-import { ContextStore } from 'src/app/stores/context.store';
-import { ParagraphService } from '../services/paragraph.service';
-import { NotesService } from '../services/notes.service';
+import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { DocumentModeStore } from '../stores/documentMode.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wy-note-items',
@@ -29,16 +20,14 @@ import { ActivatedRoute } from '@angular/router';
   animations: FADE_ANIMATIONS,
 })
 export class NoteItemsComponent implements OnInit, OnDestroy {
-  labelDef: LabelDefinition;
+  @Input() notes;
+
+  @Output() createdNoteItem = new EventEmitter();
+  @Output() editedNoteItem = new EventEmitter();
+  @Output() deletedNoteItem = new EventEmitter();
+
   MODES = DOC_MODES;
   mode: DOC_MODES;
-  noteContexts;
-  labelDefinitions;
-  parId: string;
-  fileInfo: FileInfo;
-  notes: any = {
-    paragraph: [],
-  };
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATES = DISTRACTION_FREE_STATES;
   filteredNotes = {};
@@ -66,61 +55,16 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
   };
 
   private subscription = new Subscription();
-  constructor(
-    private paragraphService: ParagraphService,
-    private notesService: NotesService,
-    private labelService: LabelService,
-    private contextService: ContextService,
-    private labelStore: LabelStore,
-    private documentModeStore: DocumentModeStore,
-    private documentStore: DocumentStore,
-    private distractionFreeStore: DistractionFreeStore,
-    private contextStore: ContextStore,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private documentModeStore: DocumentModeStore, private distractionFreeStore: DistractionFreeStore) {}
 
   ngOnInit() {
-    this.subscription.add(
-      this.labelStore.labelDefinitions$.subscribe(labelDefs => {
-        this.labelDefinitions = labelDefs;
-      })
-    );
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
         this.distractionFreeState = status;
       })
     );
-    this.subscription.add(
-      this.contextStore.contexts$.subscribe(newContexts => {
-        if (!newContexts) return;
-        this.updateContexts(newContexts);
-      })
-    );
+
     this.subscription.add(this.documentModeStore.mode$.subscribe(mode => (this.mode = mode)));
-    this.subscription.add(
-      this.documentStore.fileInfo$.subscribe(fileInfo => {
-        this.fileInfo = fileInfo;
-        this.labelDef = null;
-        this.parId = null;
-        this.getContexts();
-      })
-    );
-    this.subscription.add(
-      this.labelStore.labelDefinition$.subscribe(labelDef => {
-        this.fileInfo = null;
-        this.parId = null;
-        this.labelDef = labelDef;
-        this.getContexts();
-      })
-    );
-    this.subscription.add(
-      this.documentStore.paragraphId$.subscribe(id => {
-        if (id !== this.parId) {
-          this.parId = id;
-          this.getContexts();
-        }
-      })
-    );
   }
 
   ngOnDestroy() {
@@ -141,7 +85,7 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
       console.warn('Could not find note to edit in context. Do nothing.', editedItem);
       return;
     }
-    this.updateParagraphMeta(context, notes);
+    this.editedNoteItem.emit({ context, notes });
   }
 
   deleteNotesItem(item) {
@@ -151,7 +95,7 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
       return;
     }
     notes = notes.filter(n => n.id !== item.id);
-    this.updateParagraphMeta(item.context, notes);
+    this.deletedNoteItem.emit({ context: item.context, notes });
   }
 
   createNewNote(event) {
@@ -160,22 +104,7 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
     if (this.notes && this.notes[event.context]) {
       updatedMetaData.push(...this.notes[event.context]);
     }
-    this.updateParagraphMeta(event.context, updatedMetaData);
-  }
-
-  private updateParagraphMeta(context, data) {
-    let obs;
-    if (context.includes(':')) {
-      obs = this.labelService.saveMetaForLabelValue(context, data, 'notes');
-    } else {
-      const con = context === 'paragraph' ? this.parId : context;
-      obs = this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data);
-    }
-
-    obs.subscribe(res => {
-      this.notes[context] = res;
-      this.filterNotesForContext(context);
-    });
+    this.createdNoteItem.emit({ context: event.context, updatedMetaData });
   }
 
   shouldShowNotes(): boolean {
@@ -206,55 +135,5 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
       }
       return true;
     });
-  }
-
-  private fetchNotesForParagraph() {
-    this.notes = {};
-    if (!this.fileInfo && !this.parId) return;
-
-    this.subscription.add(
-      this.notesService
-        .getNotesForParagraph(this.fileInfo.path, this.fileInfo.name, this.parId, this.noteContexts)
-        .subscribe(res => {
-          this.notes = res;
-          this.filterNotes();
-        })
-    );
-  }
-
-  private fetchNotesForLabelDefinition() {
-    this.notes = {};
-
-    this.subscription.add(
-      this.notesService.getNotesForLabelDefinition(this.labelDef, this.noteContexts).subscribe(res => {
-        this.notes = res;
-        this.filterNotes();
-      })
-    );
-  }
-
-  private getContexts() {
-    if (!this.fileInfo && !this.labelDef) return;
-    let fetchObservable;
-
-    if (this.labelDef) {
-      fetchObservable = this.contextService.getContextsForLabelDefinition(this.labelDef);
-    } else {
-      fetchObservable = this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.parId);
-    }
-    this.subscription.add(
-      fetchObservable.subscribe(res => {
-        this.updateContexts(res);
-      })
-    );
-  }
-
-  private updateContexts(contexts) {
-    this.noteContexts = contexts;
-    if (this.labelDef) {
-      this.fetchNotesForLabelDefinition();
-    } else {
-      this.fetchNotesForParagraph();
-    }
   }
 }

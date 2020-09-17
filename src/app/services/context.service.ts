@@ -57,7 +57,7 @@ export class ContextService implements OnDestroy {
 
   getContextsForLabelDefinition(labelDef: LabelDefinition) {
     const contexts: Array<string> = [];
-    if (!labelDef?.values) return contexts;
+    if (!labelDef?.values) return of(contexts);
     const labels = [];
 
     for (const val of labelDef.values) {
