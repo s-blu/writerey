@@ -46,8 +46,6 @@ export class LabelStore {
     this.labelDefinitionsSubject = List(newLabelDefinitions);
   }
 
-
-
   private get labelDefinitionSubject(): LabelDefinition | null {
     return this._labelDefinitionSubject.getValue();
   }

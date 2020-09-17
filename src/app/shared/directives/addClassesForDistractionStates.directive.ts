@@ -6,7 +6,7 @@
 
 import { Directive, Renderer2, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import {DistractionFreeStore} from '../../stores/distractionFree.store';
+import { DistractionFreeStore } from '../../stores/distractionFree.store';
 
 @Directive({
   selector: '[wyAddClassesForDistractionStates]',

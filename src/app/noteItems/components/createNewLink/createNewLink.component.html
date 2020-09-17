@@ -14,7 +14,7 @@
         <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
       </mat-select>
     </mat-form-field>
-      <ckeditor
+    <ckeditor
       class="note-editor"
       [formControl]="createNewForm.controls['text']"
       [editor]="Editor"

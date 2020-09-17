@@ -17,6 +17,5 @@ import { DocumentDefinition } from '../../shared/models/documentDefinition.inter
 export class FooterComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 }

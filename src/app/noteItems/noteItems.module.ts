@@ -31,7 +31,7 @@ const materialModules = [
   MatTooltipModule,
   MatSelectModule,
   MatInputModule,
-  MatExpansionModule
+  MatExpansionModule,
 ];
 
 @NgModule({
@@ -54,7 +54,7 @@ const materialModules = [
     CreateNewLabelInfoComponent,
     NotesItemComponent,
     NoteComponent,
-    NoteItemsComponent
+    NoteItemsComponent,
   ],
   exports: [NoteItemsComponent],
 })

@@ -13,7 +13,7 @@
       matTreeNodePadding
       matTreeNodePaddingIndent="10"
       class="label-node"
-      [class]="{active: node.id === activeLabelId}"
+      [class]="{ active: node.id === activeLabelId }"
       (click)="openLabelCategory(node)"
     >
       <button mat-icon-button disabled matTreeNodeToggle class="explorer-btn"></button>
@@ -32,6 +32,6 @@
   </mat-tree>
 
   <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
-    {{ t('empty-tree')}}
+    {{ t('empty-tree') }}
   </div>
 </div>

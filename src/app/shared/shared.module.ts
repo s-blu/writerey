@@ -15,7 +15,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StripFileEndingPipe } from './pipes/stripFileEnding.pipe';
-import {AddClassesForDistractionStatesDirective} from './directives/addClassesForDistractionStates.directive';
+import { AddClassesForDistractionStatesDirective } from './directives/addClassesForDistractionStates.directive';
 import { TranslocoRootModule } from '../transloco-root.module';
 
 @NgModule({

@@ -13,7 +13,7 @@ import { NameSafetyValidator } from '@writerey/shared/directives/nameSafetyValid
 @Component({
   selector: 'wy-createNewFileDialog',
   templateUrl: './createNewItemDialog.component.html',
-  styleUrls: ['./createNewItemDialog.component.scss']
+  styleUrls: ['./createNewItemDialog.component.scss'],
 })
 export class CreateNewItemDialogComponent implements OnInit {
   typeOfDialog = '';
