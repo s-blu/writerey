@@ -1,3 +1,4 @@
+import { LabelStore } from './../stores/label.store';
 import { EventEmitter } from '@angular/core';
 // Copyright (c) 2020 s-blu
 //
@@ -20,16 +21,23 @@ import { DistractionFreeStore } from '../stores/distractionFree.store';
   animations: FADE_ANIMATIONS,
 })
 export class NoteItemsComponent implements OnInit, OnDestroy {
-  @Input() notes;
+  @Input() set noteItems(n) {
+    console.log('notes given', n);
+    this.notes = n;
+    this.filterNotes();
+  }
+  @Input() noteContexts;
 
   @Output() createdNoteItem = new EventEmitter();
   @Output() editedNoteItem = new EventEmitter();
   @Output() deletedNoteItem = new EventEmitter();
 
+  notes;
   MODES = DOC_MODES;
   mode: DOC_MODES;
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATES = DISTRACTION_FREE_STATES;
+  labelDefinitions;
   filteredNotes = {};
   filters = {
     todo: {
@@ -55,9 +63,18 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
   };
 
   private subscription = new Subscription();
-  constructor(private documentModeStore: DocumentModeStore, private distractionFreeStore: DistractionFreeStore) {}
+  constructor(
+    private documentModeStore: DocumentModeStore,
+    private distractionFreeStore: DistractionFreeStore,
+    private labelStore: LabelStore
+  ) {}
 
   ngOnInit() {
+    this.subscription.add(
+      this.labelStore.labelDefinitions$.subscribe(labelDefs => {
+        this.labelDefinitions = labelDefs;
+      })
+    );
     this.subscription.add(
       this.distractionFreeStore.distractionFree$.subscribe(status => {
         this.distractionFreeState = status;
