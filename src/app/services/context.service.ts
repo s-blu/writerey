@@ -49,7 +49,7 @@ export class ContextService implements OnDestroy {
           }
         }
 
-        this.contextStore.setContexts(contexts);
+        this.contextStore.setContexts(contexts); // fixme is this even necessary?
         return contexts;
       })
     );
@@ -68,7 +68,7 @@ export class ContextService implements OnDestroy {
     for (const m of labels) {
       contexts.push(this.getContextStringForLabel(m));
     }
-    this.contextStore.setContexts(contexts);
+    this.contextStore.setContexts(contexts); // fixme is this even necessary?
     return of(contexts);
   }
 

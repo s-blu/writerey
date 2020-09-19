@@ -6,7 +6,6 @@ import { ContextService } from 'src/app/services/context.service';
 import { LabelService } from 'src/app/services/label.service';
 import { NotesService } from 'src/app/services/notes.service';
 import { ParagraphService } from 'src/app/services/paragraph.service';
-import { ContextStore } from 'src/app/stores/context.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
@@ -26,17 +25,10 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     private notesService: NotesService,
     private labelService: LabelService,
     private contextService: ContextService,
-    private documentStore: DocumentStore,
-    private contextStore: ContextStore
+    private documentStore: DocumentStore
   ) {}
 
   ngOnInit() {
-    this.subscription.add(
-      this.contextStore.contexts$.subscribe(newContexts => {
-        if (!newContexts) return;
-        this.updateContexts(newContexts);
-      })
-    );
     this.subscription.add(
       this.documentStore.fileInfo$.subscribe(fileInfo => {
         this.fileInfo = fileInfo;

@@ -5,8 +5,9 @@ import { Map } from 'immutable';
 import { ContextService } from 'src/app/services/context.service';
 import { LabelService } from 'src/app/services/label.service';
 import { NotesService } from 'src/app/services/notes.service';
-import { ContextStore } from 'src/app/stores/context.store';
 import { LabelStore } from 'src/app/stores/label.store';
+import { mergeMap, distinctUntilChanged } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wy-labelNoteItems',
@@ -25,25 +26,26 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
     private labelService: LabelService,
     private contextService: ContextService,
     private labelStore: LabelStore,
-    private contextStore: ContextStore
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.subscription.add(
+      this.route.params
+        .pipe(
+          distinctUntilChanged(),
+          mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId))
+        )
+        .subscribe(labelDef => {
+          if (!labelDef) return;
+          this.labelDef = labelDef;
+          this.getContexts();
+          this.labelStore.setLabelDefinition(labelDef);
+        })
+    );
+    this.subscription.add(
       this.labelStore.labelDefinitions$.subscribe(labelDefs => {
         this.labelDefinitions = labelDefs;
-      })
-    );
-    this.subscription.add(
-      this.contextStore.contexts$.subscribe(newContexts => {
-        if (!newContexts) return;
-        this.updateContexts(newContexts);
-      })
-    );
-    this.subscription.add(
-      this.labelStore.labelDefinition$.subscribe(labelDef => {
-        this.labelDef = labelDef;
-        this.getContexts();
       })
     );
   }
