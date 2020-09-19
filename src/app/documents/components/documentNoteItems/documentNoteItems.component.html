@@ -1,4 +1,9 @@
 <div>
-  DOCUMENT NOTE ITEMS
-  <wy-note-items [noteItems]="notes" [noteContexts]="noteContexts"></wy-note-items>
+  <wy-note-items
+    [noteItems]="notes"
+    [noteContexts]="noteContexts"
+    (createdNoteItem)="updateNoteItems($event)"
+    (editedNoteItem)="updateNoteItems($event)"
+    (deletedNoteItem)="updateNoteItems($event)"
+  ></wy-note-items>
 </div>

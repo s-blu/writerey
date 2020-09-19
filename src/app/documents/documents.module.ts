@@ -14,12 +14,19 @@ import { IntroductionComponent } from './components/introduction/introduction.co
 import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
 import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { DocumentNoteItemsComponent } from './components/documentNoteItems/documentNoteItems.component';
+import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
 
 const materialModules = [MatIconModule, MatProgressBarModule];
-const declarationsAndExport = [WordCountComponent, IntroductionComponent, DocumentEditorComponent];
+const declarationsAndExport = [
+  WordCountComponent,
+  IntroductionComponent,
+  DocumentEditorComponent,
+  DocumentNoteItemsComponent,
+];
 
 @NgModule({
-  imports: [CommonModule, SharedModule, WyCkeditorModule, ...materialModules],
+  imports: [CommonModule, SharedModule, WyCkeditorModule, NoteItemsModule, ...materialModules],
   declarations: [...declarationsAndExport],
   exports: [...declarationsAndExport],
 })

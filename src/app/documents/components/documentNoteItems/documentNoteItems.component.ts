@@ -57,40 +57,8 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  editNotesItem(editedItem, oldContext?) {
-    const context = oldContext || editedItem.context;
-    const notes = this.notes[context];
-    if (!notes) {
-      console.warn('Could not find context collection for note. Do nothing.', editedItem);
-      return;
-    }
-    const index = notes.findIndex(n => n.id === editedItem.id);
-    if (index > -1) {
-      notes.splice(index, 1, editedItem);
-    } else {
-      console.warn('Could not find note to edit in context. Do nothing.', editedItem);
-      return;
-    }
-    this.updateParagraphMeta(context, notes);
-  }
-
-  deleteNotesItem(item) {
-    let notes = this.notes[item.context];
-    if (!notes) {
-      console.warn('Could not find context collection for note. Do nothing.', item);
-      return;
-    }
-    notes = notes.filter(n => n.id !== item.id);
-    this.updateParagraphMeta(item.context, notes);
-  }
-
-  createNewNote(event) {
-    if (!event) return;
-    const updatedMetaData = [event];
-    if (this.notes && this.notes[event.context]) {
-      updatedMetaData.push(...this.notes[event.context]);
-    }
-    this.updateParagraphMeta(event.context, updatedMetaData);
+  updateNoteItems(event) {
+    this.updateParagraphMeta(event.context, event.notes);
   }
 
   private updateParagraphMeta(context, data) {
@@ -103,7 +71,9 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     }
 
     obs.subscribe(res => {
-      this.notes[context] = res;
+      const notes = Object.assign({}, this.notes);
+      notes[context] = res;
+      this.notes = notes;
     });
   }
 

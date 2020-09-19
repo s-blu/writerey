@@ -121,7 +121,7 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
     if (this.notes && this.notes[event.context]) {
       updatedMetaData.push(...this.notes[event.context]);
     }
-    this.createdNoteItem.emit({ context: event.context, updatedMetaData });
+    this.createdNoteItem.emit({ context: event.context, notes: updatedMetaData });
   }
 
   shouldShowNotes(): boolean {
