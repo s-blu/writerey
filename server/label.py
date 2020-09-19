@@ -25,7 +25,7 @@ class Labels(Resource):
             return content
         except OSError as err:
             print('get labels failed', err)
-            return abort(400, 'could not get label') 
+            return ''
 
     def put(self, label_id):
         if label_id != 'definitions':

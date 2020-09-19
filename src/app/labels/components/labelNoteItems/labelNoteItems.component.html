@@ -1,3 +1,9 @@
-<p>
-  labelNoteItems works!
-</p>
+<div>
+  <wy-note-items
+    [noteItems]="notes"
+    [noteContexts]="noteContexts"
+    (createdNoteItem)="updateNoteItems($event)"
+    (editedNoteItem)="updateNoteItems($event)"
+    (deletedNoteItem)="updateNoteItems($event)"
+  ></wy-note-items>
+</div>

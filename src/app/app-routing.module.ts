@@ -1,3 +1,4 @@
+import { LabelNoteItemsComponent } from './labels/components/labelNoteItems/labelNoteItems.component';
 import { DocumentNoteItemsComponent } from './documents/components/documentNoteItems/documentNoteItems.component';
 import { LabelDetailsComponent } from './labels/components/labelDetails/labelDetails.component';
 import { DocumentEditorComponent } from './documents/components/documentEditor/documentEditor.component';
@@ -21,7 +22,17 @@ const routes: Routes = [
   },
   {
     path: 'labelDefinition',
-    component: LabelDetailsComponent,
+    children: [
+      {
+        path: '',
+        component: LabelDetailsComponent,
+      },
+      {
+        path: '',
+        component: LabelNoteItemsComponent,
+        outlet: 'notes',
+      },
+    ],
   },
 ];
 

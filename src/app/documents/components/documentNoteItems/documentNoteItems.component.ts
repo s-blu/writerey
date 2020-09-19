@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
+import { Map } from 'immutable';
 import { Subscription } from 'rxjs';
 import { ContextService } from 'src/app/services/context.service';
 import { LabelService } from 'src/app/services/label.service';
@@ -71,9 +72,8 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     }
 
     obs.subscribe(res => {
-      const notes = Object.assign({}, this.notes);
-      notes[context] = res;
-      this.notes = notes;
+      this.notes[context] = res;
+      this.notes = Map(this.notes).toObject();
     });
   }
 

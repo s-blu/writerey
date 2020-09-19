@@ -1,3 +1,4 @@
+import { LabelNoteItemsComponent } from './components/labelNoteItems/labelNoteItems.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DocumentLabelsComponent } from './components/documentLabels/documentLabels.component';
@@ -15,6 +16,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
+import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
 
 const materialModules = [
   MatSelectModule,
@@ -28,8 +30,16 @@ const materialModules = [
 ];
 
 @NgModule({
-  imports: [CommonModule, FormsModule, SharedModule, CKEditorModule, ReactiveFormsModule, ...materialModules],
-  declarations: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent],
-  exports: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent],
+  imports: [
+    CommonModule,
+    FormsModule,
+    SharedModule,
+    CKEditorModule,
+    ReactiveFormsModule,
+    NoteItemsModule,
+    ...materialModules,
+  ],
+  declarations: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
+  exports: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
 })
 export class LabelsModule {}
