@@ -10,7 +10,7 @@ import { mergeMap, distinctUntilChanged } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'wy-labelNoteItems',
+  selector: 'wy-label-note-items',
   templateUrl: './labelNoteItems.component.html',
   styleUrls: ['./labelNoteItems.component.scss'],
 })

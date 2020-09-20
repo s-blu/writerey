@@ -1,5 +1,3 @@
-import { LabelStore } from './../stores/label.store';
-import { EventEmitter } from '@angular/core';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -13,6 +11,8 @@ import { Component, OnInit, OnDestroy, Input, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { DocumentModeStore } from '../stores/documentMode.store';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
+import { LabelStore } from './../stores/label.store';
+import { EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'wy-note-items',

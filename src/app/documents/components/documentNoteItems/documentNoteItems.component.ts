@@ -9,7 +9,7 @@ import { ParagraphService } from 'src/app/services/paragraph.service';
 import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
-  selector: 'wy-documentNoteItems',
+  selector: 'wy-document-note-items',
   templateUrl: './documentNoteItems.component.html',
   styleUrls: ['./documentNoteItems.component.scss'],
 })
