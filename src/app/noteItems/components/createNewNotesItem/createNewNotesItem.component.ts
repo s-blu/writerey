@@ -66,6 +66,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     this.itemCreated.emit(newNote);
   }
 
+  // FIXME probably not needed
   createLabelInfo(event) {
     if (!event) return;
     const newLabelInfo: LabelInfo = {
@@ -73,6 +74,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
       id: uuid.v4(),
       context: event.context,
       text: event.text,
+      type: 'label',
     };
 
     this.itemCreated.emit(newLabelInfo);

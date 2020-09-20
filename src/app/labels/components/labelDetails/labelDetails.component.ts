@@ -118,6 +118,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
         new FormGroup({
           name: new FormControl(val.name),
           id: new FormControl(val.id),
+          info: new FormControl(labelDef.template || ' \n'), // todo load info of value if availabble
         })
       );
     });

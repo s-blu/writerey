@@ -1,9 +1,23 @@
 <div class="label-value" *transloco="let t; read: 'labelDetails'" [formGroup]="parentForm">
-  <mat-form-field>
-    <mat-label>{{ t('textvalue') }}</mat-label>
-    <input matInput type="text" formControlName="name" />
-  </mat-form-field>
-  <button mat-icon-button type="button" (click)="removeValue()" [matTooltip]="t('removeValue')">
-    <mat-icon>remove</mat-icon>
-  </button>
+  <div class="name">
+    <mat-form-field>
+      <mat-label>{{ t('textvalue') }}</mat-label>
+      <input matInput type="text" formControlName="name" />
+    </mat-form-field>
+    <button mat-icon-button type="button" (click)="removeValue()" [matTooltip]="t('removeValue')">
+      <mat-icon>remove</mat-icon>
+    </button>
+  </div>
+  <div class="editor-wrap">
+    <div #toolbar class="toolbar"></div>
+    <ckeditor
+      class="label-info note-editor"
+      formControlName="info"
+      [editor]="Editor"
+      [config]="editorConfig"
+      (ready)="onReady($event)"
+      (focus)="focus($event)"
+      (blur)="blur()"
+    ></ckeditor>
+  </div>
 </div>

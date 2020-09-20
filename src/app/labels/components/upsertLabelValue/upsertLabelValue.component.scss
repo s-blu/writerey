@@ -2,10 +2,21 @@
   width: 100%;
 }
 
-.label-value {
+.name {
   display: flex;
   flex-direction: row;
   .mat-form-field {
     flex-grow: 2;
   }
+}
+
+.editor-wrap {
+  position: relative;
+}
+.toolbar {
+  visibility: hidden;
+  position: absolute;
+}
+.visible {
+  visibility: visible;
 }
