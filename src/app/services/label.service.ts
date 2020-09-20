@@ -11,12 +11,11 @@ import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map, take } from 'rxjs/operators';
-import { LabelDefinition, LabelTypes } from '../shared/models/labelDefinition.class';
+import { catchError, mergeMap, map, take } from 'rxjs/operators';
+import { LabelDefinition } from '../shared/models/labelDefinition.class';
 import { ContextStore } from '../stores/context.store';
 import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';
-import { off } from 'process';
 
 @Injectable({
   providedIn: 'root',
@@ -39,11 +38,11 @@ export class LabelService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  createNewLabelCategory(name: string, type: LabelTypes) {
-    const newLabel = new LabelDefinition(name, type);
+  createNewLabelCategory(name: string) {
+    const newLabel = new LabelDefinition(name);
 
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         let newLabelDef;
         if (!labelDefRes) {
           newLabelDef = [newLabel];
@@ -60,7 +59,7 @@ export class LabelService implements OnDestroy {
     // TODO REMOVE META FILES
 
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         if (!labelDefRes) return;
         const index = labelDefRes.findIndex(m => m.id === labelId);
         if (index > -1) {
@@ -118,7 +117,7 @@ export class LabelService implements OnDestroy {
 
   updateLabelDefinition(labelDef: LabelDefinition) {
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         let updatedLabelDefs;
         if (!labelDefRes) {
           console.error('Could not get any label definitions, even though I try to update an existing one. Aborting.');

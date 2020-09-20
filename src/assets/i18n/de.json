@@ -4,11 +4,6 @@
   },
   "createLabel": {
     "title": "Eine neue Rubrik erstellen",
-    "type": {
-      "title": "Rubriktyp",
-      "text": "Text",
-      "numeric": "Numerisch"
-    },
     "name": "Name der Rubrik",
     "create": "Erstellen",
     "cancel": "Abbrechen"

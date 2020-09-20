@@ -4,11 +4,6 @@
   },
   "createLabel": {
     "title": "Create a new Label",
-    "type": {
-      "title": "Label type",
-      "text": "Text",
-      "numeric": "Numeric"
-    },
     "name": "Name of Label",
     "create": "Create",
     "cancel": "Cancel"
