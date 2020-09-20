@@ -1,0 +1,11 @@
+:host {
+  width: 100%;
+}
+
+.label-value {
+  display: flex;
+  flex-direction: row;
+  .mat-form-field {
+    flex-grow: 2;
+  }
+}

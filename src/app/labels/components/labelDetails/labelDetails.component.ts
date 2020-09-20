@@ -1,3 +1,4 @@
+import { DocumentModeStore } from './../../../stores/documentMode.store';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -18,6 +19,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 
 @Component({
   selector: 'wy-label-details',
@@ -41,10 +43,12 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     private deletionService: DeletionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private documentModeStore: DocumentModeStore
   ) {}
 
   ngOnInit() {
+    this.documentModeStore.setMode(DOC_MODES.REVIEW);
     this.subscription.add(
       this.route.params
         .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))

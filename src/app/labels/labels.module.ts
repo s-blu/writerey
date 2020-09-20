@@ -1,3 +1,4 @@
+import { UpsertLabelValueComponent } from './components/upsertLabelValue/upsertLabelValue.component';
 import { LabelNoteItemsComponent } from './components/labelNoteItems/labelNoteItems.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -39,7 +40,13 @@ const materialModules = [
     NoteItemsModule,
     ...materialModules,
   ],
-  declarations: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
+  declarations: [
+    DocumentLabelsComponent,
+    CreateNewLabelComponent,
+    LabelDetailsComponent,
+    LabelNoteItemsComponent,
+    UpsertLabelValueComponent,
+  ],
   exports: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
 })
 export class LabelsModule {}
