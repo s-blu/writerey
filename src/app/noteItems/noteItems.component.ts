@@ -22,7 +22,6 @@ import { EventEmitter } from '@angular/core';
 })
 export class NoteItemsComponent implements OnInit, OnDestroy {
   @Input() set noteItems(n) {
-    console.log('notes given', n);
     this.notes = n;
     this.filterNotes();
   }
