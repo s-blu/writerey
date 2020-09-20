@@ -16,7 +16,6 @@ import { Subscription } from 'rxjs';
 export class NotesItemComponent implements OnInit {
   @Input() item;
   @Input() labelDefs;
-  @Input() labelMode: boolean;
   @Output() editItem = new EventEmitter<any>();
   @Output() deleteItem = new EventEmitter<any>();
 

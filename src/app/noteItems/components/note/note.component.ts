@@ -22,7 +22,6 @@ import { getReadableNameForLabelContext } from '@writerey/shared/utils/label.uti
 export class NoteComponent implements OnInit {
   @Input() note: Note | LabelInfo;
   @Input() labelDefs: Array<LabelDefinition>;
-  @Input() labelMode: boolean;
 
   @Output() deleteNote = new EventEmitter<any>();
   @Output() editNote = new EventEmitter<any>();

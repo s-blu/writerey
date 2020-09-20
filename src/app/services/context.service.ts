@@ -49,7 +49,6 @@ export class ContextService implements OnDestroy {
           }
         }
 
-        this.contextStore.setContexts(contexts);
         return contexts;
       })
     );
@@ -57,7 +56,7 @@ export class ContextService implements OnDestroy {
 
   getContextsForLabelDefinition(labelDef: LabelDefinition) {
     const contexts: Array<string> = [];
-    if (!labelDef?.values) return contexts;
+    if (!labelDef?.values) return of(contexts);
     const labels = [];
 
     for (const val of labelDef.values) {
@@ -68,7 +67,6 @@ export class ContextService implements OnDestroy {
     for (const m of labels) {
       contexts.push(this.getContextStringForLabel(m));
     }
-    this.contextStore.setContexts(contexts);
     return of(contexts);
   }
 

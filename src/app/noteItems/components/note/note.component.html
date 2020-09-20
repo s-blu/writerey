@@ -26,7 +26,7 @@
       </mat-card-content>
       <mat-card-actions [style]="noteStyles" *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
         <button
-          *ngIf="note.type || labelMode"
+          *ngIf="note.type"
           mat-icon-button
           color="primary"
           (click)="delete()"

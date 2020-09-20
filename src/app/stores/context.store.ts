@@ -9,6 +9,13 @@ import { BehaviorSubject } from 'rxjs';
 import { List } from 'immutable';
 import { map } from 'rxjs/operators';
 
+/**
+ * TODO
+ * This store was used previously from the note items which was refactored. Currently I think nobody is reading this information.
+ * Investigate if we need this store to live-update possible note item contexts when i.e.
+ * - Changing a label value on a paragraph
+ * - Adding/removing/renaming a label value on the label defition page
+ */
 @Injectable({ providedIn: 'root' })
 export class ContextStore {
   private readonly _contextsSubject = new BehaviorSubject<List<string>>(List());

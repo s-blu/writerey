@@ -22,7 +22,6 @@ import { Note, NoteItemStereotypes, Link } from '@writerey/shared/models/notesIt
 export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   @Input() contexts: Array<string> = [];
   @Input() labelDefs: Array<LabelDefinition> = [];
-  @Input() labelDefinition: LabelDefinition;
   @Output() itemCreated = new EventEmitter<any>();
 
   typesOfItems = NoteItemStereotypes;
