@@ -35,6 +35,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {}
 
   ngOnChanges() {
+    if (!this.contexts) return;
     for (const context of this.contexts) {
       if (context.includes(':')) {
         const [labelId, valueId] = context.split(':');

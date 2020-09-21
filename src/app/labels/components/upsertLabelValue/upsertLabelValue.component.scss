@@ -1,22 +1,25 @@
 :host {
   width: 100%;
-}
 
-.name {
-  display: flex;
-  flex-direction: row;
-  .mat-form-field {
-    flex-grow: 2;
+  .name {
+    display: flex;
+    flex-direction: row;
+    .mat-form-field {
+      flex-grow: 2;
+    }
   }
-}
 
-.editor-wrap {
-  position: relative;
-}
-.toolbar {
-  visibility: hidden;
-  position: absolute;
-}
-.visible {
-  visibility: visible;
+  .editor-wrap {
+    position: relative;
+    margin-bottom: 0.75em;
+  }
+  .toolbar {
+    visibility: hidden;
+    position: absolute;
+    top: -40px;
+    right: 0;
+  }
+  .visible {
+    visibility: visible;
+  }
 }

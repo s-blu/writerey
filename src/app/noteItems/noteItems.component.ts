@@ -131,6 +131,7 @@ export class NoteItemsComponent implements OnInit, OnDestroy {
   }
 
   filterNotes(typeOfNote?) {
+    if (!this.notes) return;
     if (typeOfNote) {
       this.filters[typeOfNote].isShown = !this.filters[typeOfNote].isShown;
     }

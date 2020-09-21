@@ -28,9 +28,9 @@
           </mat-tab>
 
           <mat-tab [label]="t('titleValues')">
-            <div>
+            <div class="label-values">
               <ng-container formArrayName="values">
-                <div class="text-value-container tab-content" *ngFor="let control of values.controls; index as i">
+                <div class="text-value-container" *ngFor="let control of values.controls; index as i">
                   <wy-upsert-label-value
                     [parentForm]="control"
                     [formGroupName]="i"
