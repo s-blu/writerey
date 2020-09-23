@@ -163,8 +163,9 @@ export class LabelService implements OnDestroy {
     );
   }
 
-  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
-  saveMetaForLabelValue(contextId, content, metaType?) {
+  saveMetaForLabelValue(contextId, content) {
+    content = content?.filter(item => item.stereotype !== NoteItemStereotypes.LABEL);
+
     const [labelId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });

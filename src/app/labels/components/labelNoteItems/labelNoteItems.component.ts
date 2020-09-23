@@ -59,7 +59,7 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
   }
 
   private updateParagraphMeta(context, data) {
-    this.labelService.saveMetaForLabelValue(context, data, 'notes').subscribe(res => {
+    this.labelService.saveMetaForLabelValue(context, data).subscribe(res => {
       this.notes[context] = res;
       this.notes = Map(this.notes).toObject();
     });

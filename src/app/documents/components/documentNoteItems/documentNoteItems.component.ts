@@ -57,7 +57,7 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
   private updateParagraphMeta(context, data) {
     let obs;
     if (context.includes(':')) {
-      obs = this.labelService.saveMetaForLabelValue(context, data, 'notes');
+      obs = this.labelService.saveMetaForLabelValue(context, data);
     } else {
       const con = context === 'paragraph' ? this.parId : context;
       obs = this.paragraphService.setParagraphMeta(this.fileInfo.path, this.fileInfo.name, con, 'notes', data);
