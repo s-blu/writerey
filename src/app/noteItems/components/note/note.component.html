@@ -24,7 +24,13 @@
       <mat-card-content>
         <wy-ckeditor-readonly [data]="note.text"></wy-ckeditor-readonly>
       </mat-card-content>
-      <mat-card-actions [style]="noteStyles" *ngIf="isExpanded" [@fadeOutOnLeave] [@fadeInOnEnter] class="actions">
+      <mat-card-actions
+        [style]="noteStyles"
+        *ngIf="isExpanded && !isLabelInfo"
+        [@fadeOutOnLeave]
+        [@fadeInOnEnter]
+        class="actions"
+      >
         <button
           *ngIf="note.type"
           mat-icon-button
