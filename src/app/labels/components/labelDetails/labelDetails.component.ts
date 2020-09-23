@@ -37,6 +37,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   onReady = setDecoupledToolbar;
 
   private subscription = new Subscription();
+  private template = ' \n';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -58,6 +59,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
           if (!labelDef) return;
           this.initializeForm(labelDef);
           this.labelDefinition = labelDef;
+          this.template = labelDef.template || ' \n';
           this.labelStore.setLabelDefinition(labelDef);
         })
     );
@@ -73,7 +75,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       new FormGroup({
         name: new FormControl(''),
         id: new FormControl(uuid.v4()),
-        info: new FormControl(this.labelDefinition?.template || ' \n'),
+        info: new FormControl(this.template),
       })
     );
   }
@@ -105,7 +107,6 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       console.warn('got no label definition, cannot initialize form');
       return;
     }
-    const template = labelDef.template || ' \n';
 
     this.editForm = this.formBuilder.group({
       id: labelDef.id,
@@ -113,30 +114,18 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       name: labelDef.name,
       index: labelDef.index,
       values: new FormArray([]),
-      template,
+      template: this.template,
     });
 
     this.values = this.editForm.get('values') as FormArray;
-    delayValues(labelDef.values, 100)
-      .pipe(
-        mergeMap((value: any) => {
-          console.log(`${Date.now()}: info call`, value.name);
-          return this.labelService
-            .getMetaForLabelValue(`${labelDef.id}:${value.id}`, 'notes')
-            .pipe(mergeMap(info => of({ ...value, info })));
+    labelDef.values?.forEach(val => {
+      this.values.push(
+        new FormGroup({
+          name: new FormControl(val.name),
+          id: new FormControl(val.id),
+          info: new FormControl(val.info || this.template),
         })
-      )
-      .subscribe(val => {
-        console.log(`${Date.now()}: sub`, val.name);
-        const info = val.info?.find(note => note.stereotype === NoteItemStereotypes.LABEL)?.text;
-
-        this.values.push(
-          new FormGroup({
-            name: new FormControl(val.name),
-            id: new FormControl(val.id),
-            info: new FormControl(info || template),
-          })
-        );
-      });
+      );
+    });
   }
 }

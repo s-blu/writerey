@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { LabelInfo, NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
 import { ProjectStore } from './../stores/project.store';
 import { Label } from '@writerey/shared/models/label.interface';
 import { ParagraphService } from './paragraph.service';
@@ -17,6 +18,10 @@ import { ContextStore } from '../stores/context.store';
 import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';
 
+export enum metaTypesLabelValues {
+  NOTES = 'notes',
+  NOTES_AND_INFO = 'notesAndInfo',
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -177,7 +182,25 @@ export class LabelService implements OnDestroy {
     );
   }
 
-  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
+  getInfoForLabelValue(label) {
+    return this.getLabelDefinition(label.id).pipe(
+      map(labelDef => {
+        const infoText = labelDef.values?.find(val => val.id === label.valueId)?.info;
+        let response;
+        if (infoText) {
+          response = {
+            stereotype: NoteItemStereotypes.LABEL,
+            id: 'label-info',
+            context: this.contextService.getContextStringForLabel(label),
+            text: infoText,
+            type: 'label',
+          } as LabelInfo;
+        }
+        return response;
+      })
+    );
+  }
+
   getMetaForLabelValue(contextId, metaType?): Observable<any> {
     if (!contextId) return of([]);
     const label = this.contextService.getLabelFromContextString(contextId);
@@ -189,6 +212,13 @@ export class LabelService implements OnDestroy {
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseLabelValueResponse(res);
+      }),
+      mergeMap(notes => {
+        if (metaType === metaTypesLabelValues.NOTES_AND_INFO) {
+          return this.getInfoForLabelValue(label).pipe(map(info => [info, ...notes]));
+        } else {
+          return notes;
+        }
       })
     );
   }
