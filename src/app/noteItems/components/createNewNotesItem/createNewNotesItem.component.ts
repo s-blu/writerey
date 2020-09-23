@@ -67,20 +67,6 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     this.itemCreated.emit(newNote);
   }
 
-  // FIXME probably not needed
-  createLabelInfo(event) {
-    if (!event) return;
-    const newLabelInfo: LabelInfo = {
-      stereotype: NoteItemStereotypes.LABEL,
-      id: uuid.v4(),
-      context: event.context,
-      text: event.text,
-      type: 'label',
-    };
-
-    this.itemCreated.emit(newLabelInfo);
-  }
-
   createLink(event) {
     if (!event?.linkId) {
       console.warn('tried to create link without linkId. Aborting.', event);
