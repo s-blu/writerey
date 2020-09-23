@@ -1,4 +1,3 @@
-import { DocumentModeStore } from './../../../stores/documentMode.store';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -12,14 +11,17 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
-import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { delayValues } from '@writerey/shared/utils/observable.utils';
+import { NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
+import { DocumentModeStore } from './../../../stores/documentMode.store';
 
 @Component({
   selector: 'wy-label-details',
@@ -71,6 +73,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       new FormGroup({
         name: new FormControl(''),
         id: new FormControl(uuid.v4()),
+        info: new FormControl(this.labelDefinition?.template || ' \n'),
       })
     );
   }
@@ -102,6 +105,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       console.warn('got no label definition, cannot initialize form');
       return;
     }
+    const template = labelDef.template || ' \n';
 
     this.editForm = this.formBuilder.group({
       id: labelDef.id,
@@ -109,18 +113,30 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       name: labelDef.name,
       index: labelDef.index,
       values: new FormArray([]),
-      template: labelDef.template || ' \n',
+      template,
     });
 
     this.values = this.editForm.get('values') as FormArray;
-    (labelDef.values || []).forEach(val => {
-      this.values.push(
-        new FormGroup({
-          name: new FormControl(val.name),
-          id: new FormControl(val.id),
-          info: new FormControl(labelDef.template || ' \n'), // todo load info of value if availabble
+    delayValues(labelDef.values, 100)
+      .pipe(
+        mergeMap((value: any) => {
+          console.log(`${Date.now()}: info call`, value.name);
+          return this.labelService
+            .getMetaForLabelValue(`${labelDef.id}:${value.id}`, 'notes')
+            .pipe(mergeMap(info => of({ ...value, info })));
         })
-      );
-    });
+      )
+      .subscribe(val => {
+        console.log(`${Date.now()}: sub`, val.name);
+        const info = val.info?.find(note => note.stereotype === NoteItemStereotypes.LABEL)?.text;
+
+        this.values.push(
+          new FormGroup({
+            name: new FormControl(val.name),
+            id: new FormControl(val.id),
+            info: new FormControl(info || template),
+          })
+        );
+      });
   }
 }

@@ -234,7 +234,7 @@ export class LabelService implements OnDestroy {
   }
 
   private parseLabelValueResponse(res) {
-    if (!res || res === '') return res;
+    if (!res || res === '') return [];
     try {
       const data = JSON.parse(res);
       return data;

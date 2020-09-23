@@ -24,8 +24,6 @@ export class UpsertLabelValueComponent implements OnInit {
   ngOnInit() {}
 
   ngAfterViewInit() {
-    console.log('Values on ngAfterViewInit():');
-    console.log('toolbarElement:', this.toolbarElement);
     this.initialToolbarClasses = this.toolbarElement.nativeElement.className;
   }
 
