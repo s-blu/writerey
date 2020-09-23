@@ -92,6 +92,12 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(newValues) {
+    newValues.values.forEach(value => {
+      if (value.info === this.template || value.info?.trim() === '') {
+        delete value.info;
+      }
+    });
+
     this.labelService.updateLabelDefinition(newValues).subscribe(res => {
       const msg = this.translocoService.translate('labelDetails.saved');
       this.snackBar.open(msg, '', {
