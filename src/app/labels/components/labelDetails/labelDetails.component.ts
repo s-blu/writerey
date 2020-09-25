@@ -10,14 +10,18 @@ import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefinition.class';
-import { FormBuilder, FormArray, FormControl, Validators, FormGroup } from '@angular/forms';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
+import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { delayValues } from '@writerey/shared/utils/observable.utils';
+import { NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
+import { DocumentModeStore } from './../../../stores/documentMode.store';
 
 @Component({
   selector: 'wy-label-details',
@@ -27,13 +31,13 @@ import { LabelStore } from 'src/app/stores/label.store';
 export class LabelDetailsComponent implements OnInit, OnDestroy {
   editForm;
   labelDefinition: LabelDefinition;
-  types = LabelTypes;
   values;
   Editor = DecoupledEditor;
   editorConfig = editorWyNotesModules;
   onReady = setDecoupledToolbar;
 
   private subscription = new Subscription();
+  private template = ' \n';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,10 +46,12 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     private deletionService: DeletionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private documentModeStore: DocumentModeStore
   ) {}
 
   ngOnInit() {
+    this.documentModeStore.setMode(DOC_MODES.REVIEW);
     this.subscription.add(
       this.route.params
         .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))
@@ -53,6 +59,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
           if (!labelDef) return;
           this.initializeForm(labelDef);
           this.labelDefinition = labelDef;
+          this.template = labelDef.template || ' \n';
           this.labelStore.setLabelDefinition(labelDef);
         })
     );
@@ -68,6 +75,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       new FormGroup({
         name: new FormControl(''),
         id: new FormControl(uuid.v4()),
+        info: new FormControl(this.template),
       })
     );
   }
@@ -84,32 +92,12 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(newValues) {
-    if (this.numericValuesWereChanged(newValues)) {
-      const newNumValues = [];
-      for (let i = newValues.start; i <= newValues.end; i += newValues.interval) {
-        newNumValues.push(i);
+    newValues.values.forEach(value => {
+      if (value.info === this.template || value.info?.trim() === '') {
+        delete value.info;
       }
-      const newLabelValues = this.labelDefinition.values.filter(v => newNumValues.includes(v.name));
-      if (newLabelValues.length < this.labelDefinition.values.length) {
-        // todo show a user facing warning with the possibility to abort
-        console.warn(
-          `Changing start/end/interval of ${this.labelDefinition.name} led` +
-            ` to removal of ${this.labelDefinition.values.length - newLabelValues.length} values.`
-        );
-      }
-      for (const newValName of newNumValues) {
-        let val = newLabelValues.find(v => '' + v.name === '' + newValName);
-        if (!val) {
-          val = {
-            id: uuid.v4(),
-            name: newValName,
-          };
-          newLabelValues.push(val);
-        }
-      }
-      newLabelValues.sort((a, b) => ('' + a.name).localeCompare('' + b.name));
-      newValues.values = newLabelValues;
-    }
+    });
+
     this.labelService.updateLabelDefinition(newValues).subscribe(res => {
       const msg = this.translocoService.translate('labelDetails.saved');
       this.snackBar.open(msg, '', {
@@ -118,15 +106,6 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       });
       this.labelDefinition = res;
     });
-  }
-
-  private numericValuesWereChanged(newValues: any) {
-    return (
-      this.labelDefinition.type === LabelTypes.NUMERIC &&
-      (this.labelDefinition.start !== newValues.start ||
-        this.labelDefinition.end !== newValues.end ||
-        this.labelDefinition.interval !== newValues.interval)
-    );
   }
 
   private initializeForm(labelDef) {
@@ -141,22 +120,18 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       name: labelDef.name,
       index: labelDef.index,
       values: new FormArray([]),
-      template: labelDef.template || ' \n',
+      template: this.template,
     });
 
     this.values = this.editForm.get('values') as FormArray;
-    (labelDef.values || []).forEach(val => {
+    labelDef.values?.forEach(val => {
       this.values.push(
         new FormGroup({
           name: new FormControl(val.name),
           id: new FormControl(val.id),
+          info: new FormControl(val.info || this.template),
         })
       );
     });
-    if (labelDef.type === LabelTypes.NUMERIC) {
-      this.editForm.addControl('start', new FormControl(labelDef.start || 1, Validators.required));
-      this.editForm.addControl('end', new FormControl(labelDef.end || 1, Validators.required));
-      this.editForm.addControl('interval', new FormControl(labelDef.interval || 1, Validators.required));
-    }
   }
 }

@@ -54,15 +54,10 @@
   .text-value-container {
     display: flex;
     flex-direction: row;
-
-    .mat-form-field {
-      flex-grow: 2;
-    }
   }
 
-  .numeric-values {
-    mat-input-field {
-      display: block;
-    }
+  .label-values {
+    overflow-x: hidden;
+    margin-top: 1em;
   }
 }

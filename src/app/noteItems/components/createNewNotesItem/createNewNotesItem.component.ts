@@ -35,6 +35,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
   constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {}
 
   ngOnChanges() {
+    if (!this.contexts) return;
     for (const context of this.contexts) {
       if (context.includes(':')) {
         const [labelId, valueId] = context.split(':');
@@ -64,18 +65,6 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     };
 
     this.itemCreated.emit(newNote);
-  }
-
-  createLabelInfo(event) {
-    if (!event) return;
-    const newLabelInfo: LabelInfo = {
-      stereotype: NoteItemStereotypes.LABEL,
-      id: uuid.v4(),
-      context: event.context,
-      text: event.text,
-    };
-
-    this.itemCreated.emit(newLabelInfo);
   }
 
   createLink(event) {

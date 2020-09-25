@@ -69,7 +69,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
       dialogRef.afterClosed().subscribe(data => {
         if (!data) return;
         this.subscription.add(
-          this.labelService.createNewLabelCategory(data.name, data.type).subscribe((res: any) => {
+          this.labelService.createNewLabelCategory(data.name).subscribe((res: any) => {
             this.router.navigate(['/labelDefinition', { id: res[0]?.id }]);
             this.changeTabIndex(1);
           })

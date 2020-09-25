@@ -24,7 +24,6 @@ export class CreateNewLabelComponent implements OnInit {
 
   ngOnInit() {
     this.createNewForm = this.formBuilder.group({
-      type: '',
       name: '',
     });
   }

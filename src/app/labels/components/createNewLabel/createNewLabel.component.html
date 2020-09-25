@@ -10,13 +10,6 @@
   <h1>{{ t('title') }}</h1>
   <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
     <mat-form-field>
-      <mat-label>{{ t('type.title') }}</mat-label>
-      <mat-select formControlName="type" required>
-        <mat-option value="text">{{ t('type.text') }}</mat-option>
-        <mat-option value="numeric">{{ t('type.numeric') }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <mat-form-field>
       <mat-label>{{ t('name') }}</mat-label>
       <input (keyup.enter)="onSubmit(createNewForm.value)" matInput required formControlName="name" />
     </mat-form-field>

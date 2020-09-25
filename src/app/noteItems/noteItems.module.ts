@@ -17,7 +17,6 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpsertNoteComponent } from './components/upsertNote/upsertNote.component';
 import { CreateNewNotesItemComponent } from './components/createNewNotesItem/createNewNotesItem.component';
-import { CreateNewLabelInfoComponent } from './components/createNewLabelInfo/createNewLabelInfo.component';
 import { NotesItemComponent } from './components/notesItem/notesItem.component';
 import { NoteComponent } from './components/note/note.component';
 import { NoteItemsComponent } from './noteItems.component';
@@ -51,7 +50,6 @@ const materialModules = [
     ChooseFileForLinkDialogComponent,
     CreateNewLinkComponent,
     UpsertNoteComponent,
-    CreateNewLabelInfoComponent,
     NotesItemComponent,
     NoteComponent,
     NoteItemsComponent,

@@ -4,11 +4,6 @@
   },
   "createLabel": {
     "title": "Eine neue Rubrik erstellen",
-    "type": {
-      "title": "Rubriktyp",
-      "text": "Text",
-      "numeric": "Numerisch"
-    },
     "name": "Name der Rubrik",
     "create": "Erstellen",
     "cancel": "Abbrechen"
@@ -26,6 +21,7 @@
     "titleLabelProps": "Rubrikeigenschaften",
     "titleInfoTemplate": "Vorlage für Rubrikinfos",
     "template": "Füge hier eine Vorlage für deine Rubrikinfos ein. Das ist besonders hilfreich, wenn du gleichartige Informationen zu deinen Label Werten speichern möchtest.",
+    "labelInfoPlaceholder": "Gebe diesem Wert eine Beschreibung, die bei Verwendung als Notiz angezeigt wird",
     "type": {
       "text": "Text-Rubrik",
       "numeric": "Numerische Rubrik"

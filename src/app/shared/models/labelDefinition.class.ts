@@ -6,11 +6,6 @@
 
 import * as uuid from 'uuid';
 
-export enum LabelTypes {
-  NUMERIC = 'numeric',
-  TEXT = 'text',
-}
-
 interface LabelValue {
   id: string;
   name: string;
@@ -18,7 +13,6 @@ interface LabelValue {
 export class LabelDefinition {
   id: string;
   name: string;
-  type: LabelTypes;
   index: number;
   values: Array<LabelValue>;
   start: number;
@@ -26,10 +20,9 @@ export class LabelDefinition {
   interval: number;
   template: string;
 
-  constructor(name: string, type: LabelTypes) {
+  constructor(name: string) {
     this.id = uuid.v4();
     this.name = name;
-    this.type = type;
     this.values = [];
   }
 }

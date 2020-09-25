@@ -14,12 +14,12 @@ import { ParagraphService } from '../../../services/paragraph.service';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
 import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
-import { LabelDefinition, LabelTypes } from '@writerey/shared/models/labelDefinition.class';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { LabelService } from 'src/app/services/label.service';
 import { Label } from '@writerey/shared/models/label.interface';
 import { DocumentStore } from 'src/app/stores/document.store';
 import { sortLabelArray } from '@writerey/shared/utils/label.utils';
-import { flatMap, tap } from 'rxjs/operators';
+import { mergeMap, tap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 @Component({
   selector: 'wy-document-labels',
@@ -36,7 +36,6 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
   labelDefinitions: Array<LabelDefinition>;
   MODES = DOC_MODES;
   mode: DOC_MODES;
-  TYPES = LabelTypes;
   distractionFreeState: DISTRACTION_FREE_STATES;
   DF_STATE = DISTRACTION_FREE_STATES;
 
@@ -84,7 +83,7 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
     this.refresh();
   }
 
-  setValOfTextLabel(def, event) {
+  setValue(def, event) {
     const newValue = event.value;
     if (!newValue) {
       this.removeLabel(def.id);
@@ -93,18 +92,6 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.upsertLabel(def.id, newValue);
   }
-
-  setValOfNumLabel(def, event) {
-    const newValue = event.value;
-
-    if (newValue < def.start) {
-      this.removeLabel(def.id);
-      return;
-    }
-    const valueDef = def.values.find(v => v.name === newValue);
-    this.upsertLabel(def.id, valueDef.id);
-  }
-
   private refresh() {
     if (!this.fileInfo || !this.paragraphId) return;
     this.labels = [];
@@ -156,7 +143,7 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
             this.labelsFromServer = res;
             this.updateDisplayInfo(res);
           }),
-          flatMap(_ =>
+          mergeMap(_ =>
             this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.paragraphId)
           )
         )
@@ -175,11 +162,7 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
       try {
         this.enhanceLabelWithDisplayInfo(m);
         this.labels.push(m);
-        if (m.type === LabelTypes.TEXT) {
-          this.values[m.id] = m.valueId;
-        } else {
-          this.values[m.id] = m.valueName;
-        }
+        this.values[m.id] = m.valueId;
       } catch (err) {
         console.warn('Was not able to find a label definition for a label. Will remove it since it is invalid.', m);
       }
@@ -190,7 +173,6 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
     const labelDef = this.labelDefinitions.find(m => m.id === label.id);
     if (labelDef) {
       label.name = labelDef.name;
-      label.type = labelDef.type;
       label.index = labelDef.index;
       const value = labelDef.values.find(val => val.id === label.valueId);
       if (value) label.valueName = value.name;

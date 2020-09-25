@@ -46,15 +46,11 @@ Lets discuss Labels first. Labels are here to help you _categorize_ parts of you
 
 Does this paragraph belong to chapter 1,2 or 14? Is this paragraph a first draft, the second one or already final? Which scene it belongs to? Which story line? Who's the Point of View character?
 
-You can create labels by clicking the menu on the sidebar. There are two types: numeric and textual ones.
+You can create labels by clicking the menu on the sidebar.
 
-### Numeric labels
+### Label values
 
-Numeric labels consists of a start, end and an interval. Their value are based on these three properties. This is handy when you want to have a label for your scenes and chapters, for example.
-
-### Textual labels
-
-On textual labels you can freely choose your values, i.e. the name of your main characters or some states a paragraph of your work cycles through.
+The label itself is only like a folder for files. For really use them, you need to add values to them. A value consists of two properties: A name and a info (or description). The name is the real value and what you will choose when assigning labels (see below). The info on the other hand will show up as a special kind of note, so this is the right place to add all the important bits that concern this label value.
 
 ![](../img/writerey_guide_label-details.jpg)
 
@@ -66,9 +62,11 @@ After you have created a label and its value, you can assign them.
 1. Switch to review mode
 1. Click on a paragraph
 
-On the left side, you'll now have your created labels displayed. Choose the values you want to assign to this paragraph. When you now switch back to Write mode and your cursor is inside this paragraph, your labels will show up.
+On the left side, you'll now have your created labels displayed. Choose the values you want to assign to this paragraph. When you now switch back to Write mode and your cursor is inside this paragraph, your labels will show up and - if available - you'll see your label info on the right side.
 
-And there is more to them.
+![](../img/writerey_assigning_labels.jpg)
+
+There is more to labels.
 
 ## Notes
 

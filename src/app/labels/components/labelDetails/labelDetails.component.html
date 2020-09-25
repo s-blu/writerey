@@ -9,7 +9,6 @@
   <ng-container *ngIf="labelDefinition">
     <mat-card-header>
       <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
-      <mat-card-subtitle>{{ t('type.' + labelDefinition.type) }}</mat-card-subtitle>
     </mat-card-header>
 
     <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
@@ -29,43 +28,14 @@
           </mat-tab>
 
           <mat-tab [label]="t('titleValues')">
-            <div class="tab-content value-container numeric-values" *ngIf="labelDefinition.type === types.NUMERIC">
-              <mat-form-field>
-                <mat-label>{{ t('start') }}</mat-label>
-                <input matInput type="number" required formControlName="start" />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>{{ t('end') }}</mat-label>
-                <input matInput type="number" required formControlName="end" />
-              </mat-form-field>
-              <mat-form-field>
-                <mat-label>{{ t('interval') }}</mat-label>
-                <input matInput type="number" required formControlName="interval" />
-              </mat-form-field>
-              <span>{{
-                t('currentNumericalValues', {
-                  first: labelDefinition.start,
-                  last: labelDefinition.end,
-                  interval: labelDefinition.interval,
-                  count: labelDefinition.values.length
-                })
-              }}</span>
-            </div>
-            <div *ngIf="labelDefinition.type === types.TEXT">
+            <div class="label-values">
               <ng-container formArrayName="values">
-                <div class="text-value-container tab-content" *ngFor="let _ of values.controls; index as i">
-                  <mat-form-field [formGroupName]="i">
-                    <mat-label>{{ t('textvalue') }}</mat-label>
-                    <input matInput type="text" formControlName="name" />
-                  </mat-form-field>
-                  <button
-                    mat-icon-button
-                    type="button"
-                    (click)="removeValue(i, _.value)"
-                    [matTooltip]="t('removeValue')"
-                  >
-                    <mat-icon>remove</mat-icon>
-                  </button>
+                <div class="text-value-container" *ngFor="let control of values.controls; index as i">
+                  <wy-upsert-label-value
+                    [parentForm]="control"
+                    [formGroupName]="i"
+                    (valueRemoved)="removeValue(i, control.value)"
+                  ></wy-upsert-label-value>
                 </div>
               </ng-container>
               <button mat-stroked-button type="button" (click)="addNewValue()">

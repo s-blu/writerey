@@ -37,6 +37,7 @@ export class UpsertNoteComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
+    if (!this.contexts) return;
     this.createNewForm.patchValue({ context: this.contexts[0] });
   }
 
@@ -44,7 +45,7 @@ export class UpsertNoteComponent implements OnInit, OnChanges {
     const preset = {
       type: this.editNote?.type || 'todo',
       color: this.editNote?.color || '',
-      context: this.editNote?.context || this.contexts[0] || null,
+      context: this.editNote?.context || this.contexts?.[0] || null,
       text: this.editNote?.text || ' \n',
     };
 

@@ -30,15 +30,18 @@ export class NoteComponent implements OnInit {
   classes = 'note';
   contextName = '';
   isExpanded = false;
+  isLabelInfo;
   noteForEditing;
 
   constructor() {}
 
   ngOnInit() {
     if (this.note.stereotype !== NoteItemStereotypes.LABEL) {
-      this.classes += ` type-${this.note.type}`;
+      this.isExpanded = !!this.note.keepOpen;
+    } else {
+      this.isLabelInfo = true;
     }
-    this.isExpanded = !!this.note.keepOpen;
+    this.classes += ` type-${this.note.type}`;
     if (this.note.color) {
       this.noteStyles = 'background-color:' + this.note.color;
     }
