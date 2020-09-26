@@ -202,6 +202,12 @@ export class LabelService implements OnDestroy {
     );
   }
 
+  getLabelStatistics(): Observable<any> {
+    return this.httpClient
+      .get(this.api.getLabelStatisticRoute(this.project))
+      .pipe(catchError(err => this.api.handleHttpError(err)));
+  }
+
   getMetaForLabelValue(contextId, metaType?): Observable<any> {
     if (!contextId) return of([]);
     const label = this.contextService.getLabelFromContextString(contextId);
@@ -218,7 +224,7 @@ export class LabelService implements OnDestroy {
         if (metaType === metaTypesLabelValues.NOTES_AND_INFO) {
           return this.getInfoForLabelValue(label).pipe(map(info => [info, ...notes]));
         } else {
-          return notes;
+          return of(notes);
         }
       })
     );

@@ -23,6 +23,7 @@ from gitTag import Tag
 from gitMv import GitMove
 from tree import Tree
 from links import Links
+from labelStats import LabelStats
 from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
 
@@ -41,6 +42,7 @@ api.add_resource(Images, '/img/<string:doc_name>')
 api.add_resource(ParagraphMeta, '/p/<string:doc_name>')
 api.add_resource(Directories, '/dir/<string:dir_name>')
 api.add_resource(Labels, '/label/<string:label_id>')
+api.add_resource(LabelStats, '/labelstats/<string:project>')
 api.add_resource(Links, '/links/<string:project_dir>')
 api.add_resource(Tree, '/tree')
 api.add_resource(GitAutomation, '/git/commit')

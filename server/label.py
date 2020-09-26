@@ -13,6 +13,9 @@ from pathUtils import PathUtils
 import os
 from stat import ST_MTIME
 
+label_def_filename = '_writerey_label_defs'
+label_value_prefix = 'lv_'
+
 class Labels(Resource):
     def get(self, label_id):
         value_id = request.args.get('value_id')
@@ -49,7 +52,7 @@ class Labels(Resource):
 
     def getLabelValPath(self, label_id, value_id, projectDir):
         if label_id == 'definitions':
-            filename = '_writerey_label_defs'
+            filename = label_def_filename
         else:
-            filename = 'lv_' + value_id
+            filename = label_value_prefix + value_id
         return PathUtils.sanitizePathList([self.getPathToLabels(projectDir), filename])

@@ -62,14 +62,17 @@ export class NotesService {
       notesWrap[c] = [];
     });
 
-    const labelContexts = [];
-    for (const c of contexts) {
-      if (c.includes(':')) {
-        labelContexts.push(this.labelService.getMetaForLabelValue(c, metaTypesLabelValues.NOTES));
-      }
-    }
-
-    return forkJoin(labelContexts).pipe(
+    return this.labelService.getLabelStatistics().pipe(
+      mergeMap(valueIds => {
+        console.log('labelstatistic reponse', valueIds);
+        const contextObs = [];
+        contexts.forEach(context => {
+          const valueId = context.split(':')[1];
+          if (valueIds.includes(valueId))
+            contextObs.push(this.labelService.getMetaForLabelValue(context, metaTypesLabelValues.NOTES));
+        });
+        return forkJoin(contextObs);
+      }),
       mergeMap((labelRes: Array<any>) => {
         if (labelRes && labelRes instanceof Array) {
           for (const labelNotes of labelRes) {
