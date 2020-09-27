@@ -30,6 +30,7 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    console.log(Date.now(), 'on init label note items');
     this.subscription.add(
       this.route.params
         .pipe(
@@ -40,7 +41,6 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
           if (!labelDef) return;
           this.labelDef = labelDef;
           this.getContexts();
-          this.labelStore.setLabelDefinition(labelDef);
         })
     );
     this.subscription.add(

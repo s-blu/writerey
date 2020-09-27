@@ -5,7 +5,6 @@ import { CommonModule } from '@angular/common';
 import { DocumentLabelsComponent } from './components/documentLabels/documentLabels.component';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { CreateNewLabelComponent } from './components/createNewLabel/createNewLabel.component';
@@ -19,6 +18,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
 
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+
 const materialModules = [
   MatSelectModule,
   MatSliderModule,
@@ -28,11 +30,13 @@ const materialModules = [
   MatIconModule,
   MatButtonModule,
   MatInputModule,
+  MatProgressSpinnerModule,
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    ScrollingModule,
     FormsModule,
     SharedModule,
     CKEditorModule,

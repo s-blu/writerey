@@ -19,6 +19,11 @@
   border-radius: 0;
   box-sizing: border-box;
 
+  // FIXME NOT WORKING
+  .mat-tab-body-content {
+    overflow: hidden;
+  }
+
   .mat-card-actions {
     margin: 0;
     .cancel-button {
@@ -54,10 +59,17 @@
   .text-value-container {
     display: flex;
     flex-direction: row;
+    height: 100%;
   }
 
   .label-values {
-    overflow-x: hidden;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
     margin-top: 1em;
+
+    cdk-virtual-scroll-viewport {
+      height: 100%;
+    }
   }
 }

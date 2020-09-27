@@ -28,20 +28,25 @@
           </mat-tab>
 
           <mat-tab [label]="t('titleValues')">
-            <div class="label-values">
-              <ng-container formArrayName="values">
-                <div class="text-value-container" *ngFor="let control of values.controls; index as i">
-                  <wy-upsert-label-value
-                    [parentForm]="control"
-                    [formGroupName]="i"
-                    (valueRemoved)="removeValue(i, control.value)"
-                  ></wy-upsert-label-value>
-                </div>
-              </ng-container>
-              <button mat-stroked-button type="button" (click)="addNewValue()">
-                <mat-icon>add</mat-icon> {{ t('addNewValue') }}
-              </button>
-            </div>
+            <ng-template matTabContent>
+              <div class="label-values">
+                <ng-container formArrayName="values">
+                  <!-- fixme: itemsize -->
+                  <cdk-virtual-scroll-viewport itemSize="500" class="viewport">
+                    <div class="text-value-container" *cdkVirtualFor="let control of values.controls; index as i">
+                      <wy-upsert-label-value
+                        [parentForm]="control"
+                        [formGroupName]="i"
+                        (valueRemoved)="removeValue(i, control.value)"
+                      ></wy-upsert-label-value>
+                    </div>
+                  </cdk-virtual-scroll-viewport>
+                </ng-container>
+                <button mat-stroked-button type="button" (click)="addNewValue()">
+                  <mat-icon>add</mat-icon> {{ t('addNewValue') }}
+                </button>
+              </div>
+            </ng-template>
           </mat-tab>
 
           <mat-tab [label]="t('titleInfoTemplate')">

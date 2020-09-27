@@ -9,7 +9,7 @@ import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
@@ -27,6 +27,7 @@ import { DocumentModeStore } from './../../../stores/documentMode.store';
   selector: 'wy-label-details',
   templateUrl: './labelDetails.component.html',
   styleUrls: ['./labelDetails.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class LabelDetailsComponent implements OnInit, OnDestroy {
   editForm;
@@ -57,9 +58,9 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
         .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))
         .subscribe(labelDef => {
           if (!labelDef) return;
-          this.initializeForm(labelDef);
-          this.labelDefinition = labelDef;
           this.template = labelDef.template || ' \n';
+          this.labelDefinition = labelDef;
+          this.initializeForm(labelDef);
           this.labelStore.setLabelDefinition(labelDef);
         })
     );

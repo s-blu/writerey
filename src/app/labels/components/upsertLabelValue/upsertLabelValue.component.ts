@@ -1,4 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { translate } from '@ngneat/transloco';
 import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
@@ -6,6 +15,7 @@ import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
   selector: 'wy-upsert-label-value',
   templateUrl: './upsertLabelValue.component.html',
   styleUrls: ['./upsertLabelValue.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
   @Input() parentForm;
@@ -27,9 +37,7 @@ export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
-    this.initialToolbarClasses = this.toolbarElement.nativeElement.className;
-  }
+  ngAfterViewInit() {}
 
   removeValue() {
     this.valueRemoved.emit();
@@ -48,5 +56,6 @@ export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
 
   onReady(editor) {
     this.editorInstance = editor;
+    this.initialToolbarClasses = this.toolbarElement.nativeElement.className;
   }
 }
