@@ -31,8 +31,8 @@
             <ng-template matTabContent>
               <div class="label-values">
                 <ng-container formArrayName="values">
-                  <!-- fixme: itemsize -->
-                  <cdk-virtual-scroll-viewport itemSize="500" class="viewport">
+                  <!-- render three new elements if only one is left outside the viewport -->
+                  <cdk-virtual-scroll-viewport itemSize="270" minBufferPx="270" maxBufferPx="810" class="viewport">
                     <div class="text-value-container" *cdkVirtualFor="let control of values.controls; index as i">
                       <wy-upsert-label-value
                         [parentForm]="control"

@@ -27,7 +27,6 @@ import { DocumentModeStore } from './../../../stores/documentMode.store';
   selector: 'wy-label-details',
   templateUrl: './labelDetails.component.html',
   styleUrls: ['./labelDetails.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class LabelDetailsComponent implements OnInit, OnDestroy {
   editForm;

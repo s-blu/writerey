@@ -15,7 +15,6 @@ import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
   selector: 'wy-upsert-label-value',
   templateUrl: './upsertLabelValue.component.html',
   styleUrls: ['./upsertLabelValue.component.scss'],
-  encapsulation: ViewEncapsulation.None,
 })
 export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
   @Input() parentForm;
