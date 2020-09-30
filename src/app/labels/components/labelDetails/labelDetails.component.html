@@ -31,16 +31,13 @@
             <ng-template matTabContent>
               <div class="label-values">
                 <ng-container formArrayName="values">
-                  <!-- render three new elements if only one is left outside the viewport -->
-                  <cdk-virtual-scroll-viewport itemSize="270" minBufferPx="270" maxBufferPx="810" class="viewport">
-                    <div class="text-value-container" *cdkVirtualFor="let control of values.controls; index as i">
-                      <wy-upsert-label-value
-                        [parentForm]="control"
-                        [formGroupName]="i"
-                        (valueRemoved)="removeValue(i, control.value)"
-                      ></wy-upsert-label-value>
-                    </div>
-                  </cdk-virtual-scroll-viewport>
+                  <div class="text-value-container" *ngFor="let control of values.controls; index as i">
+                    <wy-upsert-label-value
+                      [parentForm]="control"
+                      [formGroupName]="i"
+                      (valueRemoved)="removeValue(i, control.value)"
+                    ></wy-upsert-label-value>
+                  </div>
                 </ng-container>
                 <button mat-stroked-button type="button" (click)="addNewValue()">
                   <mat-icon>add</mat-icon> {{ t('addNewValue') }}

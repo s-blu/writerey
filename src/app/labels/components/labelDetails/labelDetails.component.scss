@@ -28,7 +28,6 @@
 
   form {
     overflow: auto;
-    overflow-x: hidden;
     height: inherit;
     display: flex;
     flex-direction: column;
@@ -58,13 +57,8 @@
   }
 
   .label-values {
-    height: 100%;
     box-sizing: border-box;
     overflow: hidden;
     margin-top: 1em;
-
-    cdk-virtual-scroll-viewport {
-      height: 100%;
-    }
   }
 }

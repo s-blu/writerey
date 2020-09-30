@@ -19,7 +19,6 @@ import { MatInputModule } from '@angular/material/input';
 import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
 
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const materialModules = [
   MatSelectModule,
@@ -36,7 +35,6 @@ const materialModules = [
 @NgModule({
   imports: [
     CommonModule,
-    ScrollingModule,
     FormsModule,
     SharedModule,
     CKEditorModule,
