@@ -9,7 +9,7 @@
   <ng-container *ngIf="labelDefinition">
     <mat-card-header>
       <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
-      <div *ngIf="isLoadingValues">Loading ...</div>
+      <div class="loading-indicator" *ngIf="isLoadingValues"><mat-spinner [diameter]="20"></mat-spinner></div>
     </mat-card-header>
 
     <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">

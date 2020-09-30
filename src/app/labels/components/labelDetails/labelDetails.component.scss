@@ -19,6 +19,11 @@
   border-radius: 0;
   box-sizing: border-box;
 
+  mat-card-header {
+    align-items: start;
+    justify-content: space-between;
+  }
+
   .mat-card-actions {
     margin: 0;
     .cancel-button {
