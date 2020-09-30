@@ -16,7 +16,7 @@ import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { finalize, mergeMap, take, tap } from 'rxjs/operators';
+import { finalize, mergeMap, take } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { delayValues } from '@writerey/shared/utils/observable.utils';
@@ -137,14 +137,14 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
         })
       );
     });
-
+    // if the user switches from another label definition and has the values already open, we need to trigger that explicitly
     if (this.tabGroup?.selectedIndex === 1) {
       this.initValues({ index: 1 });
     }
   }
 
   initValues(ev) {
-    if (ev.index === 1 && this.renderValues.controls.length === 0 && this.values.controls.length !== 0) {
+    if (ev.index === 1 && this.renderValues.controls.length === 0) {
       this.isLoadingValues = true;
       delayValues(this.values.controls, 80)
         .pipe(

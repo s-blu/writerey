@@ -16,7 +16,7 @@ import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
   templateUrl: './upsertLabelValue.component.html',
   styleUrls: ['./upsertLabelValue.component.scss'],
 })
-export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
+export class UpsertLabelValueComponent implements OnInit {
   @Input() parentForm;
 
   @Output() valueRemoved = new EventEmitter();
@@ -35,8 +35,6 @@ export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
   constructor() {}
 
   ngOnInit() {}
-
-  ngAfterViewInit() {}
 
   removeValue() {
     this.valueRemoved.emit();

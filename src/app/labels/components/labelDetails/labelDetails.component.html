@@ -33,7 +33,6 @@
               <div class="label-values">
                 <ng-container formArrayName="values">
                   <div class="text-value-container" *ngFor="let control of renderValues.controls; index as i">
-                    hello. {{ i }}
                     <wy-upsert-label-value
                       [parentForm]="control"
                       [formGroupName]="i"
