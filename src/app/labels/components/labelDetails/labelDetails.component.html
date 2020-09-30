@@ -9,11 +9,12 @@
   <ng-container *ngIf="labelDefinition">
     <mat-card-header>
       <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
+      <div *ngIf="isLoadingValues">Loading ...</div>
     </mat-card-header>
 
     <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
       <mat-card-content>
-        <mat-tab-group>
+        <mat-tab-group (selectedTabChange)="initValues($event)" #tabGroup>
           <mat-tab [label]="t('titleLabelProps')">
             <div class="tab-content">
               <mat-form-field>
@@ -31,7 +32,8 @@
             <ng-template matTabContent>
               <div class="label-values">
                 <ng-container formArrayName="values">
-                  <div class="text-value-container" *ngFor="let control of values.controls; index as i">
+                  <div class="text-value-container" *ngFor="let control of renderValues.controls; index as i">
+                    hello. {{ i }}
                     <wy-upsert-label-value
                       [parentForm]="control"
                       [formGroupName]="i"

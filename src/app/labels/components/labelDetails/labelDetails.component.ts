@@ -9,18 +9,17 @@ import { DeletionService } from '../../../services/deletion.service';
 import { TranslocoService } from '@ngneat/transloco';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { LabelService } from 'src/app/services/label.service';
-import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
-import { of, Subscription } from 'rxjs';
-import { mergeMap } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+import { finalize, mergeMap, take, tap } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { delayValues } from '@writerey/shared/utils/observable.utils';
-import { NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
 import { DocumentModeStore } from './../../../stores/documentMode.store';
 
 @Component({
@@ -32,9 +31,13 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   editForm;
   labelDefinition: LabelDefinition;
   values;
+  renderValues = new FormArray([]);
   Editor = DecoupledEditor;
   editorConfig = editorWyNotesModules;
   onReady = setDecoupledToolbar;
+  isLoadingValues = false;
+
+  @ViewChild('tabGroup') tabGroup;
 
   private subscription = new Subscription();
   private template = ' \n';
@@ -123,6 +126,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
       template: this.template,
     });
 
+    this.renderValues = new FormArray([]);
     this.values = this.editForm.get('values') as FormArray;
     labelDef.values?.forEach(val => {
       this.values.push(
@@ -133,5 +137,27 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
         })
       );
     });
+
+    if (this.tabGroup?.selectedIndex === 1) {
+      this.initValues({ index: 1 });
+    }
+  }
+
+  initValues(ev) {
+    if (ev.index === 1 && this.renderValues.controls.length === 0 && this.values.controls.length !== 0) {
+      this.isLoadingValues = true;
+      delayValues(this.values.controls, 80)
+        .pipe(
+          take(this.values.controls.length),
+          finalize(() => {
+            // use the "real" array again to reflect adds & deletions
+            this.renderValues = this.values;
+            this.isLoadingValues = false;
+          })
+        )
+        .subscribe((control: FormControl) => {
+          this.renderValues.controls.push(control);
+        });
+    }
   }
 }
