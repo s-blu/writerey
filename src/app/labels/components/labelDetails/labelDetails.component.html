@@ -14,7 +14,7 @@
 
     <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
       <mat-card-content>
-        <mat-tab-group (selectedTabChange)="initValues($event)" #tabGroup>
+        <mat-tab-group (selectedTabChange)="initRenderValues($event)" #tabGroup>
           <mat-tab [label]="t('titleLabelProps')">
             <div class="tab-content">
               <mat-form-field>

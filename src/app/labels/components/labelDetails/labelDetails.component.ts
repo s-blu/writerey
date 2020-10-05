@@ -139,11 +139,15 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     });
     // if the user switches from another label definition and has the values already open, we need to trigger that explicitly
     if (this.tabGroup?.selectedIndex === 1) {
-      this.initValues({ index: 1 });
+      this.initRenderValues({ index: 1 });
     }
   }
 
-  initValues(ev) {
+  /**
+   * Push values of form into the array that should be rendered in a delayed matter.
+   * This prevents the view from freezing (even though it still lags) on huge amount of values.
+   */
+  initRenderValues(ev) {
     if (ev.index === 1 && this.renderValues.controls.length === 0) {
       this.isLoadingValues = true;
       delayValues(this.values.controls, 80)
