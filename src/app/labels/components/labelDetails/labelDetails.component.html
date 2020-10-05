@@ -12,7 +12,7 @@
       <div class="loading-indicator" *ngIf="isLoadingValues"><mat-spinner [diameter]="20"></mat-spinner></div>
     </mat-card-header>
 
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit(editForm.value)">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
       <mat-card-content>
         <mat-tab-group (selectedTabChange)="initRenderValues($event)" #tabGroup>
           <mat-tab [label]="t('titleLabelProps')">
@@ -65,6 +65,9 @@
         <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">
           {{ t('save') }}
         </button>
+        <span class="autosave" (click)="toggleAutosave()">
+          {{ t('autosave.' + autosave) }}
+        </span>
         <button mat-button type="button" color="warn" class="cancel-button" (click)="cancel()">
           {{ t('cancel') }}
         </button>

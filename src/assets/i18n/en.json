@@ -22,9 +22,9 @@
     "titleInfoTemplate": "Template for Label Infos",
     "template": "Insert a template here to prefill your label infos. This is very useful if you want to store similar meta information for your label values",
     "labelInfoPlaceholder": "Add a description to this value that will be shown as a note on documents",
-    "type": {
-      "text": "Text Label",
-      "numeric": "Numerical Label"
+    "autosave": {
+      "true": "Autosave is on",
+      "false": "Autosave is off"
     },
     "saved": "Saved!",
     "start": "Start",

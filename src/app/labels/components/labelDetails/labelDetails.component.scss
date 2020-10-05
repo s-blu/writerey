@@ -66,4 +66,11 @@
     overflow: hidden;
     margin-top: 1em;
   }
+
+  .autosave {
+    color: $c_hint;
+    font-size: 10pt;
+    padding: 10px;
+    cursor: pointer;
+  }
 }

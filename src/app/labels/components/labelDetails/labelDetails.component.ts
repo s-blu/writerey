@@ -15,12 +15,14 @@ import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
 import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { finalize, mergeMap, take } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { delayValues } from '@writerey/shared/utils/observable.utils';
 import { DocumentModeStore } from './../../../stores/documentMode.store';
+
+const LABEL_AUTOSAVE_KEY = 'writerey_label_definition_autosave';
 
 @Component({
   selector: 'wy-label-details',
@@ -28,14 +30,15 @@ import { DocumentModeStore } from './../../../stores/documentMode.store';
   styleUrls: ['./labelDetails.component.scss'],
 })
 export class LabelDetailsComponent implements OnInit, OnDestroy {
-  editForm;
+  editForm: FormGroup;
   labelDefinition: LabelDefinition;
-  values;
+  values: FormArray;
   renderValues = new FormArray([]);
   Editor = DecoupledEditor;
   editorConfig = editorWyNotesModules;
   onReady = setDecoupledToolbar;
   isLoadingValues = false;
+  autosave = true;
 
   @ViewChild('tabGroup') tabGroup;
 
@@ -55,11 +58,16 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.documentModeStore.setMode(DOC_MODES.REVIEW);
+    this.autosave = JSON.parse(localStorage.getItem(LABEL_AUTOSAVE_KEY)) ?? true;
+
     this.subscription.add(
       this.route.params
         .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))
         .subscribe(labelDef => {
           if (!labelDef) return;
+          if (this.labelDefinition) {
+            this.saveOnLeave();
+          }
           this.template = labelDef.template || ' \n';
           this.labelDefinition = labelDef;
           this.initializeForm(labelDef);
@@ -69,6 +77,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.saveOnLeave();
     this.subscription.unsubscribe();
   }
 
@@ -94,21 +103,41 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     this.initializeForm(this.labelDefinition);
   }
 
-  onSubmit(newValues) {
-    newValues.values.forEach(value => {
+  toggleAutosave() {
+    this.autosave = !this.autosave;
+    localStorage.setItem(LABEL_AUTOSAVE_KEY, '' + this.autosave);
+  }
+
+  saveOnLeave() {
+    if (this.editForm.dirty && this.autosave) {
+      console.info('Autosaving label definition ...');
+      this.subscription.add(this.save().subscribe());
+    }
+  }
+
+  onSubmit() {
+    this.subscription.add(
+      this.save().subscribe(res => {
+        const msg = this.translocoService.translate('labelDetails.saved');
+        this.snackBar.open(msg, '', {
+          duration: 2000,
+          horizontalPosition: 'right',
+        });
+        this.labelDefinition = res;
+      })
+    );
+  }
+
+  private save() {
+    if (!this.editForm?.value) return of(null);
+
+    this.editForm.value.values.forEach(value => {
       if (value.info === this.template || value.info?.trim() === '') {
         delete value.info;
       }
     });
 
-    this.labelService.updateLabelDefinition(newValues).subscribe(res => {
-      const msg = this.translocoService.translate('labelDetails.saved');
-      this.snackBar.open(msg, '', {
-        duration: 2000,
-        horizontalPosition: 'right',
-      });
-      this.labelDefinition = res;
-    });
+    return this.labelService.updateLabelDefinition(this.editForm.value);
   }
 
   private initializeForm(labelDef) {
@@ -149,19 +178,27 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
    */
   initRenderValues(ev) {
     if (ev.index === 1 && this.renderValues.controls.length === 0) {
+      // Delayed handling is not needed if its only a few values
+      if (this.values.controls.length < 8) {
+        this.renderValues = this.values;
+        return;
+      }
+
       this.isLoadingValues = true;
-      delayValues(this.values.controls, 80)
-        .pipe(
-          take(this.values.controls.length),
-          finalize(() => {
-            // use the "real" array again to reflect adds & deletions
-            this.renderValues = this.values;
-            this.isLoadingValues = false;
+      this.subscription.add(
+        delayValues(this.values.controls, 80)
+          .pipe(
+            take(this.values.controls.length),
+            finalize(() => {
+              // use the "real" array again to reflect adds & deletions
+              this.renderValues = this.values;
+              this.isLoadingValues = false;
+            })
+          )
+          .subscribe((control: FormControl) => {
+            this.renderValues.controls.push(control);
           })
-        )
-        .subscribe((control: FormControl) => {
-          this.renderValues.controls.push(control);
-        });
+      );
     }
   }
 }

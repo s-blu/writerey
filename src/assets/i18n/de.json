@@ -22,9 +22,9 @@
     "titleInfoTemplate": "Vorlage für Rubrikinfos",
     "template": "Füge hier eine Vorlage für deine Rubrikinfos ein. Das ist besonders hilfreich, wenn du gleichartige Informationen zu deinen Label Werten speichern möchtest.",
     "labelInfoPlaceholder": "Gebe diesem Wert eine Beschreibung, die bei Verwendung als Notiz angezeigt wird",
-    "type": {
-      "text": "Text-Rubrik",
-      "numeric": "Numerische Rubrik"
+    "autosave": {
+      "true": "Automatisches Speichern ist an",
+      "false": "Automatisches Speichern ist aus"
     },
     "saved": "Gespeichert!",
     "start": "Start",
