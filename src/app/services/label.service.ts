@@ -202,7 +202,7 @@ export class LabelService implements OnDestroy {
     );
   }
 
-  getLabelStatistics(): Observable<any> {
+  getLabelIdsWithExistingMeta(): Observable<any> {
     return this.httpClient
       .get(this.api.getLabelStatisticRoute(this.project))
       .pipe(catchError(err => this.api.handleHttpError(err)));

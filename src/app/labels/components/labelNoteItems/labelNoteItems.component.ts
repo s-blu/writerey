@@ -40,7 +40,6 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
           if (!labelDef) return;
           this.labelDef = labelDef;
           this.getContexts();
-          this.labelStore.setLabelDefinition(labelDef);
         })
     );
     this.subscription.add(

@@ -1,4 +1,13 @@
-import { Component, OnInit, Output, EventEmitter, Input, ViewChild, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  ViewChild,
+  AfterViewInit,
+  ViewEncapsulation,
+} from '@angular/core';
 import { translate } from '@ngneat/transloco';
 import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
@@ -7,7 +16,7 @@ import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
   templateUrl: './upsertLabelValue.component.html',
   styleUrls: ['./upsertLabelValue.component.scss'],
 })
-export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
+export class UpsertLabelValueComponent implements OnInit {
   @Input() parentForm;
 
   @Output() valueRemoved = new EventEmitter();
@@ -27,10 +36,6 @@ export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {}
 
-  ngAfterViewInit() {
-    this.initialToolbarClasses = this.toolbarElement.nativeElement.className;
-  }
-
   removeValue() {
     this.valueRemoved.emit();
   }
@@ -48,5 +53,6 @@ export class UpsertLabelValueComponent implements OnInit, AfterViewInit {
 
   onReady(editor) {
     this.editorInstance = editor;
+    this.initialToolbarClasses = this.toolbarElement.nativeElement.className;
   }
 }

@@ -62,9 +62,8 @@ export class NotesService {
       notesWrap[c] = [];
     });
 
-    return this.labelService.getLabelStatistics().pipe(
+    return this.labelService.getLabelIdsWithExistingMeta().pipe(
       mergeMap(valueIds => {
-        console.log('labelstatistic reponse', valueIds);
         const contextObs = [];
         contexts.forEach(context => {
           const valueId = context.split(':')[1];
