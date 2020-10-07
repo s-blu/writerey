@@ -16,7 +16,7 @@ import * as uuid from 'uuid';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
 import { of, Subscription } from 'rxjs';
-import { finalize, mergeMap, take } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize, mergeMap, take } from 'rxjs/operators';
 import { LabelStore } from 'src/app/stores/label.store';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { delayValues } from '@writerey/shared/utils/observable.utils';
@@ -74,6 +74,14 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
           this.labelStore.setLabelDefinition(labelDef);
         })
     );
+
+    if (this.autosave) {
+      const msg = this.translocoService.translate('labelDetails.autosave.activated');
+      this.snackBar.open(msg, '', {
+        duration: 4000,
+        horizontalPosition: 'right',
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -109,8 +117,7 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   }
 
   saveOnLeave() {
-    if (this.editForm.dirty && this.autosave) {
-      console.info('Autosaving label definition ...');
+    if (this.editForm?.dirty && this.autosave) {
       this.subscription.add(this.save().subscribe());
     }
   }
@@ -131,13 +138,14 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   private save() {
     if (!this.editForm?.value) return of(null);
 
-    this.editForm.value.values.forEach(value => {
+    const labelDefChanges = Object.assign({}, this.editForm.value);
+    labelDefChanges.values.forEach(value => {
       if (value.info === this.template || value.info?.trim() === '') {
         delete value.info;
       }
     });
 
-    return this.labelService.updateLabelDefinition(this.editForm.value);
+    return this.labelService.updateLabelDefinition(labelDefChanges);
   }
 
   private initializeForm(labelDef) {
@@ -169,6 +177,14 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     // if the user switches from another label definition and has the values already open, we need to trigger that explicitly
     if (this.tabGroup?.selectedIndex === 1) {
       this.initRenderValues({ index: 1 });
+    }
+    // autosave on pause
+    if (this.autosave) {
+      this.subscription.add(
+        this.editForm.valueChanges.pipe(distinctUntilChanged(), debounceTime(4000)).subscribe(res => {
+          this.subscription.add(this.save().subscribe());
+        })
+      );
     }
   }
 

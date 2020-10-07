@@ -24,7 +24,8 @@
     "labelInfoPlaceholder": "Gebe diesem Wert eine Beschreibung, die bei Verwendung als Notiz angezeigt wird",
     "autosave": {
       "true": "Automatisches Speichern ist an",
-      "false": "Automatisches Speichern ist aus"
+      "false": "Automatisches Speichern ist aus",
+      "activated": "Automatisches Speichern ist aktiviert."
     },
     "saved": "Gespeichert!",
     "start": "Start",

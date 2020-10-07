@@ -24,7 +24,8 @@
     "labelInfoPlaceholder": "Add a description to this value that will be shown as a note on documents",
     "autosave": {
       "true": "Autosave is on",
-      "false": "Autosave is off"
+      "false": "Autosave is off",
+      "activated": "Autosave is on. Will save automatically."
     },
     "saved": "Saved!",
     "start": "Start",
