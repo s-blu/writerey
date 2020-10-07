@@ -2,7 +2,6 @@ import { UpsertLabelValueComponent } from './components/upsertLabelValue/upsertL
 import { LabelNoteItemsComponent } from './components/labelNoteItems/labelNoteItems.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentLabelsComponent } from './components/documentLabels/documentLabels.component';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -42,13 +41,7 @@ const materialModules = [
     NoteItemsModule,
     ...materialModules,
   ],
-  declarations: [
-    DocumentLabelsComponent,
-    CreateNewLabelComponent,
-    LabelDetailsComponent,
-    LabelNoteItemsComponent,
-    UpsertLabelValueComponent,
-  ],
-  exports: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
+  declarations: [CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent, UpsertLabelValueComponent],
+  exports: [CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
 })
 export class LabelsModule {}

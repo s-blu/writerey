@@ -1,0 +1,10 @@
+:host {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
+wy-document-note-items {
+  overflow-y: scroll;
+}

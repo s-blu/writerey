@@ -1,3 +1,6 @@
+import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
+import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
+import { DocumentsComponent } from './documents.component';
 /**
  * Copyright (c) 2020 s-blu
  *
@@ -23,10 +26,12 @@ const declarationsAndExport = [
   IntroductionComponent,
   DocumentEditorComponent,
   DocumentNoteItemsComponent,
+  DocumentsComponent,
+  DocumentsTopbarComponent,
 ];
 
 @NgModule({
-  imports: [CommonModule, SharedModule, WyCkeditorModule, NoteItemsModule, ...materialModules],
+  imports: [CommonModule, SharedModule, WyCkeditorModule, NoteItemsModule, DocumentLabelsModule, ...materialModules],
   declarations: [...declarationsAndExport],
   exports: [...declarationsAndExport],
 })

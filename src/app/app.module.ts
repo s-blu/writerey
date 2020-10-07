@@ -40,6 +40,7 @@ import { LabelsModule } from './labels/labels.module';
 import { HistoryModule } from './history/history.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 const matModules = [
   MatFormFieldModule,
@@ -49,6 +50,7 @@ const matModules = [
   MatIconModule,
   MatTooltipModule,
   MatSnackBarModule,
+  MatToolbarModule,
 ];
 @NgModule({
   declarations: [
