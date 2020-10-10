@@ -96,7 +96,21 @@
           "src",
           "__pycache__",
           ".gitignore",
-          "node_modules"
+          "node_modules",
+          "docs",
+          ".browserslistrc",
+          ".editorconfig",
+          "angular.json",
+          "browserslist",
+          "karma.conf.js",
+          "package-lock.json",
+          "Pipfile",
+          "Pipfile.lock",
+          "transloco.config.js",
+          "tsconfig.app.json",
+          "tsconfig.base.json",
+          "tsconfig.spec.json",
+          "tslint.json"
         ],
         "icon": "dist/writerey/assets/writerey.ico"
       },
