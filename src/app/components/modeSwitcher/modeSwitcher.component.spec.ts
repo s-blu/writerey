@@ -7,9 +7,12 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ModeSwitcherComponent } from './modeSwitcher.component';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
+import { DocumentStore } from './../../stores/document.store';
+import { DocumentModeStore } from './../../stores/documentMode.store';
 
 describe('ModeSwitcherComponent', () => {
   let component: ModeSwitcherComponent;
@@ -18,6 +21,9 @@ describe('ModeSwitcherComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ModeSwitcherComponent],
+      imports: [getTranslocoTestingModule()],
+      providers: [DocumentModeStore, DocumentStore],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

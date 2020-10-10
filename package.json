@@ -83,15 +83,6 @@
   "lint-staged": {
     "*.ts|*.html|*.scss": "prettier --write"
   },
-  "jest": {
-    "preset": "jest-preset-angular",
-    "setupFilesAfterEnv": [
-      "<rootDir>/src/setup-jest.ts"
-    ],
-    "testPathIgnorePatterns": [
-      "<rootDir>/src/test.ts"
-    ]
-  },
   "config": {
     "forge": {
       "packagerConfig": {
