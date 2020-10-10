@@ -8,6 +8,11 @@
   },
   "license": "MPL-2.0",
   "main": "main.js",
+  "homepage": "https://github.com/s-blu/writerey",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/s-blu/writerey.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",

@@ -1,0 +1,28 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<ng-container *transloco="let t; read: 'about'">
+  <h1 mat-dialog-title>{{ t('title') }}</h1>
+  <div mat-dialog-content>
+    <div>{{ t('version', { version: version }) }}</div>
+    <a class="about-link" target="_blank" [href]="documentationLink"
+      >{{ t('documentation') }} <mat-icon>open_in_new</mat-icon></a
+    >
+    <a class="about-link" target="_blank" [href]="homepage">{{ t('homepage') }} <mat-icon>open_in_new</mat-icon></a>
+    <mat-divider></mat-divider>
+    <div class="source-code">
+      <div>{{ t('license', { license: license }) }}</div>
+      <a class="about-link" target="_blank" [href]="repositoryLink"
+        >{{ t('repository') }} <mat-icon>open_in_new</mat-icon></a
+      >
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="close()">{{ t('close') }}</button>
+  </div>
+</ng-container>

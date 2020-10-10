@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
 import { TagDialogComponent } from '@writerey/history/components/tagDialog/tagDialog.component';
 import { NameSnapshotDialogComponent } from '@writerey/history/components/nameSnapshotDialog/nameSnapshotDialog.component';
+import { AboutDialogComponent } from './../aboutDialog/aboutDialog.component';
 
 @Component({
   selector: 'wy-topbar',
@@ -97,6 +98,12 @@ export class TopbarComponent implements OnInit, OnDestroy {
         );
       })
     );
+  }
+
+  showAboutDialog() {
+    this.dialog.open(AboutDialogComponent, {
+      width: '400px',
+    });
   }
 
   private showSnackBar(msg, action = '', duration = 2000) {

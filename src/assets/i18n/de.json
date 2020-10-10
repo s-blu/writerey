@@ -2,6 +2,15 @@
   "distractionFreeMode": {
     "tooltip": "Sichtbarkeit UI umschalten"
   },
+  "about": {
+    "title": "Über writerey",
+    "close": "OK",
+    "version": "Version {{version}}",
+    "documentation": "Dokumentation",
+    "homepage": "Homepage",
+    "license": "Writerey ist quelloffen und lizensiert unter {{license}}.", 
+    "repository": "Quellcode auf Github"
+  },
   "createLabel": {
     "title": "Eine neue Rubrik erstellen",
     "name": "Name der Rubrik",
@@ -97,7 +106,7 @@
     "snapshot": "Sicherung erstellen",
     "tag": "Letzte Sicherung taggen",
     "history": "Alle Zwischenstände anzeigen",
-    "save": "Dokument speichern"
+    "about": "Über writerey"
   },
   "saveInfo": {
     "lastSaved": "Zuletzt gespeichert",
