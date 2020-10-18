@@ -9,15 +9,17 @@
 <ng-container *transloco="let t; read: 'about'">
   <h1 mat-dialog-title>{{ t('title') }}</h1>
   <div mat-dialog-content>
-    <div>{{ t('version', { version: version }) }}</div>
-    <a class="about-link" target="_blank" [href]="documentationLink"
+    <div class="version">{{ t('version', { version: version }) }}</div>
+    <a class="about-link docs" target="_blank" [href]="documentationLink"
       >{{ t('documentation') }} <mat-icon>open_in_new</mat-icon></a
     >
-    <a class="about-link" target="_blank" [href]="homepage">{{ t('homepage') }} <mat-icon>open_in_new</mat-icon></a>
+    <a class="about-link homepage" target="_blank" [href]="homepage"
+      >{{ t('homepage') }} <mat-icon>open_in_new</mat-icon></a
+    >
     <mat-divider></mat-divider>
     <div class="source-code">
-      <div>{{ t('license', { license: license }) }}</div>
-      <a class="about-link" target="_blank" [href]="repositoryLink"
+      <div class="license">{{ t('license', { license: license }) }}</div>
+      <a class="about-link repo" target="_blank" [href]="repositoryLink"
         >{{ t('repository') }} <mat-icon>open_in_new</mat-icon></a
       >
     </div>
