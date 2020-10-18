@@ -1,3 +1,7 @@
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -17,7 +21,9 @@ describe('TopbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [getTranslocoTestingModule(), HttpClientTestingModule, MatSnackBarModule, MatDialogModule],
       declarations: [TopbarComponent],
+      providers: [],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
