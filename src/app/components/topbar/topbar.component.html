@@ -23,5 +23,8 @@
     <button mat-icon-button [matTooltip]="t('history')" disabled>
       <mat-icon>history</mat-icon>
     </button>
+    <button mat-icon-button (click)="showAboutDialog()" [matTooltip]="t('about')">
+      <mat-icon class="material-icons-outlined">info</mat-icon>
+    </button>
   </div>
 </div>
