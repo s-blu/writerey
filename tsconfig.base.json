@@ -13,6 +13,7 @@
     "target": "es2015",
     "lib": ["es2018", "dom"],
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "paths": {
       "@writerey/shared/*": ["src/app/shared/*"],
       "@writerey/explorer/*": ["src/app/explorer/*"],
