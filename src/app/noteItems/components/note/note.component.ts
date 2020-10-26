@@ -76,6 +76,10 @@ export class NoteComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  cancelEdit() {
+    this.noteForEditing = null;
+  }
+
   getIconForType() {
     if (this.note.stereotype === NoteItemStereotypes.LABEL) return 'location_on';
     switch (this.note.type) {

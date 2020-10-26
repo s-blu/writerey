@@ -37,11 +37,18 @@
       [editor]="Editor"
       [config]="editorConfig"
       (ready)="onReady($event)"
+      (change)="editorChanged($event)"
       [style.background-color]="noteColor"
     ></ckeditor>
+    <div class="editor-footer">
+      <span *ngIf="draft" class="draft-hint">{{ t('draft') }}</span>
+    </div>
     <div class="actions">
       <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
         <mat-icon>{{ editNote ? 'edit' : 'add' }}</mat-icon>
+      </button>
+      <button *ngIf="editNote" mat-button type="button" class="cancel-btn" (click)="cancelEdit()">
+        {{ t('cancel') }}
       </button>
     </div>
   </form>
