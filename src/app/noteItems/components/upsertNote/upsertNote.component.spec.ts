@@ -81,4 +81,15 @@ describe('CreateNewNoteComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  describe('Draft', () => {
+    it('should start with an empty input if no draft is available', () => {});
+    it('should not save an input with only white characters as draft', () => {});
+
+    it('should load the "new" draft if no editNote is given', () => {});
+
+    it('should load the note specific draft if a note gets edited', () => {});
+
+    it('should remove the draft if editing is canceled', () => {});
+  });
 });
