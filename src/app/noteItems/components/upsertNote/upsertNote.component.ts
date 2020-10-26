@@ -7,7 +7,7 @@ import { Subject, Subscription } from 'rxjs';
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { Note } from '@writerey/shared/models/notesItems.interface';
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
@@ -19,7 +19,7 @@ const NOTE_DRAFT_KEY = 'writerey_note_draft_';
   templateUrl: './upsertNote.component.html',
   styleUrls: ['./upsertNote.component.scss'],
 })
-export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy {
+export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterViewInit {
   @Input() contexts: Array<string> = [];
   @Input() contextNames: any = {};
   @Input() editNote?;
@@ -35,15 +35,9 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy {
 
   private editorChangedSubject = new Subject();
   private subscription = new Subscription();
+  private componentInitialized = false;
 
-  constructor(private formBuilder: FormBuilder) {
-    this.createNewForm = this.formBuilder.group({
-      type: 'todo',
-      color: '',
-      context: this.contexts[0] || null,
-      text: ' \n',
-    });
-  }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnChanges() {
     if (!this.contexts) return;
@@ -64,14 +58,31 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy {
       text: this.draft || this.editNote?.text || ' \n',
     };
 
-    this.createNewForm.patchValue(preset);
+    this.createNewForm = this.formBuilder.group(preset);
 
     this.subscription.add(
       this.editorChangedSubject.pipe(distinctUntilChanged(), debounceTime(600)).subscribe((ev: any) => {
-        localStorage.setItem(this.getDraftKey(), ev.editor.getData());
+        if (ev?.editor?.sourceElement?.innerText?.trim() !== '') {
+          localStorage.setItem(this.getDraftKey(), ev.editor.getData());
+        } else {
+          localStorage.removeItem(this.getDraftKey());
+        }
       })
     );
   }
+
+  // workaround to fix ExpressionChangedAfterItHasBeenCheckedError of form.invalid
+  ngAfterViewInit() {
+    this.componentInitialized = true;
+  }
+
+  isInvalid() {
+    if (!this.componentInitialized) {
+      return true;
+    }
+    return this.createNewForm?.invalid;
+  }
+  // workaround end
 
   onSubmit(data) {
     localStorage.removeItem(this.getDraftKey());
