@@ -18,7 +18,7 @@ from logger import Logger
 class Images(Resource):
     log = Logger('images')
     def get(self, doc_name):
-        path = self.getPathForImageId(doc_name);
+        path = PathUtils.sanitizePathList([os.getcwd(), self.getPathForImageId(doc_name)])
         self.log.logDebug(f'sending file {doc_name} from {path} ....')
         return send_from_directory(path, filename=doc_name)
 
