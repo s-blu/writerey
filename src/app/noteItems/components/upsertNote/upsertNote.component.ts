@@ -12,7 +12,7 @@ import { FormBuilder } from '@angular/forms';
 import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 
-const NOTE_DRAFT_KEY = 'writerey_note_draft_';
+export const NOTE_DRAFT_KEY = 'writerey_note_draft_';
 
 @Component({
   selector: 'wy-upsert-note',
@@ -41,7 +41,7 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
 
   ngOnChanges() {
     if (!this.contexts) return;
-    this.createNewForm.patchValue({ context: this.contexts[0] });
+    this.createNewForm?.patchValue({ context: this.contexts[0] });
   }
 
   ngOnDestroy() {
@@ -49,6 +49,7 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
   }
 
   ngOnInit() {
+    console.log('=== COMPONENT ON INIT', this.editNote);
     this.draft = localStorage.getItem(this.getDraftKey());
 
     const preset = {
@@ -109,6 +110,9 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
   }
 
   private getDraftKey() {
-    return NOTE_DRAFT_KEY + this.editNote?.id || 'new';
+    if (this.editNote) {
+      return NOTE_DRAFT_KEY + this.editNote.id;
+    }
+    return NOTE_DRAFT_KEY + 'new';
   }
 }

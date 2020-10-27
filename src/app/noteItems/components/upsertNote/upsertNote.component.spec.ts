@@ -1,3 +1,4 @@
+import { NOTE_DRAFT_KEY } from './upsertNote.component';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,15 +11,33 @@ import { MatSelectModule } from '@angular/material/select';
 import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
 
-/* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 
 import { UpsertNoteComponent } from './upsertNote.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlValueAccessor } from '@angular/forms';
+
+const EMPTY_TEXT = ' \n';
+
+// credits to https://medium.com/better-programming/testing-angular-components-with-input-3bd6c07cfaf6
+@Component({
+  selector: `host-component`,
+  template: `<wy-upsert-note [editNote]="mockEditNote"></wy-upsert-note>`,
+})
+class TestHostComponent {
+  mockEditNote = { id: 'mock-note' };
+  @ViewChild(UpsertNoteComponent)
+  public upsertNoteComponent: UpsertNoteComponent;
+}
+
+class MockLocalStore {
+  getItem(key: string) {}
+  setItem(key: string, value: string) {}
+  removeItem(key: string) {}
+  clear() {}
+}
 
 @Component({
   // tslint:disable-next-line: component-selector
@@ -54,6 +73,8 @@ class MockCkeditorComponent implements ControlValueAccessor {
 describe('CreateNewNoteComponent', () => {
   let component: UpsertNoteComponent;
   let fixture: ComponentFixture<UpsertNoteComponent>;
+  let hostComponent: TestHostComponent;
+  let hostFixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -68,27 +89,116 @@ describe('CreateNewNoteComponent', () => {
         MatIconModule,
       ],
       providers: [FormBuilder],
-      declarations: [UpsertNoteComponent, MockCkeditorComponent],
+      declarations: [UpsertNoteComponent, MockCkeditorComponent, TestHostComponent],
     }).compileComponents();
+
+    // This needs to be overwritten to be able to spy on it for some reason
+    Object.defineProperty(window, 'localStorage', {
+      value: new MockLocalStore(),
+    });
   }));
 
-  beforeEach(() => {
+  function createHostComponentForTest() {
+    hostFixture = TestBed.createComponent(TestHostComponent);
+    hostComponent = hostFixture.componentInstance;
+    hostFixture.detectChanges();
+  }
+
+  function createComponentForTest() {
     fixture = TestBed.createComponent(UpsertNoteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
-  });
+  }
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  describe('upsertNote', () => {
+    beforeEach(() => {
+      createComponentForTest();
+    });
+
+    it('should create', () => {
+      expect(component).toBeTruthy();
+    });
   });
 
   describe('Draft', () => {
-    it('should start with an empty input if no draft is available', () => {});
-    it('should not save an input with only white characters as draft', () => {});
+    it('should start with an empty input if no draft is available', () => {
+      createComponentForTest();
+      expect(component.createNewForm.controls.text.value).toEqual(EMPTY_TEXT);
+    });
 
-    it('should load the "new" draft if no editNote is given', () => {});
+    it('should load the "new" draft if draft is available and no editNote is given', () => {
+      const draft = 'this is a test draft';
 
-    it('should load the note specific draft if a note gets edited', () => {});
+      spyOn(localStorage, 'getItem').and.callFake(key => {
+        if (key === NOTE_DRAFT_KEY + 'new') return draft;
+        return null;
+      });
+
+      createComponentForTest();
+      expect(component.createNewForm.controls.text.value).toEqual(draft);
+    });
+
+    it('should load the note specific draft if a note gets edited', () => {
+      const draft = 'this is a note specific draft';
+
+      createHostComponentForTest();
+      // component.editNote = mockEditNote;
+      // hostComponent.upsertNoteComponent.editNote = mockEditNote;
+      // console.log('TEST: SETTING COMPONENT INTO HOST');
+
+      // hostFixture.detectChanges();
+
+      spyOn(localStorage, 'getItem').and.callFake(key => {
+        console.log('CALLED FAKE', key);
+        if (key === NOTE_DRAFT_KEY + 'new') return 'this is the new draft';
+        if (key === NOTE_DRAFT_KEY + 'mock-id') return draft;
+        return null;
+      });
+
+      expect(hostComponent.upsertNoteComponent.createNewForm.controls.text.value).toEqual(draft);
+    });
+
+    it('should save input text as a draft to local Storage', done => {
+      const draft = 'please save me as draft';
+      const draftHtml = `<p>${draft}</p>`;
+
+      const setItemSpy = spyOn(localStorage, 'setItem');
+
+      createComponentForTest();
+      component.editorChanged({
+        editor: {
+          sourceElement: {
+            innerText: draft,
+          },
+          getData: () => draftHtml,
+        },
+      });
+      setTimeout(() => {
+        expect(setItemSpy).toHaveBeenCalledWith(NOTE_DRAFT_KEY + 'new', draftHtml);
+        done();
+      }, 650); // need to wait until debounceTime(600) triggered
+    });
+
+    it('should not save an input with only white characters as draft', done => {
+      const draft = '    \n  \t';
+      const draftHtml = `<p>${draft}</p>`;
+
+      const setItemSpy = spyOn(localStorage, 'setItem');
+
+      createComponentForTest();
+      component.editorChanged({
+        editor: {
+          sourceElement: {
+            innerText: draft,
+          },
+          getData: () => draftHtml,
+        },
+      });
+      setTimeout(() => {
+        expect(setItemSpy).not.toHaveBeenCalled();
+        done();
+      }, 650); // need to wait until debounceTime(600) triggered
+    });
 
     it('should remove the draft if editing is canceled', () => {});
   });
