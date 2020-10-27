@@ -13,5 +13,4 @@ metaSubPath = '_writerey_meta'
 labelPath = '_writerey_label'
 linksFileName = '_writerey_links'
 imagesFileName = '_writerey_images'
-imagesPath = 'imgs'
-debugMode = True
+debugMode = False

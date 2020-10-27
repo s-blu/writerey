@@ -24,7 +24,7 @@ class Images(Resource):
 
 
     def post(self, doc_name):
-        imgId = str(uuid.uuid4())
+        imgId = str(uuid.uuid4().hex[:8])
 
         path = request.headers['docpath']
         if path:
@@ -72,3 +72,21 @@ class Images(Resource):
 
         self.log.logDebug(f'resolved for image {image_id} path {pathForImage.group(1)}')
         return pathForImage.group(1)
+
+def updateImageLinks(oldPath, newPath):
+    log = Logger('updateImageLinks')
+    imageMapPath = PathUtils.sanitizePathList([basePath, metaSubPath, imagesFileName])
+    # Get content of image map file
+    file_handle =  open(imageMapPath, 'r', encoding='utf-8')
+    file_string = file_handle.read()
+    file_handle.close()
+    
+    regex = f'(.+? ")({oldPath})(.*"\n)'
+    log.logDebug('trying to find and replace oldPath in image file', oldPath)
+    file_string = re.sub(regex, r'\1' + newPath + r'\3', file_string)
+
+    # Overwrite image map file with updated content
+    file_handle = open(imageMapPath, 'w')
+    file_handle.write(file_string)
+    file_handle.close()
+    return True
