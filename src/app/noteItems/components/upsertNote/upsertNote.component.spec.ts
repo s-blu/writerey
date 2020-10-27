@@ -1,4 +1,3 @@
-import { NOTE_DRAFT_KEY } from './upsertNote.component';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -18,19 +17,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { UpsertNoteComponent } from './upsertNote.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ControlValueAccessor } from '@angular/forms';
+import { NOTE_DRAFT_KEY } from './upsertNote.component';
 
 const EMPTY_TEXT = ' \n';
-
-// credits to https://medium.com/better-programming/testing-angular-components-with-input-3bd6c07cfaf6
-@Component({
-  selector: `host-component`,
-  template: `<wy-upsert-note [editNote]="mockEditNote"></wy-upsert-note>`,
-})
-class TestHostComponent {
-  mockEditNote = { id: 'mock-note' };
-  @ViewChild(UpsertNoteComponent)
-  public upsertNoteComponent: UpsertNoteComponent;
-}
 
 class MockLocalStore {
   getItem(key: string) {}
@@ -73,8 +62,6 @@ class MockCkeditorComponent implements ControlValueAccessor {
 describe('CreateNewNoteComponent', () => {
   let component: UpsertNoteComponent;
   let fixture: ComponentFixture<UpsertNoteComponent>;
-  let hostComponent: TestHostComponent;
-  let hostFixture: ComponentFixture<TestHostComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -89,7 +76,7 @@ describe('CreateNewNoteComponent', () => {
         MatIconModule,
       ],
       providers: [FormBuilder],
-      declarations: [UpsertNoteComponent, MockCkeditorComponent, TestHostComponent],
+      declarations: [UpsertNoteComponent, MockCkeditorComponent],
     }).compileComponents();
 
     // This needs to be overwritten to be able to spy on it for some reason
@@ -97,12 +84,6 @@ describe('CreateNewNoteComponent', () => {
       value: new MockLocalStore(),
     });
   }));
-
-  function createHostComponentForTest() {
-    hostFixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = hostFixture.componentInstance;
-    hostFixture.detectChanges();
-  }
 
   function createComponentForTest() {
     fixture = TestBed.createComponent(UpsertNoteComponent);
@@ -140,22 +121,16 @@ describe('CreateNewNoteComponent', () => {
 
     it('should load the note specific draft if a note gets edited', () => {
       const draft = 'this is a note specific draft';
-
-      createHostComponentForTest();
-      // component.editNote = mockEditNote;
-      // hostComponent.upsertNoteComponent.editNote = mockEditNote;
-      // console.log('TEST: SETTING COMPONENT INTO HOST');
-
-      // hostFixture.detectChanges();
-
       spyOn(localStorage, 'getItem').and.callFake(key => {
-        console.log('CALLED FAKE', key);
-        if (key === NOTE_DRAFT_KEY + 'new') return 'this is the new draft';
-        if (key === NOTE_DRAFT_KEY + 'mock-id') return draft;
+        if (key === NOTE_DRAFT_KEY + 'mock-note') return draft;
         return null;
       });
 
-      expect(hostComponent.upsertNoteComponent.createNewForm.controls.text.value).toEqual(draft);
+      createComponentForTest();
+      component.editNote = { id: 'mock-note' };
+      fixture.componentInstance.ngOnInit();
+
+      expect(component.createNewForm.controls.text.value).toEqual(draft);
     });
 
     it('should save input text as a draft to local Storage', done => {
@@ -182,10 +157,9 @@ describe('CreateNewNoteComponent', () => {
     it('should not save an input with only white characters as draft', done => {
       const draft = '    \n  \t';
       const draftHtml = `<p>${draft}</p>`;
-
       const setItemSpy = spyOn(localStorage, 'setItem');
-
       createComponentForTest();
+
       component.editorChanged({
         editor: {
           sourceElement: {
@@ -200,6 +174,12 @@ describe('CreateNewNoteComponent', () => {
       }, 650); // need to wait until debounceTime(600) triggered
     });
 
-    it('should remove the draft if editing is canceled', () => {});
+    it('should remove the draft if editing is canceled', () => {
+      const removeItemSpy = spyOn(localStorage, 'removeItem');
+      createComponentForTest();
+
+      component.cancelEdit();
+      expect(removeItemSpy).toHaveBeenCalled();
+    });
   });
 });

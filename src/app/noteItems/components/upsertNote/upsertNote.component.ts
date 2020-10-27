@@ -49,7 +49,6 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
   }
 
   ngOnInit() {
-    console.log('=== COMPONENT ON INIT', this.editNote);
     this.draft = localStorage.getItem(this.getDraftKey());
 
     const preset = {
