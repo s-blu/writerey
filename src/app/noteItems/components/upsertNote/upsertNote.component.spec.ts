@@ -119,6 +119,23 @@ describe('CreateNewNoteComponent', () => {
       expect(component.createNewForm.controls.text.value).toEqual(draft);
     });
 
+    it('should show a "Draft" hint in html if and only if a draft is loaded', () => {
+      const draft = 'this is a test draft';
+
+      createComponentForTest();
+      expect(fixture.nativeElement.querySelector('.draft-hint')).toBeFalsy();
+
+      spyOn(localStorage, 'getItem').and.callFake(key => {
+        if (key === NOTE_DRAFT_KEY + 'new') return draft;
+        return null;
+      });
+
+      fixture.componentInstance.ngOnInit();
+      fixture.detectChanges();
+
+      expect(fixture.nativeElement.querySelector('.draft-hint')).toBeTruthy();
+    });
+
     it('should load the note specific draft if a note gets edited', () => {
       const draft = 'this is a note specific draft';
       spyOn(localStorage, 'getItem').and.callFake(key => {
