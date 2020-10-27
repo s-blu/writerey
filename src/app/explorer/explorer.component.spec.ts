@@ -14,10 +14,18 @@ import { Router } from '@angular/router';
 import { LabelService } from '../services/label.service';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
 import { ProjectStore } from '../stores/project.store';
+import { MatMenuModule } from '@angular/material/menu';
+import { getTranslocoTestingModule } from '../transloco-test.module';
+import { of } from 'rxjs';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 class MockMatDialog {}
-class MockProjectStore {}
-class MockDistractionFreeStore {}
+class MockProjectStore {
+  project$ = of({});
+}
+class MockDistractionFreeStore {
+  distractionFree$ = of({});
+}
 class MockLabelService {}
 class MockRouter {}
 
@@ -27,6 +35,7 @@ describe('ExplorerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [getTranslocoTestingModule(), MatMenuModule, NoopAnimationsModule],
       declarations: [ExplorerComponent],
       providers: [
         { provide: MatDialog, useClass: MockMatDialog },

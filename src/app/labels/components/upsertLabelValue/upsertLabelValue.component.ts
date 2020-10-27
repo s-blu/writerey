@@ -1,15 +1,6 @@
-import {
-  Component,
-  OnInit,
-  Output,
-  EventEmitter,
-  Input,
-  ViewChild,
-  AfterViewInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
 import { translate } from '@ngneat/transloco';
-import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { editorWyNotesModules } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 @Component({
   selector: 'wy-upsert-label-value',
