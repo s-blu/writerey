@@ -31,7 +31,7 @@ export class CreateNewNotesItemComponent implements OnInit, OnChanges {
     document: 'document',
   };
 
-  constructor(private translocoService: TranslocoService, private formBuilder: FormBuilder) {}
+  constructor(private translocoService: TranslocoService) {}
 
   ngOnChanges() {
     if (!this.contexts) return;

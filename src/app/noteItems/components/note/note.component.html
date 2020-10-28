@@ -26,7 +26,7 @@
   <ng-template #noteRead>
     <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
       <mat-card-content>
-        <wy-ckeditor-readonly [data]="note.text"></wy-ckeditor-readonly>
+        <wy-ckeditor-readonly [data]="note?.text"></wy-ckeditor-readonly>
       </mat-card-content>
       <mat-card-actions
         [style]="noteStyles"
