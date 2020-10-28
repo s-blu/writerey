@@ -204,6 +204,8 @@
   "createNote": {
     "context": "Context",
     "comment": "Note",
+    "cancel": "Cancel",
+    "draft": "Draft",
     "type": {
       "title": "Note Type",
       "info": "Info",

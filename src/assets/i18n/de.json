@@ -8,7 +8,7 @@
     "version": "Version {{version}}",
     "documentation": "Dokumentation",
     "homepage": "Homepage",
-    "license": "Writerey ist quelloffen und lizensiert unter {{license}}.", 
+    "license": "Writerey ist quelloffen und lizensiert unter {{license}}.",
     "repository": "Quellcode auf Github"
   },
   "createLabel": {
@@ -204,6 +204,8 @@
   "createNote": {
     "context": "Kontext",
     "comment": "Notiz",
+    "cancel": "Abbrechen",
+    "draft": "Entwurf",
     "type": {
       "title": "Art der Notiz",
       "info": "Info",
