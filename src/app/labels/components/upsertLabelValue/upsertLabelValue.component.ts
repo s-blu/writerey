@@ -1,5 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input, ViewChild } from '@angular/core';
-import { translate } from '@ngneat/transloco';
+import { TranslocoService } from '@ngneat/transloco';
 import { editorWyNotesModules } from '@writerey/shared/utils/editor.utils';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 @Component({
@@ -15,17 +15,20 @@ export class UpsertLabelValueComponent implements OnInit {
   @ViewChild('toolbar') toolbarElement;
 
   Editor = DecoupledEditor;
-  editorConfig = {
-    ...editorWyNotesModules,
-    placeholder: translate('labelDetails.labelInfoPlaceholder'),
-  };
+  editorConfig;
 
   private editorInstance;
   private visibleClass = 'visible';
   private initialToolbarClasses = '';
-  constructor() {}
 
-  ngOnInit() {}
+  constructor(private translocoService: TranslocoService) {}
+
+  ngOnInit() {
+    this.editorConfig = {
+      ...editorWyNotesModules,
+      placeholder: this.translocoService.translate('labelDetails.labelInfoPlaceholder'),
+    };
+  }
 
   removeValue() {
     this.valueRemoved.emit();

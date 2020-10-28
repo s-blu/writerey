@@ -4,8 +4,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { UpsertLabelValueComponent } from './upsertLabelValue.component';
 import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
-import { TranslocoRootModule } from '../../../transloco-root.module';
-import { translate, TranslocoModule } from '@ngneat/transloco';
 
 describe('UpsertLabelValueComponent', () => {
   let component: UpsertLabelValueComponent;
@@ -13,10 +11,8 @@ describe('UpsertLabelValueComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [TranslocoRootModule, getTranslocoTestingModule(), TranslocoModule],
+      imports: [getTranslocoTestingModule()],
       declarations: [UpsertLabelValueComponent],
-      //providers: [{provide: translate, useValue: translate}],
-      providers: [translate],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
