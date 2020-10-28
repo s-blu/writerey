@@ -2,7 +2,7 @@
 
 ## Projects, Folders and Documents
 
-All your writing projects begin with exactly that: A project. To create one, hit the blue button on the sidebar and give it a fancy name.
+All your writing ideas begin with a project. To create one, hit the blue button on the sidebar and give it a fancy name.
 
 ![](../img/writerey_guide_project.jpg)
 
@@ -20,11 +20,11 @@ Every time you type something into the editor, it will autosave for you (after a
 
 On top of that, all 30 minutes - and each time you hit the "Snapshot" Button at the upper right - writerey records a snapshot of all your files and all your projects. It remembers how your files looked like at this moment and saves it. This will enable you to have a look to a previous state of a document whenever you need to.
 
-_Please note: The history function is not implemented yet, but writerey snapshots your files nevertheless. To access these snapshots, you currently need a thirdparty tool to visualize git - for example Github Desktop Client. Please see "troubleshooting and known bugs"_
+_Please note: The history function is not implemented yet, but writerey snapshots your files nevertheless. To access these snapshots, you currently need a thirdparty tool to visualize git - for example Github Desktop Client. Please see "troubleshooting and known bugs"._
 
 ## Read, Write, Review
 
-Right below the editor, you have three modes to your disposal. Let's have a look on them.
+Right below the editor, you have three modes available. Let's have a look on them.
 
 ### Read
 
@@ -50,7 +50,7 @@ You can create labels by clicking the menu on the sidebar.
 
 ### Label values
 
-The label itself is only like a folder for files. For really use them, you need to add values to them. A value consists of two properties: A name and a info (or description). The name is the real value and what you will choose when assigning labels (see below). The info on the other hand will show up as a special kind of note, so this is the right place to add all the important bits that concern this label value.
+The label itself is only like a folder for files. To really use them, you need to add values to them. A value consists of two properties: A name and a info (or description). The name is the real value and what you will choose when assigning labels (see below). The info on the other hand will show up as a special kind of note, so this is the right place to add all the important bits that concern this label value.
 
 ![](../img/writerey_guide_label-details.jpg)
 
@@ -64,6 +64,10 @@ After you have created a label and its value, you can assign them.
 
 On the left side, you'll now have your created labels displayed. Choose the values you want to assign to this paragraph. When you now switch back to Write mode and your cursor is inside this paragraph, your labels will show up and - if available - you'll see your label info on the right side.
 
+Adding a label value in review mode:
+![](../img/writerey_guide-review-mode.jpg)
+
+Seeing a label value in write mode:
 ![](../img/writerey_assigning_labels.jpg)
 
 There is more to labels.
@@ -85,8 +89,6 @@ You're having a ton of background information to that church scene 37 takes plac
 1. Note Type and Colors are two ways to make a note stand out - just try it out. Both are of solely visual effect.
 1. Hit the Plus-Button to add your note.
 
-![](../img/writerey_guide-review-mode.jpg)
-
 ### How to create notes for a label value
 
 Here you have two possibilites. First, you can create a note for a label value if this label value is assigned to your selected paragraph. Then it works like above, you just need to choose a different context.
@@ -99,4 +101,6 @@ The second possibility to do so is on the label screen itself.
 
 ## Rename, Move and Delete Documents
 
-<WIP>
+You can rename, move and delete documents by clicking the three dots at the end of their tree entry when hovering them.
+
+_WIP_
