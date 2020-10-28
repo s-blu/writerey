@@ -4,7 +4,6 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelInfo } from '@writerey/shared/models/notesItems.interface';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';

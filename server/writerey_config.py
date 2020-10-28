@@ -12,4 +12,5 @@ basePath = '_writerey_data'
 metaSubPath = '_writerey_meta'
 labelPath = '_writerey_label'
 linksFileName = '_writerey_links'
+imagesFileName = '_writerey_images'
 debugMode = False
