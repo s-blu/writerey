@@ -44,6 +44,8 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    if (!this.link) return;
+
     this.isExpanded = !!this.link.keepOpen;
 
     if (this.link.context.includes(':')) {

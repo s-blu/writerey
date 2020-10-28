@@ -19,7 +19,7 @@
       <div class="link-destination">
         <wy-breadcrumb [fileInfo]="fileInfo" skipRoot="true"></wy-breadcrumb>
       </div>
-      <wy-ckeditor-readonly class="note-text preview" [data]="link.text"></wy-ckeditor-readonly>
+      <wy-ckeditor-readonly class="note-text preview" [data]="link?.text"></wy-ckeditor-readonly>
       <mat-progress-bar
         mode="indeterminate"
         *ngIf="isExpanded && !content && !unableToFetchDocument"
