@@ -1,14 +1,18 @@
 # Writerey
 
-Writerey is a tool that wants to help you with your next writing project:  A novel, an essay for school, a research, a poem booklet, ... you name it!
+Writerey is a tool that wants to help you with your next writing project: A novel, an essay for school, a research, a poem booklet, ... you name it!
 
-It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. It provides you handy functionality to note down thoughts and side-infos. Read more about the functionality you get from writerey in its [Wiki](https://github.com/s-blu/writerey/wiki).
+It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. It provides you handy functionality to note down thoughts and side-infos.
 
------
+## Resources
 
-**! Attention Attention: Still in beta !**
+- :house: [Homepage](https://writerey.com)
+- :blue_book: [Documentation](https://docs.writerey.com)
+- :rotating_light: [Issues](https://github.com/s-blu/writerey/issues)
 
-Please be aware that writerey is still in active development and did not hit v1.0 yet. Some things are broken, some are incomplete, some are simply not available yet. 
+## Attention: Still in Beta
+
+Please be aware that writerey is still in active development and did not hit v1.0 yet. Some things are broken, some are incomplete, some are simply not available yet.
 
 With that said, writerey is in a useable state and we try our best to ensure backward compatibility so that you won't lose any data. If you are interested into having a early look, please be welcome to try it out. We would value your constructive feedback a lot!
 
@@ -16,9 +20,13 @@ If you prefer to wait for a comfortable and stable version, please visit us agai
 
 Thank you!
 
------
+## License
 
 writerey is open source and licensed under Mozilla Public License Version 2.0. For License information see LICENSE
+
+## Installation
+
+For installation constructions, please refer to the [installation documentation](https://docs.writerey.com/en/installation/).
 
 ## System requirements
 
@@ -29,14 +37,9 @@ To use writerey, you need the following tools installed on your machine:
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-A guide how to install these tools is found under installation.
+More information how to install these requirements and why you need them can be found in the [installation documentation](https://docs.writerey.com/en/installation/).
 
-## Installation
-
-Please click [here](./docs/docs/en/installation.md) to visit the installation documentation.
-
-
-## Used technologies 
+## Used technologies
 
 Writerey is build with
 
@@ -50,4 +53,4 @@ For a complete list of used packages, please refer to package.json.
 
 ## Documentation
 
-Please visit the [Documentation](./docs/docs) to find out more about writerey.
+Please visit the [Documentation](https://docs.writerey.com/en/) to find out more about writerey.
