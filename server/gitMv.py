@@ -10,9 +10,11 @@ from logger import Logger
 from flask import abort
 from pathUtils import PathUtils
 from gitUtils import GitUtils
-from writerey_config import basePath, metaSubPath, linksFileName
+from writerey_config import basePath, metaSubPath, linksFileName, imagesFileName
 from os import path
 import shutil
+
+from images import updateImageLinks
 
 class GitMove(Resource):
     logger = Logger('GitMove')
@@ -61,18 +63,23 @@ class GitMove(Resource):
         new_meta_path = PathUtils.sanitizePathList([new_doc_path, metaSubPath, new_name])
         metaExists = path.exists(PathUtils.sanitizePathList([basePath, old_meta_path]))
 
+        self.logger.logDebug('prepare moving file ...', old_path, new_path)
+        self.logger.logDebug('check if moving meta ...', metaExists)
+        if metaExists:
+            self.logger.logDebug('prepare moving meta ...', old_meta_path, new_meta_path)
+
         try:
             self.git.run(['git', 'ls-files', '--error-unmatch', old_path])
         except:
             self.logger.logDebug('file is not under version control yet, do a file system move')
             shutil.move(PathUtils.sanitizePathList([basePath, old_path]), PathUtils.sanitizePathList([basePath, new_path])) 
             if (metaExists and new_name):
+                self.logger.logDebug('meta exists, moving meta via file system move')
                 shutil.move(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
+            self.logger.logDebug('updated file, updating image links....')
+            updateImageLinks(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
             return
         
-        self.logger.logDebug('moving file ...', old_path, new_path)
-        self.logger.logDebug('moving meta ...', old_meta_path, new_meta_path)
-        self.logger.logDebug('moving meta if ...', metaExists)
         if not msg:
             msg = 'Rename ' + old_path + ' to ' + new_path
         self.git.run(["git", "mv", old_path, new_path])
@@ -83,4 +90,13 @@ class GitMove(Resource):
             linksFilePath = PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])
             if path.exists(linksFilePath):
                 self.git.run(["git", "add", linksFilePath])
+        # add image file to the commit, since it possibly get changed on a move 
+        updateImageLinks(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
+        try:
+            imageMapPath = PathUtils.sanitizePathList([metaSubPath, imagesFileName])
+            self.logger.logDebug(f'adding image map to commit ... {imageMapPath} ')
+            self.git.run(["git", "add", imageMapPath])
+        except:
+            self.logger.logWarn('could not add image map to commit')
+            pass
         self.git.run(["git", "commit", "-m", msg])
