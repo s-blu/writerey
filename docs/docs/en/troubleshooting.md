@@ -1,12 +1,10 @@
 # Troubleshooting and known Bugs
 
-## Images are broken after rename or move
+## How do I access my snapshots?
 
-This is a known bug (#94). Your files aren't display anymore, though they are still available under `<installation path of writerey>/_writerey_data/<project-name>/<folder-path>/_writerey_meta/<folder named like the file>`. To get them displayed again you need to add them once again to the file.
+Currently, the history functionality to give you access to your snapshots is not implemented yet. Have a look on the [roadmap](./roadmap.md) to find out when to expect its implementation.
 
-The fix for this problem will probably be **not** backward compatible, so if you plan to do image heavy work **better wait until it's fixed**. You can check it's status [here](https://github.com/s-blu/writerey/issues/94).
-
-## There is no history available, how do I access my snapshots?
+Still, there is a way to access your snapshots.
 
 Since all the snapshot handling is done by git, you can check your snapshots with every git UI client. We recommend using [Github Desktop](https://desktop.github.com/) for this, since it is user friendly and fast to set up.
 
@@ -31,4 +29,4 @@ Done! Here, you can see all the changes writerey recorded for you and copy them 
 
 ## I have some kind of problem that is not listed here!
 
-Feel free to open up an [issue here on Github](https://github.com/s-blu/writerey/issues) that details your problem.
+Feel free to open up an [issue on Github](https://github.com/s-blu/writerey/issues) that details your problem.

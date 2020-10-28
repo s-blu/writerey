@@ -48,6 +48,7 @@ Writerey is build with
 - [Electron](https://www.electronjs.org/)
 - [CKEditor5](https://ckeditor.com/ckeditor-5/)
 - [python-shell](https://github.com/extrabacon/python-shell)
+- [MkDocs](https://www.mkdocs.org/) (for the documentation)
 
 For a complete list of used packages, please refer to package.json.
 
