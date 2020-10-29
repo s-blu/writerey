@@ -10,8 +10,8 @@
   "main": "main.js",
   "homepage": "https://writerey.com",
   "repository": {
-    "type": "git",
-    "url": "https://github.com/s-blu/writerey.git"
+    "type" : "git",
+    "url" : "https://github.com/s-blu/writerey.git"
   },
   "scripts": {
     "ng": "ng",
@@ -95,7 +95,6 @@
           "src",
           "__pycache__",
           ".gitignore",
-          ".github",
           "node_modules",
           "docs",
           ".browserslistrc",
