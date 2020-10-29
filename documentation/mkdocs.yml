@@ -9,6 +9,8 @@ nav:
   - en/development.md
 extra_css:
   - assets/custom.css
+extra_javascript:
+  - assets/matomo.js
 site_dir: ../docs
 theme:
   name: material
