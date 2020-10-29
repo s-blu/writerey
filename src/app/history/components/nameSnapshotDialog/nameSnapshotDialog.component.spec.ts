@@ -1,3 +1,8 @@
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,6 +15,12 @@ import { By } from '@angular/platform-browser';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { NameSnapshotDialogComponent } from './nameSnapshotDialog.component';
+import { FormsModule } from '@angular/forms';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+class MockMatDialogRef {
+  close() {}
+}
 
 describe('NameSnapshotDialogComponent', () => {
   let component: NameSnapshotDialogComponent;
@@ -17,8 +28,20 @@ describe('NameSnapshotDialogComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        getTranslocoTestingModule(),
+        MatDialogModule,
+        FormsModule,
+        MatInputModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        NoopAnimationsModule,
+      ],
+      providers: [
+        { provide: MatDialogRef, useClass: MockMatDialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
       declarations: [NameSnapshotDialogComponent],
-      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

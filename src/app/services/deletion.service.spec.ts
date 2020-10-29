@@ -20,7 +20,7 @@ describe('Service: Deletion', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [getTranslocoTestingModule],
+      imports: [getTranslocoTestingModule()],
       providers: [
         DeletionService,
         { provide: MatDialog, useClass: MockMatDialog },
