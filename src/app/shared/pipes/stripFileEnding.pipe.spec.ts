@@ -15,8 +15,8 @@ describe('Pipe: StripFileEndinge', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('should strip everything after and including the last .', () => {
-    let pipe = new StripFileEndingPipe();
+  it('should strip everything after and including the last dot', () => {
+    const pipe = new StripFileEndingPipe();
 
     expect(pipe.transform('index.html')).toEqual('index');
     expect(pipe.transform('file.with.multiple.dots.html')).toEqual('file.with.multiple.dots');
@@ -25,14 +25,14 @@ describe('Pipe: StripFileEndinge', () => {
   });
 
   it('should return value as-is if there is no dot in there', () => {
-    let pipe = new StripFileEndingPipe();
+    const pipe = new StripFileEndingPipe();
 
     expect(pipe.transform('file_without_dot')).toEqual('file_without_dot');
     expect(pipe.transform('')).toEqual('');
   });
 
   it('should return empty string on invalid input', () => {
-    let pipe = new StripFileEndingPipe();
+    const pipe = new StripFileEndingPipe();
 
     expect(pipe.transform(null)).toEqual('');
     expect(pipe.transform(undefined)).toEqual('');

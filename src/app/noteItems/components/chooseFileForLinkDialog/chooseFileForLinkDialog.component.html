@@ -15,7 +15,7 @@
     <div class="tree">
       <wy-document-tree [project]="project" (documentSelected)="setLink($event)"></wy-document-tree>
     </div>
-    <span class="selectedHint" *ngIf="node">{{ t('selected') }} {{ node.name | stripFileEnding }}</span>
+    <span class="selectedHint" *ngIf="node">{{ t('selected') }} {{ node?.name | stripFileEnding }}</span>
   </div>
   <div mat-dialog-actions>
     <button mat-button (click)="cancel()">{{ t('cancel') }}</button>

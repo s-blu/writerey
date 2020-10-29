@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -6,17 +7,24 @@
 
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed, inject } from '@angular/core/testing';
+import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
 
+class MockApiService {}
+
 describe('Service: Paragraph', () => {
+  let paragraphService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ParagraphService],
+      imports: [HttpClientTestingModule],
+      providers: [ParagraphService, { provide: ApiService, useClass: MockApiService }],
     });
+    paragraphService = TestBed.inject(ParagraphService);
   });
 
-  it('should ...', inject([ParagraphService], (service: ParagraphService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', () => {
+    expect(paragraphService).toBeTruthy();
+  });
 });

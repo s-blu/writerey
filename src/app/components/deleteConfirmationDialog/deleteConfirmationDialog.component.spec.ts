@@ -1,3 +1,6 @@
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -11,14 +14,23 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { DeleteConfirmationDialogComponent } from './deleteConfirmationDialog.component';
 
+class MockDialogRef {
+  close() {}
+}
+
 describe('DeleteConfirmationDialogComponent', () => {
   let component: DeleteConfirmationDialogComponent;
   let fixture: ComponentFixture<DeleteConfirmationDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [getTranslocoTestingModule(), MatDialogModule, MatButtonModule],
       declarations: [DeleteConfirmationDialogComponent],
       schemas: [NO_ERRORS_SCHEMA],
+      providers: [
+        { provide: MatDialogRef, useClass: MockDialogRef },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+      ],
     }).compileComponents();
   }));
 

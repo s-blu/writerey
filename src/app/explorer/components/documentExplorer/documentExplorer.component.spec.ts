@@ -6,18 +6,31 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { DocumentExplorerComponent } from './documentExplorer.component';
+import { Router } from '@angular/router';
+import { DocumentStore } from 'src/app/stores/document.store';
 
-xdescribe('DocumentExplorerComponent', () => {
+class MockDocumentStore {
+  setFileInfo() {}
+}
+
+class MockRouter {
+  navigate() {}
+}
+
+describe('DocumentExplorerComponent', () => {
   let component: DocumentExplorerComponent;
   let fixture: ComponentFixture<DocumentExplorerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DocumentExplorerComponent],
+      providers: [
+        { provide: DocumentStore, useClass: MockDocumentStore },
+        { provide: Router, useClass: MockRouter },
+      ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));

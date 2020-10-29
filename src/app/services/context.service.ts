@@ -5,7 +5,6 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import { LabelStore } from 'src/app/stores/label.store';
-import { ContextStore } from './../stores/context.store';
 import { ParagraphService } from './paragraph.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Label } from '../shared/models/label.interface';
@@ -29,11 +28,7 @@ export class ContextService implements OnDestroy {
   ngOnDestroy() {
     this.subscription.unsubscribe();
   }
-  constructor(
-    private paragraphService: ParagraphService,
-    private contextStore: ContextStore,
-    private labelStore: LabelStore
-  ) {
+  constructor(private paragraphService: ParagraphService, private labelStore: LabelStore) {
     this.subscription.add(this.labelStore.labelDefinitions$.subscribe(res => (this.labelDefinitions = res)));
   }
 

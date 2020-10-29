@@ -6,18 +6,24 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { BreadcrumbComponent } from './breadcrumb.component';
+import { DocumentStore } from 'src/app/stores/document.store';
+import { of } from 'rxjs';
+import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 
+class MockDocumentStore {
+  document$ = of({});
+}
 describe('BreadcrumbComponent', () => {
   let component: BreadcrumbComponent;
   let fixture: ComponentFixture<BreadcrumbComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [BreadcrumbComponent],
+      declarations: [BreadcrumbComponent, StripFileEndingPipe],
+      providers: [{ provide: DocumentStore, useClass: MockDocumentStore }],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));

@@ -6,17 +6,32 @@
 
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { getTranslocoTestingModule } from '../transloco-test.module';
 import { SnapshotService } from './snapshot.service';
+import { SnapshotStore } from '../stores/snapshot.store';
+import { ApiService } from './api.service';
 
+class MockApiService {}
+class MockSnapshotStore {}
 describe('Service: Snapshot', () => {
+  let snapshotService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [SnapshotService],
+      imports: [HttpClientTestingModule, getTranslocoTestingModule()],
+      providers: [
+        SnapshotService,
+        { provide: ApiService, useClass: MockApiService },
+        { provide: SnapshotStore, useClass: MockSnapshotStore },
+      ],
     });
+
+    snapshotService = TestBed.inject(SnapshotService);
   });
 
-  it('should ...', inject([SnapshotService], (service: SnapshotService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', () => {
+    expect(snapshotService).toBeTruthy();
+  });
 });
