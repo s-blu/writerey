@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <link rel="shortcut icon" href="../../img/writerey.ico" />
+    <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.5.12" />
+
+    <title>User Guide - Writerey Documentation</title>
+
+    <link
+      rel="stylesheet"
+      href="../../assets/stylesheets/main.4dd2dd8d.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="../../assets/stylesheets/palette.6a5ad368.min.css"
+    />
+
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback"
+    />
+    <style>
+      body,
+      input {
+        font-family: "Roboto", -apple-system, BlinkMacSystemFont, Helvetica,
+          Arial, sans-serif;
+      }
+      code,
+      kbd,
+      pre {
+        font-family: "Roboto Mono", SFMono-Regular, Consolas, Menlo, monospace;
+      }
+    </style>
+
+    <link rel="stylesheet" href="../../assets/custom.css" />
+  </head>
+
+  <body
+    dir="ltr"
+    data-md-color-scheme=""
+    data-md-color-primary=""
+    data-md-color-accent="teal"
+  >
+    <input
+      class="md-toggle"
+      data-md-toggle="drawer"
+      type="checkbox"
+      id="__drawer"
+      autocomplete="off"
+    />
+    <input
+      class="md-toggle"
+      data-md-toggle="search"
+      type="checkbox"
+      id="__search"
+      autocomplete="off"
+    />
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      <a href="#user-guide" class="md-skip">
+        Skip to content
+      </a>
+    </div>
+    <div data-md-component="announce"></div>
+
+    <header class="md-header" data-md-component="header">
+      <nav class="md-header-nav md-grid" aria-label="Header">
+        <a
+          href="../.."
+          title="Writerey Documentation"
+          class="md-header-nav__button md-logo"
+          aria-label="Writerey Documentation"
+        >
+          <img src="../../img/logo.png" alt="logo" />
+        </a>
+        <label class="md-header-nav__button md-icon" for="__drawer">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z" />
+          </svg>
+        </label>
+        <div class="md-header-nav__title" data-md-component="header-title">
+          <div class="md-header-nav__ellipsis">
+            <span class="md-header-nav__topic md-ellipsis">
+              Writerey Documentation
+            </span>
+            <span class="md-header-nav__topic md-ellipsis">
+              User Guide
+            </span>
+          </div>
+        </div>
+
+        <label class="md-header-nav__button md-icon" for="__search">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"
+            />
+          </svg>
+        </label>
+
+        <div class="md-search" data-md-component="search" role="dialog">
+          <label class="md-search__overlay" for="__search"></label>
+          <div class="md-search__inner" role="search">
+            <form class="md-search__form" name="search">
+              <input
+                type="text"
+                class="md-search__input"
+                name="query"
+                aria-label="Search"
+                placeholder="Search"
+                autocapitalize="off"
+                autocorrect="off"
+                autocomplete="off"
+                spellcheck="false"
+                data-md-component="search-query"
+                data-md-state="active"
+              />
+              <label class="md-search__icon md-icon" for="__search">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"
+                  />
+                </svg>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"
+                  />
+                </svg>
+              </label>
+              <button
+                type="reset"
+                class="md-search__icon md-icon"
+                aria-label="Clear"
+                data-md-component="search-reset"
+                tabindex="-1"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"
+                  />
+                </svg>
+              </button>
+            </form>
+            <div class="md-search__output">
+              <div class="md-search__scrollwrap" data-md-scrollfix>
+                <div class="md-search-result" data-md-component="search-result">
+                  <div class="md-search-result__meta">
+                    Initializing search
+                  </div>
+                  <ol class="md-search-result__list"></ol>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md-header-nav__source">
+          <a
+            href="https://github.com/s-blu/writerey/"
+            title="Go to repository"
+            class="md-source"
+          >
+            <div class="md-source__icon md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512">
+                <path
+                  d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
+                />
+              </svg>
+            </div>
+            <div class="md-source__repository">
+              GitHub
+            </div>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+    <div class="md-container" data-md-component="container">
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          <div
+            class="md-sidebar md-sidebar--primary"
+            data-md-component="navigation"
+          >
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav
+                  class="md-nav md-nav--primary"
+                  aria-label="Navigation"
+                  data-md-level="0"
+                >
+                  <label class="md-nav__title" for="__drawer">
+                    <a
+                      href="../.."
+                      title="Writerey Documentation"
+                      class="md-nav__button md-logo"
+                      aria-label="Writerey Documentation"
+                    >
+                      <img src="../../img/logo.png" alt="logo" />
+                    </a>
+                    Writerey Documentation
+                  </label>
+
+                  <div class="md-nav__source">
+                    <a
+                      href="https://github.com/s-blu/writerey/"
+                      title="Go to repository"
+                      class="md-source"
+                    >
+                      <div class="md-source__icon md-icon">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          viewBox="0 0 496 512"
+                        >
+                          <path
+                            d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
+                          />
+                        </svg>
+                      </div>
+                      <div class="md-source__repository">
+                        GitHub
+                      </div>
+                    </a>
+                  </div>
+
+                  <ul class="md-nav__list" data-md-scrollfix>
+                    <li class="md-nav__item">
+                      <a href="../.." title="Welcome" class="md-nav__link">
+                        Welcome
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="../installation/"
+                        title="Installation"
+                        class="md-nav__link"
+                      >
+                        Installation
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item md-nav__item--active">
+                      <input
+                        class="md-nav__toggle md-toggle"
+                        data-md-toggle="toc"
+                        type="checkbox"
+                        id="__toc"
+                      />
+
+                      <label
+                        class="md-nav__link md-nav__link--active"
+                        for="__toc"
+                      >
+                        User Guide
+                        <span class="md-nav__icon md-icon"></span>
+                      </label>
+
+                      <a
+                        href="./"
+                        title="User Guide"
+                        class="md-nav__link md-nav__link--active"
+                      >
+                        User Guide
+                      </a>
+
+                      <nav
+                        class="md-nav md-nav--secondary"
+                        aria-label="Table of contents"
+                      >
+                        <label class="md-nav__title" for="__toc">
+                          <span class="md-nav__icon md-icon"></span>
+                          Table of contents
+                        </label>
+                        <ul class="md-nav__list" data-md-scrollfix>
+                          <li class="md-nav__item">
+                            <a
+                              href="#projects-folders-and-documents"
+                              class="md-nav__link"
+                            >
+                              Projects, Folders and Documents
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a
+                              href="#editor-autosave-and-snapshots"
+                              class="md-nav__link"
+                            >
+                              Editor, Autosave and Snapshots
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#read-write-review" class="md-nav__link">
+                              Read, Write, Review
+                            </a>
+
+                            <nav
+                              class="md-nav"
+                              aria-label="Read, Write, Review"
+                            >
+                              <ul class="md-nav__list">
+                                <li class="md-nav__item">
+                                  <a href="#read" class="md-nav__link">
+                                    Read
+                                  </a>
+                                </li>
+
+                                <li class="md-nav__item">
+                                  <a href="#write" class="md-nav__link">
+                                    Write
+                                  </a>
+                                </li>
+
+                                <li class="md-nav__item">
+                                  <a href="#review" class="md-nav__link">
+                                    Review
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#labels" class="md-nav__link">
+                              Labels
+                            </a>
+
+                            <nav class="md-nav" aria-label="Labels">
+                              <ul class="md-nav__list">
+                                <li class="md-nav__item">
+                                  <a href="#label-values" class="md-nav__link">
+                                    Label values
+                                  </a>
+                                </li>
+
+                                <li class="md-nav__item">
+                                  <a
+                                    href="#assigning-labels"
+                                    class="md-nav__link"
+                                  >
+                                    Assigning labels
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#notes" class="md-nav__link">
+                              Notes
+                            </a>
+
+                            <nav class="md-nav" aria-label="Notes">
+                              <ul class="md-nav__list">
+                                <li class="md-nav__item">
+                                  <a
+                                    href="#how-to-create-notes-for-the-document-or-a-paragraph"
+                                    class="md-nav__link"
+                                  >
+                                    How to create notes for the document or a
+                                    paragraph
+                                  </a>
+                                </li>
+
+                                <li class="md-nav__item">
+                                  <a
+                                    href="#how-to-create-notes-for-a-label-value"
+                                    class="md-nav__link"
+                                  >
+                                    How to create notes for a label value
+                                  </a>
+                                </li>
+                              </ul>
+                            </nav>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a
+                              href="#rename-move-and-delete-documents"
+                              class="md-nav__link"
+                            >
+                              Rename, Move and Delete Documents
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="../troubleshooting/"
+                        title="Troubleshooting and known Bugs"
+                        class="md-nav__link"
+                      >
+                        Troubleshooting and known Bugs
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="../roadmap/"
+                        title="Roadmap"
+                        class="md-nav__link"
+                      >
+                        Roadmap
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="../development/"
+                        title="Development"
+                        class="md-nav__link"
+                      >
+                        Development
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+            <div class="md-sidebar__scrollwrap">
+              <div class="md-sidebar__inner">
+                <nav
+                  class="md-nav md-nav--secondary"
+                  aria-label="Table of contents"
+                >
+                  <label class="md-nav__title" for="__toc">
+                    <span class="md-nav__icon md-icon"></span>
+                    Table of contents
+                  </label>
+                  <ul class="md-nav__list" data-md-scrollfix>
+                    <li class="md-nav__item">
+                      <a
+                        href="#projects-folders-and-documents"
+                        class="md-nav__link"
+                      >
+                        Projects, Folders and Documents
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="#editor-autosave-and-snapshots"
+                        class="md-nav__link"
+                      >
+                        Editor, Autosave and Snapshots
+                      </a>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a href="#read-write-review" class="md-nav__link">
+                        Read, Write, Review
+                      </a>
+
+                      <nav class="md-nav" aria-label="Read, Write, Review">
+                        <ul class="md-nav__list">
+                          <li class="md-nav__item">
+                            <a href="#read" class="md-nav__link">
+                              Read
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#write" class="md-nav__link">
+                              Write
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#review" class="md-nav__link">
+                              Review
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a href="#labels" class="md-nav__link">
+                        Labels
+                      </a>
+
+                      <nav class="md-nav" aria-label="Labels">
+                        <ul class="md-nav__list">
+                          <li class="md-nav__item">
+                            <a href="#label-values" class="md-nav__link">
+                              Label values
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a href="#assigning-labels" class="md-nav__link">
+                              Assigning labels
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a href="#notes" class="md-nav__link">
+                        Notes
+                      </a>
+
+                      <nav class="md-nav" aria-label="Notes">
+                        <ul class="md-nav__list">
+                          <li class="md-nav__item">
+                            <a
+                              href="#how-to-create-notes-for-the-document-or-a-paragraph"
+                              class="md-nav__link"
+                            >
+                              How to create notes for the document or a
+                              paragraph
+                            </a>
+                          </li>
+
+                          <li class="md-nav__item">
+                            <a
+                              href="#how-to-create-notes-for-a-label-value"
+                              class="md-nav__link"
+                            >
+                              How to create notes for a label value
+                            </a>
+                          </li>
+                        </ul>
+                      </nav>
+                    </li>
+
+                    <li class="md-nav__item">
+                      <a
+                        href="#rename-move-and-delete-documents"
+                        class="md-nav__link"
+                      >
+                        Rename, Move and Delete Documents
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div>
+          </div>
+
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              <a
+                href="https://github.com/s-blu/writerey/edit/master/docs/en/guide.md"
+                title="Edit this page"
+                class="md-content__button md-icon"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"
+                  />
+                </svg>
+              </a>
+
+              <h1 id="user-guide">User Guide</h1>
+              <h2 id="projects-folders-and-documents">
+                Projects, Folders and Documents
+              </h2>
+              <p>
+                All your writing ideas begin with a project. To create one, hit
+                the blue button on the sidebar and give it a fancy name.
+              </p>
+              <p><img alt="" src="../../img/writerey_guide_project.jpg" /></p>
+              <p>
+                Inside a project you can create folders and documents, the
+                hearth of your writing projects. Hit the "More" Menu on the side
+                bar and create them at your liking. To create a folder/document
+                inside another folder, use the menu on the folder.
+              </p>
+              <p>
+                You'll notice that you can also create a "Label". We will come
+                to that later.
+              </p>
+              <p>
+                When creating a document, the editor in the middle will become
+                all yours.
+              </p>
+              <p>
+                <img alt="" src="../../img/writerey_guide_docs-labels.jpg" />
+              </p>
+              <h2 id="editor-autosave-and-snapshots">
+                Editor, Autosave and Snapshots
+              </h2>
+              <p>
+                Every time you type something into the editor, it will autosave
+                for you (after a short pause). Do you wonder where your precious
+                ideas go? Don't worry: Right on your disk space, always
+                accessable for you, even without the app. All documents are
+                saved as .html files under
+                <code
+                  >&lt;installation path of
+                  writerey&gt;/_writerey_data/&lt;project-name&gt;/</code
+                >
+                to make sure you can always access your work, no matter the
+                circumstances. Writerey uses CKEditor 5. Most of the handling
+                works just like in any other writing application. If you have
+                doubts or question, the official
+                <a href="https://ckeditor.com/ckeditor-5/">CKEditor website</a>
+                is probably a good place to look.
+              </p>
+              <p>
+                On top of that, all 30 minutes - and each time you hit the
+                "Snapshot" Button at the upper right - writerey records a
+                snapshot of all your files and all your projects. It remembers
+                how your files looked like at this moment and saves it. This
+                will enable you to have a look to a previous state of a document
+                whenever you need to.
+              </p>
+              <p>
+                <em
+                  >Please note: The history function is not implemented yet, but
+                  writerey snapshots your files nevertheless. To access these
+                  snapshots, you currently need a thirdparty tool to visualize
+                  git - for example Github Desktop Client. Please see
+                  "troubleshooting and known bugs".</em
+                >
+              </p>
+              <h2 id="read-write-review">Read, Write, Review</h2>
+              <p>
+                Right below the editor, you have three modes available. Let's
+                have a look on them.
+              </p>
+              <h3 id="read">Read</h3>
+              <p>
+                The Read mode gets all the clunky, distracting stuff out of the
+                way and puts your document into a readonly state. This way, you
+                can check (or simply enjoy) your work without distraction.
+              </p>
+              <p>
+                <em>Tip</em>: To achieve the same for the other modes, hit the
+                distraction free mode button (eye) on the lower left corner.
+              </p>
+              <h3 id="write">Write</h3>
+              <p>
+                You will probably stay in Write Mode most of the time. It lets
+                you edit your document and shows you all the context
+                informations you need to craft your next masterpiece (or
+                homework).
+              </p>
+              <h3 id="review">Review</h3>
+              <p>
+                Did you wonder about the context information I mentioned just
+                now? The review mode is where you add them. Here, you can review
+                your document and add two kinds of information: labels and
+                notes. These information will then show up on Write mode to help
+                you improve your document.
+              </p>
+              <h2 id="labels">Labels</h2>
+              <p>
+                Lets discuss Labels first. Labels are here to help you
+                <em>categorize</em> parts of your document.
+              </p>
+              <p>
+                Does this paragraph belong to chapter 1,2 or 14? Is this
+                paragraph a first draft, the second one or already final? Which
+                scene it belongs to? Which story line? Who's the Point of View
+                character?
+              </p>
+              <p>You can create labels by clicking the menu on the sidebar.</p>
+              <h3 id="label-values">Label values</h3>
+              <p>
+                The label itself is only like a folder for files. To really use
+                them, you need to add values to them. A value consists of two
+                properties: A name and a info (or description). The name is the
+                real value and what you will choose when assigning labels (see
+                below). The info on the other hand will show up as a special
+                kind of note, so this is the right place to add all the
+                important bits that concern this label value.
+              </p>
+              <p>
+                <img alt="" src="../../img/writerey_guide_label-details.jpg" />
+              </p>
+              <h3 id="assigning-labels">Assigning labels</h3>
+              <p>
+                After you have created a label and its value, you can assign
+                them.
+              </p>
+              <ol>
+                <li>Go back to your document</li>
+                <li>Switch to review mode</li>
+                <li>Click on a paragraph</li>
+              </ol>
+              <p>
+                On the left side, you'll now have your created labels displayed.
+                Choose the values you want to assign to this paragraph. When you
+                now switch back to Write mode and your cursor is inside this
+                paragraph, your labels will show up and - if available - you'll
+                see your label info on the right side.
+              </p>
+              <p>
+                Adding a label value in review mode:
+                <img alt="" src="../../img/writerey_guide-review-mode.jpg" />
+              </p>
+              <p>
+                Seeing a label value in write mode:
+                <img alt="" src="../../img/writerey_assigning_labels.jpg" />
+              </p>
+              <p>There is more to labels.</p>
+              <h2 id="notes">Notes</h2>
+              <p>
+                The second type of context information are notes. Just like
+                sticky notes. You can add them on review mode either on the
+                whole document, or your selected paragraph - or on your labels.
+              </p>
+              <p>
+                If you add a note to a paragraph, it will only show up on this
+                paragraph. If you have notes that you want on multiple places
+                but not on the complete document, labels are what you're looking
+                for. By putting notes on label values, they'll show up on each
+                paragraph that belongs to this label value.
+              </p>
+              <p>
+                You're having a ton of background information to that church
+                scene 37 takes place? Label value <code>37</code> of label
+                <code>Scenes</code> is your friend.
+              </p>
+              <h3 id="how-to-create-notes-for-the-document-or-a-paragraph">
+                How to create notes for the document or a paragraph
+              </h3>
+              <ol>
+                <li>Go to your document</li>
+                <li>Switch to Review mode</li>
+                <li>
+                  If you want the note on a paragraph, click on that paragraph
+                  and make sure the context of the "New Note" form is set to
+                  "Paragraph"
+                </li>
+                <li>Type in whatever you want to note down.</li>
+                <li>
+                  Note Type and Colors are two ways to make a note stand out -
+                  just try it out. Both are of solely visual effect.
+                </li>
+                <li>Hit the Plus-Button to add your note.</li>
+              </ol>
+              <h3 id="how-to-create-notes-for-a-label-value">
+                How to create notes for a label value
+              </h3>
+              <p>
+                Here you have two possibilites. First, you can create a note for
+                a label value if this label value is assigned to your selected
+                paragraph. Then it works like above, you just need to choose a
+                different context.
+              </p>
+              <p>
+                The second possibility to do so is on the label screen itself.
+              </p>
+              <ol>
+                <li>
+                  Go to the label screen (Switch the tree on the right with the
+                  tab and click on your label)
+                </li>
+                <li>Switch to Review mode</li>
+                <li>
+                  Choose your wanted label value as context and write down your
+                  note
+                </li>
+              </ol>
+              <h2 id="rename-move-and-delete-documents">
+                Rename, Move and Delete Documents
+              </h2>
+              <p>
+                You can rename, move and delete documents by clicking the three
+                dots at the end of their tree entry when hovering them.
+              </p>
+              <p><em>WIP</em></p>
+            </article>
+          </div>
+        </div>
+      </main>
+
+      <footer class="md-footer">
+        <div class="md-footer-nav">
+          <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+            <a
+              href="../installation/"
+              title="Installation"
+              class="md-footer-nav__link md-footer-nav__link--prev"
+              rel="prev"
+            >
+              <div class="md-footer-nav__button md-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"
+                  />
+                </svg>
+              </div>
+              <div class="md-footer-nav__title">
+                <div class="md-ellipsis">
+                  <span class="md-footer-nav__direction">
+                    Previous
+                  </span>
+                  Installation
+                </div>
+              </div>
+            </a>
+
+            <a
+              href="../troubleshooting/"
+              title="Troubleshooting and known Bugs"
+              class="md-footer-nav__link md-footer-nav__link--next"
+              rel="next"
+            >
+              <div class="md-footer-nav__title">
+                <div class="md-ellipsis">
+                  <span class="md-footer-nav__direction">
+                    Next
+                  </span>
+                  Troubleshooting and known Bugs
+                </div>
+              </div>
+              <div class="md-footer-nav__button md-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                  <path
+                    d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"
+                  />
+                </svg>
+              </div>
+            </a>
+          </nav>
+        </div>
+
+        <div class="md-footer-meta md-typeset">
+          <div class="md-footer-meta__inner md-grid">
+            <div class="md-footer-copyright">
+              Made with
+              <a
+                href="https://squidfunk.github.io/mkdocs-material/"
+                target="_blank"
+                rel="noopener"
+              >
+                Material for MkDocs
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="../../assets/javascripts/vendor.3636a4ec.min.js"></script>
+    <script src="../../assets/javascripts/bundle.e9fe3281.min.js"></script>
+    <script id="__lang" type="application/json">
+      {
+        "clipboard.copy": "Copy to clipboard",
+        "clipboard.copied": "Copied to clipboard",
+        "search.config.lang": "en",
+        "search.config.pipeline": "trimmer, stopWordFilter",
+        "search.config.separator": "[\\s\\-]+",
+        "search.result.placeholder": "Type to start searching",
+        "search.result.none": "No matching documents",
+        "search.result.one": "1 matching document",
+        "search.result.other": "# matching documents"
+      }
+    </script>
+
+    <script>
+      app = initialize({
+        base: "../..",
+        features: [],
+        search: Object.assign(
+          {
+            worker: "../../assets/javascripts/worker/search.5eca75d3.min.js",
+          },
+          typeof search !== "undefined" && search
+        ),
+      });
+    </script>
+  </body>
+</html>

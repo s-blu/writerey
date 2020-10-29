@@ -7,7 +7,6 @@ _writerey_data
 /tmp
 /out-tsc
 /out
-/docs
 # Only exists if Bazel was run
 /bazel-out
 
