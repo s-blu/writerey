@@ -1,0 +1,39 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+mat-form-field {
+  width: 100%;
+}
+
+.editor {
+  max-height: 350px;
+  overflow-y: auto;
+  display: inline-block;
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  margin-top: 0.5em;
+  justify-content: space-between;
+
+  .cancel-btn {
+    font-size: 10pt;
+    color: #272727;
+  }
+}
+
+.editor-footer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.draft-hint {
+  font-size: 8pt;
+  border-radius: 0 0 4px 4px;
+  padding: 0 4px;
+  background-color: rgb(250, 237, 124);
+}

@@ -1,22 +1,27 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { LabelInfo, NoteItemStereotypes } from '@writerey/shared/models/notesItems.interface';
 import { ProjectStore } from './../stores/project.store';
-import { Label } from 'src/app/models/label.interface';
+import { Label } from '@writerey/shared/models/label.interface';
 import { ParagraphService } from './paragraph.service';
 import { ApiService } from './api.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, of, Subscription } from 'rxjs';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, flatMap, map, take } from 'rxjs/operators';
-import { LabelDefinition, LabelTypes } from '../models/labelDefinition.class';
+import { catchError, mergeMap, map, take } from 'rxjs/operators';
+import { LabelDefinition } from '../shared/models/labelDefinition.class';
 import { ContextStore } from '../stores/context.store';
 import { LabelStore } from '../stores/label.store';
 import { ContextService } from './context.service';
 
+export enum metaTypesLabelValues {
+  NOTES = 'notes',
+  NOTES_AND_INFO = 'notesAndInfo',
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -38,11 +43,11 @@ export class LabelService implements OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  createNewLabelCategory(name: string, type: LabelTypes) {
-    const newLabel = new LabelDefinition(name, type);
+  createNewLabelCategory(name: string) {
+    const newLabel = new LabelDefinition(name);
 
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         let newLabelDef;
         if (!labelDefRes) {
           newLabelDef = [newLabel];
@@ -59,7 +64,7 @@ export class LabelService implements OnDestroy {
     // TODO REMOVE META FILES
 
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         if (!labelDefRes) return;
         const index = labelDefRes.findIndex(m => m.id === labelId);
         if (index > -1) {
@@ -95,6 +100,16 @@ export class LabelService implements OnDestroy {
     );
   }
 
+  getLabelDefinition(id) {
+    if (!id) return of(null);
+    return this.labelStore.labelDefinitions$.pipe(
+      take(1),
+      map(defs => {
+        return defs.find(def => def.id === id);
+      })
+    );
+  }
+
   init() {
     this.subscription.add(
       this.projectStore.project$.subscribe(project => {
@@ -107,7 +122,7 @@ export class LabelService implements OnDestroy {
 
   updateLabelDefinition(labelDef: LabelDefinition) {
     return this.getLabelDefinitions().pipe(
-      flatMap(labelDefRes => {
+      mergeMap(labelDefRes => {
         let updatedLabelDefs;
         if (!labelDefRes) {
           console.error('Could not get any label definitions, even though I try to update an existing one. Aborting.');
@@ -148,8 +163,9 @@ export class LabelService implements OnDestroy {
     );
   }
 
-  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
-  saveMetaForLabelValue(contextId, content, metaType?) {
+  saveMetaForLabelValue(contextId, content) {
+    content = content?.filter(item => item.stereotype !== NoteItemStereotypes.LABEL);
+
     const [labelId, valueId] = contextId.split(':');
     const blob = new Blob([JSON.stringify(content)], { type: 'application/json' });
     const file = new File([blob], name, { type: 'application/json' });
@@ -167,7 +183,31 @@ export class LabelService implements OnDestroy {
     );
   }
 
-  // TODO TAKE METATYPE INTO ACCOUNT AS SOON AS NECESSARY
+  getInfoForLabelValue(label) {
+    return this.getLabelDefinition(label.id).pipe(
+      map(labelDef => {
+        const infoText = labelDef.values?.find(val => val.id === label.valueId)?.info;
+        let response;
+        if (infoText) {
+          response = {
+            stereotype: NoteItemStereotypes.LABEL,
+            id: 'label-info',
+            context: this.contextService.getContextStringForLabel(label),
+            text: infoText,
+            type: 'label',
+          } as LabelInfo;
+        }
+        return response;
+      })
+    );
+  }
+
+  getLabelIdsWithExistingMeta(): Observable<any> {
+    return this.httpClient
+      .get(this.api.getLabelStatisticRoute(this.project))
+      .pipe(catchError(err => this.api.handleHttpError(err)));
+  }
+
   getMetaForLabelValue(contextId, metaType?): Observable<any> {
     if (!contextId) return of([]);
     const label = this.contextService.getLabelFromContextString(contextId);
@@ -179,6 +219,13 @@ export class LabelService implements OnDestroy {
       catchError(err => this.api.handleHttpError(err)),
       map((res: string) => {
         return this.parseLabelValueResponse(res);
+      }),
+      mergeMap(notes => {
+        if (metaType === metaTypesLabelValues.NOTES_AND_INFO) {
+          return this.getInfoForLabelValue(label).pipe(map(info => [info, ...notes]));
+        } else {
+          return of(notes);
+        }
       })
     );
   }
@@ -224,7 +271,7 @@ export class LabelService implements OnDestroy {
   }
 
   private parseLabelValueResponse(res) {
-    if (!res || res === '') return res;
+    if (!res || res === '') return [];
     try {
       const data = JSON.parse(res);
       return data;

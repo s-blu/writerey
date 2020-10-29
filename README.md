@@ -1,10 +1,32 @@
 # Writerey
 
-Writerey is a tool that wants to help you with your next writing project:  A novel, an essay for school, a research, a poem booklet, ... you name it!
+Writerey is a tool that wants to help you with your next writing project: A novel, an essay for school, a research, a poem booklet, ... you name it!
 
-It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. It provides you handy functionality to note down thoughts and side-infos. Read more about the functionality you get from writerey in its [Wiki](https://github.com/s-blu/writerey/wiki).
+It provides you a distraction free place to sort your thoughts and write down your ideas. It keeps your project safe with autosave functionality and snapshots. It provides you handy functionality to note down thoughts and side-infos.
+
+## Resources
+
+- :house: [Homepage](https://writerey.com)
+- :blue_book: [Documentation](https://docs.writerey.com)
+- :rotating_light: [Issues](https://github.com/s-blu/writerey/issues)
+
+## Attention: Still in Beta
+
+Please be aware that writerey is still in active development and did not hit v1.0 yet. Some things are broken, some are incomplete, some are simply not available yet.
+
+With that said, writerey is in a useable state and we try our best to ensure backward compatibility so that you won't lose any data. If you are interested into having a early look, please be welcome to try it out. We would value your constructive feedback a lot!
+
+If you prefer to wait for a comfortable and stable version, please visit us again when we hit v1.0 :)
+
+Thank you!
+
+## License
 
 writerey is open source and licensed under Mozilla Public License Version 2.0. For License information see LICENSE
+
+## Installation
+
+For installation constructions, please refer to the [installation documentation](https://docs.writerey.com/en/installation/).
 
 ## System requirements
 
@@ -15,48 +37,21 @@ To use writerey, you need the following tools installed on your machine:
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
+More information how to install these requirements and why you need them can be found in the [installation documentation](https://docs.writerey.com/en/installation/).
 
-## Used technologies 
+## Used technologies
 
 Writerey is build with
 
-- Angular 9
+- Angular
 - node.js
 - [Electron](https://www.electronjs.org/)
 - [CKEditor5](https://ckeditor.com/ckeditor-5/)
 - [python-shell](https://github.com/extrabacon/python-shell)
-
+- [MkDocs](https://www.mkdocs.org/) (for the documentation)
 
 For a complete list of used packages, please refer to package.json.
 
-## Installation
+## Documentation
 
-Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find a detailed explanation how to install writerey.
-
-- Install Python 3
-- Install Git 
-- Download the executable of writerey from the [Release page on Github](https://github.com/s-blu/writerey/releases/latest)
-- Launch writerey.exe (on Windows)
-
-### Build a executable for your environment
-writerey is build with [electron-forge](https://www.electronforge.io/). To build a executable for your target system, do the following:
-
-- Get the repository locally
-- Install dependencies with `npm i`
-- Run `npm run build-make`
-
-If you want to build the application for a non-windows platform, please refer to [the electron-forge documentation](https://www.electronforge.io/config/makers) to configure a appropiate maker.
-
-### Set up development
-
-- Clone the repository
-- Install JS dependencies with `npm i`
-- Install Python dependencies with `pip install pipenv`, followed by `pipenv install`
-- Open a terminal and start the server with `npm run flask`
-- Open another terminal and start the ui with `ng serve`
-
-Please be aware that some features (currently) don't work like expected in development environment, i.e. deletion. Since the project itself is managed by git, the sub folder is ignored to not commit test data, which leads to some conflicts when trying to commit as part of the application. To have a real test environment, please build the app as executeable.
-
-## Guide
-
-Please visit the [Wiki](https://github.com/s-blu/writerey/wiki) to find out more about writerey.
+Please visit the [Documentation](https://docs.writerey.com/en/) to find out more about writerey.

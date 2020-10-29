@@ -1,0 +1,37 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="label-tree" *transloco="let t; read: 'labelTree'">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="10"
+      class="label-node"
+      [class]="{ active: node.id === activeLabelId }"
+      (click)="openLabelCategory(node)"
+    >
+      <button mat-icon-button disabled matTreeNodeToggle class="explorer-btn"></button>
+      <div class="name">{{ node.name }}</div>
+      <button mat-icon-button class="explorer-btn" [matMenuTriggerFor]="labelMenu">
+        <mat-icon class="menu">more_vert</mat-icon>
+      </button>
+
+      <mat-menu #labelMenu="matMenu">
+        <button mat-menu-item (click)="removeLabel(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('remove') }}</span>
+        </button>
+      </mat-menu>
+    </mat-tree-node>
+  </mat-tree>
+
+  <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
+    {{ t('empty-tree') }}
+  </div>
+</div>

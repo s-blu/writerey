@@ -10,6 +10,8 @@ flask = "*"
 flask-restful = "*"
 flask-cors = "*"
 waitress = "*"
+mkdocs = "*"
+mkdocs-material = "*"
 
 [requires]
 python_version = "3.7"

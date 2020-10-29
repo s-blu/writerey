@@ -1,0 +1,65 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+@import '../../../styles/variables.scss';
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+  height: 36px;
+}
+
+.project-item {
+  &:hover {
+    cursor: pointer;
+    background-color: $c_hover_highlight;
+
+    .explorer-btn {
+      display: inline;
+    }
+  }
+
+  .name {
+    flex-grow: 2;
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .explorer-btn {
+    display: none;
+
+    .material-icons {
+      font-size: 12pt;
+    }
+  }
+}
+
+.project-title {
+  display: flex;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background-color: $c_bg_boxes;
+  z-index: 10;
+
+  .title {
+    flex-grow: 2;
+  }
+}
+
+.writerey-icon {
+  width: 18px;
+}
+
+.empty-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  color: #bfbfbf;
+  padding: 1.5em;
+}

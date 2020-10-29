@@ -1,0 +1,55 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="create-note" *transloco="let t; read: 'createNote'">
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field *ngIf="!editNote">
+      <mat-label>{{ t('context') }}</mat-label>
+      <mat-select formControlName="context" required>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ t('type.title') }}</mat-label>
+      <mat-select formControlName="type" required>
+        <mat-option value="info">{{ t('type.info') }}</mat-option>
+        <mat-option value="todo">{{ t('type.todo') }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ t('color.title') }}</mat-label>
+      <mat-select formControlName="color" (selectionChange)="changeColor()">
+        <mat-option value="">{{ t('color.none') }}</mat-option>
+        <mat-option value="#ffd4a0">{{ t('color.orange') }}</mat-option>
+        <mat-option value="#bdf9a7">{{ t('color.green') }}</mat-option>
+        <mat-option value="#c5e2ff">{{ t('color.blue') }}</mat-option>
+        <mat-option value="#fffeae">{{ t('color.yellow') }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ckeditor
+      class="note-editor"
+      [formControl]="createNewForm.controls['text']"
+      [editor]="Editor"
+      [config]="editorConfig"
+      (ready)="onReady($event)"
+      (change)="editorChanged($event)"
+      [style.background-color]="noteColor"
+    ></ckeditor>
+    <div class="editor-footer">
+      <span *ngIf="draft" class="draft-hint">{{ t('draft') }}</span>
+    </div>
+    <div class="actions">
+      <button mat-icon-button [disabled]="isInvalid()" type="submit">
+        <mat-icon>{{ editNote ? 'edit' : 'add' }}</mat-icon>
+      </button>
+      <button *ngIf="editNote" mat-button type="button" class="cancel-btn" (click)="cancelEdit()">
+        {{ t('cancel') }}
+      </button>
+    </div>
+  </form>
+</div>

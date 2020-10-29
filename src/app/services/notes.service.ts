@@ -1,14 +1,14 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { LabelService } from 'src/app/services/label.service';
+import { LabelService, metaTypesLabelValues } from 'src/app/services/label.service';
 import { ApiService } from './api.service';
 import { ParagraphService } from './paragraph.service';
 import { Injectable } from '@angular/core';
-import { catchError, flatMap } from 'rxjs/operators';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { of, forkJoin } from 'rxjs';
 import { DEFAULT_CONTEXTS } from './context.service';
 
@@ -29,23 +29,22 @@ export class NotesService {
     });
     return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'notes').pipe(
       catchError(err => this.api.handleHttpError(err)),
-      flatMap(pRes => {
+      mergeMap(pRes => {
         notesWrap[DEFAULT_CONTEXTS.PARAGRAPH] = pRes || [];
         return this.paragraphService.getParagraphMeta(docPath, docName, 'document', 'notes');
       }),
-      flatMap(docRes => {
+      mergeMap(docRes => {
         notesWrap[DEFAULT_CONTEXTS.DOCUMENT] = docRes || [];
 
         const labelContexts = [];
         for (const c of contexts) {
           if (c.includes(':')) {
-            labelContexts.push(this.labelService.getMetaForLabelValue(c, 'notes'));
+            labelContexts.push(this.labelService.getMetaForLabelValue(c, metaTypesLabelValues.NOTES_AND_INFO));
           }
         }
-
         return labelContexts.length > 0 ? forkJoin(labelContexts) : of(notesWrap);
       }),
-      flatMap((labelRes: Array<any>) => {
+      mergeMap((labelRes: Array<any>) => {
         if (labelRes && labelRes instanceof Array) {
           for (const labelNotes of labelRes) {
             const contextOnNote = labelNotes[0]?.context;
@@ -63,15 +62,17 @@ export class NotesService {
       notesWrap[c] = [];
     });
 
-    const labelContexts = [];
-    for (const c of contexts) {
-      if (c.includes(':')) {
-        labelContexts.push(this.labelService.getMetaForLabelValue(c, 'notes'));
-      }
-    }
-
-    return forkJoin(labelContexts).pipe(
-      flatMap((labelRes: Array<any>) => {
+    return this.labelService.getLabelIdsWithExistingMeta().pipe(
+      mergeMap(valueIds => {
+        const contextObs = [];
+        contexts.forEach(context => {
+          const valueId = context.split(':')[1];
+          if (valueIds.includes(valueId))
+            contextObs.push(this.labelService.getMetaForLabelValue(context, metaTypesLabelValues.NOTES));
+        });
+        return forkJoin(contextObs);
+      }),
+      mergeMap((labelRes: Array<any>) => {
         if (labelRes && labelRes instanceof Array) {
           for (const labelNotes of labelRes) {
             const contextOnNote = labelNotes[0]?.context;

@@ -56,6 +56,10 @@ export class ApiService {
     return `${this.serverAdress}/label/${labelId}`;
   }
 
+  getLabelStatisticRoute(project) {
+    return `${this.serverAdress}/labelstats/${project}`;
+  }
+
   getImageRoute(docName) {
     return docName ? `${this.serverAdress}/img/${docName}` : `${this.serverAdress}/img`;
   }

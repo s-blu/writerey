@@ -2,13 +2,17 @@
   "distractionFreeMode": {
     "tooltip": "Sichtbarkeit UI umschalten"
   },
+  "about": {
+    "title": "Über writerey",
+    "close": "OK",
+    "version": "Version {{version}}",
+    "documentation": "Dokumentation",
+    "homepage": "Homepage",
+    "license": "Writerey ist quelloffen und lizensiert unter {{license}}.",
+    "repository": "Quellcode auf Github"
+  },
   "createLabel": {
     "title": "Eine neue Rubrik erstellen",
-    "type": {
-      "title": "Rubriktyp",
-      "text": "Text",
-      "numeric": "Numerisch"
-    },
     "name": "Name der Rubrik",
     "create": "Erstellen",
     "cancel": "Abbrechen"
@@ -26,9 +30,11 @@
     "titleLabelProps": "Rubrikeigenschaften",
     "titleInfoTemplate": "Vorlage für Rubrikinfos",
     "template": "Füge hier eine Vorlage für deine Rubrikinfos ein. Das ist besonders hilfreich, wenn du gleichartige Informationen zu deinen Label Werten speichern möchtest.",
-    "type": {
-      "text": "Text-Rubrik",
-      "numeric": "Numerische Rubrik"
+    "labelInfoPlaceholder": "Gebe diesem Wert eine Beschreibung, die bei Verwendung als Notiz angezeigt wird",
+    "autosave": {
+      "true": "Automatisches Speichern ist an",
+      "false": "Automatisches Speichern ist aus",
+      "activated": "Automatisches Speichern ist aktiviert."
     },
     "saved": "Gespeichert!",
     "start": "Start",
@@ -100,7 +106,7 @@
     "snapshot": "Sicherung erstellen",
     "tag": "Letzte Sicherung taggen",
     "history": "Alle Zwischenstände anzeigen",
-    "save": "Dokument speichern"
+    "about": "Über writerey"
   },
   "saveInfo": {
     "lastSaved": "Zuletzt gespeichert",
@@ -198,6 +204,8 @@
   "createNote": {
     "context": "Kontext",
     "comment": "Notiz",
+    "cancel": "Abbrechen",
+    "draft": "Entwurf",
     "type": {
       "title": "Art der Notiz",
       "info": "Info",
