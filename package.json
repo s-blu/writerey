@@ -26,7 +26,8 @@
     "flask": "python server/app.py development",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make",
-    "build-docs": "cd documentation && mkdocs build"
+    "build-docs": "cd documentation && mkdocs build",
+    "deploy-docs": "cd documentation && mkdocs gh-deploy"
   },
   "private": true,
   "dependencies": {

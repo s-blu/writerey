@@ -1,5 +1,6 @@
 site_name: Writerey Documentation
 repo_url: https://github.com/s-blu/writerey
+site_description: User Documentation for writing software writerey
 nav:
   - index.md
   - en/installation.md
