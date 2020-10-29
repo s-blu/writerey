@@ -20,7 +20,7 @@ export class AboutDialogComponent {
   license = license;
   homepage = homepage;
   repositoryLink = repository.url;
-  documentationLink = homepage;
+  documentationLink = 'https://docs.writerey.com';
 
   constructor(public dialogRef: MatDialogRef<AboutDialogComponent>) {}
 
