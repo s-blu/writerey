@@ -1,11 +1,11 @@
 // Copyright (c) 2020 s-blu
-// 
+//
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FileInfo } from './../models/fileInfo.interface';
-import { DocumentDefinition, LAST_DOCUMENT_KEY } from './../models/documentDefinition.interface';
+import { FileInfo } from '../shared/models/fileInfo.interface';
+import { DocumentDefinition, LAST_DOCUMENT_KEY } from '../shared/models/documentDefinition.interface';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { map, tap, shareReplay } from 'rxjs/operators';

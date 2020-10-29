@@ -1,0 +1,34 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="create-link" *transloco="let t; read: 'createLink'">
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field>
+      <mat-label>{{ t('context') }}</mat-label>
+      <mat-select formControlName="context" required>
+        <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <ckeditor
+      class="note-editor"
+      [formControl]="createNewForm.controls['text']"
+      [editor]="Editor"
+      [config]="editorConfig"
+      (ready)="onReady($event)"
+    ></ckeditor>
+    <button class="choose-document-button" mat-stroked-button type="button" (click)="chooseDocument()">
+      <span *ngIf="!selectedDocument">{{ t('chooseDocument') }}</span>
+      <wy-breadcrumb *ngIf="selectedDocument" [fileInfo]="selectedDocument" skipRoot="true"></wy-breadcrumb>
+    </button>
+    <div class="actions">
+      <button mat-icon-button [disabled]="createNewForm.invalid" type="submit">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+  </form>
+</div>

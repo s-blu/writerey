@@ -1,0 +1,76 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+@import '../../../styles/variables';
+
+:host {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.label-details {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  border-radius: 0;
+  box-sizing: border-box;
+
+  mat-card-header {
+    align-items: start;
+    justify-content: space-between;
+  }
+
+  .mat-card-actions {
+    margin: 0;
+    .cancel-button {
+      float: right;
+    }
+  }
+
+  form {
+    overflow: auto;
+    height: inherit;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 2;
+    mat-card-content {
+      display: block;
+      flex-grow: 2;
+    }
+  }
+
+  .mat-form-field {
+    display: block;
+  }
+
+  .tab-content {
+    margin: 1em;
+    overflow: auto;
+  }
+  .mat-card-actions {
+    padding-bottom: 0;
+  }
+
+  .text-value-container {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+  }
+
+  .label-values {
+    box-sizing: border-box;
+    overflow: hidden;
+    margin-top: 1em;
+  }
+
+  .autosave {
+    color: $c_hint;
+    font-size: 10pt;
+    padding: 10px;
+    cursor: pointer;
+  }
+}

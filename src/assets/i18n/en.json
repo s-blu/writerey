@@ -2,13 +2,17 @@
   "distractionFreeMode": {
     "tooltip": "Toggle distraction free mode"
   },
+  "about": {
+    "title": "About writerey",
+    "close": "OK",
+    "version": "Version {{version}}",
+    "documentation": "Documentation",
+    "homepage": "Homepage",
+    "license": "Writerey is open source and licensed under {{license}}.", 
+    "repository": "Code on Github"
+  },
   "createLabel": {
     "title": "Create a new Label",
-    "type": {
-      "title": "Label type",
-      "text": "Text",
-      "numeric": "Numeric"
-    },
     "name": "Name of Label",
     "create": "Create",
     "cancel": "Cancel"
@@ -26,9 +30,11 @@
     "titleLabelProps": "Label Properties",
     "titleInfoTemplate": "Template for Label Infos",
     "template": "Insert a template here to prefill your label infos. This is very useful if you want to store similar meta information for your label values",
-    "type": {
-      "text": "Text Label",
-      "numeric": "Numerical Label"
+    "labelInfoPlaceholder": "Add a description to this value that will be shown as a note on documents",
+    "autosave": {
+      "true": "Autosave is on",
+      "false": "Autosave is off",
+      "activated": "Autosave is on. Will save automatically."
     },
     "saved": "Saved!",
     "start": "Start",
@@ -100,7 +106,7 @@
     "snapshot": "Create snapshot",
     "tag": "Tag last snapshot",
     "history": "Show snapshot history",
-    "save": "Save document"
+    "about": "About"
   },
   "saveInfo": {
     "lastSaved": "Last saved on",
@@ -198,6 +204,8 @@
   "createNote": {
     "context": "Context",
     "comment": "Note",
+    "cancel": "Cancel",
+    "draft": "Draft",
     "type": {
       "title": "Note Type",
       "info": "Info",

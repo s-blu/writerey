@@ -1,0 +1,124 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="document-tree" *transloco="let t; read: 'documentTree'">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node
+      *matTreeNodeDef="let node"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="10"
+      class="dir-node"
+      [ngClass]="{
+        moving: node.path === moveNode?.path && node.name === moveNode?.name
+      }"
+    >
+      <button
+        mat-icon-button
+        [disabled]="!node.expandable"
+        (click)="toggleExpand(node)"
+        [attr.aria-label]="'toggle ' + node.name"
+        class="explorer-btn"
+      >
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{ treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right' }}
+        </mat-icon>
+      </button>
+      <div class="name">{{ node.name }}</div>
+      <button
+        *ngIf="node.path === moveNode?.path && node.name === moveNode?.name; else moveHereButton"
+        mat-icon-button
+        class="explorer-btn"
+        (click)="cancelMoving()"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+      <button *ngIf="showMenus && !moveNode" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="dirMenu">
+        <mat-icon class="menu">more_vert</mat-icon>
+      </button>
+
+      <mat-menu #dirMenu="matMenu">
+        <button mat-menu-item (click)="renameDir(node)">
+          <mat-icon>text_fields</mat-icon>
+          <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="setMoveNode(node)">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>{{ t('move') }}</span>
+        </button>
+        <button mat-menu-item (click)="deleteDir(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
+        </button>
+        <wy-create-new-dir-or-file type="dir" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file type="file" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
+      </mat-menu>
+
+      <ng-template #moveHereButton>
+        <button *ngIf="moveNode" mat-icon-button class="explorer-btn" (click)="finishMoving(node)">
+          <mat-icon class="menu">call_received</mat-icon>
+        </button>
+      </ng-template>
+    </mat-tree-node>
+
+    <mat-tree-node
+      *matTreeNodeDef="let node; when: isFile"
+      matTreeNodePadding
+      matTreeNodePaddingIndent="15"
+      class="file-node"
+      [ngClass]="{
+        active: highlightOpenDocument && node.path === activeFileInfo?.path && node.name === activeFileInfo?.name,
+        moving: node.path === moveNode?.path && node.name === moveNode?.name
+      }"
+    >
+      <button mat-icon-button (click)="clickedDocument(node)" class="explorer-btn file-btn">
+        <i class="material-icons-outlined">insert_drive_file</i>
+      </button>
+      <div (click)="clickedDocument(node)" class="name">{{ node.name | stripFileEnding }} {{ node.isActive }}</div>
+      <button *ngIf="showMenus && !moveNode" mat-icon-button class="explorer-btn" [matMenuTriggerFor]="fileMenu">
+        <mat-icon class="menu">more_vert</mat-icon>
+      </button>
+      <button
+        *ngIf="node.path === moveNode?.path && node.name === moveNode?.name"
+        mat-icon-button
+        class="explorer-btn"
+        (click)="cancelMoving()"
+      >
+        <mat-icon>clear</mat-icon>
+      </button>
+
+      <mat-menu #fileMenu="matMenu">
+        <button mat-menu-item (click)="renameFile(node)">
+          <mat-icon>text_fields</mat-icon>
+          <span>{{ t('rename') }}</span>
+        </button>
+        <button mat-menu-item (click)="setMoveNode(node)">
+          <mat-icon>swap_horiz</mat-icon>
+          <span>{{ t('move') }}</span>
+        </button>
+        <button mat-menu-item (click)="toggleStartPage(node)">
+          <mat-icon>push_pin</mat-icon>
+          <span>{{ isNodeCurrentStartPage(node) ? t('removeStartPage') : t('setStartPage') }}</span>
+        </button>
+        <button mat-menu-item (click)="deleteFile(node)">
+          <mat-icon>delete</mat-icon>
+          <span>{{ t('delete') }}</span>
+        </button>
+      </mat-menu>
+    </mat-tree-node>
+  </mat-tree>
+  <div *ngIf="moveNode" class="move-to-root">
+    <span class="label">{{ t('moveToRoot') }}</span>
+    <button mat-icon-button class="explorer-btn" (click)="finishMoving()">
+      <mat-icon class="menu">call_received</mat-icon>
+    </button>
+  </div>
+
+  <div class="empty-hint" *ngIf="!dataSource?.data || dataSource?.data?.length === 0">
+    {{ t('empty-tree') }}
+  </div>
+</div>

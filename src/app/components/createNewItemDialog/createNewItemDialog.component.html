@@ -13,7 +13,13 @@
       <p class="message">{{ t('message') }}</p>
       <mat-form-field>
         <mat-label>{{ t('input') }}</mat-label>
-        <input matInput (keyup.enter)="submit(form.value)" required formControlName="name" [errorStateMatcher]="matcher"/>
+        <input
+          matInput
+          (keyup.enter)="submit(form.value)"
+          required
+          formControlName="name"
+          [errorStateMatcher]="matcher"
+        />
         <mat-error *ngIf="form.get('name').errors?.forbiddenName"
           >{{ 'createDirOrFile.forbiddenName' | transloco }}
         </mat-error>

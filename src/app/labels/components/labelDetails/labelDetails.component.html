@@ -1,0 +1,77 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+<mat-card class="label-details mat-elevation-z2" *transloco="let t; read: 'labelDetails'">
+  <ng-container *ngIf="labelDefinition">
+    <mat-card-header>
+      <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
+      <div class="loading-indicator" *ngIf="isLoadingValues"><mat-spinner [diameter]="20"></mat-spinner></div>
+    </mat-card-header>
+
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+      <mat-card-content>
+        <mat-tab-group (selectedTabChange)="initRenderValues($event)" #tabGroup>
+          <mat-tab [label]="t('titleLabelProps')">
+            <div class="tab-content">
+              <mat-form-field>
+                <mat-label>{{ t('name') }}</mat-label>
+                <input matInput required formControlName="name" />
+              </mat-form-field>
+              <mat-form-field>
+                <mat-label>{{ t('index') }}</mat-label>
+                <input matInput type="number" formControlName="index" />
+              </mat-form-field>
+            </div>
+          </mat-tab>
+
+          <mat-tab [label]="t('titleValues')">
+            <ng-template matTabContent>
+              <div class="label-values">
+                <ng-container formArrayName="values">
+                  <div class="text-value-container" *ngFor="let control of renderValues.controls; index as i">
+                    <wy-upsert-label-value
+                      [parentForm]="control"
+                      [formGroupName]="i"
+                      (valueRemoved)="removeValue(i, control.value)"
+                    ></wy-upsert-label-value>
+                  </div>
+                </ng-container>
+                <button mat-stroked-button type="button" (click)="addNewValue()">
+                  <mat-icon>add</mat-icon> {{ t('addNewValue') }}
+                </button>
+              </div>
+            </ng-template>
+          </mat-tab>
+
+          <mat-tab [label]="t('titleInfoTemplate')">
+            <ng-template matTabContent class="tab-content">
+              <p>{{ t('template') }}</p>
+              <ckeditor
+                class="note-editor"
+                [formControl]="editForm.controls['template']"
+                [editor]="Editor"
+                [config]="editorConfig"
+                (ready)="onReady($event)"
+              ></ckeditor>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" [disabled]="editForm.invalid" type="submit">
+          {{ t('save') }}
+        </button>
+        <span class="autosave" (click)="toggleAutosave()">
+          {{ t('autosave.' + autosave) }}
+        </span>
+        <button mat-button type="button" color="warn" class="cancel-button" (click)="cancel()">
+          {{ t('cancel') }}
+        </button>
+      </mat-card-actions>
+    </form>
+  </ng-container>
+</mat-card>

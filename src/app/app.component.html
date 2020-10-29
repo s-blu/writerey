@@ -10,17 +10,16 @@
   <wy-topbar></wy-topbar>
   <div class="main">
     <div class="left">
-      <wy-explorer (labelChanged)="changeLabel($event)"></wy-explorer>
-      <wy-document-marks></wy-document-marks>
+      <wy-explorer></wy-explorer>
+      <wy-document-labels></wy-document-labels>
     </div>
     <div class="editor">
       <div class="document-area">
-        <wy-document-editor *ngIf="!labelDef"></wy-document-editor>
-        <wy-label-details *ngIf="labelDef" [labelDef]="labelDef"></wy-label-details>
+        <router-outlet></router-outlet>
       </div>
     </div>
     <div class="notes">
-      <wy-notes [labelDefinition]="labelDef"></wy-notes>
+      <router-outlet name="notes"></router-outlet>
     </div>
   </div>
   <wy-footer></wy-footer>

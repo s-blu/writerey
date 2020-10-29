@@ -33,24 +33,30 @@ body {
   margin: 0;
 }
 
-.note-editor {
+.note-editor,
+.label-value-editor {
   .ck.ck-editor__editable_inline {
     border: 1px solid var(--ck-color-toolbar-border);
-    border-top: none;
     min-height: 3em;
   }
 }
+.note-editor {
+  .ck.ck-editor__editable_inline {
+    border-top: none;
+  }
+}
+
 #ckeditor-container.ck-content.ck-editor__editable {
   overflow-y: hidden;
 }
-.readonly-note-ckeditor {
+.ckeditor-readonly-wrap {
   .ck-content.ck-editor__editable.ck-read-only {
     padding: 0;
   }
 }
 
 .mat-typography .ckeditor-component .ck-content,
-.mat-typography .readonly-note-ckeditor .ck-content {
+.mat-typography .ckeditor-readonly-wrap .ck-content {
   h1,
   h2,
   h3,

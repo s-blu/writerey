@@ -1,0 +1,24 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="create-note" *transloco="let t; read: 'createLabel'">
+  <h1>{{ t('title') }}</h1>
+  <form [formGroup]="createNewForm" (ngSubmit)="onSubmit(createNewForm.value)">
+    <mat-form-field>
+      <mat-label>{{ t('name') }}</mat-label>
+      <input (keyup.enter)="onSubmit(createNewForm.value)" matInput required formControlName="name" />
+    </mat-form-field>
+    <div class="actions">
+      <button mat-button [disabled]="createNewForm.invalid" type="submit">
+        <mat-icon>add</mat-icon>
+        {{ t('create') }}
+      </button>
+      <button mat-button type="button" (click)="cancel()">{{ t('cancel') }}</button>
+    </div>
+  </form>
+</div>

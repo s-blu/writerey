@@ -1,0 +1,46 @@
+<!--
+ Copyright (c) 2020 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
+  <mat-card-header>
+    <mat-icon class="icon">link</mat-icon>
+    <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
+    <mat-icon class="expand" [@rotate]="isExpanded" (click)="changeExpand()">
+      expand_more
+    </mat-icon>
+  </mat-card-header>
+  <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
+    <mat-card-content>
+      <div class="link-destination">
+        <wy-breadcrumb [fileInfo]="fileInfo" skipRoot="true"></wy-breadcrumb>
+      </div>
+      <wy-ckeditor-readonly class="note-text preview" [data]="link?.text"></wy-ckeditor-readonly>
+      <mat-progress-bar
+        mode="indeterminate"
+        *ngIf="isExpanded && !content && !unableToFetchDocument"
+      ></mat-progress-bar>
+      <wy-ckeditor-readonly
+        class="note-text"
+        *ngIf="content && isExpanded && !unableToFetchDocument"
+        [@fadeOutOnLeave]
+        [data]="content"
+      ></wy-ckeditor-readonly>
+      <div class="document-error" *ngIf="unableToFetchDocument">
+        {{ t('documentError') }}
+      </div>
+    </mat-card-content>
+    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions">
+      <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
+        <mat-icon>done</mat-icon>
+      </button>
+      <button mat-icon-button (click)="changeKeepOpen()" [matTooltip]="t(link.keepOpen ? 'keepClosed' : 'keepOpen')">
+        <mat-icon>{{ link.keepOpen ? 'unfold_less' : 'unfold_more' }}</mat-icon>
+      </button>
+    </mat-card-actions>
+  </div>
+</mat-card>

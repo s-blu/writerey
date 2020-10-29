@@ -7,15 +7,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormControl, FormBuilder } from '@angular/forms';
-import { NameSafetyValidator } from 'src/app/directives/nameSafetyValidator';
-import { slideInDownAnimation, slideInDownOnEnterAnimation } from 'angular-animations';
-import { OnChangeErrorMatcher } from 'src/app/utils/form.utils';
+import { OnChangeErrorMatcher } from '@writerey/shared/utils/form.utils';
+import { NameSafetyValidator } from '@writerey/shared/directives/nameSafetyValidator';
 
 @Component({
   selector: 'wy-createNewFileDialog',
   templateUrl: './createNewItemDialog.component.html',
   styleUrls: ['./createNewItemDialog.component.scss'],
-  animations: [slideInDownOnEnterAnimation()],
 })
 export class CreateNewItemDialogComponent implements OnInit {
   typeOfDialog = '';

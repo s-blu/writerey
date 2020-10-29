@@ -39,8 +39,11 @@ class Documents(Resource):
             pathToSaveTo = basePath
         name = PathUtils.sanitizeFilename(doc_name)
         filePath = PathUtils.sanitizePathList([pathToSaveTo, name])
-        # TODO check if this is available
-        f = request.files['file']
+        try:
+            f = request.files['file']
+        except:
+            return abort(400, 'No or invalid file given')
+
         f.save(filePath)
         return self.getResponseObject(open(filePath, encoding='utf-8'))
 

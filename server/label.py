@@ -4,7 +4,7 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
+from flask import request, abort
 from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath, labelPath
@@ -12,6 +12,9 @@ from pathUtils import PathUtils
 
 import os
 from stat import ST_MTIME
+
+label_def_filename = '_writerey_label_defs'
+label_value_prefix = 'lv_'
 
 class Labels(Resource):
     def get(self, label_id):
@@ -25,7 +28,7 @@ class Labels(Resource):
             return content
         except OSError as err:
             print('get labels failed', err)
-            return ''  # TODO send an error back here
+            return ''
 
     def put(self, label_id):
         if label_id != 'definitions':
@@ -36,8 +39,10 @@ class Labels(Resource):
         pathToLabels = self.getPathToLabels(projectDir)
         Path(pathToLabels).mkdir(parents=True, exist_ok=True)
         labelFilePath = self.getLabelValPath(label_id, value_id, projectDir)
-        # TODO check if this is available
-        f = request.files['file']
+        try:
+            f = request.files['file']
+        except:
+            return abort(400, 'No or invalid file given')
         f.save(labelFilePath)
         fileRead = open(labelFilePath, encoding='utf-8')
         return fileRead.read()
@@ -47,7 +52,7 @@ class Labels(Resource):
 
     def getLabelValPath(self, label_id, value_id, projectDir):
         if label_id == 'definitions':
-            filename = '_writerey_label_defs'
+            filename = label_def_filename
         else:
-            filename = 'lv_' + value_id
+            filename = label_value_prefix + value_id
         return PathUtils.sanitizePathList([self.getPathToLabels(projectDir), filename])
