@@ -10,8 +10,8 @@
   "main": "main.js",
   "homepage": "https://writerey.com",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/s-blu/writerey.git"
+    "type": "git",
+    "url": "https://github.com/s-blu/writerey.git"
   },
   "scripts": {
     "ng": "ng",
@@ -26,7 +26,7 @@
     "flask": "python server/app.py development",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make",
-    "build-docs": "cd docs && mkdocs build"
+    "build-docs": "cd documentation && mkdocs build"
   },
   "private": true,
   "dependencies": {

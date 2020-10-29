@@ -9,6 +9,7 @@ nav:
   - en/development.md
 extra_css:
   - assets/custom.css
+site_dir: ../docs
 theme:
   name: material
   favicon: img/writerey.ico
