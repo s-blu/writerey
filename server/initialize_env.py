@@ -17,13 +17,15 @@ installed_packages = get_installed_distributions()
 flat_installed_packages = [package.project_name for package in installed_packages]
 
 def initialize_env(): 
+  log = Logger('initialize_app')
   pip_cmd = 'pip'
+
+  log.logDebug('checking if pip is available or fallback to pip3')
   try:
-    subprocess.run([pip_cmd, '--version'], shell=True, check=True, text=True)
+    subprocess.run([pip_cmd, '--version'], shell=True, check=True, stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
   except:
     pip_cmd = 'pip3'
   
-  log = Logger('initialize_app')
   required_packages = ['Flask', 'Flask-RESTful', 'waitress']
   log.logDebug('installed packages ...', flat_installed_packages)
   for package in required_packages:

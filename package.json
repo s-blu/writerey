@@ -24,6 +24,7 @@
     "electron": "electron .",
     "build-electron": "ng build --prod && npm run electron .",
     "flask": "python server/app.py development",
+    "unix:flask": "~/.local/bin/pipenv run python3 server/app.py development",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make",
     "build-docs": "cd documentation && mkdocs build",
