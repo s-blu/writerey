@@ -4,7 +4,14 @@ site_description: User Documentation for writing software writerey
 nav:
   - index.md
   - en/installation.md
-  - en/guide.md
+  - "User Guide":
+      - en/get_started.md
+      - en/application.md
+      - en/projects-folders.md
+      - en/documents.md
+      - en/note-items.md
+      - en/labels.md
+      - en/snapshots-tags.md
   - en/troubleshooting.md
   - en/roadmap.md
   - en/development.md
