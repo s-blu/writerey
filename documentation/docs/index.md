@@ -13,3 +13,7 @@ You don't know what writerey is? Head over to our [homepage](https://writerey.co
 Please be aware that writerey is still in active development and did not hit v1.0 yet. Some things are broken, some are incomplete, some are simply not available yet.
 
 To find out what to expect in future, head over to our [Roadmap](./en/roadmap.md).
+
+Do you have questions? Contact us via hello@writerey.com
+
+[Imprint](https://writerey.com/imprint)
