@@ -2,6 +2,8 @@
 
 ## What is a document?
 
+A document is the only type of file writerey knows. It is a text file that will be saved as .html to your local disk space, relative to the installation path of writerey. You'll use documents to write your story, your background informations, plan plots and so on. 
+
 ## Create a document
 
 You can create documents only inside of a project.
@@ -15,17 +17,47 @@ You can create documents only inside of a project.
 
 ## Rename a document
 
+- In the explorer, hover over the document you want to rename
+- Click on the More Menu on the explorer entry
+- Select "Rename"
+- A dialog appears. Type in the new name for your document.
+- Click "Rename"
+
+Your document is now renamed.
+
+_Technical note_: On every rename, writerey creates a snapshot to reflect this change.
+
 ## Move a document
 
+- In the explorer, hover over the document you want to move
+- Click on the More Menu on the explorer entry
+- Select "Move"
+- You've now entered the move mode. Hover over folders in your explorer to let the "Move here" arrow appear.
+- Click on the arrow on the folder you want to move your document
+- If you want to move it to the root, click on the Arrow at the very bottom of the tree, right from the "(To Root)" label
+
+To cancel a move, click on the X beside the document you are just moving.
+
+_Technical note_: On every move, writerey creates a snapshot to reflect this change.
+
 ## Delete a document
+
+- In the explorer, hover over the document you want to delete
+- Click on the More Menu on the explorer entry
+- Select "Delete"
+- Confirm the dialog that pops up
+
+_Technical note_: On every delete, writerey creates a snapshot _before_ deleting the document to give you a chance to get it back, if necessary.
 
 ## Use the Editor
 
 Writerey uses CKEditor 5. Most of the handling works just like in any other writing application. If you have doubts or question, the official [CKEditor website](https://ckeditor.com/ckeditor-5/) is probably a good place to look.
 
+After creating or navigating a document, you'll get access to the sheet of paper in the middle. Above you'll have a Toolbar that allows to modify how part of your document looks and also give you the possibility to i.e. insert a table.
+
 ## Switch document modes
 
-Right below the editor, you have three modes available. When you click on one of t hese, your document switches mode. Let's have a look on them.
+Right below the editor, you have three modes available. When you click on one of these, your document switches mode. Switching document modes affects the visibility of ui elements as well as the state of the editor.
 
 ### Read
 
@@ -35,21 +67,21 @@ _Tip_: To achieve the same for the other modes, hit the distraction free mode bu
 
 ### Write
 
-You will probably stay in Write Mode most of the time. It lets you edit your document and shows you all the context informations you need to craft your next masterpiece (or homework).
+You will probably stay in Write Mode most of the time. It lets you edit your document and shows you all the context informations you need.
 
 ### Review
 
-Did you wonder about the context information I mentioned just now? The review mode is where you add them. Here, you can review your document and add two kinds of information: labels and notes. These information will then show up on Write mode to help you improve your document.
+In the review mode, you'll see all ui elements you need to add or modify context informations like label values and note items.
 
 ## Activate a paragraph
 
 Either click into a paragraph or put the writing cursor into it. After a short moment, a thin blue border will appear on the left side. This paragraph is now active.
 
-You'll now see its label and note informations and be able to edit both for this specific paragraph.
+You'll now see its label and note informations and be able to edit both for this specific paragraph in the review mode.
 
 ## Save a document
 
-Writerey saves automatically for you, every time you do a tiny writing pause. You see that your document got saved when the Save Icon in the lower right corner wiggles.
+Writerey saves automatically for you, every time you do a tiny writing pause. You see that your document got saved when the Save Icon in the lower right corner wiggles and the saved date updates.
 
 ## Access documents outside of writerey
 
@@ -57,11 +89,11 @@ Do you wonder where your precious ideas go? Don't worry: Right on your disk spac
 
 ## Add label values to paragraphs
 
-After you have created a label and its value, you can assign them.
+You'll need a existing label with label values in order to assign them. Please be aware that labels are only valid in project scope, that means every project has its own labels.
 
-1. Go back to your document
+1. Open up your document
 1. Switch to review mode
-1. Click on a paragraph
+1. Activate a paragraph
 
 On the left side, you'll now have your created labels displayed. Choose the values you want to assign to this paragraph. When you now switch back to Write mode and your cursor is inside this paragraph, your labels will show up and - if available - you'll see your label info on the right side.
 
