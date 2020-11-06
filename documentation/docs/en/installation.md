@@ -70,4 +70,4 @@ Installing Git can be a bit alienating, since there are a lot of options to choo
 
 1. Unzip the zip in your preffered installation path. Please be aware that all the files you'll create in writerey will lay in the same path
 1. Double Click writerey.exe
-1. You're ready to go!
+1. You're ready to go! Visit [our Get Started Guide](../get_started) to start writing!
