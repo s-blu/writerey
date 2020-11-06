@@ -48,9 +48,11 @@
     "core-js": "^3.6.5",
     "electron-squirrel-startup": "^1.0.0",
     "immutable": "^4.0.0-rc.12",
+    "material-design-icons": "^3.0.1",
     "python-shell": "^2.0.1",
     "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
+    "typeface-roboto": "^1.1.13",
     "uuid": "^8.3.0",
     "zone.js": "^0.11.1"
   },
