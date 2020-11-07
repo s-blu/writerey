@@ -4,6 +4,8 @@ Welcome to the writerey documentation!
 
 **Choose a topic on the right sidebar to learn more.**
 
+Are you new to writerey? Please refer to [the installation guide](/en/installation/). Already installed? Check out our [Get Started Guide](/en/get_started/)!
+
 ## Writer-what?
 
 You don't know what writerey is? Head over to our [homepage](https://writerey.com) to find out more about the app.

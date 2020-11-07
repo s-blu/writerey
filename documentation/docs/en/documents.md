@@ -15,6 +15,13 @@ You can create documents only inside of a project.
 
 ![](../img/writerey_guide_docs-labels.jpg)
 
+### Create a document in an existing folder
+
+- Hover over the folder in the sidebar
+- Click on the "More" Menu that appears on the tree entry
+- Choose "Create Document"
+- Choose a Name and hit "Create"
+
 ## Rename a document
 
 - In the explorer, hover over the document you want to rename
@@ -25,7 +32,7 @@ You can create documents only inside of a project.
 
 Your document is now renamed.
 
-_Technical note_: On every rename, writerey creates a snapshot to reflect this change.
+_Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you rename a folder only in a casesensitive way (i.e. "characters" to "Characters") writerey will do two commits to prevent problems. Git on Windows has some problems with case sensitive renames.
 
 ## Move a document
 

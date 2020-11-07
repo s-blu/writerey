@@ -23,13 +23,57 @@ You can create labels only inside of a project.
 
 ## Rename labels
 
-## Remove labels
+- Switch the tab in the sidebar to "Labels"
+- Click on the label you want to rename to open up it's details
+- Under tab "details", change the name of the label
+- Hit Save
+
+## Delete labels
+
+- Switch the tab in the sidebar to "Labels"
+- Hover over the label you want to delete
+- Click on the More Menu on the folder entry
+- Select "Delete"
+
+- Confirm the dialog that pops up
+
+_Technical note_: On every delete, writerey creates a snapshot _before_ deleting something to give you a chance to get it back, if necessary.
+
+## Save labels
+
+When on a label detail view, you can save your changes by clicking the blue "Save" Button at the bottom of the page.
+
+Alternatively, you can enable automatic saving. Automatic saving on labels works just like it does on documents: If you change anything, no matter in which tab or field, and do a tiny pause, it will save the label.
+
+### Activate automatic saving
+
+Autosaving is enabled by default. You can disable it application-wide by clicking the "Autosave is on" text right from the Save Button. 
 
 ## Create label values
 
+- Navigate into a label
+- Switch tabs to "Values"
+- Scroll down if necessary
+- Click on "Add new label value"
+
 ## Rename label values
 
-## Remove label values
+- Navigate into a label
+- Switch tabs to "Values"
+- Scroll to the label value you want to rename
+- Input the new name in input field "Value"
+- Click Save if autosave is off
+
+## Delete label values
+
+- Navigate into a label
+- Switch tabs to "Values"
+- Scroll to the label value you want to delete
+- Click on the - Button right from the name input field
+- Confirm the dialog that pops up
+- Click Save if autosave is off
+
+Please be aware that this also deletes all the note items that were associated with this label value.
 
 ## Create a label value template
 
