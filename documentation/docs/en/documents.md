@@ -32,7 +32,7 @@ You can create documents only inside of a project.
 
 Your document is now renamed.
 
-_Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you rename a folder only in a casesensitive way (i.e. "characters" to "Characters") writerey will do two commits to prevent problems. Git on Windows has some problems with case sensitive renames.
+_Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you rename a folder only in a casesensitive way (i.e. "characters" to "Characters") writerey will create two snapshots to prevent problems that can occur on these cases.
 
 ## Move a document
 
@@ -82,7 +82,13 @@ In the review mode, you'll see all ui elements you need to add or modify context
 
 ## Activate a paragraph
 
-Either click into a paragraph or put the writing cursor into it. After a short moment, a thin blue border will appear on the left side. This paragraph is now active.
+Activating a paragraph gives you the possibility to maintain label values and paragraph specific notes on it.
+
+1. Open up a document
+1. Either be in write or review mode
+1. Place the editor cursor in the paragraph you want to activate by clicking in it or moving the cursor via keyboard there
+
+After a short moment, a thin blue border will appear on the left side. This paragraph is now active.
 
 You'll now see its label and note informations and be able to edit both for this specific paragraph in the review mode.
 
