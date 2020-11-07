@@ -4,11 +4,9 @@ _paq.push(["disableCookies"]);
 _paq.push(["trackPageView"]);
 _paq.push(["enableLinkTracking"]);
 (function () {
-  if (process.env.NODE_ENV !== "production") {
-    console.log("not prod", process.env.NODE_ENV);
+  if (window && window.location && window.location.hostname === "127.0.0.1") {
     return;
   }
-  console.log("prod", process.env.NODE_ENV);
   var u = "//matomo.writerey.com/";
   _paq.push(["setTrackerUrl", u + "matomo.php"]);
   _paq.push(["setSiteId", "3"]);

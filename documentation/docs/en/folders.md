@@ -2,7 +2,7 @@
 
 ## What is a folder?
 
-A folder in writerey is the exact same like a folder on your file system: It is a bag of things that helps you to organize your documents and keep everything clean and tidy. You can also nest folders into each other or work completely without, if you prefer that.  
+A folder in writerey is the exact same like a folder on your file system: It is a bag of things that helps you to organize your documents and keep everything clean and tidy. You can also nest folders into each other or work completely without, if you prefer that.
 
 ## Create a folder
 
@@ -20,7 +20,7 @@ You can create folders only inside of a project.
 You can create folders only inside of a project.
 
 - Navigate into a project, if you have not already
-- Hover over the folder in the sidebar
+- Hover over the folder you want as a parent in the sidebar
 - Click on the "More" Menu that appears on the tree entry
 - Choose "Create Folder"
 - Choose a Name and hit "Create"
@@ -32,7 +32,7 @@ You can create folders only inside of a project.
 - Choose "Rename"
 - Choose a new Name and hit "Rename"
 
-_Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you rename a folder only in a casesensitive way (i.e. "characters" to "Characters") writerey will do two commits to prevent problems. Git on Windows has some problems with case sensitive renames.
+_Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you do a rename only in a casesensitive way (i.e. "characters" to "Characters") writerey will create two snapshots to prevent problems that can occur on these cases.
 
 ## Move a folder
 
@@ -45,9 +45,13 @@ _Technical note_: On every rename, writerey creates a snapshot to reflect this c
 
 To cancel a move, click on the X beside the folder you are just moving.
 
+![](../img/writerey_guide_move.jpg)
+
 _Technical note_: On every move, writerey creates a snapshot to reflect this change.
 
 ## Delete a folder
+
+Please be aware that deletion of a folder will also delete all its content, meaning containing folders and documents.
 
 - In the explorer, hover over the folder you want to delete
 - Click on the More Menu on the folder entry

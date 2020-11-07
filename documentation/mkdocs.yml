@@ -2,7 +2,7 @@ site_name: Writerey Documentation
 repo_url: https://github.com/s-blu/writerey
 site_description: User Documentation for writing software writerey
 nav:
-  - index.md
+  - "Welcome": index.md
   - en/installation.md
   - "User Guide":
       - en/get_started.md
@@ -23,6 +23,7 @@ extra_javascript:
 site_dir: ../docs
 theme:
   name: material
+  custom_dir: overrides
   favicon: img/writerey.ico
   logo: img/logo.png
   icon:

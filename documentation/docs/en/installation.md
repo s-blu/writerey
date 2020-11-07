@@ -10,7 +10,7 @@ To use writerey, you need following third party software installed:
 
 ## What is Python? Why do I need it?
 
-Python is a popular programming language, just like Java. Do you remember installing and updating Java environments all the time?
+Python is a popular programming language, just like Java. Do you remember installing and updating the Java environment (JRE) all the time, back in the old day? I still see the "[very large number] devices run java" screen before my inner eye.
 
 Python is already part of Linux and iOS, so you can use it there without installing it separately. On Windows machines, you need to teach Windows to understand it first.
 
@@ -41,7 +41,7 @@ Do you want to learn more? Visit the [official website](https://www.python.org/)
 
 Git is a VCS, a Version Control System. A VCS is one of the fundamentals of software development and Git is a fairly popular choice for a VCS (if not _the_ choice). In short, it takes care that developers can jump back to a old version of their code base and that they can have a look what changed between two versions. Developing without a VCS is quite hard to imagine.
 
-In writerey, we use Git to do the exact same for your writing project: To make sure you can always jump back to an old version of your files or to check what you've changed. It archives your first draft, your second, your 23rd one for you so that you don't need to do that manually.
+In writerey, we use Git to do the exact same for your writing project: To make sure you can always jump back to an old version of your files or to check what you've changed. The [snapshot functionality](../snapshots-tags/) is powered by git. It archives your first draft, your second, your 23rd one for you so that you don't need to do that manually.
 
 Do you want to learn more? Visit the [official website](https://git-scm.com/) or its [wikipedia page](https://en.wikipedia.org/wiki/Git).
 

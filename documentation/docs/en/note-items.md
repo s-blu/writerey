@@ -2,24 +2,24 @@
 
 ## What is a note?
 
-A Note is a little piece of additional information, just like a sticky note. You can add them on review mode either on the whole document, or your selected paragraph - or on your labels.
+A Note is a little piece of additional information, just like a sticky note. You can add them on review mode either on the whole document, your selected paragraph or on labels.
 
 If you add a note to a paragraph, it will only show up on this paragraph. If you have notes that you want on multiple places but not on the complete document, labels are what you're looking for. By putting notes on label values, they'll show up on each paragraph that belongs to this label value.
 
-You're having a ton of background information to that church scene 37 takes place? Label value `37` of label `Scenes` is your friend.
+You're having a ton of background information to that church scene 37 takes place? A note on label value `37` of label `Scenes` is your friend.
 
 ## What is a document link?
 
 A document link is another type of context information that'll appear on the same place like notes. Just like notes, you can add them to a document, a specific paragraph or a label.
 
-Document links give you the possibility to display another document inside your project in your note items. This can be especially useful if you have notes for a specific scene or character. With document links, you can add them to the place where you need them and don't need to switch between documents.
+Document links give you the possibility to display another document alongside your active document in your note items. This can be especially useful if you have documents for a specific location or character. With document links, you can add them to the place where you need them and don't need to switch between documents.
 
 Document links will display the document of question in a readonly way.
 
 ## Add Notes to a document
 
 You can add notes either to the whole document or to specific paragraphs.
-When adding them to documents, you see them all the time (as long as you are in this document). When adding them to paragraphs, you only see them when this paragraph is active.
+When adding them to documents, you see them all the time (as long as you are in this document).
 
 1. Go to your document
 1. Switch to Review mode
@@ -30,9 +30,11 @@ When adding them to documents, you see them all the time (as long as you are in 
 
 ## Add Document links to a document
 
-This works just like [adding a note to a document](./#add-notes-to-a-document)
+Adding a document link to a document works just like [adding a note to a document](./#add-notes-to-a-document).
 
 ## Add Notes to a paragraph
+
+When adding a note to a paragraph, you only see them when this paragraph is active.
 
 1. Switch to Review mode
 1. [Active the paragraph](../documents/#activate-a-paragraph) you want to maintain the information for
@@ -43,9 +45,11 @@ This works just like [adding a note to a document](./#add-notes-to-a-document)
 
 ## Add Document links to a paragraph
 
+Adding a document link to a paragraph works just like [adding a note to a paragraph](./#add-notes-to-a-paragraph).
+
 ## Add Notes to a label value
 
-You can add notes to label values in two ways: Firstly, while you are in a document and have a [activated paragraph](../documents/#activate-a-paragraph) that has this label value maintained. Secondly, you can add notes to all values of a label when having the label details opened.
+You can add notes to label values in two ways: First, while you are in a document and have a [activated paragraph](../documents/#activate-a-paragraph) that has this label value maintained. Second, you can add notes to all values of a label when having the label details opened.
 
 ### Adding notes to a label value while editing a document
 

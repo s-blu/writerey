@@ -1,6 +1,4 @@
-# Welcome
-
-Welcome to the writerey documentation!
+# Welcome to the writerey documentation!
 
 **Choose a topic on the right sidebar to learn more.**
 
@@ -16,6 +14,4 @@ Please be aware that writerey is still in active development and did not hit v1.
 
 To find out what to expect in future, head over to our [Roadmap](./en/roadmap.md).
 
-Do you have questions? Contact us via hello@writerey.com
-
-[Imprint](https://writerey.com/imprint)
+Do you have questions? Contact us via [hello@writerey.com](mailto:hello@writerey.com).

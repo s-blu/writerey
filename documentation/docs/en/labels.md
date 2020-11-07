@@ -2,11 +2,11 @@
 
 ## What is a label?
 
-Labels are here to help you _categorize_ parts of your document.
+Labels are here to help you categorize parts of your document.
 
-Does this paragraph belong to chapter 1,2 or 14? Is this paragraph a first draft, the second one or already final? Which scene it belongs to? Which story line? Who's the Point of View character?
+Does this paragraph belong to chapter 1, 2 or 14? Is this paragraph a first draft, the second one or already final? Which scene it belongs to? Which story line? Who's the Point of View character? Where does it take place?
 
-The label itself is only like a folder for files. To really use them, you need to add values to them. A value consists of two properties: A name and a info (or description). The name is the real value and what you will choose when assigning labels. The info on the other hand will show up as a special kind of note, so this is the right place to add all the important bits that concern this label value.
+The label itself is only like a folder for files. To really use them, you need to add values to them. A value consists of two properties: A name and a info (or description). The name is the real value and what you will choose when [assigning labels](../documents/#add-label-values-to-paragraphs). The info on the other hand will show up as a special kind of note, so this is the right place to add all the important bits that concern this label value.
 
 ![](../img/writerey_guide_label-details.jpg)
 
@@ -34,7 +34,6 @@ You can create labels only inside of a project.
 - Hover over the label you want to delete
 - Click on the More Menu on the folder entry
 - Select "Delete"
-
 - Confirm the dialog that pops up
 
 _Technical note_: On every delete, writerey creates a snapshot _before_ deleting something to give you a chance to get it back, if necessary.
@@ -55,6 +54,7 @@ Autosaving is enabled by default. You can disable it application-wide by clickin
 - Switch tabs to "Values"
 - Scroll down if necessary
 - Click on "Add new label value"
+- Click Save if autosave is off
 
 ## Rename label values
 

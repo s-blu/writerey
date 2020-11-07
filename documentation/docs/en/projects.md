@@ -4,6 +4,8 @@
 
 All your writing ideas begin with a project. Inside a project, you can add all the bits and bobs you need for a project. It is a separated place for one certain idea - one certain project - that allows you to concentrate on this one undertaking.
 
+Almost everything (except snapshots) happen in scope of a project. You have separate documents for each project as well as separate labels. This way, you can always start on a fresh state when pursuing your next idea.
+
 ## Create a project
 
 - Navigate outside of any project. To do that, click the More Menu at the top of the sidebar and click "Back to Projects"
@@ -18,7 +20,7 @@ All your writing ideas begin with a project. Inside a project, you can add all t
 - Hover over the project you want to rename
 - Click on the "More" Menu on the explorer entry
 - Select "Rename"
-- A dialog appears. Type in the new name for your document.
+- A dialog appears. Type in the new name.
 - Click "Rename"
 
 _Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you do a rename only in a casesensitive way (i.e. "characters" to "Characters") writerey will create two snapshots to prevent problems that can occur on these cases.
@@ -26,7 +28,7 @@ _Technical note_: On every rename, writerey creates a snapshot to reflect this c
 ## Delete a project
 
 - Navigate outside of any project. To do that, click the More Menu at the top of the sidebar and click "Back to Projects"
-- In the explorer, hover over the document you want to delete
+- In the explorer, hover over the project you want to delete
 - Click on the More Menu on the explorer entry
 - Select "Delete"
 - Confirm the dialog that pops up
