@@ -17,7 +17,7 @@
     
     
       
-        <title>Troubleshooting - Writerey Documentation</title>
+        <title>Get started - Writerey Documentation</title>
       
     
     
@@ -58,7 +58,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#troubleshooting" class="md-skip">
+        <a href="#get-started" class="md-skip">
           Skip to content
         </a>
       
@@ -85,7 +85,7 @@
           </span>
           <span class="md-header-nav__topic md-ellipsis">
             
-              Troubleshooting
+              Get started
             
           </span>
         </div>
@@ -206,10 +206,12 @@
       
       
 
+  
 
-  <li class="md-nav__item md-nav__item--nested">
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
     
-      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" checked>
     
     <label class="md-nav__link" for="nav-3">
       User Guide
@@ -227,11 +229,20 @@
           
           
 
+  
 
-  <li class="md-nav__item">
-    <a href="../get_started/" title="Get started" class="md-nav__link">
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+    <a href="./" title="Get started" class="md-nav__link md-nav__link--active">
       Get started
     </a>
+    
   </li>
 
         
@@ -328,56 +339,11 @@
       
       
 
-  
 
-
-  <li class="md-nav__item md-nav__item--active">
-    
-    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
-    
-      
-    
-    
-      <label class="md-nav__link md-nav__link--active" for="__toc">
-        Troubleshooting
-        <span class="md-nav__icon md-icon"></span>
-      </label>
-    
-    <a href="./" title="Troubleshooting" class="md-nav__link md-nav__link--active">
+  <li class="md-nav__item">
+    <a href="../troubleshooting/" title="Troubleshooting" class="md-nav__link">
       Troubleshooting
     </a>
-    
-      
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#how-do-i-access-my-snapshots" class="md-nav__link">
-    How do I access my snapshots?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#i-have-some-kind-of-problem-that-is-not-listed-here" class="md-nav__link">
-    I have some kind of problem that is not listed here!
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-    
   </li>
 
     
@@ -422,28 +388,6 @@
     
   
   
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#how-do-i-access-my-snapshots" class="md-nav__link">
-    How do I access my snapshots?
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#i-have-some-kind-of-problem-that-is-not-listed-here" class="md-nav__link">
-    I have some kind of problem that is not listed here!
-  </a>
-  
-</li>
-      
-    </ul>
-  
 </nav>
                   </div>
                 </div>
@@ -454,7 +398,7 @@
             <article class="md-content__inner md-typeset">
               
                 
-                  <a href="https://github.com/s-blu/writerey/edit/master/docs/en/troubleshooting.md" title="Edit this page" class="md-content__button md-icon">
+                  <a href="https://github.com/s-blu/writerey/edit/master/docs/en/get_started.md" title="Edit this page" class="md-content__button md-icon">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
                   </a>
                 
@@ -462,36 +406,22 @@
                   
                 
                 
-                <h1 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
-<h2 id="how-do-i-access-my-snapshots">How do I access my snapshots?<a class="headerlink" href="#how-do-i-access-my-snapshots" title="Permanent link">&para;</a></h2>
-<p>Currently, the history functionality to give you access to your snapshots is not implemented yet. Have a look on the <a href="../roadmap/">roadmap</a> to find out when to expect its implementation.</p>
-<p>Still, there is a way to access your snapshots.</p>
-<p>Since all the snapshot handling is done by git, you can check your snapshots with every git UI client. We recommend using <a href="https://desktop.github.com/">Github Desktop</a> for this, since it is user friendly and fast to set up.</p>
-<p>To see your history in Github Desktop, please proceed like follows</p>
-<ol>
-<li>Get it <a href="https://desktop.github.com/">here</a></li>
-<li>Run the installer</li>
-<li>When it asks you for a Github Account, click on "Skip this step" on the bottom</li>
-<li>On the next screen, hit "Next" without inputing anything</li>
-<li>Decide if you want to submit usage data and hit "Finish"</li>
-<li>Open up your file explorer and navigate to your writerey installation path</li>
-<li>Drag and Drop the folder containing writerey.exe onto Github Desktop</li>
-<li>
-<p>A popup appears. Click "Add Repository"</p>
-</li>
-<li>
-<p><img alt="" src="../../img/github-desktop1.png" /></p>
-</li>
-<li>
-<p>Github Desktop now opens up your repository. Click on the tab "History" to access your History.</p>
-</li>
-<li>
-<p><img alt="" src="../../img/github-desktop2.png" /></p>
-</li>
-</ol>
-<p>Done! Here, you can see all the changes writerey recorded for you and copy them into the original file again, if necessary.</p>
-<h2 id="i-have-some-kind-of-problem-that-is-not-listed-here">I have some kind of problem that is not listed here!<a class="headerlink" href="#i-have-some-kind-of-problem-that-is-not-listed-here" title="Permanent link">&para;</a></h2>
-<p>Feel free to open up an <a href="https://github.com/s-blu/writerey/issues">issue on Github</a> that details your problem.</p>
+                <h1 id="get-started">Get started<a class="headerlink" href="#get-started" title="Permanent link">&para;</a></h1>
+<p>Welcome to the writerey! Let's have a look what you can do when you have a brand-new installation.</p>
+<ul>
+<li>First thing, you should have an rough idea or task. Since you got this far, you probably have that.</li>
+<li>To be able to use writerey, you need a <a href="../projects/#what-is-a-project">project</a>. Learn <a href="../projects/#create-a-project">here how to create one</a>.</li>
+<li>Give it a name that lets you identify which idea or task this project is about</li>
+<li>To be able to use the editor and start writing, you need to <a href="../documents/#create-a-document">create a document</a>.</li>
+</ul>
+<p>That's it! Now get to work, for example ...</p>
+<ul>
+<li>... create more documents for all your content</li>
+<li>... organize them in <a href="../folders/">folders</a> for better overview</li>
+<li>... add context informations with <a href="../note-items/">notes</a> and <a href="../labels/">labels</a> to have every to do and background information right at hand</li>
+<li>... and save your revisions with <a href="../snapshots-tags/">snapshots and tags</a>.</li>
+</ul>
+<p><strong>Happy writing!</strong></p>
                 
               
               
@@ -510,7 +440,7 @@
     <div class="md-footer-nav">
       <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
         
-          <a href="../snapshots-tags/" title="Snapshots and Tags" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+          <a href="../installation/" title="Installation" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
             <div class="md-footer-nav__button md-icon">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
             </div>
@@ -519,19 +449,19 @@
                 <span class="md-footer-nav__direction">
                   Previous
                 </span>
-                Snapshots and Tags
+                Installation
               </div>
             </div>
           </a>
         
         
-          <a href="../roadmap/" title="Roadmap" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../application/" title="Application" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Roadmap
+                Application
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

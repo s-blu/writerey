@@ -8,7 +8,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="User Documentation for writing software writerey">
+        <meta name="description" content="User Documentation for Free Writing Software writerey">
       
       
       
@@ -207,10 +207,120 @@
       
 
 
-  <li class="md-nav__item">
-    <a href="../guide/" title="User Guide" class="md-nav__link">
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
       User Guide
+      <span class="md-nav__icon md-icon"></span>
+    </label>
+    <nav class="md-nav" aria-label="User Guide" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        <span class="md-nav__icon md-icon"></span>
+        User Guide
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../get_started/" title="Get started" class="md-nav__link">
+      Get started
     </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../application/" title="Application" class="md-nav__link">
+      Application
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../projects/" title="Projects" class="md-nav__link">
+      Projects
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../folders/" title="Folders" class="md-nav__link">
+      Folders
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../documents/" title="Documents" class="md-nav__link">
+      Documents
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../note-items/" title="Note Items" class="md-nav__link">
+      Note Items
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../labels/" title="Labels" class="md-nav__link">
+      Labels
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../snapshots-tags/" title="Snapshots and Tags" class="md-nav__link">
+      Snapshots and Tags
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
   </li>
 
     
@@ -220,8 +330,8 @@
 
 
   <li class="md-nav__item">
-    <a href="../troubleshooting/" title="Troubleshooting and known Bugs" class="md-nav__link">
-      Troubleshooting and known Bugs
+    <a href="../troubleshooting/" title="Troubleshooting" class="md-nav__link">
+      Troubleshooting
     </a>
   </li>
 
@@ -392,10 +502,10 @@
                   
                 
                 
-                <h1 id="development">Development</h1>
+                <h1 id="development">Development<a class="headerlink" href="#development" title="Permanent link">&para;</a></h1>
 <p>This section explains how you can get involved in the development of writerey and set up a local development environment.</p>
 <p>Just want to use the app? Go to the <a href="../installation/">installation guide</a> to learn how to set it up for end users.</p>
-<h2 id="set-up-a-development-environment">Set up a development environment</h2>
+<h2 id="set-up-a-development-environment">Set up a development environment<a class="headerlink" href="#set-up-a-development-environment" title="Permanent link">&para;</a></h2>
 <p>Please note that you need Python 3 and Node.js (&gt;= 12) installed on your machine.</p>
 <ul>
 <li>Clone the repository and navigate into the repository via CLI</li>
@@ -406,7 +516,7 @@
 <li>Open another terminal and start the ui with <code>ng serve</code> (if that is not working, use <code>npm run ng serve</code>)</li>
 <li>Ready! Visit <code>localhost:4200</code> to open up the app</li>
 </ul>
-<h3 id="git-features-as-part-of-the-app">Git features as part of the app</h3>
+<h3 id="git-features-as-part-of-the-app">Git features as part of the app<a class="headerlink" href="#git-features-as-part-of-the-app" title="Permanent link">&para;</a></h3>
 <p>Please be aware that some features currently <strong>don't work like expected</strong> in development environment. Since the project itself is managed by git, the sub folder is ignored to not commit test data, which leads to some conflicts when trying to commit as part of the application. To have a real test environment, please build the app as executeable.</p>
 <p>Nonfunctioning are currently (list is maybe incomplete):</p>
 <ul>
@@ -414,7 +524,7 @@
 <li>Snapshotting</li>
 <li>Tagging</li>
 </ul>
-<h2 id="build-a-executable-for-your-environment">Build a executable for your environment</h2>
+<h2 id="build-a-executable-for-your-environment">Build a executable for your environment<a class="headerlink" href="#build-a-executable-for-your-environment" title="Permanent link">&para;</a></h2>
 <p>writerey is build with <a href="https://www.electronforge.io/">electron-forge</a>. To build a executable for your target system, do the following:</p>
 <ul>
 <li>Clone the repository and navigate into the repository via CLI</li>
@@ -422,7 +532,7 @@
 <li>Trigger building and packaging with <code>npm run build-make</code></li>
 </ul>
 <p>If you want to build the application for a non-windows platform, please refer to <a href="https://www.electronforge.io/config/makers">the electron-forge documentation</a> to configure a appropiate maker.</p>
-<h2 id="build-documentation">Build documentation</h2>
+<h2 id="build-documentation">Build documentation<a class="headerlink" href="#build-documentation" title="Permanent link">&para;</a></h2>
 <p>This very documentation is build via <a href="https://www.mkdocs.org/">MkDocs</a>. Getting it running locally only requires a few steps.</p>
 <ul>
 <li>Make sure you have python dependencies installed</li>
@@ -475,7 +585,14 @@
           Material for MkDocs
         </a>
       </div>
-      
+      <div class="custom-footer">
+  <div class="footer-email">
+    <a href="mailto:hello@writerey.com">hello@writerey.com</a>
+  </div>
+  <div>
+    <a href="https://writerey.com/#/imprint" target="_blank">Imprint</a>
+  </div>
+</div>
     </div>
   </div>
 </footer>

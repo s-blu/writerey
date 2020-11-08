@@ -9,3 +9,13 @@
 :root > * {
   --md-code-bg-color: #e6e6fb;
 }
+
+.custom-footer {
+  font-size: 10pt;
+  display: flex;
+  align-items: center;
+}
+
+.footer-email {
+  margin-right: 1em;
+}
