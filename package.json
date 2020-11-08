@@ -91,9 +91,12 @@
         "ignore": [
           ".idea",
           ".vscode",
+          ".github",
           "_writerey_data",
           "e2e",
           "src",
+          "documentation",
+          "server",
           "__pycache__",
           ".gitignore",
           "node_modules",
@@ -102,15 +105,12 @@
           ".editorconfig",
           "angular.json",
           "browserslist",
-          "karma.conf.js",
+          "jest.config.js",
           "package-lock.json",
-          "Pipfile",
-          "Pipfile.lock",
+          "Pipfile.*",
           "transloco.config.js",
-          "tsconfig.app.json",
-          "tsconfig.base.json",
-          "tsconfig.spec.json",
-          "tslint.json"
+          "ts.*json",
+          "CNAME"
         ],
         "icon": "dist/writerey/assets/writerey.ico"
       },
