@@ -34,7 +34,14 @@ When adding them to documents, you see them all the time (as long as you are in 
 
 ## Add Document links to a document
 
-Adding a document link to a document works just like [adding a note to a document](./#add-notes-to-a-document).
+1. Switch to Review mode
+1. On the "New Note" card on the right, switch "Note Type" to "Document Link"
+1. Double check if the context is set to "Document"
+1. Click on "Choose document".
+1. A dialog pops up that lets you choose an existing document out of this project. Click on the document you want to link.
+1. Click on "Choose Document" to confirm your selection and close the dialog
+1. You can add a short, optional description, i.e. why this document is important here
+1. Hit the Plus-Button to add your document link.
 
 ## Add Notes to a paragraph
 
@@ -49,7 +56,17 @@ When adding a note to a paragraph, you only see them when this paragraph is acti
 
 ## Add Document links to a paragraph
 
-Adding a document link to a paragraph works just like [adding a note to a paragraph](./#add-notes-to-a-paragraph).
+Adding a document link to a paragraph is similar to [adding a note to a paragraph](./#add-notes-to-a-paragraph).
+
+1. Switch to Review mode
+1. [Active the paragraph](../documents/#activate-a-paragraph) you want to maintain the information for
+1. On the "New Note" card on the right, switch "Note Type" to "Document Link"
+1. Double check if the context is set to "Paragraph"
+1. Click on "Choose document".
+1. A dialog pops up that lets you choose an existing document out of this project. Choose the document you want to link.
+1. Click on "Choose document" to confirm your selection and close the dialog
+1. You can add a short, optional description, i.e. why this document is important here
+1. Hit the Plus-Button to add your document link.
 
 ## Add Notes to a label value
 
@@ -76,7 +93,7 @@ Please note that you can only add notes to label values that are maintained on y
 
 ## Add Document links to a label value
 
-This works just like [adding a note](./#add-notes-to-a-label-value).
+This works just like [adding a document link to a paragraph](./#add-document-links-to-a-paragraph). Just make sure to choose your label value as context, instead of "paragraph".
 
 ## Edit a note
 
