@@ -25,6 +25,8 @@ Almost everything (except snapshots) happen in scope of a project. You have sepa
 
 _Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you do a rename only in a casesensitive way (i.e. "characters" to "Characters") writerey will create two snapshots to prevent problems that can occur on these cases.
 
+![](../img/projects-renamedelete.png)
+
 ## Delete a project
 
 - Navigate outside of any project. To do that, click the More Menu at the top of the sidebar and click "Back to Projects"
@@ -34,3 +36,6 @@ _Technical note_: On every rename, writerey creates a snapshot to reflect this c
 - Confirm the dialog that pops up
 
 _Technical note_: On every delete, writerey creates a snapshot _before_ deleting anything to give you a chance to get it back, if necessary.
+
+
+![](../img/projects-renamedelete.png)

@@ -12,6 +12,8 @@ A tag is a "special name" for a snapshot. Since writerey is automatically doing 
 
 You can use tags to mark these special milestones to find them more quickly when necessary.
 
+![](../img/snapshot-tag-buttons.png)
+
 ## Create a snapshot
 
 1. Click on the camera icon at the very right, upper corner of the application
@@ -27,6 +29,7 @@ _Hint2:_ Additional to manual snapshots, writerey snapshots your data automatica
 1. Input a custom name. Please be aware that you can only use a restricted character set and especially no spaces.
 
 **Attention!** A tag is always created on the _last_ snapshot available. It is **not** automatically generating a new snapshot. That means if you want to tag your current state you first need to do a snapshot and then tag this snapshot. 
+
 
 ## View snapshots and tags
 

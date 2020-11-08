@@ -32,6 +32,8 @@ You can create documents only inside of a project.
 
 _Technical note_: On every rename, writerey creates a snapshot to reflect this change. Don't wonder: If you rename a folder only in a casesensitive way (i.e. "characters" to "Characters") writerey will create two snapshots to prevent problems that can occur on these cases.
 
+![](../img/documents-menu.png)
+
 ## Move a document
 
 - In the explorer, hover over the document you want to move
@@ -56,6 +58,8 @@ _Technical note_: On every move, writerey creates a snapshot to reflect this cha
 
 _Technical note_: On every delete, writerey creates a snapshot _before_ deleting the document to give you a chance to get it back, if necessary.
 
+![](../img/documents-menu.png)
+
 ## Use the Editor
 
 Writerey uses CKEditor 5. Most of the handling works just like in any other writing application. If you have doubts or question to editor specifica, the official [CKEditor website](https://ckeditor.com/ckeditor-5/) is probably a good place to look.
@@ -65,6 +69,8 @@ After creating or navigating into a document, you'll get access to the sheet of 
 ## Switch document modes
 
 Right below the editor, you have three modes available. When you click on one of these, your document switches mode. Switching document modes affects the visibility of ui elements as well as the state of the editor.
+
+![](../img/document-modes.png)
 
 ### Read
 

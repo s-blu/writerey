@@ -15,7 +15,7 @@ You'll find the distraction free toggle on the lower left corner.
 
 The distraction free toggle can be changed in and has effect on all views.
 
-![](../img/app-distration-free-toggle.png)
+![Icon representation of the different distraction free states](../img/app-distration-free-toggle.png)
 
 ### Document Modes
 
@@ -24,6 +24,8 @@ Document Modes also alter the visibility of ui elements.
 - Write Mode: Show Context information (Notes and Label Values), if existing
 - Review Mode: Show additionally elements to create or edit notes and label values
 - Read Mode: Hide all context information and set editor into read only
+
+![Document Mode Switches](../img/document-modes.png)
 
 ## What is a "start page"?
 
@@ -34,7 +36,9 @@ Per default, writerey opens the last document you edited when starting up. You c
 - You'll need a document to set it as a  start page. Navigate into the corresponding project.
 - In the explorer, hover over the document
 - Click on the More Menu on the explorer entry
-- Select "Set as start page"
+- Select "Use as start page"
+
+![](../img/use_as_startpage.png)
 
 ### Remove start page
 

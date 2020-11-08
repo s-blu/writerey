@@ -25,6 +25,8 @@ You can create folders only inside of a project.
 - Choose "Create Folder"
 - Choose a Name and hit "Create"
 
+![](../img/folders-menu.png)
+
 ## Rename a folder
 
 - Hover over the folder you want to rename in the sidebar

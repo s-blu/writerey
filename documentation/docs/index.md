@@ -14,4 +14,4 @@ Please be aware that writerey is still in active development and did not hit v1.
 
 To find out what to expect in future, head over to our [Roadmap](./en/roadmap.md).
 
-Do you have questions? Contact us via [hello@writerey.com](mailto:hello@writerey.com).
+Do you have questions? [Open an issue](https://github.com/s-blu/writerey/issues) or contact us via [hello@writerey.com](mailto:hello@writerey.com).

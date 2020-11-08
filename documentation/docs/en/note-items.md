@@ -8,6 +8,8 @@ If you add a note to a paragraph, it will only show up on this paragraph. If you
 
 You're having a ton of background information to that church scene 37 takes place? A note on label value `37` of label `Scenes` is your friend.
 
+![](../img/notes.png)
+
 ## What is a document link?
 
 A document link is another type of context information that'll appear on the same place like notes. Just like notes, you can add them to a document, a specific paragraph or a label.
@@ -15,6 +17,8 @@ A document link is another type of context information that'll appear on the sam
 Document links give you the possibility to display another document alongside your active document in your note items. This can be especially useful if you have documents for a specific location or character. With document links, you can add them to the place where you need them and don't need to switch between documents.
 
 Document links will display the document of question in a readonly way.
+
+![Example of a document link creation](../img/documentlink.png)
 
 ## Add Notes to a document
 
@@ -97,6 +101,8 @@ Editing a document link is currently not possible. You need to delete it and cre
 1. Click on the "Check"-Button on the right lower corner
 
 _Attention:_ Contrary to other deletion actions, writerey will not do a safety commit when checking a note.
+
+![](../img/expanded_note.png)
 
 ## Delete or check a document link
 

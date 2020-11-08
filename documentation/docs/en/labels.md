@@ -83,6 +83,8 @@ For example, maybe you want to note down for each scene you have where it takes 
 
 To make it easier for you to maintain such equally structured informations, you can define a label info template. When editing your label values, each label value info will be prefilled with this template - except you already input a info for this label value, of course.
 
+![](../img/label-value-template-example.png)
+
 ## Create a label value info template
 
 - Navigate into a label definition by choosing it in the tree
