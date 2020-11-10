@@ -9,7 +9,6 @@ import os
 from pathlib import Path
 
 from writerey_config import basePath
-# TODO: is this package named pip under ubuntu, too?
 from pip._internal.utils.misc import get_installed_distributions
 from logger import Logger
 
