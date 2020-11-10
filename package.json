@@ -1,18 +1,24 @@
 {
   "name": "writerey",
   "description": "Writerey helps you to organize, compose and refine your stories.",
-  "version": "0.9.0-SNAPSHOT",
+  "version": "0.10.0-SNAPSHOT",
   "author": {
     "name": "Stefanie S",
     "email": "sts@s-blu.de"
   },
   "license": "MPL-2.0",
   "main": "main.js",
+  "homepage": "https://writerey.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/s-blu/writerey.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "electron-forge start",
     "build": "ng build --prod",
-    "test": "ng test",
+    "test": "jest",
+    "test:watch": "jest --watch",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "electron": "electron .",
@@ -20,7 +26,8 @@
     "flask": "python server/app.py development",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make",
-    "build-docs": "cd docs && mkdocs build"
+    "build-docs": "cd documentation && mkdocs build",
+    "deploy-docs": "cd documentation && mkdocs gh-deploy"
   },
   "private": true,
   "dependencies": {
@@ -57,22 +64,15 @@
     "@electron-forge/maker-rpm": "^6.0.0-beta.52",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
     "@electron-forge/maker-zip": "^6.0.0-beta.52",
-    "@types/jasmine": "^3.5.13",
-    "@types/jasminewd2": "~2.0.3",
+    "@types/jest": "^26.0.14",
     "@types/node": "^14.6.0",
     "codelyzer": "^6.0.0",
     "electron": "^9.2.1",
     "husky": "^4.2.5",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.1.1",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage-istanbul-reporter": "~3.0.2",
-    "karma-jasmine": "~4.0.1",
-    "karma-jasmine-html-reporter": "^1.5.4",
+    "jest": "^26.5.2",
+    "jest-preset-angular": "^8.3.1",
     "lint-staged": "^10.2.11",
     "prettier": "2.0.5",
-    "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
     "typescript": "^3.9.7"
@@ -91,12 +91,26 @@
         "ignore": [
           ".idea",
           ".vscode",
+          ".github",
           "_writerey_data",
           "e2e",
           "src",
+          "documentation",
+          "server",
           "__pycache__",
           ".gitignore",
-          "node_modules"
+          "node_modules",
+          "docs",
+          ".browserslistrc",
+          ".editorconfig",
+          "angular.json",
+          "browserslist",
+          "jest.config.js",
+          "package-lock.json",
+          "Pipfile.*",
+          "transloco.config.js",
+          "ts.*json",
+          "CNAME"
         ],
         "icon": "dist/writerey/assets/writerey.ico"
       },

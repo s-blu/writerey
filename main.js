@@ -44,7 +44,7 @@ function createWindow() {
     win = null;
   });
 
-  // Open windows in default Browser
+  // Open clicked urls in default Browser and not a electron child instance
   openUrlsInDefaultBrowser();
 
   // Enable spellchecking
@@ -127,8 +127,7 @@ function openUrlsInDefaultBrowser() {
 function enableSpellChecking() {
   const { Menu, MenuItem } = require("electron");
 
-  // FIXME get the userlanguage here, but how? navigator.language doesnt work ...
-  win.webContents.session.setSpellCheckerLanguages(["en-US", "de-DE"]);
+  win.webContents.session.setSpellCheckerLanguages(["en-US", app.getLocale()]);
   win.webContents.on("context-menu", (event, params) => {
     const menu = new Menu();
 

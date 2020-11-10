@@ -16,13 +16,17 @@
   </mat-card-header>
   <div *ngIf="noteForEditing; else noteRead">
     <mat-card-content>
-      <wy-upsert-note [editNote]="noteForEditing" (noteCreated)="finishEditing($event)"></wy-upsert-note>
+      <wy-upsert-note
+        [editNote]="noteForEditing"
+        (noteCreated)="finishEditing($event)"
+        (editCanceled)="cancelEdit()"
+      ></wy-upsert-note>
     </mat-card-content>
   </div>
   <ng-template #noteRead>
     <div class="exandable-wrap" [class]="{ collapsed: !isExpanded, opened: isExpanded }">
       <mat-card-content>
-        <wy-ckeditor-readonly [data]="note.text"></wy-ckeditor-readonly>
+        <wy-ckeditor-readonly [data]="note?.text"></wy-ckeditor-readonly>
       </mat-card-content>
       <mat-card-actions
         [style]="noteStyles"

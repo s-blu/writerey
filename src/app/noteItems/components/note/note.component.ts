@@ -36,6 +36,8 @@ export class NoteComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    if (!this.note) return;
+
     if (this.note.stereotype !== NoteItemStereotypes.LABEL) {
       this.isExpanded = !!this.note.keepOpen;
     } else {
@@ -76,9 +78,13 @@ export class NoteComponent implements OnInit {
     this.isExpanded = !this.isExpanded;
   }
 
+  cancelEdit() {
+    this.noteForEditing = null;
+  }
+
   getIconForType() {
-    if (this.note.stereotype === NoteItemStereotypes.LABEL) return 'location_on';
-    switch (this.note.type) {
+    if (this.note?.stereotype === NoteItemStereotypes.LABEL) return 'location_on';
+    switch (this.note?.type) {
       case 'todo':
         return 'assignment';
       case 'info':

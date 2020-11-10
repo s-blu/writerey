@@ -6,17 +6,33 @@
 
 /* tslint:disable:no-unused-variable */
 
-import { TestBed, async, inject } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { ApiService } from './api.service';
+import { LabelService } from './label.service';
 import { NotesService } from './notes.service';
+import { ParagraphService } from './paragraph.service';
+
+class MockLabelService {}
+class MockParagraphService {}
+class MockApiService {}
 
 describe('Service: Notes', () => {
+  let notesService;
+
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [NotesService],
+      providers: [
+        NotesService,
+        { provide: ParagraphService, useClass: MockParagraphService },
+        { provide: ApiService, useClass: MockApiService },
+        { provide: LabelService, useClass: MockLabelService },
+      ],
     });
+
+    notesService = TestBed.inject(NotesService);
   });
 
-  it('should ...', inject([NotesService], (service: NotesService) => {
-    expect(service).toBeTruthy();
-  }));
+  it('should ...', () => {
+    expect(notesService).toBeTruthy();
+  });
 });

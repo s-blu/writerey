@@ -6,10 +6,17 @@
 
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CreateNewLabelComponent } from './createNewLabel.component';
+import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
+class MockMatDialogRef {
+  close() {}
+}
 
 describe('CreateNewLabelComponent', () => {
   let component: CreateNewLabelComponent;
@@ -17,7 +24,15 @@ describe('CreateNewLabelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        getTranslocoTestingModule(),
+        FormsModule,
+        ReactiveFormsModule,
+        NoopAnimationsModule /*...materialModules*/,
+      ],
       declarations: [CreateNewLabelComponent],
+      providers: [{ provide: MatDialogRef, useClass: MockMatDialogRef }, FormBuilder],
+      schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
   }));
 

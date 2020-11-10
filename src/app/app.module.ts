@@ -35,12 +35,14 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
+import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
 import { NoteItemsModule } from './noteItems/noteItems.module';
 import { LabelsModule } from './labels/labels.module';
 import { HistoryModule } from './history/history.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDividerModule } from '@angular/material/divider';
 
 const matModules = [
   MatFormFieldModule,
@@ -51,6 +53,7 @@ const matModules = [
   MatTooltipModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatDividerModule,
 ];
 @NgModule({
   declarations: [
@@ -61,6 +64,7 @@ const matModules = [
     DeleteConfirmationDialogComponent,
     ModeSwitcherComponent,
     DistractionFreeModeComponent,
+    AboutDialogComponent,
   ],
   imports: [
     BrowserModule,

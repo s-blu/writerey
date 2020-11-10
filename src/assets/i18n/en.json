@@ -2,6 +2,15 @@
   "distractionFreeMode": {
     "tooltip": "Toggle distraction free mode"
   },
+  "about": {
+    "title": "About writerey",
+    "close": "OK",
+    "version": "Version {{version}}",
+    "documentation": "Documentation",
+    "homepage": "Homepage",
+    "license": "Writerey is open source and licensed under {{license}}.", 
+    "repository": "Code on Github"
+  },
   "createLabel": {
     "title": "Create a new Label",
     "name": "Name of Label",
@@ -97,7 +106,7 @@
     "snapshot": "Create snapshot",
     "tag": "Tag last snapshot",
     "history": "Show snapshot history",
-    "save": "Save document"
+    "about": "About"
   },
   "saveInfo": {
     "lastSaved": "Last saved on",
@@ -195,6 +204,8 @@
   "createNote": {
     "context": "Context",
     "comment": "Note",
+    "cancel": "Cancel",
+    "draft": "Draft",
     "type": {
       "title": "Note Type",
       "info": "Info",

@@ -1,3 +1,6 @@
+import { DocumentStore } from 'src/app/stores/document.store';
+import { Observable } from 'rxjs';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -7,9 +10,13 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { WordCountComponent } from './wordCount.component';
+
+class MockDocumentStore {
+  wordCount$ = new Observable();
+}
 
 describe('WordCountComponent', () => {
   let component: WordCountComponent;
@@ -17,7 +24,9 @@ describe('WordCountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [getTranslocoTestingModule()],
       declarations: [WordCountComponent],
+      providers: [{ provide: DocumentStore, useClass: MockDocumentStore }],
     }).compileComponents();
   }));
 

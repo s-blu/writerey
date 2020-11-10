@@ -11,6 +11,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class StripFileEndingPipe implements PipeTransform {
   transform(value: any, args?: any): any {
-    return value.replace(/\.[^\./s]+$/, '');
+    try {
+      value = value.replace(/\.[^\./s]+$/, '');
+    } catch {
+      value = '';
+    }
+    return value;
   }
 }

@@ -7,9 +7,36 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement, EventEmitter, NO_ERRORS_SCHEMA } from '@angular/core';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
+import { FormBuilder } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 import { NoteComponent } from './note.component';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { Output } from '@angular/core';
+import { Input } from '@angular/core';
+
+@Component({
+  selector: 'wy-upsert-note',
+  template: '<div>create new notes item mock</div>',
+})
+class MockUpsertNoteComponent {
+  @Input() editNote;
+
+  @Output() noteCreated = new EventEmitter();
+  @Output() editCanceled = new EventEmitter();
+}
+
+@Component({
+  selector: 'wy-ckeditor-readonly',
+  template: '<div>mock ckeditor readonly</div>',
+})
+class MockCkeditorReadonly {
+  @Input() data;
+}
 
 describe('NoteComponent', () => {
   let component: NoteComponent;
@@ -17,7 +44,16 @@ describe('NoteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [NoteComponent],
+      imports: [
+        getTranslocoTestingModule(),
+        MatTooltipModule,
+        MatCardModule,
+        NoopAnimationsModule,
+        MatIconModule,
+        MatIconModule,
+      ],
+      providers: [FormBuilder],
+      declarations: [NoteComponent, MockUpsertNoteComponent, MockCkeditorReadonly],
     }).compileComponents();
   }));
 
