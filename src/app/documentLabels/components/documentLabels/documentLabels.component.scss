@@ -9,8 +9,6 @@
 
 :host {
   margin-top: 1em;
-  position: relative;
-  min-width: 150px;
 }
 
 .label-name {
@@ -30,9 +28,6 @@
 
 .review-mode {
   padding: 0 1em;
-  position: absolute;
-  top: 0;
-  width: calc(100% - 1em);
 }
 
 mat-slider,

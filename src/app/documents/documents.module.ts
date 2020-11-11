@@ -48,7 +48,23 @@ const declarationsAndExport = [
     DocumentsRoutingModule,
     ...materialModules,
   ],
-  declarations: [...declarationsAndExport],
-  exports: [...declarationsAndExport],
+  declarations: [
+    WordCountComponent,
+    IntroductionComponent,
+    DocumentEditorComponent,
+    DocumentNoteItemsComponent,
+    DocumentsComponent,
+    DocumentsTopbarComponent,
+    DocumentsFooterComponent,
+    ModeSwitcherComponent,
+  ],
+  exports: [
+    IntroductionComponent,
+    DocumentsComponent,
+    DocumentEditorComponent,
+    DocumentsTopbarComponent,
+    DocumentsFooterComponent,
+    ModeSwitcherComponent,
+  ],
 })
 export class DocumentsModule {}
