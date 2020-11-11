@@ -8,7 +8,8 @@
 
 .app {
   overflow: hidden;
-  .mat-drawer-container {
+  .mat-drawer-container,
+  .mat-sidenav-content {
     background-color: inherit;
     margin-bottom: 4px;
     overflow: hidden;
@@ -17,6 +18,6 @@
 
   .mat-sidenav {
     width: 270px;
-    margin-bottom: 4px;
+    margin: $margin-sidebar-content;
   }
 }

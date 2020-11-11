@@ -4,10 +4,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+@import '../../../styles/variables.scss';
+
 .document-editor {
-  margin: auto;
   width: 780px;
+  height: 100%;
   overflow-wrap: break-word;
+  background-color: $c_bg_boxes;
 
   * {
     box-sizing: border-box;
@@ -22,10 +25,5 @@
   position: absolute;
   top: 40px;
   height: 5px;
-  width: 660px;
-}
-
-:host,
-.document-editor {
-  height: 100%;
+  width: 780px;
 }
