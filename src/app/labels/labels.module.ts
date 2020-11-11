@@ -1,3 +1,4 @@
+import { LabelsRoutingModule } from './labels-routing.module';
 import { LabelsComponent } from './labels.component';
 import { UpsertLabelValueComponent } from './components/upsertLabelValue/upsertLabelValue.component';
 import { LabelNoteItemsComponent } from './components/labelNoteItems/labelNoteItems.component';
@@ -34,6 +35,7 @@ const materialModules = [
 
 @NgModule({
   imports: [
+    LabelsRoutingModule,
     CommonModule,
     FormsModule,
     SharedModule,
@@ -49,6 +51,6 @@ const materialModules = [
     UpsertLabelValueComponent,
     LabelsComponent,
   ],
-  exports: [CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent, LabelsComponent],
+  exports: [CreateNewLabelComponent, LabelsComponent],
 })
 export class LabelsModule {}

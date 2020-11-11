@@ -1,7 +1,3 @@
-import { MatButtonModule } from '@angular/material/button';
-import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
-import { HistoryModule } from './../history/history.module';
-import { DocumentsFooterComponent } from './components/documentsFooter/documentsFooter.component';
 /**
  * Copyright (c) 2020 s-blu
  *
@@ -23,9 +19,13 @@ import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
 import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
 import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
 import { DocumentsComponent } from './documents.component';
+import { DocumentsRoutingModule } from './documents-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
+import { HistoryModule } from './../history/history.module';
+import { DocumentsFooterComponent } from './components/documentsFooter/documentsFooter.component';
 
 const materialModules = [MatIconModule, MatProgressBarModule, MatButtonModule];
-// FIXME after rebuilding stuff into dedicated topbar/footer components, most of these prob. dont need to be exported anymore
 const declarationsAndExport = [
   WordCountComponent,
   IntroductionComponent,
@@ -45,6 +45,7 @@ const declarationsAndExport = [
     NoteItemsModule,
     DocumentLabelsModule,
     HistoryModule,
+    DocumentsRoutingModule,
     ...materialModules,
   ],
   declarations: [...declarationsAndExport],

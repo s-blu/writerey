@@ -1,38 +1,14 @@
-import { LabelsComponent } from './labels/labels.component';
-import { DocumentsFooterComponent } from './documents/components/documentsFooter/documentsFooter.component';
-import { DocumentsComponent } from './documents/documents.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DocumentsTopbarComponent } from './documents/components/documentsTopbar/documentsTopbar.component';
 
 const routes: Routes = [
   {
     path: '',
-    children: [
-      {
-        path: '',
-        component: DocumentsFooterComponent,
-        outlet: 'footer',
-      },
-      {
-        path: '',
-        component: DocumentsTopbarComponent,
-        outlet: 'topbar',
-      },
-      {
-        path: '',
-        component: DocumentsComponent,
-      },
-    ],
+    loadChildren: () => import('./documents/documents.module').then(m => m.DocumentsModule),
   },
   {
     path: 'labelDefinition',
-    children: [
-      {
-        path: '',
-        component: LabelsComponent,
-      },
-    ],
+    loadChildren: () => import('./labels/labels.module').then(m => m.LabelsModule),
   },
 ];
 
