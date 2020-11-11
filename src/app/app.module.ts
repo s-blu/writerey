@@ -43,6 +43,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const matModules = [
   MatFormFieldModule,
@@ -54,6 +55,7 @@ const matModules = [
   MatSnackBarModule,
   MatToolbarModule,
   MatDividerModule,
+  MatSidenavModule,
 ];
 @NgModule({
   declarations: [

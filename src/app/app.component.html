@@ -8,9 +8,17 @@
 
 <div class="app">
   <wy-topbar></wy-topbar>
-  <div class="main">
-    <wy-explorer></wy-explorer>
-    <router-outlet></router-outlet>
-  </div>
+  <mat-sidenav-container class="main">
+    <mat-sidenav mode="side" opened class="mat-elevation-z1">
+      <div>
+        <wy-explorer></wy-explorer>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
   <wy-footer></wy-footer>
 </div>

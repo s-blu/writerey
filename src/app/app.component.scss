@@ -6,12 +6,17 @@
 
 @import './styles/variables.scss';
 
-.main {
-  display: flex;
-  height: calc(100vh - 90px);
-  overflow-y: hidden;
-  padding: 5px 0;
-}
-.main > * {
-  box-sizing: border-box;
+.app {
+  overflow: hidden;
+  .mat-drawer-container {
+    background-color: inherit;
+    margin-bottom: 4px;
+    overflow: hidden;
+    height: calc(100vh - 85px);
+  }
+
+  .mat-sidenav {
+    width: 270px;
+    margin-bottom: 4px;
+  }
 }
