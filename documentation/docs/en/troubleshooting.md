@@ -1,4 +1,4 @@
-# Troubleshooting and known Bugs
+# Troubleshooting
 
 ## How do I access my snapshots?
 
