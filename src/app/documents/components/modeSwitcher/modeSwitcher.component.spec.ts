@@ -11,8 +11,8 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { ModeSwitcherComponent } from './modeSwitcher.component';
 import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
-import { DocumentStore } from './../../stores/document.store';
-import { DocumentModeStore } from './../../stores/documentMode.store';
+import { DocumentStore } from 'src/app/stores/document.store';
+import { DocumentModeStore } from 'src/app/stores/documentMode.store';
 
 describe('ModeSwitcherComponent', () => {
   let component: ModeSwitcherComponent;

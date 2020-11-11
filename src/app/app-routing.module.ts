@@ -1,3 +1,4 @@
+import { DocumentsFooterComponent } from './documents/components/documentsFooter/documentsFooter.component';
 import { DocumentsComponent } from './documents/documents.component';
 import { LabelNoteItemsComponent } from './labels/components/labelNoteItems/labelNoteItems.component';
 import { DocumentNoteItemsComponent } from './documents/components/documentNoteItems/documentNoteItems.component';
@@ -11,6 +12,11 @@ const routes: Routes = [
   {
     path: '',
     children: [
+      {
+        path: '',
+        component: DocumentsFooterComponent,
+        outlet: 'footer',
+      },
       {
         path: '',
         component: DocumentsTopbarComponent,

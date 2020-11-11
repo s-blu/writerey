@@ -9,33 +9,8 @@
 .footer {
   height: 40px;
   padding: 0 1em;
-  display: grid;
-  grid-template-columns: 1fr $size_width_editor 1fr;
-  grid-auto-flow: column;
+  display: flex;
   font-size: 10pt;
   color: $c_hint;
-}
-
-.center {
-  justify-content: center;
-  align-items: flex-end;
-  display: grid;
-  grid-template-columns: 1fr max-content 1fr;
-
-  wy-mode-switcher {
-    grid-column: 2;
-  }
-
-  wy-word-count {
-    margin-bottom: 5px;
-    justify-self: flex-end;
-    margin-right: 20px;
-  }
-}
-
-.right {
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
+  align-items: center;
 }

@@ -10,7 +10,6 @@ import { DocumentsModule } from '@writerey/documents/documents.module';
 import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { TranslocoService } from '@ngneat/transloco';
-import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -64,7 +63,6 @@ const matModules = [
     FooterComponent,
     CreateNewItemDialogComponent,
     DeleteConfirmationDialogComponent,
-    ModeSwitcherComponent,
     DistractionFreeModeComponent,
     AboutDialogComponent,
   ],

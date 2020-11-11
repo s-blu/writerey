@@ -1,0 +1,14 @@
+@import '../../../styles/variables.scss';
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.left,
+.right {
+  width: 100%;
+}
+
+.middle {
+  width: $size_width_editor;
+}
