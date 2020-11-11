@@ -1,6 +1,3 @@
-import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
-import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
-import { DocumentsComponent } from './documents.component';
 /**
  * Copyright (c) 2020 s-blu
  *
@@ -19,8 +16,12 @@ import { DocumentEditorComponent } from './components/documentEditor/documentEdi
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DocumentNoteItemsComponent } from './components/documentNoteItems/documentNoteItems.component';
 import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
+import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
+import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
+import { DocumentsComponent } from './documents.component';
 
 const materialModules = [MatIconModule, MatProgressBarModule];
+// FIXME after rebuilding stuff into dedicated topbar/footer components, these prob. dont need to be exported anymore
 const declarationsAndExport = [
   WordCountComponent,
   IntroductionComponent,
