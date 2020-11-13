@@ -5,8 +5,4 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './documentsTopbar.component.html',
   styleUrls: ['./documentsTopbar.component.scss'],
 })
-export class DocumentsTopbarComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
-}
+export class DocumentsTopbarComponent {}
