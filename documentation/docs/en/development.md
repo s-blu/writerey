@@ -4,7 +4,7 @@ This section explains how you can get involved in the development of writerey an
 
 Just want to use the app? Go to the [installation guide](./installation.md) to learn how to set it up for end users.
 
-## Set up a development environment
+## Set up a development environment (Windows)
 
 Please note that you need Python 3 and Node.js (>= 12) installed on your machine.
 
@@ -15,6 +15,20 @@ Please note that you need Python 3 and Node.js (>= 12) installed on your machine
 - Open a terminal and start the server with `npm run flask`
 - Open another terminal and start the ui with `ng serve` (if that is not working, use `npm run ng serve`)
 - Ready! Visit `localhost:4200` to open up the app
+
+## Set up a development environment (Unix)
+
+If not already available, install pip, node.js (>= 12) and npm: `sudo apt install git nodejs npm python3-pip`
+
+- Clone the repository and navigate into the repository via terminal
+- Install JS dependencies with `npm i`
+- Install pipenv with `pip3 install pipenv`
+- Install python dependencies with `~/.local/bin/pipenv install`
+- Open a terminal and start the server with `npm run unix:flask`
+- Open another terminal and start the ui with `ng serve` (if that is not working, use `npm run ng serve`)
+- Ready! Visit `localhost:4200` to open up the app
+
+_Note:_ If you are a unix person and think this can be done easier, we'd highly appreciate your feedback! 
 
 ### Git features as part of the app
 
