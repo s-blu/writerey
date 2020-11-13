@@ -1,9 +1,15 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { Component, DebugElement } from '@angular/core';
 
 import { DocumentsTopbarComponent } from './documentsTopbar.component';
+
+@Component({
+  selector: 'wy-ckeditor-toolbar',
+  template: '<div class="mock-ckeditor-toolbar">Mock ckeditor-toolbar</div>',
+})
+class MockCkeditorToolbarComponent {}
 
 describe('DocumentsTopbarComponent', () => {
   let component: DocumentsTopbarComponent;
@@ -11,7 +17,7 @@ describe('DocumentsTopbarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [DocumentsTopbarComponent],
+      declarations: [DocumentsTopbarComponent, MockCkeditorToolbarComponent],
     }).compileComponents();
   }));
 
@@ -23,5 +29,9 @@ describe('DocumentsTopbarComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should contain editor toolbar', () => {
+    expect(fixture.nativeElement.querySelector('wy-ckeditor-toolbar')).toBeTruthy();
   });
 });
