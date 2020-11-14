@@ -9,6 +9,7 @@ from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath, labelPath
 from pathUtils import PathUtils
+from logger import Logger
 
 import os
 from stat import ST_MTIME
@@ -17,6 +18,8 @@ label_def_filename = '_writerey_label_defs'
 label_value_prefix = 'lv_'
 
 class Labels(Resource):
+    log = Logger('Labels')
+
     def get(self, label_id):
         value_id = request.args.get('value_id')
         projectDir = request.args.get('project')
@@ -24,11 +27,14 @@ class Labels(Resource):
             labelFile = self.getLabelValPath(label_id, value_id, projectDir)
             f = open(labelFile, encoding='utf-8')
             content = f.read()
-
+            self.log.logDebug('returning label value content', label_id, value_id, projectDir)
             return content
-        except OSError as err:
-            print('get labels failed', err)
-            return ''
+        except FileNotFoundError:
+            self.log.logDebug('Label Value not found', value_id)
+            abort(404)
+        except OSError:
+            self.log.logError('get labels failed with OSError')
+            abort(500)
 
     def put(self, label_id):
         if label_id != 'definitions':

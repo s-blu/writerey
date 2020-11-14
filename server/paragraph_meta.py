@@ -4,14 +4,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
+from flask import request, abort
 from flask_restful import Resource
 from pathlib import Path
 from pathUtils import PathUtils
 from writerey_config import basePath, metaSubPath
+from logger import Logger
 
 
 class ParagraphMeta(Resource):
+    log = Logger('ParagraphMeta')
+
     def get(self, doc_name):
         path = request.args.get('doc_path')
         context = request.args.get('context')
@@ -21,9 +24,12 @@ class ParagraphMeta(Resource):
             f = open(path, encoding='utf-8')
             content = f.read()
             return content
+        except FileNotFoundError:
+            self.log.logInfo('paragraph meta file not found ')
+            abort(404)
         except OSError as err:
-            print('get paragraph meta failed', err)
-            return ''
+            self.log.logError('get paragraph meta failed', err)
+            abort(500)
 
     def put(self, doc_name):
         context = request.form['context']
@@ -35,9 +41,14 @@ class ParagraphMeta(Resource):
         Path(dirPath).mkdir(parents=True, exist_ok=True)
         
         pathToSaveTo = PathUtils.sanitizePathList([dirPath, context])
-        f = request.files['file']
-        f.save(pathToSaveTo)
-        savedF = open(pathToSaveTo, 'r', encoding='utf-8')
-        newContent = savedF.read()
+        try:
+            f = request.files['file']
+            f.save(pathToSaveTo)
+            savedF = open(pathToSaveTo, 'r', encoding='utf-8')
+            newContent = savedF.read()
 
-        return newContent
+            return newContent
+        except:
+            self.log.logWarn('put paragraph meta failed')
+            abort(500)
+

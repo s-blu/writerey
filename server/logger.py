@@ -5,9 +5,9 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 
-from writerey_config import debugMode
-
 import json
+
+from writerey_config import debugMode
 
 
 class bcolors:
@@ -19,11 +19,12 @@ class bcolors:
 
 
 class Logger:
-    def __init__(self, pre=''):
+    def __init__(self, pre='', silenced=False):
         self.prefix = pre
+        self.silenced = silenced
 
     def logDebug(self, *msg):
-        if (debugMode):
+        if (debugMode and not self.silenced):
             print(f'{bcolors.DEBUG}[debug]{bcolors.END}',
                   '[' + self.prefix + ']', self.parseToString(*msg))
 
@@ -32,6 +33,10 @@ class Logger:
 
     def logWarn(self, *msg):
         print(f'{bcolors.WARNING}-[WARN]{bcolors.END}',
+              '[' + self.prefix + ']', self.parseToString(*msg))
+
+    def logError(self, *msg):
+        print(f'{bcolors.ERROR}--[[ERROR]]{bcolors.END}',
               '[' + self.prefix + ']', self.parseToString(*msg))
 
     def parseToString(self, *msg):

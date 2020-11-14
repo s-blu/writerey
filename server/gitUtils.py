@@ -6,16 +6,24 @@
 
 
 import subprocess
+
+from logger import Logger
 from pathUtils import PathUtils
 from writerey_config import basePath
 
 
 class GitUtils:
+    log = Logger('GitUtils')
     def run(self, cmds: [str]):
-        switchDir = ['cd', basePath, '&&']
-        return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
+        try: 
+            switchDir = ['cd', basePath, '&&']
+            return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
+        except:
+            self.log.logError('Could not run git command', cmds)
+
 
     def setGitConfig(self):
+        self.log.logInfo('setting git config ...')
         pathToGitConfig = PathUtils.sanitizePathList(
             ['.git/config'])
         f = open(pathToGitConfig, 'a')

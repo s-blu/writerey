@@ -4,18 +4,17 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request
-from flask_restful import Resource
-from pathlib import Path
-from pathUtils import PathUtils
-from logger import Logger
-from writerey_config import basePath
-
-import subprocess
 import os
 import re
+import subprocess
+from pathlib import Path
 
+from flask import abort, request
+from flask_restful import Resource
 from gitUtils import GitUtils
+from logger import Logger
+from pathUtils import PathUtils
+from writerey_config import basePath
 
 
 class GitAutomation(Resource):
@@ -24,8 +23,13 @@ class GitAutomation(Resource):
 
     def init(self):
         if not os.path.exists('.git'):
-            subprocess.run(['git', 'init'], shell=True, check=True)
-            self.git.setGitConfig()
+            try:
+                subprocess.run(['git', 'init'], shell=True, check=True)
+                self.git.setGitConfig()
+            except:
+                msg = 'could not initalize git! Is Git installed on the system?'
+                self.logger.logError(msg)
+                abort(412, msg)
         else:
             self.logger.logDebug('git is already initialized, do nothing')
         return

@@ -18,8 +18,9 @@ from logger import Logger
 
 class Directories(Resource):
     log = Logger('directories')
+
     def get(self, dir_name):
-        return 'Not implemented yet'
+        abort(501, 'not implemented')
 
     def put(self, dir_name):
         self.log.logDebug('put called', dir_name)
@@ -27,7 +28,7 @@ class Directories(Resource):
         if not request.form or (not request.form['doc_path'] and not request.form['root_dir']):
             self.log.logWarn(
                 'directories put was called with invalid data. Do nothing.')
-            return None
+            abort(400)
         newPath = PathUtils.sanitizePathList(
                 [basePath, request.form['doc_path'], dir_name])
         self.log.logDebug('saving path', newPath)
@@ -44,7 +45,7 @@ class Directories(Resource):
         dirPath = PathUtils.sanitizePathList([pathToDelete, dir_name])
         self.log.logDebug('will delete directory', dirPath)
         if not os.path.exists(dirPath):
-            return abort(400, 'File for deletion was not found')
+            abort(400, 'Dir for deletion was not found')
         
         shutil.rmtree(dirPath)
 
