@@ -7,14 +7,6 @@
 -->
 
 <div class="footer" *transloco="let t">
-  <div class="left">
-    <wy-distraction-free-mode></wy-distraction-free-mode>
-  </div>
-  <div class="center">
-    <wy-mode-switcher></wy-mode-switcher>
-    <wy-word-count></wy-word-count>
-  </div>
-  <div class="right">
-    <wy-last-modified></wy-last-modified>
-  </div>
+  <wy-distraction-free-mode></wy-distraction-free-mode>
+  <router-outlet name="footer"></router-outlet>
 </div>
