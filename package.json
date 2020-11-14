@@ -97,7 +97,6 @@
           "e2e",
           "src",
           "documentation",
-          "server",
           "__pycache__",
           ".gitignore",
           "node_modules",
@@ -110,7 +109,7 @@
           "package-lock.json",
           "Pipfile.*",
           "transloco.config.js",
-          "ts.*json",
+          "tsconfig(.*)json",
           "CNAME"
         ],
         "icon": "dist/writerey/assets/writerey.ico"
