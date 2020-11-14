@@ -28,7 +28,7 @@ If not already available, install pip, node.js (>= 12) and npm: `sudo apt instal
 - Open another terminal and start the ui with `ng serve` (if that is not working, use `npm run ng serve`)
 - Ready! Visit `localhost:4200` to open up the app
 
-_Note:_ If you are a unix person and think this can be done easier, we'd highly appreciate your feedback! 
+_Note:_ If you are a unix person and think this can be done easier, we'd highly appreciate your feedback! Open up an [documentation issue on Github](https://github.com/s-blu/writerey/issues/new?template=documentation-issue.md&title=Unix Development Improvements) and tell us how we can do better.
 
 ### Git features as part of the app
 
@@ -55,7 +55,7 @@ If you want to build the application for a non-windows platform, please refer to
 This very documentation is build via [MkDocs](https://www.mkdocs.org/). Getting it running locally only requires a few steps.
 
 - Make sure you have python dependencies installed
-- `cd docs/`
+- `cd documentation/`
 - `mkdocs build`
 
-For developing the documentation, run `cd docs/ && mkdocs serve` to start a hot reload server.
+For developing the documentation, run `cd documentation/ && mkdocs serve` to start a hot reload server.
