@@ -22,4 +22,5 @@ jobs:
       - name: Deploy 
         run: |
           cd documentation
+          git fetch
           mkdocs gh-deploy
