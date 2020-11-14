@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'wy-documentsTopbar',
+  selector: 'wy-documents-topbar',
   templateUrl: './documentsTopbar.component.html',
   styleUrls: ['./documentsTopbar.component.scss'],
 })
