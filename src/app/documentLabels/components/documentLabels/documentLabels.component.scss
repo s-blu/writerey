@@ -9,8 +9,8 @@
 
 :host {
   margin-top: 1em;
-  position: relative;
 }
+
 .label-name {
   color: $c_label;
   margin-right: 0.5em;
@@ -28,17 +28,11 @@
 
 .review-mode {
   padding: 0 1em;
-  position: absolute;
-  top: 0;
-  width: calc(100% - 1em);
 }
 
 mat-slider,
 mat-form-field {
   width: 100%;
-}
-.numeric-label mat-label {
-  display: block;
 }
 
 .empty-hint {

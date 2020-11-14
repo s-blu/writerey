@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="document-editor" [class]="{ loading: isLoading }">
+<div class="document-editor mat-elevation-z1" [class]="{ loading: isLoading }">
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
   <wy-ckeditor
     *ngIf="document; else emptyHint"

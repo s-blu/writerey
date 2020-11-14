@@ -4,11 +4,11 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DocumentModeStore } from '../../stores/documentMode.store';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { Subscription } from 'rxjs';
 import { DocumentStore } from 'src/app/stores/document.store';
+import { DocumentModeStore } from 'src/app/stores/documentMode.store';
 
 @Component({
   selector: 'wy-mode-switcher',

@@ -6,11 +6,9 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { DocumentsModule } from '@writerey/documents/documents.module';
 import { ExplorerModule } from '@writerey/explorer/explorer.module';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { TranslocoService } from '@ngneat/transloco';
-import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
 import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
 import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -18,7 +16,6 @@ import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-import { WyCkeditorModule } from './wyCkeditor/wyCkeditor.module';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -36,12 +33,12 @@ import { FooterComponent } from './components/footer/footer.component';
 import { initializeApp, WyInitService } from './services/wy-init.service';
 import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
 import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
-import { NoteItemsModule } from './noteItems/noteItems.module';
-import { LabelsModule } from './labels/labels.module';
 import { HistoryModule } from './history/history.module';
 import { AppRoutingModule } from './app-routing.module';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 const matModules = [
   MatFormFieldModule,
@@ -51,7 +48,9 @@ const matModules = [
   MatIconModule,
   MatTooltipModule,
   MatSnackBarModule,
+  MatToolbarModule,
   MatDividerModule,
+  MatSidenavModule,
 ];
 @NgModule({
   declarations: [
@@ -60,7 +59,6 @@ const matModules = [
     FooterComponent,
     CreateNewItemDialogComponent,
     DeleteConfirmationDialogComponent,
-    ModeSwitcherComponent,
     DistractionFreeModeComponent,
     AboutDialogComponent,
   ],
@@ -75,10 +73,6 @@ const matModules = [
     CKEditorModule,
     ExplorerModule,
     SharedModule,
-    WyCkeditorModule,
-    DocumentsModule,
-    NoteItemsModule,
-    LabelsModule,
     HistoryModule,
     AppRoutingModule,
   ],
