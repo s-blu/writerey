@@ -49,7 +49,7 @@
 
           <mat-tab [label]="t('titleInfoTemplate')">
             <ng-template matTabContent class="tab-content">
-              <p>{{ t('template') }}</p>
+              <p class="template-description">{{ t('template') }}</p>
               <ckeditor
                 class="note-editor"
                 [formControl]="editForm.controls['template']"
