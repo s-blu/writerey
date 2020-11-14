@@ -26,16 +26,6 @@ import { HistoryModule } from './../history/history.module';
 import { DocumentsFooterComponent } from './components/documentsFooter/documentsFooter.component';
 
 const materialModules = [MatIconModule, MatProgressBarModule, MatButtonModule];
-const declarationsAndExport = [
-  WordCountComponent,
-  IntroductionComponent,
-  DocumentEditorComponent,
-  DocumentNoteItemsComponent,
-  DocumentsComponent,
-  DocumentsTopbarComponent,
-  DocumentsFooterComponent,
-  ModeSwitcherComponent,
-];
 
 @NgModule({
   imports: [
