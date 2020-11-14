@@ -19,7 +19,7 @@ class GitUtils:
             switchDir = ['cd', basePath, '&&']
             return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
         except:
-            self.log.logError('Could not run git command', cmds)
+            self.log.logWarn('git command failed', cmds)
 
 
     def setGitConfig(self):

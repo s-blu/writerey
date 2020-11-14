@@ -4,14 +4,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FileInfo } from '../shared/models/fileInfo.interface';
-import { TranslocoService } from '@ngneat/transloco';
-import { ApiService } from './api.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as uuid from 'uuid';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map, flatMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { catchError, flatMap, map, take } from 'rxjs/operators';
+import * as uuid from 'uuid';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -82,7 +80,10 @@ export class ParagraphService {
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
     return this.getParagraphMeta(docPath, docName, context).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.code === 404) return '';
+        return this.api.handleHttpError(err);
+      }),
       flatMap(getRes => {
         const paragraphMeta = getRes || {};
         paragraphMeta[metaType] = metaContent;
@@ -114,7 +115,10 @@ export class ParagraphService {
     };
 
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        return this.api.handleHttpError(err);
+      }),
       map((res: string) => {
         return this.parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType);
       })

@@ -27,7 +27,7 @@ class Links(Resource):
             return content
         except FileNotFoundError:
             print('get links file not found')
-            abort(404) # FIXME i remember that this was a bad idea for some reason
+            abort(404)
         except OSError as err:
             self.log.logError('get links failed with OSError', err)
             abort(500)

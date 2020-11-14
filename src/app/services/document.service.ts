@@ -4,21 +4,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { ProjectStore } from './../stores/project.store';
-import { LinkService } from 'src/app/services/link.service';
-import { FileInfo } from '../shared/models/fileInfo.interface';
-import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../shared/models/documentDefinition.interface';
-import { ParagraphService } from './paragraph.service';
-import { ApiService } from './api.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map, tap, flatMap } from 'rxjs/operators';
-import { Observable, of, Subscription } from 'rxjs';
-import { sanitizeName, ensureFileEnding } from '../shared/utils/name.util';
-import { DocumentStore } from '../stores/document.store';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
+import { Observable, of, Subscription } from 'rxjs';
+import { catchError, flatMap, map, tap } from 'rxjs/operators';
+import { LinkService } from 'src/app/services/link.service';
 import { environment } from 'src/environments/environment';
+import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../shared/models/documentDefinition.interface';
+import { FileInfo } from '../shared/models/fileInfo.interface';
+import { ensureFileEnding, sanitizeName } from '../shared/utils/name.util';
+import { DocumentStore } from '../stores/document.store';
+import { ProjectStore } from './../stores/project.store';
+import { ApiService } from './api.service';
+import { ParagraphService } from './paragraph.service';
 
 @Injectable({
   providedIn: 'root',
@@ -47,7 +47,10 @@ export class DocumentService implements OnDestroy {
     if (withContent) params.with_content = 'true';
 
     return this.httpClient.get(this.api.getDocumentRoute(name), { params }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        this.api.handleHttpError(err);
+      }),
       map((res: any) => this.transformLastEditedIntoDate(res))
     );
   }
