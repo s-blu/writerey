@@ -81,7 +81,7 @@ class Images(Resource):
 
         if not pathForImage:
             self.log.logWarn(f'could not resolve path for image {image_id}')
-            abort(400, 'could not resolve image_id to path')
+            abort(410, 'could not resolve image_id to path, no mapping available')
 
         self.log.logDebug(f'resolved for image {image_id} path {pathForImage.group(1)}')
         return pathForImage.group(1)

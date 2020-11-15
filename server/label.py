@@ -30,8 +30,8 @@ class Labels(Resource):
             self.log.logDebug('returning label value content', label_id, value_id, projectDir)
             return content
         except FileNotFoundError:
-            self.log.logDebug('Label Value not found', value_id)
-            abort(404)
+            self.log.logDebug('Label Value not found, return empty string', value_id)
+            return ''
         except OSError:
             self.log.logError('get labels failed with OSError')
             abort(500)

@@ -4,12 +4,13 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-from flask import request, abort
-from flask_restful import Resource
 from pathlib import Path
+
+from flask import Response, abort, request
+from flask_restful import Resource
+from logger import Logger
 from pathUtils import PathUtils
 from writerey_config import basePath, metaSubPath
-from logger import Logger
 
 
 class ParagraphMeta(Resource):
@@ -25,8 +26,8 @@ class ParagraphMeta(Resource):
             content = f.read()
             return content
         except FileNotFoundError:
-            self.log.logInfo('paragraph meta file not found ')
-            abort(404)
+            self.log.logInfo('paragraph meta file not found, return empty string', context)
+            return ''
         except OSError as err:
             self.log.logError('get paragraph meta failed', err)
             abort(500)
