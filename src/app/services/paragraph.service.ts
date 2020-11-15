@@ -30,6 +30,8 @@ export class ParagraphService {
     let previousUuid = '';
     let currentUuidBeforeEnhance = '';
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
+    let counter = 0;
+    const beforeEnhance = Date.now();
     paragraphs.forEach((p, i) => {
       if (p === '') return;
       const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
@@ -37,7 +39,9 @@ export class ParagraphService {
       p = this.upsertParagraphIdentifierIfNecessary(p, previousUuid, path, name);
       previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
+      counter++;
     });
+    console.log(`Checked and enhanced ${counter} paragraphs in ${Date.now() - beforeEnhance} ms.`);
     return enhancedDocument;
   }
 
