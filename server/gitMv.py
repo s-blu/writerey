@@ -21,9 +21,15 @@ class GitMove(Resource):
     git = GitUtils()
 
     def get(self):
-        return abort(501, 'not implemented')
+        abort(501, 'not implemented')
 
     def put(self):
+        doc_path = None
+        new_doc_path = None
+        project_dir = None
+        msg = None
+        doc_name = None
+        new_name = None
         try:
             doc_path = request.form['doc_path']
             new_doc_path = request.form['new_doc_path']

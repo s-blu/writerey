@@ -9,6 +9,7 @@ from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
 from pathUtils import PathUtils
+from logger import Logger
 
 import os
 import shutil
@@ -16,6 +17,8 @@ from stat import ST_MTIME
 
 
 class Documents(Resource):
+    log = Logger('Documents')
+
     def get(self, doc_name):
         try:
             path = PathUtils.sanitizePathList(
@@ -27,10 +30,10 @@ class Documents(Resource):
                 response['content'] = content
             return response
         except FileNotFoundError:
-            print('document not found', doc_name)
+            self.log.logWarn('document not found', doc_name)
             abort(404)
         except OSError:
-            print('OSError on getting document', doc_name)
+            self.log.logWarn('OSError on getting document', doc_name)
             abort(500) 
 
     def put(self, doc_name):

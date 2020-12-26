@@ -27,8 +27,8 @@ class Directories(Resource):
         dir_name = PathUtils.sanitizeFilename(dir_name)
         if not request.form or (not request.form['doc_path'] and not request.form['root_dir']):
             self.log.logWarn(
-                'directories put was called with invalid data. Do nothing.')
-            abort(400)
+                'directories put was called with invalid data.')
+            abort(400, 'Invalid Parameters')
         newPath = PathUtils.sanitizePathList(
                 [basePath, request.form['doc_path'], dir_name])
         self.log.logDebug('saving path', newPath)

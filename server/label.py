@@ -48,7 +48,7 @@ class Labels(Resource):
         try:
             f = request.files['file']
         except:
-            return abort(400, 'No or invalid file given')
+            abort(400, 'No or invalid file given')
         f.save(labelFilePath)
         fileRead = open(labelFilePath, encoding='utf-8')
         return fileRead.read()

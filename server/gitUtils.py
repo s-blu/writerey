@@ -15,11 +15,8 @@ from writerey_config import basePath
 class GitUtils:
     log = Logger('GitUtils')
     def run(self, cmds: [str]):
-        try: 
-            switchDir = ['cd', basePath, '&&']
-            return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
-        except:
-            self.log.logWarn('git command failed', cmds)
+        switchDir = ['cd', basePath, '&&']
+        return subprocess.run(switchDir + cmds, shell=True, check=True, stdout=subprocess.PIPE, text=True).stdout
 
 
     def setGitConfig(self):

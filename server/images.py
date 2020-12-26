@@ -19,16 +19,16 @@ from writerey_config import basePath, host, imagesFileName, metaSubPath, port
 
 
 class Images(Resource):
-    log = Logger('images', True)
+    log = Logger('images')
     def get(self, doc_name):
         try: 
             path = PathUtils.sanitizePathList([os.getcwd(), self.getPathForImageId(doc_name)])
             self.log.logDebug(f'sending file {doc_name} from {path} ....')
             return send_from_directory(path, filename=doc_name)
         except FileNotFoundError:
-            return abort(404)
+            abort(404)
         except OSError:
-            return abort(500)
+            abort(500)
 
 
     def post(self, doc_name):

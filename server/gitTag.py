@@ -17,7 +17,7 @@ class Tag(Resource):
     git = GitUtils()
 
     def get(self):
-        abort(501, 'not implemented yet')
+        abort(501, 'not implemented')
 
     def put(self):
         tagname = request.form['tagname']

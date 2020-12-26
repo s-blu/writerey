@@ -9,7 +9,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
 import { Observable, of, Subscription } from 'rxjs';
-import { catchError, flatMap, map, tap } from 'rxjs/operators';
+import { catchError, mergeMap, map, tap } from 'rxjs/operators';
 import { LinkService } from 'src/app/services/link.service';
 import { environment } from 'src/environments/environment';
 import { DocumentDefinition, LAST_DOCUMENT_KEY, START_PAGE_KEY } from '../shared/models/documentDefinition.interface';
@@ -118,12 +118,12 @@ export class DocumentService implements OnDestroy {
     httpHeaders.append('Content-Type', 'multipart/form-data');
     return this.documentStore.fileInfo$.pipe(
       tap(res => (currentFileInfo = res)),
-      flatMap(_ => this.projectStore.project$),
-      flatMap(project => {
+      mergeMap(_ => this.projectStore.project$),
+      mergeMap(project => {
         formdata.append('project_dir', project);
         return this.linkService.moveLinkDestination(project, name, path, newName, newPath);
       }),
-      flatMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
+      mergeMap(_ => this.httpClient.put(this.api.getGitMoveRoute(), formdata, { headers: httpHeaders })),
       catchError(err => this.api.handleHttpError(err)),
       tap((res: FileInfo) => {
         if (currentFileInfo?.path === path && currentFileInfo.name === name) {
@@ -199,7 +199,7 @@ export class DocumentService implements OnDestroy {
     this.subscription.add(
       this.documentStore.fileInfo$
         .pipe(
-          flatMap((fileInfo: FileInfo) => {
+          mergeMap((fileInfo: FileInfo) => {
             if (!fileInfo) return of(null);
             fInfo = fileInfo;
             return this.getDocument(fileInfo.path, fileInfo.name, false);
