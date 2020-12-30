@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
 import { Map } from 'immutable';
 import { Subscription } from 'rxjs';
@@ -6,6 +6,7 @@ import { ContextService } from 'src/app/services/context.service';
 import { LabelService } from 'src/app/services/label.service';
 import { NotesService } from 'src/app/services/notes.service';
 import { ParagraphService } from 'src/app/services/paragraph.service';
+import { ContextStore } from 'src/app/stores/context.store';
 import { DocumentStore } from 'src/app/stores/document.store';
 
 @Component({
@@ -25,7 +26,8 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     private notesService: NotesService,
     private labelService: LabelService,
     private contextService: ContextService,
-    private documentStore: DocumentStore
+    private documentStore: DocumentStore,
+    private contextStore: ContextStore
   ) {}
 
   ngOnInit() {
@@ -86,7 +88,15 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     if (!this.fileInfo) return;
     this.subscription.add(
       this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
+        this.contextStore.setContexts(res);
         this.updateContexts(res);
+      })
+    );
+    this.subscription.add(
+      this.contextStore.contexts$.subscribe(contexts => {
+        if (this.areContextsUpdated(contexts)) {
+          this.updateContexts(contexts);
+        }
       })
     );
   }
@@ -94,5 +104,20 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
   private updateContexts(contexts) {
     this.noteContexts = contexts;
     this.fetchNotesForParagraph();
+  }
+
+  private areContextsUpdated(contexts) {
+    if ((this.noteContexts && !contexts) || (!this.noteContexts && contexts)) {
+      return true;
+    } else if (this.noteContexts.length !== contexts.length) {
+      return true;
+    } else {
+      for (let i = 0; i < this.noteContexts.length; i++) {
+        if (this.noteContexts[i] !== contexts[i]) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }
