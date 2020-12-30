@@ -21,21 +21,29 @@ class GitMove(Resource):
     git = GitUtils()
 
     def get(self):
-        abort(501, 'not implemented yet')
+        abort(501, 'not implemented')
 
     def put(self):
+        doc_path = None
+        new_doc_path = None
+        project_dir = None
+        msg = None
         doc_name = None
         new_name = None
-        doc_path = request.form['doc_path']
-        new_doc_path = request.form['new_doc_path']
-        project_dir = request.form['project_dir']
-        msg = request.form['msg']
+        try:
+            doc_path = request.form['doc_path']
+            new_doc_path = request.form['new_doc_path']
+            project_dir = request.form['project_dir']
+            msg = request.form['msg']
+        except:
+            self.logger.logInfo('put got called with invalid parameters')
+            abort(400)
+
         try:
             doc_name = request.form['doc_name']
             new_name = request.form['new_doc_name']
         except:
             pass
-
 
         if doc_name and not new_name:
             abort(400, 'Got no new name, cannot move')
@@ -45,7 +53,7 @@ class GitMove(Resource):
             self.logger.logDebug('got no doc_name, want to rename dir, set doc names to empty string')
 
         if doc_path == new_doc_path and doc_name == new_name:
-            self.logger.logDebug('path and name are identical to new path and name, return 400')
+            self.logger.logInfo('path and name are identical to new path and name, return 400')
             abort(400, 'New path and name are identical to existing path and name.')
         
         if doc_path == new_doc_path and doc_name.lower() == new_name.lower():
@@ -90,8 +98,8 @@ class GitMove(Resource):
             linksFilePath = PathUtils.sanitizePathList([projectDir, metaSubPath, linksFileName])
             if path.exists(linksFilePath):
                 self.git.run(["git", "add", linksFilePath])
-        # add image file to the commit, since it possibly get changed on a move 
         updateImageLinks(PathUtils.sanitizePathList([basePath, old_meta_path]), PathUtils.sanitizePathList([basePath, new_meta_path]))
+        # add image file to the commit, since it possibly get changed on a move 
         try:
             imageMapPath = PathUtils.sanitizePathList([metaSubPath, imagesFileName])
             self.logger.logDebug(f'adding image map to commit ... {imageMapPath} ')

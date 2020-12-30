@@ -1,3 +1,4 @@
+import { LAST_DOCUMENT_KEY } from './../shared/models/documentDefinition.interface';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -148,6 +149,7 @@ export class DirectoryService implements OnDestroy {
             duration: 10000,
           });
           this.projectStore.setProject(null);
+          localStorage.removeItem(LAST_DOCUMENT_KEY);
         }
 
         return this.api.handleHttpError(err);

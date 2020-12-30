@@ -81,7 +81,10 @@ export class LabelService implements OnDestroy {
     };
 
     return this.httpClient.get(this.api.getLabelRoute('definitions'), { params }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        return this.api.handleHttpError(err);
+      }),
       map((res: string) => {
         return this.parseLabelValueResponse(res);
       }),
@@ -216,7 +219,10 @@ export class LabelService implements OnDestroy {
       project: this.project,
     };
     return this.httpClient.get(this.api.getLabelRoute(label.id), { params }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        return this.api.handleHttpError(err);
+      }),
       map((res: string) => {
         return this.parseLabelValueResponse(res);
       }),

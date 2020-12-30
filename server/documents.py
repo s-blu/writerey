@@ -9,6 +9,7 @@ from flask_restful import Resource
 from pathlib import Path
 from writerey_config import basePath, metaSubPath
 from pathUtils import PathUtils
+from logger import Logger
 
 import os
 import shutil
@@ -16,6 +17,8 @@ from stat import ST_MTIME
 
 
 class Documents(Resource):
+    log = Logger('Documents')
+
     def get(self, doc_name):
         try:
             path = PathUtils.sanitizePathList(
@@ -26,9 +29,12 @@ class Documents(Resource):
                 content = f.read()
                 response['content'] = content
             return response
-        except OSError as err:
-            print('get document failed', err)
-            return abort(500) 
+        except FileNotFoundError:
+            self.log.logWarn('document not found', doc_name)
+            abort(404)
+        except OSError:
+            self.log.logWarn('OSError on getting document', doc_name)
+            abort(500) 
 
     def put(self, doc_name):
         if request.form['doc_path']:
@@ -42,7 +48,7 @@ class Documents(Resource):
         try:
             f = request.files['file']
         except:
-            return abort(400, 'No or invalid file given')
+            abort(400, 'No or invalid file given')
 
         f.save(filePath)
         return self.getResponseObject(open(filePath, encoding='utf-8'))
@@ -56,7 +62,7 @@ class Documents(Resource):
 
         filePath = PathUtils.sanitizePathList([pathToDelete, doc_name])
         if not os.path.exists(filePath):
-            return abort(400, 'File for deletion was not found')
+            abort(400, 'File for deletion was not found')
         
         os.remove(filePath)
 
