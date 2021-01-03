@@ -88,8 +88,8 @@ export class DocumentNoteItemsComponent implements OnInit, OnDestroy {
     if (!this.fileInfo) return;
     this.subscription.add(
       this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.parId).subscribe(res => {
-        this.contextStore.setContexts(res);
         this.updateContexts(res);
+        this.contextStore.setContexts(res);
       })
     );
     this.subscription.add(
