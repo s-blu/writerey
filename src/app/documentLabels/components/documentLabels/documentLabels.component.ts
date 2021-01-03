@@ -142,10 +142,7 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
           tap(res => {
             this.labelsFromServer = res;
             this.updateDisplayInfo(res);
-          }),
-          mergeMap(_ =>
-            this.contextService.getContextsForDocument(this.fileInfo.path, this.fileInfo.name, this.paragraphId)
-          )
+          })
         )
         .subscribe()
     );
