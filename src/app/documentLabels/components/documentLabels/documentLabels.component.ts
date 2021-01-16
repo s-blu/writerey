@@ -1,26 +1,25 @@
+import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
+import { Label } from '@writerey/shared/models/label.interface';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
+import { sortLabelArray } from '@writerey/shared/utils/label.utils';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged, tap } from 'rxjs/operators';
+import { LabelService } from 'src/app/services/label.service';
+import { DocumentStore } from 'src/app/stores/document.store';
+import { ParagraphService } from '../../../services/paragraph.service';
 import { DistractionFreeStore } from '../../../stores/distractionFree.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
 import { LabelStore } from '../../../stores/label.store';
-import { Subscription } from 'rxjs';
-import { ParagraphService } from '../../../services/paragraph.service';
-import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
-import { Component, OnInit, SimpleChanges, OnChanges, OnDestroy } from '@angular/core';
-import { FileInfo } from '@writerey/shared/models/fileInfo.interface';
-import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
-import { LabelService } from 'src/app/services/label.service';
-import { Label } from '@writerey/shared/models/label.interface';
-import { DocumentStore } from 'src/app/stores/document.store';
-import { sortLabelArray } from '@writerey/shared/utils/label.utils';
-import { mergeMap, tap } from 'rxjs/operators';
-import { ContextService } from 'src/app/services/context.service';
 @Component({
   selector: 'wy-document-labels',
   templateUrl: './documentLabels.component.html',
@@ -48,7 +47,7 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
     private documentModeStore: DocumentModeStore,
     private documentStore: DocumentStore,
     private distractionFreeStore: DistractionFreeStore,
-    private contextService: ContextService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -64,9 +63,13 @@ export class DocumentLabelsComponent implements OnInit, OnChanges, OnDestroy {
         this.refresh();
       })
     );
+
     this.subscription.add(
-      this.documentStore.fileInfo$.subscribe(fileInfo => {
-        this.fileInfo = fileInfo;
+      this.route.queryParams.pipe(distinctUntilChanged()).subscribe(params => {
+        this.fileInfo = {
+          name: params?.name,
+          path: params?.path,
+        };
         this.refresh();
       })
     );

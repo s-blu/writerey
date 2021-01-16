@@ -4,16 +4,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
+import EditorUtils from '@writerey/shared/utils/editor.utils';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { DocumentService } from '../../../services/document.service';
+import { ParagraphService } from '../../../services/paragraph.service';
 import { DocumentStore } from '../../../stores/document.store';
 import { DocumentModeStore } from '../../../stores/documentMode.store';
-import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
-import { ParagraphService } from '../../../services/paragraph.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { DocumentService } from '../../../services/document.service';
-import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
-import EditorUtils from '@writerey/shared/utils/editor.utils';
 
 @Component({
   selector: 'wy-document-editor',
@@ -37,7 +38,9 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     private documentService: DocumentService,
     private paragraphService: ParagraphService,
     private documentModeStore: DocumentModeStore,
-    private documentStore: DocumentStore
+    private documentStore: DocumentStore,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -49,10 +52,26 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.clickSubject.pipe(distinctUntilChanged(), debounceTime(300)).subscribe((event: string) => {
         this.documentStore.setParagraphId(event);
+
+        // this.router.navigate([], {
+        //   relativeTo: this.route,
+        //   queryParams: {
+        //     paragraphId: event,
+        //   },
+        //   queryParamsHandling: 'merge',
+        //   skipLocationChange: true,
+        // });
       })
     );
 
-    this.subscription.add(this.documentStore.document$.subscribe(newDoc => this.switchDocument(newDoc)));
+    this.subscription.add(
+      this.route.queryParams
+        .pipe(distinctUntilChanged((a, b) => a.name === b.name && a.path === b.path))
+        .subscribe(params => {
+          this.switchDocument(params.path, params.name);
+        })
+    );
+
     this.subscription.add(this.documentModeStore.mode$.subscribe(m => this.switchMode(m)));
   }
 
@@ -130,13 +149,10 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  private switchDocument(newDoc: DocumentDefinition) {
-    if (!newDoc) return;
-    if (newDoc.path === this.document?.path && newDoc.name === this.document?.name) {
-      console.warn(
-        'Tried to switch to the same document again. Prevent saving and reload, do nothing instead.',
-        newDoc?.name
-      );
+  private switchDocument(path, name) {
+    if (!path && !name) return;
+    if (path === this.document?.path && name === this.document?.name) {
+      console.warn('Tried to switch to the same document again. Prevent saving and reload, do nothing instead.', name);
       return;
     }
     // empty content for editor to prevent app from crashing when switching between two heavy documents
@@ -145,7 +161,7 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
     this.paragraphId = null;
 
     this.subscription.add(
-      this.documentService.getDocument(newDoc.path, newDoc.name).subscribe(res => {
+      this.documentService.getDocument(path, name).subscribe(res => {
         this.documentModeStore.setMode(DOC_MODES.WRITE);
         this.editorData = res.content;
         this.document = res;
