@@ -13,7 +13,7 @@ import { of } from 'rxjs';
 import { DeletionService } from 'src/app/services/deletion.service';
 import { LabelService } from 'src/app/services/label.service';
 import { LabelStore } from 'src/app/stores/label.store';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
@@ -38,6 +38,10 @@ class MockRouter {
   navigate() {}
 }
 
+class MockActivatedRoute {
+  queryParams = of({});
+}
+
 describe('LabelTreeComponent', () => {
   let component: LabelTreeComponent;
   let fixture: ComponentFixture<LabelTreeComponent>;
@@ -51,6 +55,7 @@ describe('LabelTreeComponent', () => {
         { provide: LabelService, useClass: MockLabelService },
         { provide: LabelStore, useClass: MockLabelStore },
         { provide: Router, useClass: MockRouter },
+        { provide: ActivatedRoute, useClass: MockActivatedRoute },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();
