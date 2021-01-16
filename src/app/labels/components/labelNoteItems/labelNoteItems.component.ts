@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
-import { Subscription } from 'rxjs';
 import { Map } from 'immutable';
+import { Subscription } from 'rxjs';
+import { distinctUntilChanged, mergeMap } from 'rxjs/operators';
 import { ContextService } from 'src/app/services/context.service';
 import { LabelService } from 'src/app/services/label.service';
 import { NotesService } from 'src/app/services/notes.service';
 import { LabelStore } from 'src/app/stores/label.store';
-import { mergeMap, distinctUntilChanged } from 'rxjs/operators';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'wy-label-note-items',
@@ -31,10 +31,10 @@ export class LabelNoteItemsComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription.add(
-      this.route.params
+      this.route.queryParams
         .pipe(
           distinctUntilChanged(),
-          mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId))
+          mergeMap(params => this.labelService.getLabelDefinition(params.id))
         )
         .subscribe(labelDef => {
           if (!labelDef) return;
