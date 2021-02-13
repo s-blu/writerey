@@ -4,15 +4,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DeletionService } from '../../../services/deletion.service';
-import { Subscription } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
-import { LabelService } from 'src/app/services/label.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
+import { Subscription } from 'rxjs';
+import { LabelService } from 'src/app/services/label.service';
 import { LabelStore } from 'src/app/stores/label.store';
-import { Router } from '@angular/router';
+import { DeletionService } from '../../../services/deletion.service';
 
 /**
  * Food data with nested structure.
@@ -55,7 +55,8 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
     private deletionService: DeletionService,
     private labelService: LabelService,
     private labelStore: LabelStore,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -65,6 +66,12 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
         this.dataSource.data = this.labelDefinitions;
       })
     );
+
+    this.subscription.add(
+      this.route.queryParams.subscribe(params => {
+        this.activeLabelId = params?.id;
+      })
+    );
   }
 
   ngOnDestroy() {
@@ -72,8 +79,7 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
   }
 
   openLabelCategory(node) {
-    this.activeLabelId = node.id;
-    this.router.navigate(['/labelDefinition', { labelDefinitionId: node.id }]);
+    this.router.navigate(['/labelDefinition'], { queryParams: { id: node.id } });
   }
 
   removeLabel(node) {
@@ -81,6 +87,7 @@ export class LabelTreeComponent implements OnInit, OnDestroy {
       this.deletionService.handleDeleteUserInputAndSnapshot(node.name, 'label').subscribe(result => {
         if (!result) return;
         this.labelService.deleteLabelCategory(node.id).subscribe(() => {
+          this.router.navigate(['labelDefinition']);
           // TODO show snackbar
         });
       })

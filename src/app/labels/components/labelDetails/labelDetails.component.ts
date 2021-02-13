@@ -4,22 +4,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
-import { DeletionService } from '../../../services/deletion.service';
-import { TranslocoService } from '@ngneat/transloco';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { LabelService } from 'src/app/services/label.service';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
-import { FormBuilder, FormArray, FormControl, FormGroup } from '@angular/forms';
-import * as uuid from 'uuid';
-import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 import { ActivatedRoute } from '@angular/router';
+import { TranslocoService } from '@ngneat/transloco';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { LabelDefinition } from '@writerey/shared/models/labelDefinition.class';
+import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { delayValues } from '@writerey/shared/utils/observable.utils';
 import { of, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize, mergeMap, take } from 'rxjs/operators';
-import { LabelStore } from 'src/app/stores/label.store';
-import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
-import { delayValues } from '@writerey/shared/utils/observable.utils';
+import { LabelService } from 'src/app/services/label.service';
+import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
+import * as uuid from 'uuid';
+import { DeletionService } from '../../../services/deletion.service';
 import { DocumentModeStore } from './../../../stores/documentMode.store';
 
 const LABEL_AUTOSAVE_KEY = 'writerey_label_definition_autosave';
@@ -48,7 +47,6 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private labelService: LabelService,
-    private labelStore: LabelStore,
     private snackBar: MatSnackBar,
     private translocoService: TranslocoService,
     private deletionService: DeletionService,
@@ -61,17 +59,20 @@ export class LabelDetailsComponent implements OnInit, OnDestroy {
     this.autosave = JSON.parse(localStorage.getItem(LABEL_AUTOSAVE_KEY)) ?? true;
 
     this.subscription.add(
-      this.route.params
-        .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.labelDefinitionId)))
+      this.route.queryParams
+        .pipe(mergeMap(params => this.labelService.getLabelDefinition(params.id)))
         .subscribe(labelDef => {
-          if (!labelDef) return;
           if (this.labelDefinition) {
             this.saveOnLeave();
           }
+          if (!labelDef) {
+            this.labelDefinition = null;
+            return;
+          }
+
           this.template = labelDef.template || ' \n';
           this.labelDefinition = labelDef;
           this.initializeForm(labelDef);
-          this.labelStore.setLabelDefinition(labelDef);
         })
     );
 
