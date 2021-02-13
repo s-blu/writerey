@@ -4,18 +4,18 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DirectoryStore } from './../../../stores/directory.store';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { Subscription, zip, of } from 'rxjs';
-import { DocumentService } from 'src/app/services/document.service';
-import { DirectoryService } from 'src/app/services/directory.service';
-import { DocumentStore } from 'src/app/stores/document.store';
-import { take, flatMap } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
-import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
 import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
+import { of, Subscription, zip } from 'rxjs';
+import { flatMap, take } from 'rxjs/operators';
+import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { DocumentStore } from 'src/app/stores/document.store';
+import { DirectoryStore } from './../../../stores/directory.store';
 
 @Component({
   selector: 'wy-create-new-dir-or-file',
@@ -82,7 +82,9 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
       .subscribe((res: any) => {
         if (!res) return;
         this.directoryService.getTree().subscribe(_ => {
+          console.log('emitting itemCreated event after item creation', res);
           this.itemCreated.emit(res);
+
           if (this.type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
         });
       });

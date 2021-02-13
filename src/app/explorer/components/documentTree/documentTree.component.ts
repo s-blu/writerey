@@ -4,21 +4,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DirectoryService } from 'src/app/services/directory.service';
-import { DeletionService } from './../../../services/deletion.service';
-import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
-import { DocumentService } from 'src/app/services/document.service';
-import { DirectoryStore } from './../../../stores/directory.store';
-import { DocumentStore } from '../../../stores/document.store';
-import { Subscription, of } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { flatMap, filter } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { translate } from '@ngneat/transloco';
 import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
+import { of, Subscription } from 'rxjs';
+import { filter, flatMap } from 'rxjs/operators';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { DocumentStore } from '../../../stores/document.store';
+import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
+import { DeletionService } from './../../../services/deletion.service';
+import { DirectoryStore } from './../../../stores/directory.store';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -214,6 +214,11 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
   toggleExpand(node) {
     this.treeControl.toggle(node);
     this.openedDirs[`${node.path}/${node.name}`] = this.treeControl.isExpanded(node);
+  }
+
+  expandToDir(dir) {
+    console.log('hello', dir);
+    // this.expandDirectories(dir.path);
   }
 
   private expandToActiveDocument() {
