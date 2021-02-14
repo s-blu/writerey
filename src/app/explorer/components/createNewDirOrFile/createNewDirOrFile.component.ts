@@ -3,14 +3,13 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { translate } from '@ngneat/transloco';
 import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
 import { of, Subscription, zip } from 'rxjs';
-import { flatMap, take } from 'rxjs/operators';
+import { map, mergeMap, take, tap } from 'rxjs/operators';
 import { CreateNewItemDialogComponent } from 'src/app/components/createNewItemDialog/createNewItemDialog.component';
 import { DirectoryService } from 'src/app/services/directory.service';
 import { DocumentService } from 'src/app/services/document.service';
@@ -52,7 +51,7 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
     zip(dialogRef.afterClosed(), this.directoryStore.tree$)
       .pipe(
         take(1),
-        flatMap(([name, tree]) => {
+        mergeMap(([name, tree]) => {
           if (!name) return;
           const containingDir = this.getDirSubTree(tree);
 
@@ -75,18 +74,13 @@ export class CreateNewDirOrFileComponent implements OnInit, OnDestroy {
             });
             return of(null);
           }
-
           return createObservable;
         })
       )
       .subscribe((res: any) => {
         if (!res) return;
-        this.directoryService.getTree().subscribe(_ => {
-          console.log('emitting itemCreated event after item creation', res);
-          this.itemCreated.emit(res);
-
-          if (this.type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
-        });
+        this.itemCreated.emit(res);
+        if (this.type === 'file') this.documentStore.setFileInfo({ name: res.name, path: res.path });
       });
   }
 

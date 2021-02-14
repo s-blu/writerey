@@ -57,9 +57,13 @@
         <wy-create-new-dir-or-file
           type="dir"
           [path]="prettifyPath(node)"
-          (itemCreated)="expandToDir($event)"
+          (itemCreated)="itemCreated('dir', $event)"
         ></wy-create-new-dir-or-file>
-        <wy-create-new-dir-or-file type="file" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file
+          type="file"
+          [path]="prettifyPath(node)"
+          (itemCreated)="itemCreated('file', $event)"
+        ></wy-create-new-dir-or-file>
       </mat-menu>
 
       <ng-template #moveHereButton>
