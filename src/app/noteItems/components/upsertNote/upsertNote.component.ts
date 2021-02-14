@@ -1,15 +1,16 @@
-import { debounce, distinctUntilChanged, debounceTime } from 'rxjs/operators';
-import { Subject, Subscription } from 'rxjs';
-// Copyright (c) 2020 s-blu
-//
-// This Source Code Form is subject to the terms of the Mozilla Public
-// License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+/**
+ * Copyright (c) 2021 s-blu
+ *
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/.
+ */
 
-import { Note } from '@writerey/shared/models/notesItems.interface';
-import { Component, OnInit, Input, EventEmitter, Output, OnChanges, OnDestroy, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { editorWyNotesModules, setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
 
 export const NOTE_DRAFT_KEY = 'writerey_note_draft_';
@@ -90,13 +91,9 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
     this.createNewForm.patchValue({ text: '' });
   }
 
-  changeColor() {
-    const color = this.createNewForm.get('color')?.value;
-    if (color) {
-      this.noteColor = color;
-    } else {
-      this.noteColor = null;
-    }
+  changeColor(value) {
+    this.noteColor = value;
+    this.createNewForm?.patchValue({ color: value });
   }
 
   editorChanged(event) {
