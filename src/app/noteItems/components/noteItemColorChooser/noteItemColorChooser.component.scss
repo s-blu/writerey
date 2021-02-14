@@ -6,6 +6,26 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-mat-form-field {
+@import '../../../styles/variables';
+
+.color-chooser {
   width: 100%;
+  display: flex;
+  margin-bottom: 0.5em;
+}
+
+.color-square {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 1px solid slategray;
+  margin-right: 0.5em;
+
+  &.active {
+    outline: 2px solid black;
+  }
+
+  &.default {
+    background-color: $c_bg_boxes;
+  }
 }

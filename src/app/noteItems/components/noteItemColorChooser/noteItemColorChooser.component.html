@@ -6,16 +6,14 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div *transloco="let t; read: 'createNote'">
-  <mat-form-field>
-    <!-- TODO: change transloco key -->
-    <mat-label>{{ t('color.title') }}</mat-label>
-    <mat-select [(ngModel)]="color" (selectionChange)="changeColor()">
-      <mat-option value="">{{ t('color.none') }}</mat-option>
-      <mat-option value="#ffd4a0">{{ t('color.orange') }}</mat-option>
-      <mat-option value="#bdf9a7">{{ t('color.green') }}</mat-option>
-      <mat-option value="#c5e2ff">{{ t('color.blue') }}</mat-option>
-      <mat-option value="#fffeae">{{ t('color.yellow') }}</mat-option>
-    </mat-select>
-  </mat-form-field>
+<div class="color-chooser" *transloco="let t; read: 'createNote'">
+  <span class="color-square default" [ngClass]="{ active: !activeColor }" (click)="changeColor(null)"></span>
+  <div *ngFor="let color of colors">
+    <span
+      class="color-square"
+      [ngClass]="{ active: activeColor === color }"
+      [style.background]="color"
+      (click)="changeColor(color)"
+    ></span>
+  </div>
 </div>

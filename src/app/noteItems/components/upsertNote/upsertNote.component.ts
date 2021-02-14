@@ -58,7 +58,7 @@ export class UpsertNoteComponent implements OnInit, OnChanges, OnDestroy, AfterV
       context: this.editNote?.context || this.contexts?.[0] || null,
       text: this.draft || this.editNote?.text || ' \n',
     };
-
+    this.noteColor = preset.color;
     this.createNewForm = this.formBuilder.group(preset);
 
     this.subscription.add(

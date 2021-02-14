@@ -21,7 +21,10 @@
         <mat-option value="todo">{{ t('type.todo') }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <wy-note-item-color-chooser (colorChanged)="changeColor($event)"></wy-note-item-color-chooser>
+    <wy-note-item-color-chooser
+      [initialColor]="noteColor"
+      (colorChanged)="changeColor($event)"
+    ></wy-note-item-color-chooser>
     <ckeditor
       class="note-editor"
       [formControl]="createNewForm.controls['text']"
