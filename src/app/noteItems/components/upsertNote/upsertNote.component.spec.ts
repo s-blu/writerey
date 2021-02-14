@@ -29,7 +29,7 @@ class MockLocalStore {
   selector: 'wy-note-item-color-chooser',
   template: '<div class="mock-component"></div>',
 })
-class MockNoteItemColorChooser {
+class MockNoteItemColorChooserComponent {
   @Input() initialColor;
 }
 
@@ -50,7 +50,7 @@ describe('CreateNewNoteComponent', () => {
         MatIconModule,
       ],
       providers: [FormBuilder],
-      declarations: [UpsertNoteComponent, MockCkeditorComponent, MockNoteItemColorChooser],
+      declarations: [UpsertNoteComponent, MockCkeditorComponent, MockNoteItemColorChooserComponent],
     }).compileComponents();
 
     // This needs to be overwritten to be able to spy on it for some reason
