@@ -1,3 +1,4 @@
+import { DirectoryService } from 'src/app/services/directory.service';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -29,6 +30,12 @@ class MockDistractionFreeStore {
 class MockLabelService {}
 class MockRouter {}
 
+class MockDirectoryService {
+  getTree() {
+    return of({});
+  }
+}
+
 describe('ExplorerComponent', () => {
   let component: ExplorerComponent;
   let fixture: ComponentFixture<ExplorerComponent>;
@@ -43,6 +50,7 @@ describe('ExplorerComponent', () => {
         { provide: DistractionFreeStore, useClass: MockDistractionFreeStore },
         { provide: LabelService, useClass: MockLabelService },
         { provide: Router, useClass: MockRouter },
+        { provide: DirectoryService, useClass: MockDirectoryService },
       ],
       schemas: [NO_ERRORS_SCHEMA],
     }).compileComponents();

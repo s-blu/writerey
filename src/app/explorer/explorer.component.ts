@@ -3,7 +3,6 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -11,6 +10,7 @@ import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLa
 import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
 import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
 import { Subscription } from 'rxjs';
+import { DirectoryService } from 'src/app/services/directory.service';
 import { LabelService } from 'src/app/services/label.service';
 import { DistractionFreeStore } from '../stores/distractionFree.store';
 import { ProjectStore } from '../stores/project.store';
@@ -46,7 +46,8 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     private projectStore: ProjectStore,
     private distractionFreeStore: DistractionFreeStore,
     private labelService: LabelService,
-    private router: Router
+    private router: Router,
+    private directoryService: DirectoryService
   ) {}
 
   selectProject(event) {
@@ -60,6 +61,14 @@ export class ExplorerComponent implements OnInit, OnDestroy {
 
   changeTabIndex(index) {
     this.tabIndex = index;
+  }
+
+  newDirOrFileCreated() {
+    this.subscription.add(
+      this.directoryService.getTree().subscribe(_ => {
+        this.changeTabIndex(0);
+      })
+    );
   }
 
   addNewLabelCategory() {
