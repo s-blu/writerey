@@ -4,17 +4,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { ProjectStore } from '../../../stores/project.store';
-import { LinkService } from '../../../services/link.service';
-import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import { map, take, flatMap } from 'rxjs/operators';
-import { Link } from '@writerey/shared/models/notesItems.interface';
-import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
-import { setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { MatDialog } from '@angular/material/dialog';
 import { ChooseFileForLinkDialogComponent } from '@writerey/noteItems/components/chooseFileForLinkDialog/chooseFileForLinkDialog.component';
+import { Link } from '@writerey/shared/models/notesItems.interface';
+import { setDecoupledToolbar } from '@writerey/shared/utils/editor.utils';
+import { Subscription } from 'rxjs';
+import { mergeMap, take } from 'rxjs/operators';
+import * as DecoupledEditor from 'src/assets/ckeditor5/build/ckeditor';
+import { LinkService } from '../../../services/link.service';
+import { ProjectStore } from '../../../stores/project.store';
 
 @Component({
   selector: 'wy-create-new-link',
@@ -47,6 +47,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
       context: this.contexts[0] || null,
       linkId: [null, [Validators.required]],
       text: ' \n',
+      color: null,
     });
   }
 
@@ -68,6 +69,10 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
     this.selectedDocument = null;
   }
 
+  changeColor(value) {
+    this.createNewForm?.patchValue({ color: value });
+  }
+
   chooseDocument() {
     const dialogRef = this.dialog.open(ChooseFileForLinkDialogComponent);
 
@@ -75,7 +80,7 @@ export class CreateNewLinkComponent implements OnInit, OnChanges, OnDestroy {
       dialogRef
         .afterClosed()
         .pipe(
-          flatMap(node => {
+          mergeMap(node => {
             return this.linkService.getLinkForDocument(node.name, node.path, this.project);
           })
         )

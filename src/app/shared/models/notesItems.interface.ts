@@ -35,6 +35,7 @@ export interface Link extends NotesItem {
   stereotype: NoteItemStereotypes.LINK;
   linkId: string;
   text: string;
+  color?: string;
 }
 
 export interface DocumentLink {

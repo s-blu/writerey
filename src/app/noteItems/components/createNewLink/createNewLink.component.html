@@ -14,6 +14,7 @@
         <mat-option *ngFor="let con of contexts" [value]="con">{{ contextNames[con] }}</mat-option>
       </mat-select>
     </mat-form-field>
+    <wy-note-item-color-chooser (colorChanged)="changeColor($event)"></wy-note-item-color-chooser>
     <ckeditor
       class="note-editor"
       [formControl]="createNewForm.controls['text']"
