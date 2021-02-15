@@ -54,6 +54,15 @@ describe('NoteItemColorChooserComponent', () => {
     expect(colorSquare.className).toMatch('active');
   });
 
+  it('should not break if initial color is unknown', () => {
+    component.initialColor = '#000000';
+    fixture.detectChanges();
+    const emitSpy = spyOn(component.colorChanged, 'emit');
+    const colorSquare = fixture.nativeElement.querySelector('.color-square');
+    colorSquare.click();
+    expect(emitSpy).toHaveBeenCalledWith(null);
+  });
+
   it('should emit event when and only when color is changed', () => {
     const emitSpy = spyOn(component.colorChanged, 'emit');
     component.initialColor = component.colors[4];
