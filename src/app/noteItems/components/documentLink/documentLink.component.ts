@@ -36,7 +36,10 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
   content: string;
   isExpanded = false;
   unableToFetchDocument = false;
+  styles = '';
+
   private subscription = new Subscription();
+
   constructor(
     private linkService: LinkService,
     private documentService: DocumentService,
@@ -53,6 +56,11 @@ export class DocumentLinkComponent implements OnInit, OnDestroy {
     } else {
       this.contextName = this.link.context;
     }
+
+    if (this.link.color) {
+      this.styles = 'background-color:' + this.link.color;
+    }
+
     this.subscription.add(
       this.projectStore.project$
         .pipe(

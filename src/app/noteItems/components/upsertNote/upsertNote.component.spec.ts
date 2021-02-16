@@ -4,21 +4,17 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
-import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormBuilder, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from '@angular/forms';
-import { Component, Input, Output, EventEmitter, forwardRef, ViewChild } from '@angular/core';
-
+import { Component, Input } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { UpsertNoteComponent } from './upsertNote.component';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
-import { ControlValueAccessor } from '@angular/forms';
-import { NOTE_DRAFT_KEY } from './upsertNote.component';
+import { MatSelectModule } from '@angular/material/select';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MockCkeditorComponent } from '@writerey/shared/test/ckeditor.component.mock';
+import { getTranslocoTestingModule } from 'src/app/transloco-test.module';
+import { NOTE_DRAFT_KEY, UpsertNoteComponent } from './upsertNote.component';
 
 const EMPTY_TEXT = ' \n';
 
@@ -27,6 +23,14 @@ class MockLocalStore {
   setItem(key: string, value: string) {}
   removeItem(key: string) {}
   clear() {}
+}
+
+@Component({
+  selector: 'wy-note-item-color-chooser',
+  template: '<div class="mock-component"></div>',
+})
+class MockNoteItemColorChooserComponent {
+  @Input() initialColor;
 }
 
 describe('CreateNewNoteComponent', () => {
@@ -46,7 +50,7 @@ describe('CreateNewNoteComponent', () => {
         MatIconModule,
       ],
       providers: [FormBuilder],
-      declarations: [UpsertNoteComponent, MockCkeditorComponent],
+      declarations: [UpsertNoteComponent, MockCkeditorComponent, MockNoteItemColorChooserComponent],
     }).compileComponents();
 
     // This needs to be overwritten to be able to spy on it for some reason

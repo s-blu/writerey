@@ -1,0 +1,19 @@
+<!--
+ Copyright (c) 2021 s-blu
+ 
+ This Source Code Form is subject to the terms of the Mozilla Public
+ License, v. 2.0. If a copy of the MPL was not distributed with this
+ file, You can obtain one at http://mozilla.org/MPL/2.0/.
+-->
+
+<div class="color-chooser" *transloco="let t; read: 'createNote'">
+  <span class="color-square default" [ngClass]="{ active: !activeColor }" (click)="changeColor(null)"></span>
+  <div *ngFor="let color of colors">
+    <span
+      class="color-square"
+      [ngClass]="{ active: activeColor === color }"
+      [style.background-color]="color"
+      (click)="changeColor(color)"
+    ></span>
+  </div>
+</div>

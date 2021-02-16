@@ -1,3 +1,4 @@
+import { NoteItemColorChooserComponent } from './components/noteItemColorChooser/noteItemColorChooser.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
@@ -53,6 +54,7 @@ const materialModules = [
     NotesItemComponent,
     NoteComponent,
     NoteItemsComponent,
+    NoteItemColorChooserComponent,
   ],
   exports: [NoteItemsComponent],
 })

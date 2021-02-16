@@ -211,14 +211,6 @@
       "info": "Info",
       "todo": "To Do",
       "label": "Label info"
-    },
-    "color": {
-      "title": "Color",
-      "none": "None",
-      "orange": "Orange",
-      "blue": "Blue",
-      "green": "Green",
-      "yellow": "Yellow"
     }
   },
   "tagDialog": {
