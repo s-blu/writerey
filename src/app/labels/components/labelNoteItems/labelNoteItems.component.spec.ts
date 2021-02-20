@@ -32,7 +32,7 @@ class MockLabelStore {
 }
 
 class MockActivatedRoute {
-  params = of({});
+  queryParams = of({});
 }
 
 describe('LabelNoteItemsComponent', () => {

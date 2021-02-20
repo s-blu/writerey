@@ -8,19 +8,13 @@
 
 <div class="app">
   <wy-topbar></wy-topbar>
-  <div class="main">
-    <div class="left">
+  <mat-sidenav-container class="main">
+    <mat-sidenav mode="side" opened class="mat-elevation-z1">
       <wy-explorer></wy-explorer>
-      <wy-document-labels></wy-document-labels>
-    </div>
-    <div class="editor">
-      <div class="document-area">
-        <router-outlet></router-outlet>
-      </div>
-    </div>
-    <div class="notes">
-      <router-outlet name="notes"></router-outlet>
-    </div>
-  </div>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
   <wy-footer></wy-footer>
 </div>

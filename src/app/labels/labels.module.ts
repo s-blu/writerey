@@ -1,8 +1,9 @@
+import { LabelsRoutingModule } from './labels-routing.module';
+import { LabelsComponent } from './labels.component';
 import { UpsertLabelValueComponent } from './components/upsertLabelValue/upsertLabelValue.component';
 import { LabelNoteItemsComponent } from './components/labelNoteItems/labelNoteItems.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DocumentLabelsComponent } from './components/documentLabels/documentLabels.component';
 import { SharedModule } from '@writerey/shared/shared.module';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
@@ -34,6 +35,7 @@ const materialModules = [
 
 @NgModule({
   imports: [
+    LabelsRoutingModule,
     CommonModule,
     FormsModule,
     SharedModule,
@@ -43,12 +45,12 @@ const materialModules = [
     ...materialModules,
   ],
   declarations: [
-    DocumentLabelsComponent,
     CreateNewLabelComponent,
     LabelDetailsComponent,
     LabelNoteItemsComponent,
     UpsertLabelValueComponent,
+    LabelsComponent,
   ],
-  exports: [DocumentLabelsComponent, CreateNewLabelComponent, LabelDetailsComponent, LabelNoteItemsComponent],
+  exports: [CreateNewLabelComponent, LabelsComponent],
 })
 export class LabelsModule {}

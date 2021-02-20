@@ -1,17 +1,17 @@
 {
   "name": "writerey",
   "description": "Writerey helps you to organize, compose and refine your stories.",
-  "version": "0.9.0",
+  "version": "0.10.0-SNAPSHOT",
   "author": {
     "name": "Stefanie S",
     "email": "sts@s-blu.de"
   },
   "license": "MPL-2.0",
   "main": "main.js",
-  "homepage": "https://writerey.com",
+  "homepage": "https://writerey.com/",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/s-blu/writerey.git"
+    "type": "git",
+    "url": "https://github.com/s-blu/writerey.git"
   },
   "scripts": {
     "ng": "ng",
@@ -24,9 +24,10 @@
     "electron": "electron .",
     "build-electron": "ng build --prod && npm run electron .",
     "flask": "python server/app.py development",
+    "unix:flask": "~/.local/bin/pipenv run python3 server/app.py development",
     "build-make": "ng build --prod && electron-forge make",
     "make": "electron-forge make",
-    "build-docs": "cd docs && mkdocs build"
+    "build-docs": "cd documentation && mkdocs build"
   },
   "private": true,
   "dependencies": {
@@ -46,6 +47,7 @@
     "core-js": "^3.6.5",
     "electron-squirrel-startup": "^1.0.0",
     "immutable": "^4.0.0-rc.12",
+    "material-design-icons": "^3.0.1",
     "python-shell": "^2.0.1",
     "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
@@ -90,9 +92,11 @@
         "ignore": [
           ".idea",
           ".vscode",
+          ".github",
           "_writerey_data",
           "e2e",
           "src",
+          "documentation",
           "__pycache__",
           ".gitignore",
           "node_modules",
@@ -101,15 +105,12 @@
           ".editorconfig",
           "angular.json",
           "browserslist",
-          "karma.conf.js",
+          "jest.config.js",
           "package-lock.json",
-          "Pipfile",
-          "Pipfile.lock",
+          "Pipfile.*",
           "transloco.config.js",
-          "tsconfig.app.json",
-          "tsconfig.base.json",
-          "tsconfig.spec.json",
-          "tslint.json"
+          "tsconfig(.*)json",
+          "CNAME"
         ],
         "icon": "dist/writerey/assets/writerey.ico"
       },

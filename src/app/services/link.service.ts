@@ -1,14 +1,13 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { of } from 'rxjs';
+import { catchError, flatMap, map } from 'rxjs/operators';
 // Copyright (c) 2020 s-blu
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import { ApiService } from 'src/app/services/api.service';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
-import { map, flatMap } from 'rxjs/operators';
 import * as uuid from 'uuid';
 
 interface DocumentLink {
@@ -98,6 +97,10 @@ export class LinkService {
 
     if (!this.linkMap[project]) {
       linksForProjectObservable = this.httpClient.get(this.api.getLinkRoute(project)).pipe(
+        catchError(err => {
+          if (err.status === 404) return of([]);
+          return this.api.handleHttpError(err);
+        }),
         map((res: any) => {
           this.saveServerResponseToLinkMap(project, res);
           return this.linkMap[project];

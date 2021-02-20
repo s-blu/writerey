@@ -17,7 +17,8 @@ from logger import Logger
 
 class Tree(Resource):
     def get(self):
-        log = Logger('directories.get')
+        # ATTENTION: Tree debug is quite spammy and deactivated by default. If you want to debug it, remove the silenced=True parameter
+        log = Logger('directories.get', True)
         directoryStructure = {
             'name': '',
             'dirs': [],

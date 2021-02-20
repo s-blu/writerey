@@ -21,16 +21,10 @@
         <mat-option value="todo">{{ t('type.todo') }}</mat-option>
       </mat-select>
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{ t('color.title') }}</mat-label>
-      <mat-select formControlName="color" (selectionChange)="changeColor()">
-        <mat-option value="">{{ t('color.none') }}</mat-option>
-        <mat-option value="#ffd4a0">{{ t('color.orange') }}</mat-option>
-        <mat-option value="#bdf9a7">{{ t('color.green') }}</mat-option>
-        <mat-option value="#c5e2ff">{{ t('color.blue') }}</mat-option>
-        <mat-option value="#fffeae">{{ t('color.yellow') }}</mat-option>
-      </mat-select>
-    </mat-form-field>
+    <wy-note-item-color-chooser
+      [initialColor]="noteColor"
+      (colorChanged)="changeColor($event)"
+    ></wy-note-item-color-chooser>
     <ckeditor
       class="note-editor"
       [formControl]="createNewForm.controls['text']"

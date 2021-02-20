@@ -6,12 +6,12 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<div class="topbar" *transloco="let t; read: 'topbar'">
+<mat-toolbar class="topbar" *transloco="let t; read: 'topbar'">
   <div class="left">
     <wy-breadcrumb></wy-breadcrumb>
   </div>
   <div class="center">
-    <wy-ckeditor-toolbar></wy-ckeditor-toolbar>
+    <router-outlet name="topbar"></router-outlet>
   </div>
   <div class="right">
     <button class="snapshot-btn" mat-icon-button (click)="snapshot()" [matTooltip]="t('snapshot')">
@@ -27,4 +27,4 @@
       <mat-icon class="material-icons-outlined">info</mat-icon>
     </button>
   </div>
-</div>
+</mat-toolbar>

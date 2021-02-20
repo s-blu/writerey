@@ -3,17 +3,17 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
-import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
-import { LabelService } from 'src/app/services/label.service';
-import { ProjectStore } from '../stores/project.store';
-import { DistractionFreeStore } from '../stores/distractionFree.store';
-import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
-import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLabel/createNewLabel.component';
 import { Router } from '@angular/router';
+import { CreateNewLabelComponent } from '@writerey/labels/components/createNewLabel/createNewLabel.component';
+import { DISTRACTION_FREE_STATES } from '@writerey/shared/models/distractionFreeStates.enum';
+import { FADE_ANIMATIONS } from '@writerey/shared/utils/animation.utils';
+import { Subscription } from 'rxjs';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { LabelService } from 'src/app/services/label.service';
+import { DistractionFreeStore } from '../stores/distractionFree.store';
+import { ProjectStore } from '../stores/project.store';
 
 @Component({
   selector: 'wy-explorer',
@@ -46,7 +46,8 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     private projectStore: ProjectStore,
     private distractionFreeStore: DistractionFreeStore,
     private labelService: LabelService,
-    private router: Router
+    private router: Router,
+    private directoryService: DirectoryService
   ) {}
 
   selectProject(event) {
@@ -62,6 +63,14 @@ export class ExplorerComponent implements OnInit, OnDestroy {
     this.tabIndex = index;
   }
 
+  newDirOrFileCreated() {
+    this.subscription.add(
+      this.directoryService.getTree().subscribe(_ => {
+        this.changeTabIndex(0);
+      })
+    );
+  }
+
   addNewLabelCategory() {
     const dialogRef = this.dialog.open(CreateNewLabelComponent);
 
@@ -70,7 +79,7 @@ export class ExplorerComponent implements OnInit, OnDestroy {
         if (!data) return;
         this.subscription.add(
           this.labelService.createNewLabelCategory(data.name).subscribe((res: any) => {
-            this.router.navigate(['/labelDefinition', { id: res[0]?.id }]);
+            this.router.navigate(['/labelDefinition'], { queryParams: { id: res[0]?.id } });
             this.changeTabIndex(1);
           })
         );

@@ -5,7 +5,7 @@
  License, v. 2.0. If a copy of the MPL was not distributed with this
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
-<mat-card class="label-details mat-elevation-z2" *transloco="let t; read: 'labelDetails'">
+<mat-card class="label-details mat-elevation-z1" *transloco="let t; read: 'labelDetails'">
   <ng-container *ngIf="labelDefinition">
     <mat-card-header>
       <mat-card-title>{{ labelDefinition.name }}</mat-card-title>
@@ -49,7 +49,7 @@
 
           <mat-tab [label]="t('titleInfoTemplate')">
             <ng-template matTabContent class="tab-content">
-              <p>{{ t('template') }}</p>
+              <p class="template-description">{{ t('template') }}</p>
               <ckeditor
                 class="note-editor"
                 [formControl]="editForm.controls['template']"

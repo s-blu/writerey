@@ -4,14 +4,12 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { FileInfo } from '../shared/models/fileInfo.interface';
-import { TranslocoService } from '@ngneat/transloco';
-import { ApiService } from './api.service';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as uuid from 'uuid';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { catchError, map, flatMap, take } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { catchError, flatMap, map, take } from 'rxjs/operators';
+import * as uuid from 'uuid';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +30,8 @@ export class ParagraphService {
     let previousUuid = '';
     let currentUuidBeforeEnhance = '';
     const paragraphs = document.split(this.PARAGRAPH_DELIMITER_REGEX);
+    let counter = 0;
+    const beforeEnhance = Date.now();
     paragraphs.forEach((p, i) => {
       if (p === '') return;
       const prefix = i > 0 ? this.PARAGRAPH_DELIMITER + '\n' : '';
@@ -39,7 +39,9 @@ export class ParagraphService {
       p = this.upsertParagraphIdentifierIfNecessary(p, previousUuid, path, name);
       previousUuid = currentUuidBeforeEnhance;
       enhancedDocument += `${prefix}${p}\n`;
+      counter++;
     });
+    console.log(`Checked and enhanced ${counter} paragraphs in ${Date.now() - beforeEnhance} ms.`);
     return enhancedDocument;
   }
 
@@ -82,7 +84,10 @@ export class ParagraphService {
     httpHeaders.append('Content-Type', 'multipart/form-data');
 
     return this.getParagraphMeta(docPath, docName, context).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.code === 404) return '';
+        return this.api.handleHttpError(err);
+      }),
       flatMap(getRes => {
         const paragraphMeta = getRes || {};
         paragraphMeta[metaType] = metaContent;
@@ -114,7 +119,10 @@ export class ParagraphService {
     };
 
     return this.httpClient.get(this.api.getParagraphRoute(docName), { params }).pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        return this.api.handleHttpError(err);
+      }),
       map((res: string) => {
         return this.parseAndExtractParagraphMetaResponse(res, docPath, docName, context, metaType);
       })

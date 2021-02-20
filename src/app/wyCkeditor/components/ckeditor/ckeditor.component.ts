@@ -4,13 +4,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
-import { ApiService } from 'src/app/services/api.service';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
-import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import CKEditorInspector from '@ckeditor/ckeditor5-inspector';
+import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
 import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { ApiService } from 'src/app/services/api.service';
+import * as CkEditorDecoubled from 'src/assets/ckeditor5/build/ckeditor';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -25,7 +25,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   @Input() set content(c: string) {
     if (c !== this.editorData) {
       this.editorData = c;
-      this.editorDataIsNewlySet = true;
       if (this.editor) {
         this.editor.setData(c);
       }
@@ -45,7 +44,6 @@ export class CkeditorComponent implements OnInit, OnDestroy {
 
   private documentDef: DocumentDefinition;
   private editorData: string;
-  private editorDataIsNewlySet: boolean;
   public editor: CkEditorDecoubled;
   public config = {
     toolbar: {
@@ -98,13 +96,11 @@ export class CkeditorComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.changeDebounce.pipe(distinctUntilChanged(), debounceTime(1000)).subscribe((event: any) => {
         const innerHtmlOfEditor = this.getInnerHtmlOfEditor();
-        if (this.editorDataIsNewlySet) {
+        if (!this.editorData) {
           this.editorData = innerHtmlOfEditor;
-          this.editorDataIsNewlySet = false;
           return;
         }
         const isEqual = this.editorData === innerHtmlOfEditor;
-
         if (!isEqual) {
           this.editorData = innerHtmlOfEditor;
           this.sendChangeEvent(event);
@@ -147,6 +143,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
         if (toolbarContainer) toolbarContainer.appendChild(editor.ui.view.toolbar.element);
 
         this.editor = editor;
+        this.editorData = this.getInnerHtmlOfEditor();
         if (environment.debugMode) {
           CKEditorInspector.attach(editor);
         }
@@ -179,9 +176,7 @@ export class CkeditorComponent implements OnInit, OnDestroy {
   }
 
   onBlur(editorEvent) {
-    if (this.editorDataIsNewlySet) {
-      return;
-    } else if (this.getInnerHtmlOfEditor() !== this.editorData) {
+    if (this.editorData && this.getInnerHtmlOfEditor() !== this.editorData) {
       const event = this.getDocumentChangedEvent();
       this.editorBlur.emit(event);
     }

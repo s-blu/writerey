@@ -16,6 +16,10 @@
   justify-items: center;
   align-items: center;
 
+  &.mat-toolbar {
+    background-color: inherit;
+  }
+
   .left,
   .center,
   .right {
@@ -30,13 +34,6 @@
   .center {
     justify-content: center;
   }
-  // .center {
-  //   justify-content: flex-end;
-  //   align-items: flex-end;
-  //   font-size: 10pt;
-  //   color: $c_hint;
-  //   margin-right: 4em;
-  // }
 
   wy-breadcrumb {
     font-size: 10pt;

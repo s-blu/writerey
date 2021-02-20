@@ -6,33 +6,18 @@
 
 @import './styles/variables.scss';
 
-.main,
-.left,
-.notes,
-.document-area {
-  box-sizing: border-box;
-  height: 100%;
-}
-.notes {
-  overflow-y: hidden;
-}
 .app {
-  display: flex;
-  flex-direction: column;
-  word-wrap: break-word;
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 1fr $size_width_editor 1fr;
-
-  .left {
-    display: grid;
-    grid-template-columns: minmax(280px, 1fr) 1fr; //FIXME think about that minmax again after solving the issue with the tree buttons
+  overflow: hidden;
+  .mat-drawer-container,
+  .mat-sidenav-content {
+    background-color: inherit;
+    margin-bottom: 4px;
+    overflow-y: hidden;
+    height: calc(100vh - 85px);
   }
-}
 
-.main > * {
-  // FIXME uh. this is not so cool. is there a better solution?
-  height: calc(100vh - 90px);
+  .mat-sidenav {
+    width: 270px;
+    margin: $margin-sidebar-content;
+  }
 }

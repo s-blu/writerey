@@ -54,8 +54,16 @@
           <mat-icon>delete</mat-icon>
           <span>{{ t('delete') }}</span>
         </button>
-        <wy-create-new-dir-or-file type="dir" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
-        <wy-create-new-dir-or-file type="file" [path]="prettifyPath(node)"></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file
+          type="dir"
+          [path]="prettifyPath(node)"
+          (itemCreated)="itemCreated('dir', $event)"
+        ></wy-create-new-dir-or-file>
+        <wy-create-new-dir-or-file
+          type="file"
+          [path]="prettifyPath(node)"
+          (itemCreated)="itemCreated('file', $event)"
+        ></wy-create-new-dir-or-file>
       </mat-menu>
 
       <ng-template #moveHereButton>

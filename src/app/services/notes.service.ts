@@ -4,13 +4,13 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import { Injectable } from '@angular/core';
+import { forkJoin, of } from 'rxjs';
+import { catchError, mergeMap } from 'rxjs/operators';
 import { LabelService, metaTypesLabelValues } from 'src/app/services/label.service';
 import { ApiService } from './api.service';
-import { ParagraphService } from './paragraph.service';
-import { Injectable } from '@angular/core';
-import { catchError, mergeMap } from 'rxjs/operators';
-import { of, forkJoin } from 'rxjs';
 import { DEFAULT_CONTEXTS } from './context.service';
+import { ParagraphService } from './paragraph.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +28,10 @@ export class NotesService {
       notesWrap[c] = [];
     });
     return this.paragraphService.getParagraphMeta(docPath, docName, paragraphId, 'notes').pipe(
-      catchError(err => this.api.handleHttpError(err)),
+      catchError(err => {
+        if (err.status === 404) return of('');
+        return this.api.handleHttpError(err);
+      }),
       mergeMap(pRes => {
         notesWrap[DEFAULT_CONTEXTS.PARAGRAPH] = pRes || [];
         return this.paragraphService.getParagraphMeta(docPath, docName, 'document', 'notes');

@@ -4,21 +4,21 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { DirectoryService } from 'src/app/services/directory.service';
-import { DeletionService } from './../../../services/deletion.service';
-import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
-import { DocumentService } from 'src/app/services/document.service';
-import { DirectoryStore } from './../../../stores/directory.store';
-import { DocumentStore } from '../../../stores/document.store';
-import { Subscription, of } from 'rxjs';
-import { Component, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { flatMap, filter } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { translate } from '@ngneat/transloco';
 import { StripFileEndingPipe } from '@writerey/shared/pipes/stripFileEnding.pipe';
+import { of, Subscription } from 'rxjs';
+import { filter, mergeMap } from 'rxjs/operators';
+import { DirectoryService } from 'src/app/services/directory.service';
+import { DocumentService } from 'src/app/services/document.service';
+import { DocumentStore } from '../../../stores/document.store';
+import { RenameItemDialogComponent } from '../renameItemDialog/renameItemDialog.component';
+import { DeletionService } from './../../../services/deletion.service';
+import { DirectoryStore } from './../../../stores/directory.store';
 
 interface ExplorerNode {
   expandable: boolean;
@@ -159,7 +159,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
       moveObs = this.directoryService.moveDirectory(this.moveNode.path, this.moveNode.name, null, targetPath);
     }
 
-    moveObs.pipe(flatMap(_ => this.directoryService.getTree())).subscribe(_ => {
+    moveObs.pipe(mergeMap(_ => this.directoryService.getTree())).subscribe(_ => {
       this.moveNode = null;
     });
   }
@@ -170,13 +170,13 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
         .handleDeleteUserInputAndSnapshot(node.name, typeOfItem)
         .pipe(
           filter(res => res),
-          flatMap(_ => {
+          mergeMap(_ => {
             let deleteObs = of({});
             if (typeOfItem === 'dir') deleteObs = this.directoryService.deleteDirectory(node.path, node.name);
             if (typeOfItem === 'file') deleteObs = this.documentService.deleteDocument(node.path, node.name);
             return deleteObs;
           }),
-          flatMap(_ => this.directoryService.getTree())
+          mergeMap(_ => this.directoryService.getTree())
         )
         .subscribe()
     );
@@ -192,13 +192,13 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
         .afterClosed()
         .pipe(
           filter(res => res),
-          flatMap(newName => {
+          mergeMap(newName => {
             let moveObs = of({});
             if (typeOfItem === 'dir') moveObs = this.directoryService.moveDirectory(node.path, node.name, newName);
             if (typeOfItem === 'file') moveObs = this.documentService.moveDocument(node.path, node.name, newName);
             return moveObs;
           }),
-          flatMap(_ => this.directoryService.getTree())
+          mergeMap(_ => this.directoryService.getTree())
         )
         .subscribe()
     );
@@ -216,11 +216,24 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     this.openedDirs[`${node.path}/${node.name}`] = this.treeControl.isExpanded(node);
   }
 
-  private expandToActiveDocument() {
-    return this.expandDirectories(this.activeFileInfo?.path);
+  itemCreated(type, info) {
+    this.subscription.add(
+      this.directoryService.getTree().subscribe(tree => {
+        this.setTree(tree);
+        if (type === 'file') {
+          this.expandToActiveDocument();
+        } else {
+          this.expandDirectories(info.path);
+        }
+      })
+    );
   }
 
-  private expandDirectories(targetPath) {
+  private expandToActiveDocument() {
+    return this.expandDirectories(this.activeFileInfo?.path, true);
+  }
+
+  private expandDirectories(targetPath, isTargetFile?) {
     if (!this.highlightOpenDocument) return;
     if (!targetPath || !this.treeControl?.dataNodes) return;
 
@@ -237,6 +250,7 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
     let pathUpUntilNow = pathParts[0];
     pathParts.shift();
 
+    let stepsToGo = pathParts.length;
     for (const step of pathParts) {
       const nextDir = flattenedTreeNodes.find(dir => dir.name === step && dir.path === pathUpUntilNow);
 
@@ -244,9 +258,11 @@ export class DocumentTreeComponent implements OnInit, OnDestroy {
         console.warn('Could not find nextDir to expand tree for file', step, targetPath);
         return;
       }
-
-      this.treeControl.expand(nextDir);
+      if (stepsToGo > 1 || isTargetFile) {
+        this.treeControl.expand(nextDir);
+      }
       pathUpUntilNow = pathUpUntilNow === '' ? step : `${pathUpUntilNow}/${step}`;
+      stepsToGo--;
     }
   }
 

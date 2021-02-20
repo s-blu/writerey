@@ -7,7 +7,7 @@
 -->
 
 <div
-  class="explorer mat-elevation-z1"
+  class="explorer"
   *ngIf="distractionFreeStatus !== DISTRACTION_FREE_STATES.FULL"
   wyAddClassesForDistractionStates
   [@fadeInOnEnter]
@@ -28,12 +28,12 @@
           <wy-create-new-dir-or-file
             type="file"
             [path]="selectedProject"
-            (itemCreated)="changeTabIndex(0)"
+            (itemCreated)="newDirOrFileCreated()"
           ></wy-create-new-dir-or-file>
           <wy-create-new-dir-or-file
             type="dir"
             [path]="selectedProject"
-            (itemCreated)="changeTabIndex(0)"
+            (itemCreated)="newDirOrFileCreated()"
           ></wy-create-new-dir-or-file>
           <button mat-menu-item (click)="addNewLabelCategory()">
             <mat-icon class="material-icons-outlined">add_location</mat-icon>

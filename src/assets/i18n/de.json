@@ -211,14 +211,6 @@
       "info": "Info",
       "todo": "To Do",
       "label": "Rubrikinfo"
-    },
-    "color": {
-      "title": "Farbe",
-      "none": "Keine",
-      "orange": "Orange",
-      "blue": "Blau",
-      "green": "Grün",
-      "yellow": "Gelb"
     }
   },
   "tagDialog": {

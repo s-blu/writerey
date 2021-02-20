@@ -1,0 +1,40 @@
+// Copyright (c) 2020 s-blu
+//
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+@import '../../../styles/variables';
+@import '../../../styles/distractionFree';
+
+:host {
+  margin-top: 1em;
+}
+
+.label-name {
+  color: $c_label;
+  margin-right: 0.5em;
+}
+
+.value-name {
+  min-width: 2em;
+  display: inline-block;
+}
+
+.write-mode {
+  padding-top: 3em;
+  text-align: end;
+}
+
+.review-mode {
+  padding: 0 1em;
+}
+
+mat-slider,
+mat-form-field {
+  width: 100%;
+}
+
+.empty-hint {
+  color: $c_hint;
+}

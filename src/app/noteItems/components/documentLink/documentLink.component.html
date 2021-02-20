@@ -6,7 +6,7 @@
  file, You can obtain one at http://mozilla.org/MPL/2.0/.
 -->
 
-<mat-card [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
+<mat-card [style]="styles" [@fadeInOnEnter] *transloco="let t; read: 'link'" class="link notes-item">
   <mat-card-header>
     <mat-icon class="icon">link</mat-icon>
     <mat-card-subtitle class="context">{{ contextName }}</mat-card-subtitle>
@@ -34,7 +34,7 @@
         {{ t('documentError') }}
       </div>
     </mat-card-content>
-    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions">
+    <mat-card-actions *ngIf="isExpanded" [@fadeOutOnLeave] class="actions" [style]="styles">
       <button mat-icon-button color="primary" (click)="delete()" [matTooltip]="t('delete')" class="done-button">
         <mat-icon>done</mat-icon>
       </button>

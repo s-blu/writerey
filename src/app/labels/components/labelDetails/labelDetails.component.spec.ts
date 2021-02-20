@@ -33,7 +33,7 @@ class MockDeletionService {
   handleDeleteUserInputAndSnapshot() {}
 }
 class MockActivatedRoute {
-  params = of({});
+  queryParams = of({});
 }
 class MockDocumentModeStore {
   setMode() {}

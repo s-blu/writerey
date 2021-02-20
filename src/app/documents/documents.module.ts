@@ -16,18 +16,45 @@ import { DocumentEditorComponent } from './components/documentEditor/documentEdi
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DocumentNoteItemsComponent } from './components/documentNoteItems/documentNoteItems.component';
 import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
+import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
+import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
+import { DocumentsComponent } from './documents.component';
+import { DocumentsRoutingModule } from './documents-routing.module';
+import { MatButtonModule } from '@angular/material/button';
+import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
+import { HistoryModule } from './../history/history.module';
+import { DocumentsFooterComponent } from './components/documentsFooter/documentsFooter.component';
 
-const materialModules = [MatIconModule, MatProgressBarModule];
-const declarationsAndExport = [
-  WordCountComponent,
-  IntroductionComponent,
-  DocumentEditorComponent,
-  DocumentNoteItemsComponent,
-];
+const materialModules = [MatIconModule, MatProgressBarModule, MatButtonModule];
 
 @NgModule({
-  imports: [CommonModule, SharedModule, WyCkeditorModule, NoteItemsModule, ...materialModules],
-  declarations: [...declarationsAndExport],
-  exports: [...declarationsAndExport],
+  imports: [
+    CommonModule,
+    SharedModule,
+    WyCkeditorModule,
+    NoteItemsModule,
+    DocumentLabelsModule,
+    HistoryModule,
+    DocumentsRoutingModule,
+    ...materialModules,
+  ],
+  declarations: [
+    WordCountComponent,
+    IntroductionComponent,
+    DocumentEditorComponent,
+    DocumentNoteItemsComponent,
+    DocumentsComponent,
+    DocumentsTopbarComponent,
+    DocumentsFooterComponent,
+    ModeSwitcherComponent,
+  ],
+  exports: [
+    IntroductionComponent,
+    DocumentsComponent,
+    DocumentEditorComponent,
+    DocumentsTopbarComponent,
+    DocumentsFooterComponent,
+    ModeSwitcherComponent,
+  ],
 })
 export class DocumentsModule {}

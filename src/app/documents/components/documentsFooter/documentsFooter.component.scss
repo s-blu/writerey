@@ -1,0 +1,29 @@
+@import '../../../styles/variables.scss';
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.left,
+.right {
+  width: 100%;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.middle {
+  & > * {
+    width: 780px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+
+    wy-word-count {
+      justify-self: flex-end;
+    }
+  }
+}
