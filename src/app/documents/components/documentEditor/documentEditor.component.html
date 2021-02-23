@@ -7,6 +7,7 @@
 -->
 
 <div class="document-editor mat-elevation-z1" [class]="{ loading: isLoading }">
+  <wy-paragraph-note-counter [document]="document"></wy-paragraph-note-counter>
   <mat-progress-bar class="load-indicator" *ngIf="isLoading" mode="indeterminate"> </mat-progress-bar>
   <wy-ckeditor
     *ngIf="document; else emptyHint"

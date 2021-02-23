@@ -28,6 +28,10 @@ export class ApiService {
     return docName ? `${this.serverAdress}/p/${docName}` : `${this.serverAdress}/p`;
   }
 
+  getParagraphCountRoute(docName) {
+    return docName ? `${this.serverAdress}/pcount/${docName}` : `${this.serverAdress}/pcount`;
+  }
+
   getDirectoryRoute(dirName?: string) {
     return dirName ? `${this.serverAdress}/dir/${dirName}` : `${this.serverAdress}/dir`;
   }
