@@ -20,8 +20,8 @@ import { DocumentLinkComponent } from './components/documentLink/documentLink.co
 import { NoteComponent } from './components/note/note.component';
 import { NoteItemColorChooserComponent } from './components/noteItemColorChooser/noteItemColorChooser.component';
 import { NotesItemComponent } from './components/notesItem/notesItem.component';
-import { ParagraphNoteCounterComponent } from './components/paragraphNoteCounter/paragraphNoteCounter.component';
 import { UpsertNoteComponent } from './components/upsertNote/upsertNote.component';
+import { ParagraphNoteMarksDirective } from './directives/paragraphNoteMarks.directive';
 import { NoteItemsComponent } from './noteItems.component';
 
 const materialModules = [
@@ -56,8 +56,8 @@ const materialModules = [
     NoteComponent,
     NoteItemsComponent,
     NoteItemColorChooserComponent,
-    ParagraphNoteCounterComponent,
+    ParagraphNoteMarksDirective,
   ],
-  exports: [NoteItemsComponent, ParagraphNoteCounterComponent],
+  exports: [NoteItemsComponent, ParagraphNoteMarksDirective],
 })
 export class NoteItemsModule {}

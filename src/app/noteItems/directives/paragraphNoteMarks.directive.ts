@@ -1,18 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnChanges, OnInit } from '@angular/core';
+import { Directive, Input } from '@angular/core';
+import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
 import { of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
-import { DocumentDefinition } from './../../../shared/models/documentDefinition.interface';
 
-@Component({
-  selector: 'wy-paragraph-note-counter',
-  templateUrl: './paragraphNoteCounter.component.html',
-  styleUrls: ['./paragraphNoteCounter.component.scss'],
+@Directive({
+  selector: '[wyParagraphNoteMarks]',
 })
-export class ParagraphNoteCounterComponent implements OnInit, OnChanges {
-  @Input() set document(d: DocumentDefinition) {
-    if (d?.path !== this.doc?.path && d?.name !== this.doc?.name) {
+export class ParagraphNoteMarksDirective {
+  @Input('wyParagraphNoteMarks') set document(d: DocumentDefinition) {
+    console.log('change doc', d, this.doc);
+    if (d?.path !== this.doc?.path || d?.name !== this.doc?.name) {
       this.doc = d;
       this.getParagrahIds();
     }
@@ -21,28 +20,16 @@ export class ParagraphNoteCounterComponent implements OnInit, OnChanges {
   private style;
   private doc;
 
-  constructor(private httpClient: HttpClient, private api: ApiService) {}
-
-  ngOnInit() {
+  constructor(private httpClient: HttpClient, private api: ApiService) {
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(''));
     document.head.appendChild(style);
     this.style = style.sheet;
-  }
-
-  ngOnChanges(change) {
-    console.log('chasd', change);
-    if (
-      change.document?.currentValue?.path !== this.doc?.path &&
-      change.document?.currentValue?.name !== this.doc?.name
-    ) {
-      this.doc = change.document?.currentValue;
-      this.getParagrahIds();
-    }
+    this.getParagrahIds();
   }
 
   getParagrahIds() {
-    console.log('docu', this.doc);
+    console.log('doausdo');
     if (!this.doc) return;
     this.httpClient
       .get(this.api.getParagraphCountRoute(this.doc.name), { params: { doc_path: this.doc.path } })
@@ -54,21 +41,28 @@ export class ParagraphNoteCounterComponent implements OnInit, OnChanges {
       )
       .subscribe((res: string) => {
         const paragraphIds = (res || '').split('\n').filter(str => str !== '');
-        console.log('p count got res', paragraphIds);
+        console.log('gotres', paragraphIds);
         this.addParagraphIdStyles(paragraphIds);
       });
   }
 
+  clearStyles() {
+    if (this.style?.cssRules?.length > 0) {
+      for (let i = 0; i < this.style.cssRules.length; i++) {
+        this.style.deleteRule(i);
+      }
+    }
+  }
+
   addParagraphIdStyles(pIds) {
-    // todo reset
+    this.clearStyles();
     pIds.forEach(pId => {
-      // div :nth-child(1 of p.special) { color: green; }
-      console.log('set style for pId', pId, `p.${pId}:first-of-type::after`);
+      console.log('set style for pId', pId);
       let rule = `p.${pId}::after {
         height: 12px;
         width: 12px;
-        background-color: #3f51b5;
-        border-radius: 50%;
+        background-color: #88b4db;
+        border-radius: 5px;
         content: ' ';
         display: inline-block;
         position: absolute;
