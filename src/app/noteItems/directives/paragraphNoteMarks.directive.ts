@@ -1,16 +1,17 @@
 import { HttpClient } from '@angular/common/http';
-import { Directive, Input } from '@angular/core';
+import { Directive, Input, OnDestroy } from '@angular/core';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
 import { DocumentDefinition } from '@writerey/shared/models/documentDefinition.interface';
-import { of } from 'rxjs';
+import { of, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ApiService } from 'src/app/services/api.service';
+import { DocumentModeStore } from 'src/app/stores/documentMode.store';
 
 @Directive({
   selector: '[wyParagraphNoteMarks]',
 })
-export class ParagraphNoteMarksDirective {
+export class ParagraphNoteMarksDirective implements OnDestroy {
   @Input('wyParagraphNoteMarks') set document(d: DocumentDefinition) {
-    console.log('change doc', d, this.doc);
     if (d?.path !== this.doc?.path || d?.name !== this.doc?.name) {
       this.doc = d;
       this.getParagrahIds();
@@ -19,31 +20,52 @@ export class ParagraphNoteMarksDirective {
 
   private style;
   private doc;
+  private mode;
+  private paragraphIds;
 
-  constructor(private httpClient: HttpClient, private api: ApiService) {
+  private subscription = new Subscription();
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  constructor(private httpClient: HttpClient, private api: ApiService, private documentModeStore: DocumentModeStore) {
     const style = document.createElement('style');
     style.appendChild(document.createTextNode(''));
     document.head.appendChild(style);
     this.style = style.sheet;
-    this.getParagrahIds();
+
+    this.subscription.add(
+      this.documentModeStore.mode$.subscribe(mode => {
+        if (this.mode === mode) return;
+
+        if (mode === DOC_MODES.READ) {
+          this.clearStyles();
+        } else if (this.mode === DOC_MODES.READ) {
+          this.addParagraphIdStyles();
+        }
+        this.mode = mode;
+        if (mode === DOC_MODES.READ) this.clearStyles();
+      })
+    );
   }
 
   getParagrahIds() {
-    console.log('doausdo');
     if (!this.doc) return;
-    this.httpClient
-      .get(this.api.getParagraphCountRoute(this.doc.name), { params: { doc_path: this.doc.path } })
-      .pipe(
-        catchError(err => {
-          if (err.status === 404) return of('');
-          return this.api.handleHttpError(err);
+    this.subscription.add(
+      this.httpClient
+        .get(this.api.getParagraphCountRoute(this.doc.name), { params: { doc_path: this.doc.path } })
+        .pipe(
+          catchError(err => {
+            if (err.status === 404) return of('');
+            return this.api.handleHttpError(err);
+          })
+        )
+        .subscribe((res: string) => {
+          const paragraphIds = (res || '').split('\n').filter(str => str !== '');
+          this.paragraphIds = paragraphIds;
+          this.addParagraphIdStyles();
         })
-      )
-      .subscribe((res: string) => {
-        const paragraphIds = (res || '').split('\n').filter(str => str !== '');
-        console.log('gotres', paragraphIds);
-        this.addParagraphIdStyles(paragraphIds);
-      });
+    );
   }
 
   clearStyles() {
@@ -54,10 +76,9 @@ export class ParagraphNoteMarksDirective {
     }
   }
 
-  addParagraphIdStyles(pIds) {
+  addParagraphIdStyles() {
     this.clearStyles();
-    pIds.forEach(pId => {
-      console.log('set style for pId', pId);
+    this.paragraphIds.forEach(pId => {
       let rule = `p.${pId}::after {
         height: 12px;
         width: 12px;
