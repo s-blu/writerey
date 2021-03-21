@@ -135,9 +135,7 @@ export class ParagraphService {
       const data = JSON.parse(res);
       const result = metaType ? data[metaType] : data;
 
-      console.log('parseAndExtractParagraphMetaResponse', context);
       if (RegExp(this.UUID_V4_REGEX_STR).exec(context)) {
-        console.log('saving meta-meta');
         this.metaDb.upsertParagraphMeta(docPath, docName, context, data);
       }
       this.setCacheItem(docPath, docName, context, data);
