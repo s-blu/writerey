@@ -16,6 +16,7 @@
     (editorChange)="onChange($event)"
     (editorBlur)="onBlur($event)"
     [readonly]="docMode === DOC_MODES.READ"
+    [wyParagraphAnnotator]="document"
   ></wy-ckeditor>
   <ng-template #emptyHint>
     <wy-introduction></wy-introduction>
