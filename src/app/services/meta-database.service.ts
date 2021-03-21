@@ -9,16 +9,12 @@ export class MetaDatabaseService {
   database;
 
   constructor() {
-    // Dexie.delete('writerey_meta'); // TODO remove me
     this.database = new Dexie('writerey_meta');
     if (environment.debugMode) this.database.debug = true;
 
     this.database.version(1).stores({
-      paragraphMeta: 'pId,[docPath+docName]', // paragraphNoteCount, assignedLabels
+      paragraphMeta: 'pId,[docPath+docName]',
     });
-    //this.database.open(); // not needed?
-    // this.database.friends.add({ name: 'Ingemar Bergman', isCloseFriend: 0 });
-    // this.database.pets.add({ name: 'Josephina', kind: 'dog', fur: 'too long right now' });
   }
 
   upsertParagraphMeta(docPath, docName, context, data) {
@@ -35,4 +31,12 @@ export class MetaDatabaseService {
     console.log('getParagraphMetaForDocument', docPath, docName);
     return this.database.paragraphMeta.where('[docPath+docName]').equals([docPath, docName]).toArray();
   }
+}
+
+export interface ParagraphMetaEntry {
+  pId: string;
+  docPath: string;
+  docName: string;
+  pNoteCount: number;
+  labels: { id; valueId }[];
 }

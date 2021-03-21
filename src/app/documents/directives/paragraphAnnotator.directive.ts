@@ -1,35 +1,107 @@
-import { Directive, Input, OnInit, Renderer2 } from '@angular/core';
-import { MetaDatabaseService } from './../../services/meta-database.service';
+import { Directive, Input, OnDestroy, OnInit } from '@angular/core';
+import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { Subscription } from 'rxjs';
+import { MetaDatabaseService, ParagraphMetaEntry } from './../../services/meta-database.service';
+import { DocumentModeStore } from './../../stores/documentMode.store';
 
 @Directive({
   selector: '[wyParagraphAnnotator]',
 })
-export class ParagraphAnnotatorDirective implements OnInit {
+export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
   @Input('wyParagraphAnnotator') document;
 
-  constructor(private renderer: Renderer2, private metaDb: MetaDatabaseService) {}
+  private stylesheet;
+  private styleElement;
+  private mode;
+  private paragraphMeta;
+  private subscription = new Subscription();
 
-  ngOnInit() {
+  constructor(private metaDb: MetaDatabaseService, private documentModeStore: DocumentModeStore) {}
+
+  async ngOnInit() {
+    this.createStylesheet();
     this.annotateParagraphs();
+
+    this.subscription.add(
+      this.documentModeStore.mode$.subscribe(async newMode => {
+        if (this.mode === newMode) return;
+
+        if (newMode === DOC_MODES.READ) {
+          this.clearStyles();
+        } else if (this.mode === DOC_MODES.REVIEW) {
+          await this.getParagraphMeta();
+          this.annotateParagraphs();
+        } else if (this.mode === DOC_MODES.READ) {
+          this.annotateParagraphs();
+        }
+
+        this.mode = newMode;
+      })
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
+
+  async getParagraphMeta() {
+    const pMeta = await this.metaDb.getParagraphMetaForDocument(this.document?.path, this.document?.name);
+    this.paragraphMeta = pMeta;
   }
 
   async annotateParagraphs() {
-    console.log('annotateParagraph', this.document);
-    const paragraphMetaInfo = await this.metaDb.getParagraphMetaForDocument(this.document?.path, this.document?.name);
-    console.log('annotateParagraph paragraphMetaInfo', paragraphMetaInfo);
-    const container = document.querySelector('#ckeditor-container');
-
-    paragraphMetaInfo.forEach(meta => {
-      const paragraphObj = container.querySelector(`p.${meta.pId}`); // document.querySelector(`p.${meta.pId}`);
-      const annotator = document.createElement('p'); // this.renderer.createElement('p');
-
-      annotator.textContent = meta.pNoteCount + 'HALLO HIER BIN ICH';
-      annotator.className = `p-annotator annotator-${meta.pId}`;
-      // this.renderer.setProperty(annotator, 'style', `color: red;background-color: grey;`);
-      console.log(paragraphObj, annotator);
-      // Append the created div to the body element
-      container.insertBefore(annotator, paragraphObj);
-      console.log(container);
+    if (!this.paragraphMeta) await this.getParagraphMeta();
+    this.clearStyles();
+    this.paragraphMeta.forEach((meta: ParagraphMetaEntry) => {
+      if (meta.pNoteCount > 0) {
+        this.addNoteCountPseudoElement(meta);
+      }
     });
+  }
+
+  private addNoteCountPseudoElement(meta: ParagraphMetaEntry) {
+    let rule = `p.${meta.pId}::after {
+      height: 14px;
+      width: 14px;
+      background-color: rgb(136, 180, 219);
+      border-radius: 3px;
+      content: "${meta.pNoteCount}";
+      display: flex;
+      position: absolute;
+      font-family: Ubuntu, sans-serif;
+      color: white;
+      font-size: 8pt;
+      top: -12px;
+      right: -7px;
+      justify-content: center;
+      align-items: center;
+    }`;
+    this.stylesheet.insertRule(rule);
+
+    rule = `p.${meta.pId} {
+      position: relative;
+    }`;
+    this.stylesheet.insertRule(rule);
+
+    // display badge only on first paragraph with id
+    rule = `p.${meta.pId} ~ p.${meta.pId}::after {
+      position: inherit;
+      display: none;
+      content: '';
+    }`;
+    this.stylesheet.insertRule(rule);
+  }
+
+  clearStyles() {
+    document.head.removeChild(this.styleElement);
+    this.createStylesheet();
+  }
+
+  private createStylesheet() {
+    const style = document.createElement('style');
+    style.appendChild(document.createTextNode(''));
+    document.head.appendChild(style);
+    this.stylesheet = style.sheet;
+    this.styleElement = style;
   }
 }
