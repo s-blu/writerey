@@ -65,12 +65,19 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
     if (!this.paragraphMeta) await this.getParagraphMeta();
     this.clearStyles();
     this.paragraphMeta.forEach((meta: ParagraphMetaEntry) => {
+      let styled = false;
       if (meta.pNoteCount > 0) {
         this.addNoteCountPseudoElement(meta);
+        styled = true;
       }
 
       if (meta.labels) {
         this.addLabelStyles(meta);
+        styled = true;
+      }
+
+      if (styled) {
+        this.setParagraphToRelativePositioning(meta);
       }
     });
   }
@@ -132,16 +139,18 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
     }`;
     this.stylesheet.insertRule(rule);
 
-    rule = `p.${meta.pId} {
-      position: relative;
-    }`;
-    this.stylesheet.insertRule(rule);
-
     // display badge only on first paragraph with id
     rule = `p.${meta.pId} ~ p.${meta.pId}::after {
       position: inherit;
       display: none;
       content: '';
+    }`;
+    this.stylesheet.insertRule(rule);
+  }
+
+  private setParagraphToRelativePositioning(meta) {
+    const rule = `p.${meta.pId} {
+      position: relative;
     }`;
     this.stylesheet.insertRule(rule);
   }
