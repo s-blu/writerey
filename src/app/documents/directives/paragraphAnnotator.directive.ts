@@ -1,5 +1,6 @@
 import { Directive, Input, OnDestroy, OnInit } from '@angular/core';
 import { DOC_MODES } from '@writerey/shared/models/docModes.enum';
+import { liveQuery } from 'dexie';
 import { Subscription } from 'rxjs';
 import { LabelStore } from 'src/app/stores/label.store';
 import { MetaDatabaseService, ParagraphMetaEntry } from './../../services/meta-database.service';
@@ -29,14 +30,22 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
     this.annotateParagraphs();
 
     this.subscription.add(
+      liveQuery(() => {
+        return this.metaDb.getParagraphMetaForDocument(this.document?.path, this.document?.name);
+      }).subscribe(pMeta => {
+        this.paragraphMeta = pMeta;
+        if (this.mode !== DOC_MODES.READ) {
+          this.annotateParagraphs();
+        }
+      })
+    );
+
+    this.subscription.add(
       this.documentModeStore.mode$.subscribe(async newMode => {
         if (this.mode === newMode) return;
 
         if (newMode === DOC_MODES.READ) {
           this.clearStyles();
-        } else if (this.mode === DOC_MODES.REVIEW) {
-          await this.getParagraphMeta();
-          this.annotateParagraphs();
         } else if (this.mode === DOC_MODES.READ) {
           this.annotateParagraphs();
         }
@@ -56,13 +65,9 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  async getParagraphMeta() {
-    const pMeta = await this.metaDb.getParagraphMetaForDocument(this.document?.path, this.document?.name);
-    this.paragraphMeta = pMeta;
-  }
-
   async annotateParagraphs() {
-    if (!this.paragraphMeta) await this.getParagraphMeta();
+    const start = Date.now();
+    if (!this.paragraphMeta) return;
     this.clearStyles();
     this.paragraphMeta.forEach((meta: ParagraphMetaEntry) => {
       let styled = false;
@@ -80,6 +85,7 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
         this.setParagraphToRelativePositioning(meta);
       }
     });
+    console.log('finished annotating parargraphs after ms: ', Date.now() - start);
   }
 
   private addLabelStyles(meta: ParagraphMetaEntry) {
