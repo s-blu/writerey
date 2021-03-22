@@ -23,12 +23,10 @@ export class MetaDatabaseService {
     data.notes?.forEach(note => {
       if (note.context === 'paragraph') pNoteCount++;
     });
-    console.log('upsertParagraphMeta', docPath, docName, context, data);
     this.database.paragraphMeta.put({ docPath, docName, pId: context, pNoteCount, labels: data.labels });
   }
 
   getParagraphMetaForDocument(docPath, docName) {
-    console.log('getParagraphMetaForDocument', docPath, docName);
     return this.database.paragraphMeta.where('[docPath+docName]').equals([docPath, docName]).toArray();
   }
 }

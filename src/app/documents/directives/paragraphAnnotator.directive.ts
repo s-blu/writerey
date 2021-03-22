@@ -102,7 +102,6 @@ export class ParagraphAnnotatorDirective implements OnInit, OnDestroy {
       color: rgb(136, 180, 219);
       font-family: Ubuntu, sans-serif;
       top: -1.5em;
-      left: 0;
       font-size: 7pt;
     }`;
     this.stylesheet.insertRule(rule);
