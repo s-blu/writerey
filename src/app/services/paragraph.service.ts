@@ -3,13 +3,13 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
-
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { catchError, flatMap, map, take } from 'rxjs/operators';
 import * as uuid from 'uuid';
 import { ApiService } from './api.service';
+import { MetaDatabaseService } from './meta-database.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class ParagraphService {
 
   private paragraphMetaCache = {};
 
-  constructor(private api: ApiService, private httpClient: HttpClient) {}
+  constructor(private api: ApiService, private httpClient: HttpClient, private metaDb: MetaDatabaseService) {}
 
   enhanceDocumentWithParagraphIds(document: string, path: string, name: string) {
     if (!document) return;
@@ -135,6 +135,9 @@ export class ParagraphService {
       const data = JSON.parse(res);
       const result = metaType ? data[metaType] : data;
 
+      if (RegExp(this.UUID_V4_REGEX_STR).exec(context)) {
+        this.metaDb.upsertParagraphMeta(docPath, docName, context, data);
+      }
       this.setCacheItem(docPath, docName, context, data);
       return result;
     } catch {

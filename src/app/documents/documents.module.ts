@@ -5,25 +5,26 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
-import { MatIconModule } from '@angular/material/icon';
-import { SharedModule } from './../shared/shared.module';
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { WordCountComponent } from './components/wordCount/wordCount.component';
-import { IntroductionComponent } from './components/introduction/introduction.component';
-import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
-import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { DocumentNoteItemsComponent } from './components/documentNoteItems/documentNoteItems.component';
-import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
-import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
-import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
-import { DocumentsComponent } from './documents.component';
-import { DocumentsRoutingModule } from './documents-routing.module';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { WyCkeditorModule } from '@writerey/ckeditor/wyCkeditor.module';
+import { NoteItemsModule } from '@writerey/noteItems/noteItems.module';
+import { DocumentLabelsModule } from './../documentLabels/documentLabels.module';
 import { HistoryModule } from './../history/history.module';
+import { SharedModule } from './../shared/shared.module';
+import { DocumentEditorComponent } from './components/documentEditor/documentEditor.component';
+import { DocumentNoteItemsComponent } from './components/documentNoteItems/documentNoteItems.component';
 import { DocumentsFooterComponent } from './components/documentsFooter/documentsFooter.component';
+import { DocumentsTopbarComponent } from './components/documentsTopbar/documentsTopbar.component';
+import { IntroductionComponent } from './components/introduction/introduction.component';
+import { ModeSwitcherComponent } from './components/modeSwitcher/modeSwitcher.component';
+import { WordCountComponent } from './components/wordCount/wordCount.component';
+import { ParagraphAnnotatorDirective } from './directives/paragraphAnnotator.directive';
+import { DocumentsRoutingModule } from './documents-routing.module';
+import { DocumentsComponent } from './documents.component';
 
 const materialModules = [MatIconModule, MatProgressBarModule, MatButtonModule];
 
@@ -47,6 +48,7 @@ const materialModules = [MatIconModule, MatProgressBarModule, MatButtonModule];
     DocumentsTopbarComponent,
     DocumentsFooterComponent,
     ModeSwitcherComponent,
+    ParagraphAnnotatorDirective,
   ],
   exports: [
     IntroductionComponent,

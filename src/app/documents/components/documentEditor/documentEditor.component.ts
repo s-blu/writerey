@@ -63,21 +63,12 @@ export class DocumentEditorComponent implements OnInit, OnDestroy {
   onParagraphIdUpdate(event) {
     if (RegExp(this.paragraphService.UUID_V4_REGEX_STR).test(event) && this.docMode !== DOC_MODES.READ) {
       this.paragraphId = event;
-      let rule = '';
-      if (this.docMode === DOC_MODES.REVIEW) {
-        // TODO is it possible to use the scss variable value here?
-        rule = `p.${event} {
-          background-color: aliceblue;
-        }`;
-      } else {
-        // margin-left is equals -(padding-left + 1px)
-        rule = `p.${event} {
+      let rule = `p.${event} {
           margin-left: -9px;
           border-left: 1px solid rgb(193, 215, 234);
           z-index: 5;
           padding-left: 8px;
         }`;
-      }
 
       this.deleteParagraphStyles();
       this.style.insertRule(rule);
