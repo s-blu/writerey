@@ -32,7 +32,7 @@
     "@ckeditor/ckeditor5-typing": "^27",
     "@ckeditor/ckeditor5-upload": "^27",
     "css-loader": "^5.0.1",
-    "postcss": "^8.2.1",
+    "postcss": "^8.2.10",
     "postcss-loader": "^4.1.0",
     "raw-loader": "^4.0.2",
     "style-loader": "^2.0.0",
