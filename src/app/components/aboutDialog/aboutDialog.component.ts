@@ -8,7 +8,7 @@
 
 import { Component } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { version, repository, license, homepage } from '../../../../package.json';
+import { homepage, license, repository, version } from '../../../../package.json';
 
 @Component({
   selector: 'wy-about-dialog',
@@ -20,7 +20,7 @@ export class AboutDialogComponent {
   license = license;
   homepage = homepage;
   repositoryLink = repository.url;
-  documentationLink = 'https://docs.writerey.com';
+  documentationLink = 'https://s-blu.github.io/writerey';
 
   constructor(public dialogRef: MatDialogRef<AboutDialogComponent>) {}
 

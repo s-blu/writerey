@@ -6,8 +6,8 @@ It provides you a distraction free place to sort your thoughts and write down yo
 
 ## Resources
 
-- :house: [Homepage](https://writerey.com)
-- :blue_book: [Documentation](https://docs.writerey.com)
+- :house: [Homepage](https://s-blu.github.io/writerey-pages)
+- :blue_book: [Documentation](https://s-blu.github.io/writerey)
 - :rotating_light: [Issues](https://github.com/s-blu/writerey/issues)
 
 ## Attention: Still in Beta
@@ -26,7 +26,7 @@ writerey is open source and licensed under Mozilla Public License Version 2.0. F
 
 ## Installation
 
-For installation constructions, please refer to the [installation documentation](https://docs.writerey.com/en/installation/).
+For installation constructions, please refer to the [installation documentation](https://s-blu.github.io/writerey/en/installation/).
 
 ## System requirements
 
@@ -37,7 +37,7 @@ To use writerey, you need the following tools installed on your machine:
 - [Python 3](https://www.python.org/downloads/)
 - [Git](https://git-scm.com/downloads)
 
-More information how to install these requirements and why you need them can be found in the [installation documentation](https://docs.writerey.com/en/installation/).
+More information how to install these requirements and why you need them can be found in the [installation documentation](https://s-blu.github.io/writerey/en/installation/).
 
 ## Used technologies
 
@@ -54,4 +54,4 @@ For a complete list of used packages, please refer to package.json.
 
 ## Documentation
 
-Please visit the [Documentation](https://docs.writerey.com/en/) to find out more about writerey.
+Please visit the [Documentation](https://s-blu.github.io/writerey/en/) to find out more about writerey.
