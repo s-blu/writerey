@@ -6,7 +6,7 @@ Are you new to writerey? Please refer to [the installation guide](/en/installati
 
 ## Writer-what?
 
-You don't know what writerey is? Head over to our [homepage](https://writerey.com) to find out more about the app.
+You don't know what writerey is? Head over to our [homepage](https://s-blu.github.io/writerey-pages/#/) to find out more about the app.
 
 ## WARNING: Development paused indefinitely!
 

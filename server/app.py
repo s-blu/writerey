@@ -6,6 +6,7 @@
 
 from initialize_env import initialize_env
 
+
 if __name__ == '__main__':
     initialize_env()
 
@@ -26,6 +27,7 @@ from links import Links
 from labelStats import LabelStats
 from writerey_config import basePath, metaSubPath, port, host
 from waitress import serve
+from markdown_converter import MarkdownConverter
 
 import sys
 
@@ -45,6 +47,7 @@ api.add_resource(Labels, '/label/<string:label_id>')
 api.add_resource(LabelStats, '/labelstats/<string:project>')
 api.add_resource(Links, '/links/<string:project_dir>')
 api.add_resource(Tree, '/tree')
+api.add_resource(MarkdownConverter, '/export')
 api.add_resource(GitAutomation, '/git/commit')
 api.add_resource(Tag, '/git/tag')
 api.add_resource(GitMove, '/git/mv')

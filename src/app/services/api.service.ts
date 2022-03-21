@@ -64,6 +64,10 @@ export class ApiService {
     return docName ? `${this.serverAdress}/img/${docName}` : `${this.serverAdress}/img`;
   }
 
+  getExportRoute(path?) {
+    return path ? `${this.serverAdress}/export/${path}` : `${this.serverAdress}/export`;
+  }
+
   handleHttpError(error: HttpErrorResponse) {
     if (error.error instanceof ErrorEvent) {
       // A client-side or network error occurred. Handle it accordingly.
