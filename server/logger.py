@@ -6,6 +6,7 @@
 
 
 import json
+from datetime import datetime
 
 from writerey_config import debugMode
 
@@ -25,7 +26,7 @@ class Logger:
 
     def logDebug(self, *msg):
         if (debugMode and not self.silenced):
-            print(f'{bcolors.DEBUG}[debug]{bcolors.END}',
+            print(f'{datetime.now()} {bcolors.DEBUG}[debug]{bcolors.END}',
                   '[' + self.prefix + ']', self.parseToString(*msg))
 
     def logInfo(self, *msg):
