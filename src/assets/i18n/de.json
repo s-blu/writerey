@@ -261,5 +261,9 @@
   "error": {
     "couldNotFetchTree": "Konnte Projekt \"{{name}}\" nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
     "couldNotLoadDocument": "Das Dokument '{{name}}' konnte nicht geladen werden :("
+  },
+  "export": {
+    "error": "Der Export konnte nicht gestartet werden. Bitte stelle sicher, das kein _writerey_export Ordner in deinem Writerey-Installationspfad existiert.",
+    "finished": "Fertig! Du findest deine exportierten Markdown-Dateien im Ordner _writerey_export in deinem Writerey-Installationspfad"
   }
 }

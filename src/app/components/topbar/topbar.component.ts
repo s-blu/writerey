@@ -10,7 +10,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslocoService } from '@ngneat/transloco';
 import { NameSnapshotDialogComponent } from '@writerey/history/components/nameSnapshotDialog/nameSnapshotDialog.component';
 import { TagDialogComponent } from '@writerey/history/components/tagDialog/tagDialog.component';
-import { Subscription } from 'rxjs';
+import { of, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
 import { SnapshotService } from '../../services/snapshot.service';
 import { ExportService } from './../../services/export.service';
@@ -109,8 +110,20 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   export() {
-    console.log('expprt!');
-    this.exportService.export().subscribe(res => console.log('sdououeq', res));
+    this.exportService
+      .export()
+      .pipe(
+        catchError(() => {
+          const snackBarMsg = this.translocoService.translate('export.error');
+          this.showSnackBar(snackBarMsg, '', 10000);
+          return of('error');
+        })
+      )
+      .subscribe(res => {
+        if (res === 'error') return;
+        const snackBarMsg = this.translocoService.translate('export.finished');
+        this.showSnackBar(snackBarMsg, '', 10000);
+      });
   }
 
   private showSnackBar(msg, action = '', duration = 2000) {

@@ -262,5 +262,9 @@
   "error": {
     "couldNotFetchTree": "Was unable to fetch tree, cannot display directories. Please try restart the application or return to project overview.",
     "couldNotLoadDocument": "Was unable to load document :("
+  },
+  "export": {
+    "error": "Export couldn't start. Please make sure no _writerey_export folder exists in your writerey installation folder (parallel to _writerey_data)",
+    "finished": "Finished! You'll find your exported Markdown-Files in _writerey_export in your writerey installation folder"
   }
 }
