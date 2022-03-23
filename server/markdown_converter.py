@@ -13,6 +13,7 @@ from writerey_config import basePath, labelPath, metaSubPath
 
 exportPath = '_writerey_export'
 log = Logger('markdown-converter')
+file_suffix = '.md'
 class MarkdownConverter(Resource):
   def get(self):
       # TODO delete existing export folder
@@ -27,9 +28,9 @@ class MarkdownConverter(Resource):
     # dirpath is a string, the path to the directory. 
     # dirnames is a list of the names of the subdirectories in dirpath (excluding '.' and '..'). 
     # filenames is a list of the names of the non-directory files in dirpath. 
+    failedFilesCounter = 0
     for (dirpath, dirnames, filenames) in os.walk(basePath):
         log.logDebug('walking ...', dirpath, dirnames, filenames)
-        failedFilesCounter = 0;
         filePath = PathUtils.sanitizePathString(dirpath, True)
 
         for filename in filenames:
@@ -55,7 +56,7 @@ def createExportFolder(path, dir_name):
 
 def createExportFile(path, file_name):
     try: 
-        exportFilename = re.sub(r'.html', '.md', file_name)
+        exportFilename = re.sub(r'.html', file_suffix, file_name)
         originalFilepath = PathUtils.sanitizePathList([basePath, path, file_name])
         exportFilepath = PathUtils.sanitizePathList([exportPath, path, exportFilename])
         log.logDebug(f'export file for "{originalFilepath}" to "{exportFilepath}"')
@@ -82,6 +83,18 @@ def duplicateFileToExportPath(path, file_name):
         log.logError('Could not duplicate file!', err, originalFilepath)
         return 1
 
+def rewriteNoteDataToFile(path, filename, data):
+    exportFilepath = PathUtils.sanitizePathList([exportPath, path, filename])
+    newFileContent = ''
+    if 'notes' not in data:
+        return 0
+    for note in data['notes']:
+        newFileContent = newFileContent + '\n' + markdownify(note['text'])
+    createExportFolder('', path)
+    file = open(exportFilepath, 'a')
+    file.write(newFileContent)
+    return 0
+
 def rewriteMetaFileForExport(path, file_name):
     if file_name.startswith('lv_'):
         definitionsFile = open(PathUtils.sanitizePathList([basePath, path, '_writerey_label_defs']))
@@ -89,54 +102,49 @@ def rewriteMetaFileForExport(path, file_name):
         definitions = json.load(definitionsFile)
         labelValue = json.load(labelValueFile)
         (defId, valueId) = labelValue[0]['context'].split(':')
-        log.logWarn('got ids', defId, valueId)
 
         definition = None
         value = None
         for defi in definitions:
             if (defi['id'] == defId):
-                log.logDebug('got definition!')
                 definition = defi
+
         if definition:
             for val in definition['values']:
                 if (val['id'] == valueId):
-                    log.logDebug('got vall!111', val)
                     value = val
         else:
             log.logInfo('couldnt find label definition, wont save info...')
             return 0
-        
-        try:
-            return 0
-        except BaseException as err:
-            log.logError('Could save label value!', err, PathUtils.sanitizePathList([basePath, path, file_name]))
-            return 1
-        # TODO filetype 1: lv_ types - need to find its human readable name in _writerey_label_defs and extract "text" values
-        # TODO read  _writerey_label_defs, read file itself
-        # TODO parse context to uuids, find def with first uuid - save name 
-        # TODO find value with second uuid - save name as "defname_valuename"
-        # TODO write all "text" values as paragraphs to this file
-        log.logDebug('rewrite labels...')
+
+        if value:
+            newFilename = defi['name'] + '_' + value['name'] + file_suffix
+        else: 
+            newFilename = defi['name'] + '_' + value['id'] + file_suffix
+
+        data = { 'notes': labelValue }
+        try: 
+            if (value['info']):
+                data['notes'].insert(0, { 'text': value['info'] })
+        except:
+            log.logInfo('could not append value info, skipping', newFilename)
+        return rewriteNoteDataToFile(path, newFilename, data)
     elif path.endswith('.html') and '.' not in file_name and (file_name.startswith('p') or file_name == 'document'):
-        newFilename = path.split('/').pop() + '_notes.md'
-        log.logDebug('rewriting notes for file', newFilename)
+        newFilename = path.split('/').pop() + '_notes' + file_suffix
         originalFilepath = PathUtils.sanitizePathList([basePath, path, file_name])
-        exportFilepath = PathUtils.sanitizePathList([exportPath, path, newFilename])
+        
         file = open(originalFilepath, "r")
         try:
             data = json.load(file)
+            return rewriteNoteDataToFile(path, newFilename, data)
         except json.JSONDecodeError:
             log.logWarn('could not read file as json, skipping', originalFilepath)
             return 1
+    elif file_name in ['_writerey_images', '_writerey_links', '_writerey_label_defs']:
+        return 0
+    else:
+        log.logWarn('unsupported meta file!', path, file_name)
+        return 1
+        
 
-        newFileContent = ''
-        if 'notes' not in data:
-            return 0
-        for note in data['notes']:
-            log.logDebug('writing note to file content...')
-            newFileContent = newFileContent + '\n' + markdownify(note['text'])
-        createExportFolder('', path)
-        exportFile = open(exportFilepath, 'a')
-        exportFile.write(newFileContent)
 
-    return 0
