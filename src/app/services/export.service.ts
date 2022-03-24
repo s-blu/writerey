@@ -9,7 +9,9 @@ import { ApiService } from './api.service';
 export class ExportService {
   constructor(private httpClient: HttpClient, private api: ApiService) {}
 
-  export(path = null) {
-    return this.httpClient.get(this.api.getExportRoute(path)).pipe(catchError(err => this.api.handleHttpError(err)));
+  export(filetype) {
+    return this.httpClient
+      .get(this.api.getExportRoute(filetype))
+      .pipe(catchError(err => this.api.handleHttpError(err)));
   }
 }

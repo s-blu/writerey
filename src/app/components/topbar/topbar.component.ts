@@ -11,11 +11,12 @@ import { TranslocoService } from '@ngneat/transloco';
 import { NameSnapshotDialogComponent } from '@writerey/history/components/nameSnapshotDialog/nameSnapshotDialog.component';
 import { TagDialogComponent } from '@writerey/history/components/tagDialog/tagDialog.component';
 import { of, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter, switchMap, tap } from 'rxjs/operators';
 import { SnapshotStore } from 'src/app/stores/snapshot.store';
 import { SnapshotService } from '../../services/snapshot.service';
 import { ExportService } from './../../services/export.service';
 import { AboutDialogComponent } from './../aboutDialog/aboutDialog.component';
+import { ExportDialogComponent } from './../exportDialog/exportDialog.component';
 
 @Component({
   selector: 'wy-topbar',
@@ -110,17 +111,26 @@ export class TopbarComponent implements OnInit, OnDestroy {
   }
 
   export() {
-    this.exportService
-      .export()
+    this.dialog
+      .open(ExportDialogComponent, {
+        width: '700px',
+      })
+      .afterClosed()
       .pipe(
+        tap(res => {
+          console.log('sdihasod', res);
+        }),
+        filter(res => !!res),
+        switchMap(res => this.exportService.export(res)),
         catchError(() => {
           const snackBarMsg = this.translocoService.translate('export.error');
           this.showSnackBar(snackBarMsg, '', 10000);
-          return of('error');
+          return of(null);
         })
       )
       .subscribe(res => {
-        if (res === 'error') return;
+        console.log('suuuubbbb', res);
+        if (!res) return;
         const snackBarMsg = this.translocoService.translate('export.finished');
         this.showSnackBar(snackBarMsg, '', 10000);
       });

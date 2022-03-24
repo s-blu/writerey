@@ -264,6 +264,16 @@
   },
   "export": {
     "error": "Der Export konnte nicht gestartet werden. Bitte stelle sicher, das kein _writerey_export Ordner in deinem Writerey-Installationspfad existiert.",
-    "finished": "Fertig! Du findest deine exportierten Markdown-Dateien im Ordner _writerey_export in deinem Writerey-Installationspfad"
+    "finished": "Fertig! Du findest deine exportierten Markdown-Dateien im Ordner _writerey_export in deinem Writerey-Installationspfad",
+    "dialog": {
+      "title": "Export",
+      "filetype": {
+        "explanation": "Bitte wähle den Dateitypen aus, den deine Exportdateien haben sollen. Bitte beachte: Der Inhalt deiner Exportdateien bleibt gleich, ausschließlich die Dateiendung unterscheidet sich.",
+        "md": "Markdown (.md)",
+        "txt": "Text (.txt)"
+      },
+      "cancel": "Abbrechen",
+      "export": "Export starten"
+    }
   }
 }

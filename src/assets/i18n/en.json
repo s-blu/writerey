@@ -265,6 +265,16 @@
   },
   "export": {
     "error": "Export couldn't start. Please make sure no _writerey_export folder exists in your writerey installation folder (parallel to _writerey_data)",
-    "finished": "Finished! You'll find your exported Markdown-Files in _writerey_export in your writerey installation folder"
+    "finished": "Finished! You'll find your exported Markdown-Files in _writerey_export in your writerey installation folder",
+    "dialog": {
+      "title": "Export",
+      "filetype": {
+        "explanation": "Please select which file type you want to export. Please note: This does not change the content of the exported file, only the file endings.",
+        "md": "Markdown-File (.md)",
+        "txt": "Text-File (.txt)"
+      },
+      "cancel": "Cancel",
+      "export": "Start Export"
+    }
   }
 }
