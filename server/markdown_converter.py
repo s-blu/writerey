@@ -105,43 +105,45 @@ def rewriteNoteDataToFile(path, filename, data):
 
 def rewriteMetaFileForExport(path, file_name, file_suffix):
     originalFilepath = ''
+    if file_name == '_writerey_label_defs':
+        originalFilepath = PathUtils.sanitizePathList([basePath, path, file_name])
+        definitionsFile = open(PathUtils.sanitizePathList([basePath, path, file_name]), encoding='utf-8', errors='ignore')
+        definitions = json.load(definitionsFile)
+        for defi in definitions:
+            for val in defi['values']:
+                newFilename = f'{defi["name"]}_{val["name"]}{file_suffix}'
+                try: 
+                    if (val['info']):
+                        data = { 'notes': [{ 'text': val['info'] }]}
+                        rewriteNoteDataToFile(path, newFilename, data)
+                except:
+                    continue
     if file_name.startswith('lv_'):
         originalFilepath = PathUtils.sanitizePathList([basePath, path, file_name])
         definitionsFile = open(PathUtils.sanitizePathList([basePath, path, '_writerey_label_defs']), encoding='utf-8', errors='ignore')
         labelValueFile = open(originalFilepath, encoding='utf-8', errors='ignore')
         definitions = json.load(definitionsFile)
         labelValue = json.load(labelValueFile)
-        try:
-            (defId, valueId) = labelValue[0]['context'].split(':')
-        except:
-            log.logInfo('LabelValue seems to be empty, skipping', originalFilepath)
-            return None
+        valueId = re.sub(r'lv_', '', file_name)
 
-        definition = None
         value = None
+        definition = None
         for defi in definitions:
-            if (defi['id'] == defId):
-                definition = defi
-
-        if definition:
-            for val in definition['values']:
+            for val in defi['values']:
                 if (val['id'] == valueId):
                     value = val
-        else:
-            log.logInfo('couldnt find label definition, wont save info...')
+                    definition = defi
+                
+        if not value:
+            log.logInfo('couldnt find label/value definition, wont save info...')
             return None
 
         if value:
-            newFilename = f'{defi["name"]}_{value["name"]}{file_suffix}'
+            newFilename = f'{definition["name"]}_{value["name"]}{file_suffix}'
         else: 
-            newFilename = f'{defi["name"]}_{value["id"]}{file_suffix}'
+            newFilename = f'{definition["name"]}_{value["id"]}{file_suffix}'
 
-        data = { 'notes': labelValue }
-        try: 
-            if (value['info']):
-                data['notes'].insert(0, { 'text': value['info'] })
-        except:
-            log.logInfo('could not find or append value info, skipping', newFilename)
+        data = { 'notes': labelValue or [] }
         failed = rewriteNoteDataToFile(path, newFilename, data)
         return originalFilepath if failed else None
     elif path.endswith('.html') and '.' not in file_name and (file_name.startswith('p') or file_name == 'document'):
