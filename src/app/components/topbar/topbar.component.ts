@@ -117,19 +117,16 @@ export class TopbarComponent implements OnInit, OnDestroy {
       })
       .afterClosed()
       .pipe(
-        tap(res => {
-          console.log('sdihasod', res);
-        }),
         filter(res => !!res),
         switchMap(res => this.exportService.export(res)),
-        catchError(() => {
+        catchError(err => {
+          console.error('error occured on export', err);
           const snackBarMsg = this.translocoService.translate('export.error');
           this.showSnackBar(snackBarMsg, '', 10000);
           return of(null);
         })
       )
       .subscribe(res => {
-        console.log('suuuubbbb', res);
         if (!res) return;
         const snackBarMsg = this.translocoService.translate('export.finished');
         this.showSnackBar(snackBarMsg, '', 10000);
