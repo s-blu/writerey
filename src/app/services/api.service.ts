@@ -4,8 +4,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import { Injectable } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
 @Injectable({
@@ -62,6 +62,10 @@ export class ApiService {
 
   getImageRoute(docName) {
     return docName ? `${this.serverAdress}/img/${docName}` : `${this.serverAdress}/img`;
+  }
+
+  getExportRoute(filetype) {
+    return `${this.serverAdress}/export?filetype=${filetype}`;
   }
 
   handleHttpError(error: HttpErrorResponse) {

@@ -25,7 +25,7 @@ def initialize_env():
   except:
     pip_cmd = 'pip3'
   
-  required_packages = ['Flask', 'Flask-RESTful', 'waitress']
+  required_packages = ['Flask', 'Flask-RESTful', 'waitress', 'markdownify']
   log.logDebug('installed packages ...', flat_installed_packages)
   for package in required_packages:
     if package not in flat_installed_packages:
