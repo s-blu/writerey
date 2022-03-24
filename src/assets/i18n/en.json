@@ -106,7 +106,8 @@
     "snapshot": "Create snapshot",
     "tag": "Tag last snapshot",
     "history": "Show snapshot history",
-    "about": "About"
+    "about": "About",
+    "export": "Projekte exportieren"
   },
   "saveInfo": {
     "lastSaved": "Last saved on",
@@ -268,6 +269,7 @@
     "finished": "Finished! You'll find your exported Markdown-Files in _writerey_export in your writerey installation folder",
     "dialog": {
       "title": "Export",
+      "text": "Export all your projects in Markdown to be able to migrate them to another program.",
       "filetype": {
         "explanation": "Please select which file type you want to export. Please note: This does not change the content of the exported file, only the file endings.",
         "md": "Markdown-File (.md)",

@@ -106,7 +106,8 @@
     "snapshot": "Sicherung erstellen",
     "tag": "Letzte Sicherung taggen",
     "history": "Alle Zwischenstände anzeigen",
-    "about": "Über writerey"
+    "about": "Über writerey",
+    "export": "Export projects"
   },
   "saveInfo": {
     "lastSaved": "Zuletzt gespeichert",
@@ -267,6 +268,7 @@
     "finished": "Fertig! Du findest deine exportierten Markdown-Dateien im Ordner _writerey_export in deinem Writerey-Installationspfad",
     "dialog": {
       "title": "Export",
+      "text": "Exportiere all deine Projekte als Markdown, um sie beispielsweise zu einer anderen Anwendung zu migrieren.",
       "filetype": {
         "explanation": "Bitte wähle den Dateitypen aus, den deine Exportdateien haben sollen. Bitte beachte: Der Inhalt deiner Exportdateien bleibt gleich, ausschließlich die Dateiendung unterscheidet sich.",
         "md": "Markdown (.md)",
