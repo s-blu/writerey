@@ -64,7 +64,7 @@ export class ApiService {
     return docName ? `${this.serverAdress}/img/${docName}` : `${this.serverAdress}/img`;
   }
 
-  getExportRoute(filetype?) {
+  getExportRoute(filetype) {
     return `${this.serverAdress}/export?filetype=${filetype}`;
   }
 

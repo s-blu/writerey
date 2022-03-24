@@ -17,7 +17,6 @@ log = Logger('markdown-converter')
 class MarkdownConverter(Resource):
   def get(self):
     file_suffix = request.args.get('filetype') or '.txt'
-    log.logDebug('got filetype', file_suffix)
     if Path(exportPath).exists():
         abort(400, 'Export Path already exists')
     log.logDebug('========== GET TREE FOR EXPORT =========')       
@@ -25,10 +24,6 @@ class MarkdownConverter(Resource):
     log.logDebug('==========')
 
     Path(exportPath).mkdir(parents=True, exist_ok=True)
-    # For each directory in the directory tree rooted at top incl self
-    # dirpath is a string, the path to the directory. 
-    # dirnames is a list of the names of the subdirectories in dirpath (excluding '.' and '..'). 
-    # filenames is a list of the names of the non-directory files in dirpath. 
     failedFiles = []
     for (dirpath, dirnames, filenames) in os.walk(basePath):
         filePath = PathUtils.sanitizePathString(dirpath, True)
@@ -50,7 +45,7 @@ class MarkdownConverter(Resource):
         
     log.logInfo('finished export with failed files:', failedFiles)
     if len(failedFiles) > 0:
-        content = ''
+        content = 'Following files could not be exported and are missing in your export folder. Please take care of these manually - sorry for the inconvience! \n'
         failedFilesFilePath = PathUtils.sanitizePathList([exportPath, '_could_not_export' + file_suffix])
         exportFile = open(failedFilesFilePath, 'w', encoding='utf-8')
         for path in failedFiles:
