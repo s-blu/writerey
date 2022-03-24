@@ -1,0 +1,17 @@
+<ng-container *transloco="let t; read: 'export.dialog'">
+  <h1 mat-dialog-title>{{ t('title') }}</h1>
+  <div mat-dialog-content>
+    <div>
+      <p>{{ t('text') }}</p>
+      <p>{{ t('filetype.explanation') }}</p>
+      <mat-radio-group [(ngModel)]="filetype">
+        <mat-radio-button value=".txt">{{ t('filetype.txt') }}</mat-radio-button>
+        <mat-radio-button value=".md">{{ t('filetype.md') }}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button type="button" (click)="cancel()">{{ t('cancel') }}</button>
+    <button mat-raised-button color="primary" (click)="export()">{{ t('export') }}</button>
+  </div>
+</ng-container>

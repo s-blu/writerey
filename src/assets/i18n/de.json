@@ -106,7 +106,8 @@
     "snapshot": "Sicherung erstellen",
     "tag": "Letzte Sicherung taggen",
     "history": "Alle Zwischenstände anzeigen",
-    "about": "Über writerey"
+    "about": "Über writerey",
+    "export": "Export projects"
   },
   "saveInfo": {
     "lastSaved": "Zuletzt gespeichert",
@@ -261,5 +262,20 @@
   "error": {
     "couldNotFetchTree": "Konnte Projekt \"{{name}}\" nicht laden. Bitte versuche, die Anwendung neuzustarten oder zur Projektübersicht zurückzukehren.",
     "couldNotLoadDocument": "Das Dokument '{{name}}' konnte nicht geladen werden :("
+  },
+  "export": {
+    "error": "Der Export konnte nicht gestartet werden. Bitte stelle sicher, das kein _writerey_export Ordner in deinem Writerey-Installationspfad existiert.",
+    "finished": "Fertig! Du findest deine exportierten Markdown-Dateien im Ordner _writerey_export in deinem Writerey-Installationspfad",
+    "dialog": {
+      "title": "Export",
+      "text": "Exportiere all deine Projekte als Markdown, um sie beispielsweise zu einer anderen Anwendung zu migrieren.",
+      "filetype": {
+        "explanation": "Bitte wähle den Dateitypen aus, den deine Exportdateien haben sollen. Bitte beachte: Der Inhalt deiner Exportdateien bleibt gleich, ausschließlich die Dateiendung unterscheidet sich.",
+        "md": "Markdown (.md)",
+        "txt": "Text (.txt)"
+      },
+      "cancel": "Abbrechen",
+      "export": "Export starten"
+    }
   }
 }

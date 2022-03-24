@@ -6,39 +6,38 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/.
  */
 
-import { ExplorerModule } from '@writerey/explorer/explorer.module';
-import { SharedModule } from '@writerey/shared/shared.module';
-import { TranslocoService } from '@ngneat/transloco';
-import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
-import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, APP_INITIALIZER, LOCALE_ID } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { APP_INITIALIZER, LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
-
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
-
-import { TranslocoRootModule } from './transloco-root.module';
-import { AppComponent } from './app.component';
-import { TopbarComponent } from './components/topbar/topbar.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FooterComponent } from './components/footer/footer.component';
-
-import { initializeApp, WyInitService } from './services/wy-init.service';
-import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
-import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
-import { HistoryModule } from './history/history.module';
-import { AppRoutingModule } from './app-routing.module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
+import { TranslocoService } from '@ngneat/transloco';
+import { ExplorerModule } from '@writerey/explorer/explorer.module';
+import { SharedModule } from '@writerey/shared/shared.module';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { AboutDialogComponent } from './components/aboutDialog/aboutDialog.component';
+import { CreateNewItemDialogComponent } from './components/createNewItemDialog/createNewItemDialog.component';
+import { DeleteConfirmationDialogComponent } from './components/deleteConfirmationDialog/deleteConfirmationDialog.component';
+import { DistractionFreeModeComponent } from './components/distractionFreeMode/distractionFreeMode.component';
+import { ExportDialogComponent } from './components/exportDialog/exportDialog.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { TopbarComponent } from './components/topbar/topbar.component';
+import { HistoryModule } from './history/history.module';
+import { initializeApp, WyInitService } from './services/wy-init.service';
+import { TranslocoRootModule } from './transloco-root.module';
 
 const matModules = [
   MatFormFieldModule,
@@ -51,6 +50,7 @@ const matModules = [
   MatToolbarModule,
   MatDividerModule,
   MatSidenavModule,
+  MatRadioModule,
 ];
 @NgModule({
   declarations: [
@@ -61,6 +61,7 @@ const matModules = [
     DeleteConfirmationDialogComponent,
     DistractionFreeModeComponent,
     AboutDialogComponent,
+    ExportDialogComponent,
   ],
   imports: [
     BrowserModule,
