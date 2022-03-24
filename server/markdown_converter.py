@@ -111,7 +111,11 @@ def rewriteMetaFileForExport(path, file_name, file_suffix):
         labelValueFile = open(originalFilepath, encoding='utf-8', errors='ignore')
         definitions = json.load(definitionsFile)
         labelValue = json.load(labelValueFile)
-        (defId, valueId) = labelValue[0]['context'].split(':')
+        try:
+            (defId, valueId) = labelValue[0]['context'].split(':')
+        except:
+            log.logInfo('LabelValue seems to be empty, skipping', originalFilepath)
+            return None
 
         definition = None
         value = None
@@ -128,9 +132,9 @@ def rewriteMetaFileForExport(path, file_name, file_suffix):
             return None
 
         if value:
-            newFilename = defi['name'] + '_' + value['name'] + file_suffix
+            newFilename = f'{defi["name"]}_{value["name"]}{file_suffix}'
         else: 
-            newFilename = defi['name'] + '_' + value['id'] + file_suffix
+            newFilename = f'{defi["name"]}_{value["id"]}{file_suffix}'
 
         data = { 'notes': labelValue }
         try: 
